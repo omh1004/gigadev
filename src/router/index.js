@@ -1,3 +1,7 @@
+
+
+import HomeComponent from '@/components/HomeComponent.vue'
+
 import MainComponent from '@/components/member/main.vue'
 import LoginComponent from '@/components/member/login.vue'
 import JoinComponent from '@/components/member/join.vue'
@@ -17,7 +21,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Main',
-      component: MainComponent,
+      component: HomeComponent,
     },
     {
       path: '/login',

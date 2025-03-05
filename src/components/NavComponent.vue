@@ -1,6 +1,5 @@
 <template>
     <div>
-       
         <ul>
             <li v-for="link in links" :key="link.link">
                 <router-link :to="link.link">
@@ -8,11 +7,20 @@
                 </router-link>
             </li>
         </ul>
-       
+        
+        <body>
+            <div>
+                <!-- <img :src="defaultImg"> -->
+
+            </div>
+        </body>
 
     </div>
 </template>
 <script>
+
+
+
 
 const model={
     links:[
@@ -24,7 +32,6 @@ const model={
         {label:"튜토리얼",link:"/tutorial"},
         
     ],
-  
     historyNum : 1,
   
 }
@@ -52,30 +59,6 @@ export default {
     }
 }
 </script>
-<style scoped>
-    ul{
-        padding:0;
-        margin:0;
-        display: flex;
-        list-style-type: none;
-        width:100%;
-        justify-content: space-evenly;
-    }
-    li{
-        font-size: 20px;
-        font-weight: bolder;
-        cursor: pointer;
-    }
-    .container{
-        display:flex;
-        flex-direction: column;
-    }
-    .innercontainer{
-        display: flex;
-        justify-content: space-around;
-    }
-    .linked{
-        background-color: lightblue;
-        border-radius: 100px;
-    }
+<style>
+  
 </style>
