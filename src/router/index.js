@@ -53,6 +53,11 @@ const router = createRouter({
       name: 'bank',
       component: bankComponent
     },
+    {
+      path: '/mainMenu',
+      name: 'menu',
+      component: HomeComponent 
+    },
     
   ],
 })
