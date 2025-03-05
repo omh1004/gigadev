@@ -53,3 +53,22 @@ export const quizComment = [
         // 디지털 금융 환경과 금융 서비스
         "블록체인은 중앙기관 없이 데이터가 저장되며, 조작이 어렵습니다.",
 ]
+
+export const quizReward = [
+    // 보상
+    30000, 1.05, 2, 'news',
+]
+
+export const rewardDialog = [
+    // 1~10일차 하드코딩
+    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[1] + "% 상승합니다.", reward:1 },
+    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[2] + "배가 됩니다.", reward:2 },
+    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+    { "dialog":"조류인플루엔자 어쩌구저쩌구 계란의 가격이 올라 어쩌구 저쩌구", reward:3 },
+    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[1] + "% 상승합니다.", reward:1 },
+    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[2] + "배가 됩니다.", reward:2 },
+    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+    { "dialog":"조류인플루엔자 어쩌구저쩌구 계란의 가격이 올라 어쩌구 저쩌구", reward:3 },
+]
