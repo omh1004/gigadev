@@ -59,6 +59,7 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
+    min-height:100vh;
   }
   
   .instruction-box {

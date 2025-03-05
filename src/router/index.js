@@ -1,5 +1,10 @@
 
+
 import HomeComponent from '@/components/HomeComponent.vue'
+
+import MainComponent from '@/components/member/main.vue'
+import LoginComponent from '@/components/member/login.vue'
+import JoinComponent from '@/components/member/join.vue'
 import quizComponent from '@/components/quiz/quizMain.vue'
 import productComponent from '@/components/product/productMain.vue'
 import tutorialComponent from '@/components/tutorial/totorialMain.vue'
@@ -17,6 +22,16 @@ const router = createRouter({
       path: '/',
       name: 'Main',
       component: HomeComponent,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginComponent,
+    },
+    {
+      path: '/join',
+      name: 'join',
+      component: JoinComponent,
     },
     {
       path: '/quiz',
