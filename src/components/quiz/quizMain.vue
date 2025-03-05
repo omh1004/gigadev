@@ -11,7 +11,7 @@
 </template>
 <script>
 import quizChoice from './quizChoice.vue';
-import { quiz, quizAnswer, quizComment } from './quiz.js';
+import { quiz, quizAnswer, quizComment, rewardDialog } from './quiz.js';
 
 export default {
     name:'quizcomponent',
@@ -30,9 +30,9 @@ export default {
             console.log(ans);
             if(quizAnswer[this.quizNum]==ans){
                 this.dialog='정답입니다.';
-                // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로로
+                // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
                 setTimeout(() => {
-                    this.dialog='보상데이터 넣기';
+                    this.dialog=rewardDialog[0].dialog;
                 }, 3500);
             }else{
                 this.dialog='오답입니다.';
@@ -40,6 +40,9 @@ export default {
                     this.dialog=quizComment[this.quizNum];
                 },3500);
             }
+            setTimeout(()=>{
+                this.$router.push('/');
+            },7000);
         }
     },
     mounted(){
