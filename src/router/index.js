@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Main',
-      component: HomeComponent,
+      component: MainComponent,
     },
     {
       path: '/login',
