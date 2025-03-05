@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>은행</h3>
+        <h3> 은행</h3>
     </div>
 </template>
 <script>
