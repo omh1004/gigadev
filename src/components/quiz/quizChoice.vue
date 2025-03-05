@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-import { quizSelect } from './quiz.js';
+import { quizAnswer, quizSelect } from './quiz.js';
 
 export default {
     data(){
@@ -19,29 +19,50 @@ export default {
                 {'select':false,'correct':false,'incorrect':false},
                 {'select':false,'correct':false,'incorrect':false},
             ],
+            submitAnswer:false,
         }
     },
     methods:{
         selected(e){
-            if(this.quizClass[e.target.id-1].select==true){
-                this.quizClass[e.target.id -1].select=false;
-            }else{
-                for(let i=0;i<this.quizClass.length;i++){
-                    this.quizClass[i].select=false;
+            if(!this.submitAnswer){
+                if(this.quizClass[e.target.id-1].select==true){
+                    this.quizClass[e.target.id -1].select=false;
+                }else{
+                    for(let i=0;i<this.quizClass.length;i++){
+                        this.quizClass[i].select=false;
+                    }
+                    this.quizClass[e.target.id -1].select=true;
                 }
-                this.quizClass[e.target.id -1].select=true;
             }
         },
         submit(){
-            let answer = 0;
-            // 시간초과 로직 나중에 추가하기. 여기 말고 다른데 추가해야 할 수도 있음.
-            for(let i=0;i<this.quizClass.length;i++){
-                if(this.quizClass[i].select==true){
-                    answer = i+1;
-                    i = this.quizClass.length;     // break 안쓰기(?)
+            if(!this.submitAnswer){
+                let answer = 0;
+                // 시간초과 로직 나중에 추가하기. 여기 말고 다른데 추가해야 할 수도 있음.
+                for(let i=0;i<this.quizClass.length;i++){
+                    if(this.quizClass[i].select==true){
+                        answer = i+1;
+                        i = this.quizClass.length;     // break 안쓰기(?)
+                    }
                 }
+                if(quizAnswer[this.quizNum]==answer){
+                    this.quizClass[answer-1].select=false;
+                    this.quizClass[answer-1].correct=true;
+                }else{
+                    this.quizClass[answer-1].select=false;
+                    this.quizClass[answer-1].incorrect=true;
+                }
+                this.$emit('result',answer);
+
+                this.submitAnswer=true;
+
+                setTimeout(()=>{
+                    this.quizClass[answer-1].select=false;
+                    this.quizClass[answer-1].correct=false;
+                    this.quizClass[answer-1].incorrect=false;
+                    this.submitAnswer=false;
+                },7500);
             }
-            this.$emit('result',answer);
         }
     },
     props:['quizNum'],
@@ -92,5 +113,11 @@ export default {
     .counter{
         position:relative;
         top:-100px;
+    }
+    .correct{
+        background-color:#DBECFF;
+    }
+    .incorrect{
+        background-color:#FFBABA;
     }
 </style>

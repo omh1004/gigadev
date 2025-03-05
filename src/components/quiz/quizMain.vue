@@ -1,6 +1,9 @@
 <template>
     <div style="display:inline-block;text-align:center;">
-        <h3>퀴즈</h3>   <!-- 일단 프론트엔드만 만들어놓는 중 -->
+        <!-- 일단 프론트엔드만 만들어놓는 중 -->
+        <div v-show="quizTime" class="quiztime">
+            <img src="@/resources/quiz_time.png">
+        </div>
         <p class="balloon">{{ dialog }}</p>
         <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
         <quizChoice :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"/>
@@ -19,6 +22,7 @@ export default {
         return{
             dialog:'',
             quizNum:Math.floor(Math.random()*10),
+            quizTime:true,
         }
     },
     methods:{
@@ -40,6 +44,9 @@ export default {
     },
     mounted(){
         this.dialog = quiz[this.quizNum];
+        setTimeout(()=>{
+            this.quizTime=false;
+        },3000);
     },
     emit:['answer'],
 }
@@ -60,10 +67,21 @@ export default {
         font-size:28px;
         padding-left:100px;
         padding-right:60px;
+        z-index:0;
     }
     .manInBlack{
         position:relative;
         bottom:0;
         right:150px;
+    }
+    .quiztime{
+        width:100vw;
+        height:100vh;
+        position:absolute;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:10;
+        background-color:rgba(0,0,0,0.3);
     }
 </style>
