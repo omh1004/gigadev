@@ -53,8 +53,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1920px;
-  height: 1080px;
+  width: 100vw;
+  height: 100wh;
+  background-image: url(@/resources/mainbackimg.png);
+  background-size: cover;
+  min-height: 100vh;
 }
 #mainbox {
   display: block;
@@ -64,14 +67,6 @@ export default {
   border-radius: 50px;
   border:7px solid #5E395A;
   background-color : #FFEFCA;
-}
-body {
- margin: 0;
- padding: 0;
- width: 100%;
- height: 100vh;
- background-image: url(@/resources/mainbackimg.png);
- background-size: cover;
 }
 #loginbtn {
   width: 232px;

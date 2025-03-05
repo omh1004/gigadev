@@ -24,7 +24,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 #loginbtn {
     font-family: RecipekoreaOTF;
     font-size: 24px;
