@@ -1,4 +1,5 @@
-import MainComponent from '@/components/member/main.vue'
+
+import HomeComponent from '@/components/HomeComponent.vue'
 import quizComponent from '@/components/quiz/quizMain.vue'
 import productComponent from '@/components/product/productMain.vue'
 import tutorialComponent from '@/components/tutorial/totorialMain.vue'
@@ -15,7 +16,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Main',
-      component: MainComponent,
+      component: HomeComponent,
     },
     {
       path: '/quiz',
