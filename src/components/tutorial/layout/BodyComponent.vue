@@ -1,27 +1,42 @@
 <template>
-    <div>
-        <LayoutComponent>
-            <template v-slot:header>
-                <HeaderComponent/>
-            </template>
-            <template v-slot:article>
-                <BodyComponent/>
-            </template>
-        </LayoutComponent>
+    <div class="container" :style="style.main.background">
+      <div class="top-bar">
+        <div class="d-30">D-30</div>
+        <div class="balance">500,000원</div>
+      </div>
+  
+      <div class="main-content">
+        <div class="instruction-box">
+          <span class="instruction-text">발주를 눌러보세요.</span>
+          <div class="red-notification">1</div>
+        </div>
+  
+        <div class="action-buttons">
+          <button class="primary-button">발주</button>
+          <button class="secondary-button">창고</button>
+          <button class="secondary-button">은행</button>
+        </div>
+  
+        <button class="open-button">OPEN</button>
+      </div>
     </div>
-
   </template>
 <script>
-import BodyComponent from './layout/BodyComponent.vue';
-import HeaderComponent from './layout/HeaderComponent.vue';
-import LayoutComponent from './layout/LayoutComponent.vue';
 
-
-
+const model ={
+  style:{
+      main:{
+        background:"@/assets/tutorialMain.jpg"
+      }
+  }
+}
 
 export default {
     name:'tutorialVue'
-    ,components:{BodyComponent,HeaderComponent,LayoutComponent}
+  ,data(){
+    return model;
+  }
+
 }
 </script>
 
@@ -31,7 +46,7 @@ export default {
   max-width: 375px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
-  background-image: './tutorial/tutorialIMG/image.png';
+  
 }
 
 .top-bar {
