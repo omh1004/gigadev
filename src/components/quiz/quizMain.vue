@@ -20,6 +20,7 @@ export default {
     },
     data(){
         return{
+            day:Math.floor(Math.random()*10)+1,   // 임의의 일수로 설정(1~10)
             dialog:'',
             quizNum:Math.floor(Math.random()*10),
             quizTime:true,
@@ -32,7 +33,14 @@ export default {
                 this.dialog='정답입니다.';
                 // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
                 setTimeout(() => {
-                    this.dialog=rewardDialog[0].dialog;
+                    this.dialog=rewardDialog[this.day].dialog;
+                    if(rewardDialog[this.day].reward==0){
+                        // 수익에 +30000원 추가. 내가 추가할 게 있나요?
+                    }else if(rewardDialog[this.day].reward>=1 && rewardDialog[this.day].reward<=3){
+                        // 영업 종료 후 총 수익에서 n% 증가, 정산서에 표시. 내가 추가할 게 있나요?
+                    }else if(rewardDialog[this.day].reward==4){
+                        // 뉴스 내용 전달. 내가 추가할 게 있나요?
+                    }
                 }, 3500);
             }else{
                 this.dialog='오답입니다.';
