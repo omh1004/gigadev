@@ -1,5 +1,5 @@
 <template>
-    <div style="display:flex;">
+    <div style="display:flex;padding-top:15px;">
         <div class="choice" :class="quizClass[i-1]" v-for="(quiz,i) in quizChoice" @click="selected($event)" :id="i">
             <div class="number" :id="i"><p>{{ i }}</p></div>
             <p style="text-align:center;" :id="i">{{ quiz }}</p>
@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-import { quizAnswer, quizSelect } from './quiz.js';
+import { quizAnswer, quizSelect } from '../../resources/quiz.js';
 
 export default {
     data(){
@@ -68,7 +68,7 @@ export default {
     props:['quizNum'],
 }
 </script>
-<style>
+<style scoped>
     .choice{
         width:200px;
         height:100px;
