@@ -18,7 +18,7 @@ export default {
     emit:['answer'],
 }
 </script>
-<style>
+<style scoped>
     .balloon{
         display:flex;
         justify-content:center;
