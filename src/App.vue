@@ -10,7 +10,7 @@ export default {
 
 }
 </script>
-<style scoped>
+<style>
   body,html {
     margin: 0;
     padding: 0;
