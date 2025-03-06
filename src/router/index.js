@@ -17,8 +17,8 @@ import bankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
-import Counter from '@/components/maingame/counter.vue'
-import Customer from '@/components/maingame/customer.vue'
+import Counter from '@/components/store/counter.vue'
+import Customer from '@/components/store/customer.vue'
 
 
 

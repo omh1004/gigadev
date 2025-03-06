@@ -1,8 +1,10 @@
 <template>
     <div class="conv">
+        <img src="">
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     @quizTime="quizTime" @customer="customer"></RouterView>
-        <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"></RouterView>
+        <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" @result="result"
+                    @dragstart_cart="dragstart_cart" @dragover_cart="dragover_cart" @drop_cart="drop_cart"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
         <!-- <QuizChoice v-show="quiz" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"/> -->
     </div>
@@ -15,16 +17,13 @@ import { quiz, quizAnswer, quizComment, rewardDialog } from '@/resources/quiz.js
 export default {
     data(){
         return{
-            // 판매 시 cart 초기화
-            cart:[],
-            // product -> product / cart -> cart를 막기 위한 값. 'prod','cart'
-            dragtarget:'',
             quiz:false,
             dialog:'상품이 없어요',
             quizDialog:quiz[this.quizNum],
             day:Math.floor(Math.random()*10),   // 임의의 일수로 설정(1~10)
             customerCount:1,
             quizMan:Math.floor(Math.random()*6)+6,
+            meetQuizMan:false,
         }
     },
     methods:{
@@ -59,27 +58,37 @@ export default {
         },
         customer(){
             this.$emit('customer');
-        }
+        },
+        dragstart_cart(ev){
+            this.$emit('dragstart_cart',ev);
+        },
+        dragover_cart(ev){
+            this.$emit('dragover_cart',ev);
+        },
+        drop_cart(ev){
+            console.log("여기까지 옴?");
+            this.$emit('drop_cart',ev);
+        },
     },
     watch:{
         timeleft(curVal, oriVal){
             if(curVal<=0){
                 clearInterval(this.interval);
-                if(this.customerCount==this.quizMan){
+                if(this.customerCount==this.quizMan && !this.meetQuizMan){
+                    this.meetQuizMan=true;
                     this.quizDialog='시간을 초과하였습니다.';
                     setTimeout(()=>{
                         this.quizDialog=quizComment[this.quizNum];
                     },3500);
                     setTimeout(()=>{
                         this.$router.push('/maingame/'+this.customerCount);
-                        this.$emit('customer');
                     },7000);
                 }else{
                     this.customerCount++;
+                    console.log(this.customerCount);
                     if(this.customerCount==this.quizMan){
                         setTimeout(()=>{
                             this.$router.push('/maingame/quiz');
-                            this.$emit('quizTime');
                         },3500);
                     }else{
                         setTimeout(()=>{
@@ -94,7 +103,7 @@ export default {
     components:{
         QuizMain,QuizChoice,
     },
-    props:['quizNum','interval','timeleft','customerA']
+    props:['quizNum','interval','timeleft','customerA','cart']
 }
 </script>
 <style scoped>
@@ -114,8 +123,6 @@ export default {
     }
     .counter{
         width:100%;
-        height:35%;
-        overflow-x:auto;
         text-wrap:nowrap;
     }
     #cartzone>div{
