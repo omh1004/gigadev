@@ -19,7 +19,7 @@ import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
 import Counter from '@/components/maingame/counter.vue'
 import Customer from '@/components/maingame/customer.vue'
-
+import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
 
 
 
@@ -108,10 +108,15 @@ const router = createRouter({
       ,name:'linkStorageTutorial'
       ,component:StorageTuto
     }
-    ,   ,{
+       ,{
       path:'/linkBankTutorial'
       ,name:'linkBankTutorial'
       ,component:BankTuto
+    }
+    ,{
+      path:'/introStart'
+      ,name:'introStart'
+      ,component:IntroStart1
     }
   ],
 })
