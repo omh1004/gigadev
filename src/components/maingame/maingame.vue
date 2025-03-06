@@ -33,7 +33,7 @@
         </div>
     </div>
 </template>
-<script>
+<script scoped>
 import Cartlist from './cartlist.vue';
 import Productlist from './productlist.vue';
 

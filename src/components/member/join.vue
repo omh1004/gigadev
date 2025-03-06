@@ -1,6 +1,7 @@
 <template>
   <div id="maincontainer">
     <main id="mainbox">
+      <div>
       <h1 id="title">회원가입</h1><br>
       <P id="must"><span>*</span>는 필수입력</P>
 
@@ -31,6 +32,7 @@
 
       <div id="signbtnbox">
       <button id="signbtn">sign up (회원가입)</button>
+      </div>
     </div>
     </main>
   </div>
@@ -72,12 +74,12 @@ label {
   color:red;
   padding-top: 0px;
   text-box-trim: trim-start;
-  margin-left: -334px;
   margin-top: 8px;
+  margin-left: 310px;
 }
 #alertPw {
-  margin-left: -150px;
   margin-top: -3px;
+  margin-left: 310px;
 }
 #maincontainer {
   background-image: url('@/resources/whiteimg.png');
@@ -85,6 +87,8 @@ label {
   min-height: 100vh;
 }
 #mainbox {
+  display: flex;
+  justify-content: center;
   padding: 30px 70px;
 }
 .input-group {
@@ -92,7 +96,7 @@ label {
 }
 #userId {
   margin-left: 197px;
-  width: 905px;
+  width: 901px;
   height: 40px;
   border:3px solid #6F3533;
   border-radius: 5px;
@@ -111,7 +115,7 @@ label {
 #userPw {
   margin-top: 20px;
   margin-left: 170px;
-  width: 904px;
+  width: 900px;
   height: 40px;
   border:3px solid #6F3533;
   border-radius: 5px;
@@ -134,7 +138,7 @@ label {
 }
 #nick {
   margin-top: 20px;
-  margin-left: 194px;
+  margin-left: 197px;
   width: 900px;
   height: 40px;
   border:3px solid #6F3533;
@@ -144,14 +148,14 @@ label {
   text-box-trim:trim-start;
   margin-top: 8px;
   color: red;
-  margin-left: -380px;
+  margin-left: 310px;
 }
 #signbtnbox {
   display: flex;
   justify-content: center;
 }
 #signbtn {
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 5px 10px;
   border:3px solid #56174F;
   border-radius: 10px;
