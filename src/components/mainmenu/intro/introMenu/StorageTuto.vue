@@ -152,22 +152,37 @@
   
   <style scoped>
   .main-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    
+    background-repeat: no-repeat;
+
+
     font-family: RecipekoreaOTF;
-  font-size: 20px;
+  font-size: 24px;
   margin-top: 50px;
   background-color: #f5f5f5;
   
   text-align: center;
   max-width: 100%;
-  min-height: 90vh;
+  min-height: 90%;
 
-  background-image: url('@/assets/common/homeMain.png');
-  background-size:cover;
+  background-size: cover;
 
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center; 
+
+
+
+  
+
+
+  background-image: url('@/assets/common/homeMain.png');
+
   }
   
   .header {

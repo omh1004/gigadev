@@ -8,9 +8,6 @@
             <span class="amount">500,000원</span>
           </div>
           <div class="settings-icon">⚙️</div>
-          <div class="notification">
-            <span class="notification-badge">6</span>
-          </div>
         </div>
       </div>
 
@@ -25,21 +22,25 @@
     
       
       <div class="menu-container">
-        <div class="menu-button" @click="linkOrdering">
-          <span class="button-text">발주</span>
+        <div class="menu-button"  @click="linkOrdering">
+          <span class="button-text">
+            <img src="@/assets/tutorial/button/orderingbutton.png">
+          </span>
         </div>
         
         <div class="menu-button" @click="linkStorage">
-          <span class="button-text">창고</span>
+          <span class="button-text">
+            <img src="@/assets/tutorial/button/storagebutton.png">
+          </span>
         </div>
         
         <div class="menu-button" @click="linkBank">
-          <span class="button-text">은행</span>
+          <span class="button-text"><img src="@/assets/tutorial/button/bankbutton.png"></span>
         </div>
       </div>
       
       <div class="open-button-container">
-        <button class="open-button">OPEN</button>
+        <button class="open-button"></button>
       </div>
     </div>
   </template>
@@ -63,22 +64,36 @@
   
   <style scoped>
   .main-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    
+    background-repeat: no-repeat;
+
+
     font-family: RecipekoreaOTF;
-  font-size: 20px;
+  font-size: 24px;
   margin-top: 50px;
   background-color: #f5f5f5;
   
   text-align: center;
   max-width: 100%;
-  min-height: 90vh;
+  min-height: 90%;
 
-  background-image: url('@/assets/common/homeMenu.png');
-  background-size:cover;
+  background-size: cover;
 
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center; 
+
+
+
+  background-repeat: no-repeat;
+
+  background-image: url('@/assets/common/homeMenu.png');
+ 
 
 
   }
@@ -177,11 +192,11 @@
     margin-bottom: 150px;
   }
   
-  .menu-button {
-    width: 250px;
+  .button-text > img{
+    width: 300px;
     height: 80px;
-    background-color: #FFF8DC;
-    border: 2px solid #8B4513;
+    /* background-color: #FFF8DC;
+    border: 2px solid #8B4513; */
     border-radius: 24px;
     display: flex;
     align-items: center;
@@ -198,17 +213,23 @@
   .open-button-container {
     display: flex;
     justify-content: center;
+    /* background-image: url('@/assets/tutorial/button/openbutton.png'); */
   }
   
   .open-button {
     width: 180px;
     height: 60px;
-    background-color: #4B0082;
-    color: white;
-    border: none;
-    border-radius: 16px;
+    background-image: url('@/assets/tutorial/button/openbutton.png');
+    background-size: cover;
+    
+    /* border: none; */
+    /* border-radius: 16px; */
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
   }
+
+ 
+
+  
   </style>
