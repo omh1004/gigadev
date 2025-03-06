@@ -55,7 +55,7 @@ export default {
             this.quiztime=true;
             setTimeout(()=>{
                 this.quiztime=false;
-                this.timer();
+                // this.timer();
             },3000);
         },
         customer(){
@@ -82,7 +82,9 @@ export default {
     watch:{
         '$route.params.customerCount':{
             handler:function(curVal,oriVal){
-                this.customerCount=curVal;
+                if(curVal!=='quiz'){
+                    this.customerCount=curVal;
+                }
             }
         }
     },

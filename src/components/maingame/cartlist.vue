@@ -31,10 +31,10 @@ export default {
         result(ans){
             clearInterval(this.interval);
             if(quizAnswer[this.quizNum]==ans){
-                this.dialog='정답입니다.';
+                this.quizDialog='정답입니다.';
                 // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
                 setTimeout(() => {
-                    this.dialog=rewardDialog[this.day].dialog;
+                    this.quizDialog=rewardDialog[this.day].dialog;
                     if(rewardDialog[this.day].reward==0){
                         // 수익에 +30000원 추가. 내가 추가할 게 있나요?
                     }else if(rewardDialog[this.day].reward>=1 && rewardDialog[this.day].reward<=3){
@@ -44,9 +44,9 @@ export default {
                     }
                 }, 3500);
             }else{
-                this.dialog='오답입니다.';
+                this.quizDialog='오답입니다.';
                 setTimeout(()=>{
-                    this.dialog=quizComment[this.quizNum];
+                    this.quizDialog=quizComment[this.quizNum];
                 },3500);
             }
             setTimeout(()=>{
