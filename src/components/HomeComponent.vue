@@ -1,34 +1,37 @@
 <template>
-  <div class="game-container">
-    <img id="secondimg" src="@/resources/tycoonname.png" alt="타이쿤 이름 이미지">
-  
+  <div></div>
+  <div class="game-container">  
 
+    <img id="secondimg" src="@/resources/tycoonname.png" alt="타이쿤 이름 이미지">
     <div class="action-buttons">
       <button class="load-button">불러오기</button>
       <button class="start-button">게임시작</button>
     </div>
 
+
+
     <div class="ranking-board">
 
 
       <div class="ranking-header">
-        <!-- <span>순위</span>
-        <span>닉네임</span>
-        <span>수익</span> -->
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      <!-- <div class="ranking-list">
+       <div class="ranking-list">
         <div 
           v-for="(player, index) in rankings" 
           :key="index" 
           :class="['ranking-item', getTopPlayerClass(index)]"
         >
-           <span>{{ index + 1 }}</span>
+          
           <span>{{ player.nickname }}</span>
           <span>{{ formatCurrency(player.profit) }}</span>
         </div>
-      </div> -->
+      </div> 
     </div>
   </div>
+
 </template>
 
 <script>
@@ -61,17 +64,24 @@ export default {
 .game-container {
   font-family: RecipekoreaOTF;
   font-size: 24px;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
+  margin-top: 50px;
   background-color: #f5f5f5;
   font-family: Arial, sans-serif;
-  padding: 20px;
   text-align: center;
-  min-height: 100vh;
-  min-width: 80vw;
+  max-width: 100%;
+  min-height: 90vh;
+
   background-image: url('@/assets/common/homeMenu.png');
-  background-size:100%;
+  background-size:cover;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+
+
+
+  background-repeat: no-repeat;
 }
 
 .title-section {
@@ -91,6 +101,7 @@ export default {
 }
 
 .action-buttons {
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -127,8 +138,9 @@ export default {
   margin-right: 200px;
   min-height:400px;
   width: 800px;
-
+  margin-top: 50px;
   background-image: url('@/assets/common/rankingboard.png');
+  background-repeat: no-repeat;
 }
 
 .ranking-header {
@@ -144,6 +156,8 @@ export default {
 .ranking-list {
   font-family: RecipekoreaOTF;
   text-align: center;
+  padding-left: 350px;
+  padding-top: 50px;
 }
 
 .ranking-item {
@@ -154,17 +168,4 @@ export default {
   border-bottom: 1px solid #eee;
 }
 
-.top-1 {
-  font-family: RecipekoreaOTF;
-  /* background-color: #ffefca; */
-  font-weight: bold;
-}
-
-.top-2 {
-  /* background-color: #f0f4c3; */
-}
-
-.top-3 {
-  /* background-color: #e6ee9c; */
-}
 </style>
