@@ -9,7 +9,7 @@
                 <img src="@/resources/timer.png" width="50" height="52">
                 <div class="timebar-container">
                     <div class="timerbar">
-                        <div v-show="aa>0" class="timeleft" :style="`width:${aa}px`"></div>
+                        <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}px`"></div>
                     </div>
                     <p class="time">{{ timeleft }}초</p>
                 </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="product-container">
-            <Cartlist @quizTime="quizTime" :quizNum="quizNum" :interval="interval" :timeleft="timeleft"/>
+            <Cartlist @quizTime="quizTime" @customer="customer" :quizNum="quizNum" :interval="interval" :timeleft="timeleft"/>
             <Productlist/>
         </div>
     </div>
@@ -40,8 +40,8 @@ import Productlist from './productlist.vue';
 export default {
     data(){
         return{
-            aa:800,
-            quiztime:true,
+            timebar:800,
+            quiztime:false,
             quizNum:Math.floor(Math.random()*10),
             timeleft:30,
             interval:'',
@@ -51,20 +51,29 @@ export default {
         quizTime(){
             setTimeout(()=>{
                 this.quiztime=false;
-                const quizstart = new Date();
-                let quizend = new Date();
-                this.interval = setInterval(()=>{
-                    if(this.aa<=0){
-                        this.aa=0;
-                        this.timeleft=0;
-                        clearInterval(this.interval);
-                    }
-                    quizend = new Date();
-                    this.aa = 800/30*(30-(quizend-quizstart)/1000);
-                    this.timeleft = 30-Math.floor((quizend-quizstart)/1000);
-                },50)
+                this.timer();
             },3000);
+        },
+        customer(){
+            this.timer();
+        },
+        timer(){
+            const quizstart = new Date();
+            let quizend = new Date();
+            this.interval = setInterval(()=>{
+                if(this.timebar<=0){
+                    this.timebar=0;
+                    this.timeleft=0;
+                    clearInterval(this.interval);
+                }
+                quizend = new Date();
+                this.timebar = 800/30*(30-(quizend-quizstart)/1000);
+                this.timeleft = 30-Math.floor((quizend-quizstart)/1000);
+            },50)
         }
+    },
+    mounted(){
+        this.$router.push("/maingame/1");
     },
     components:{
         Cartlist,Productlist

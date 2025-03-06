@@ -15,6 +15,10 @@ import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue
 import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
 import bankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
+import QuizChoice from '@/components/quiz/quizChoice.vue'
+import QuizMain from '@/components/quiz/quizMain.vue'
+import Counter from '@/components/maingame/counter.vue'
+import Customer from '@/components/maingame/customer.vue'
 
 
 
@@ -61,7 +65,23 @@ const router = createRouter({
     {
       path: '/maingame',
       name: 'maingame',
-      component: maingameComponent
+      component: maingameComponent,
+      children:[
+        {
+          path:":customerCount",
+          components:{
+            customer:Customer,
+            counter:Counter,
+          }
+        },
+        {
+          path:"quiz",
+          components:{
+            customer:QuizMain,
+            counter:QuizChoice,
+          }
+        }
+      ]
     },
     {
       path: '/homeMenu',
