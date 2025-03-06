@@ -9,6 +9,7 @@ import quizComponent from '@/components/quiz/quizMain.vue'
 import productComponent from '@/components/product/productMain.vue'
 import tutorialComponent from '@/components/tutorial/totorialMain.vue'
 import bankComponent from '@/components/bank/bankMain.vue'
+import maingameComponent from '@/components/maingame/maingame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
@@ -53,7 +54,11 @@ const router = createRouter({
       name: 'bank',
       component: bankComponent
     },
-    
+    {
+      path: '/maingame',
+      name: 'maingame',
+      component: maingameComponent
+    },
   ],
 })
 
