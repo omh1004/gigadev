@@ -12,6 +12,8 @@ import bankComponent from '@/components/bank/bankMain.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue'
 import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
+import bankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
+import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 
 
 
@@ -79,6 +81,11 @@ const router = createRouter({
       path:'/linkStorageTutorial'
       ,name:'linkStorageTutorial'
       ,component:StorageTuto
+    }
+    ,   ,{
+      path:'/linkBankTutorial'
+      ,name:'linkBankTutorial'
+      ,component:BankTuto
     }
   ],
 })

@@ -14,14 +14,14 @@
         </div>
       </div>
 
-      <div class="speech-bubble">
+      <!-- <div class="speech-bubble">
         <div class="speech-bubble-content">
           <p>이 화면은 게임 시작전 준비공간입니다.</p>
           <p>편의점 편의점 운영중에는 다시 방문할 수 없습니다.</p>
           <p>신중하게 결정하고 오픈해주세요</p>
         </div>
         <div class="arrow-down"></div>
-      </div>
+      </div> -->
     
       
       <div class="menu-container">
@@ -53,6 +53,9 @@
       }
       ,linkStorage(){
         this.$router.push('/linkStorageTutorial')
+      }
+      ,linkBank(){
+        this.$router.push('/linkBankTutorial')
       }
     }
   }
