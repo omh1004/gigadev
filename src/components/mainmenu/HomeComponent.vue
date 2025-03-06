@@ -4,8 +4,8 @@
 
     <img id="secondimg" src="@/resources/tycoonname.png" alt="타이쿤 이름 이미지">
     <div class="action-buttons">
-      <button class="load-button">불러오기</button>
-      <button class="start-button">게임시작</button>
+      <button class="load-button" >불러오기</button>
+      <button class="start-button" @click="startgame">게임시작</button>
     </div>
 
 
@@ -56,6 +56,9 @@ export default {
     getTopPlayerClass(index) {
       return index < 3 ? `top-${index + 1}` : ''
     }
+    ,startgame(){
+      return this.$router.push('/introstart')
+    }
   }
 }
 </script>
@@ -66,10 +69,10 @@ export default {
   font-size: 24px;
   margin-top: 50px;
   background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
+  
   text-align: center;
   max-width: 100%;
-  min-height: 90vh;
+  min-height: 100vh;
 
   background-image: url('@/assets/common/homeMenu.png');
   background-size:cover;

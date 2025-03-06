@@ -1,5 +1,6 @@
 <template>
   <div id="maincontainer">
+    <form>
     <main id="mainbox">
       <input id="inputId" type="text" name="userId" placeholder="ID"><br>
       <input id="inputPw" type="password" name="userPw" placeholder="Password"><br>
@@ -9,102 +10,111 @@
       </div><br>
       <div id="btns">
         <button id="loginbtn" type="submit">로그인</button>
-        <button id="resetbtn" type="reset">취소</button>
+        <button id="resetbtn" type="reset" @click="goToMain">취소</button>
       </div>
     </main>
+  </form>
   </div>
   <router-view></router-view>
 </template>
 <script>
 export default {
   name:'loginVue',
+  methods: {
+    goToMain() {
+      this.$router.push('/'); //메인페이지로 이동
+
+    }
+  }
 }
 </script>
-<style>
+<style scoped>
 * {
   box-sizing: border-box;
 }
 #inputId {
-  width: 715px;
-  height: 115px;
-  border: 7px solid #5E395A;
-  border-radius: 30px;
+  width: 400px;
+  height: 58px;
+  border: 4px solid #5E395A;
+  border-radius: 20px;
   padding: 27px 32px;
   gap: 8px;
-  margin-top:30px;
+  margin-top:60px;
   margin-bottom: 20px;
-  font-size: 28px;
+  font-size: 18px;
 }
 #inputPw {
-  width: 715px;
-  height: 115px;
-  border: 7px solid #5E395A;
-  border-radius: 30px;
+  width: 400px;
+  height: 58px;
+  border: 4px solid #5E395A;
+  border-radius: 20px;
   padding: 27px 32px;
   gap: 8px;
   margin-bottom: 20px;
-  font-size: 28px;
+  font-size: 18px;
 }
-#remembertext {
-  font-size: 28px;
-  font-weight: 400;
-}
+
 #maincontainer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100wh;
-  background-image: url(@/resources/mainbackimg.png);
+  background-image: url(@/resources/mainback2.png);
   background-size: cover;
   min-height: 100vh;
 }
 #mainbox {
   display: block;
   justify-items: center;
-  width: 890px;
-  height: 658px;
-  border-radius: 50px;
-  border:7px solid #5E395A;
+  width: 500px;
+  height: 400px;
+  border-radius: 30px;
+  border:4px solid #5E395A;
   background-color : #FFEFCA;
+  margin-top: -120px;
 }
 #loginbtn {
-  width: 232px;
-  height: 92px;
-  border: 7px solid #6F3533;
-  border-radius: 20px;
+  width: 160px;
+  height: 60px;
+  border: 5px solid #6F3533;
+  border-radius: 15px;
   background-color: #6F3533;
   color:#FFFFFF;
-  padding: 20px 40px;
-  font-weight: 400;
+  padding: 10px 30px;
+  font-weight: 900;
+  font-size: 18px;
   margin-right: 20px;
-  
+  cursor: pointer;
 }
 #resetbtn {
-  width: 232px;
-  height: 92px;
-  border: 7px solid #6F3533;
+  width: 160px;
+  height: 60px;
+  border: 4px solid #6F3533;
   color: #6F3533;
-  padding: 20px 40px;
-  border-radius: 20px;
+  padding: 10px 30px;
+  border-radius: 15px;
   background-color: #FFEFCA;
-  font-size: 24px;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 900; 
   margin-left: 20px;
+  cursor: pointer;
 }
-input[type="checkbox"] {
-  width: 59px;
-  height: 59px;
-}
+
 #checkbox {
   display: flex;
   align-items: center;
   justify-content: flex-start; 
   gap: 8px;
   margin-left: 32px; 
-  width: 715px; 
+  width: 400px; 
+  font-size: 18px;
+  font-weight: 600;
+  height: 16px; 
+  accent-color: #6F3533;
+  cursor: pointer; 
 }
 #btns {
-  margin-top: 52px;
+  margin-top: 30px;
 }
 </style>
