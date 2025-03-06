@@ -1,15 +1,17 @@
 
 
-import HomeComponent from '@/components/HomeComponent.vue'
-
+import HomeComponent from '@/components/mainmenu/HomeComponent.vue'
+import IntroStartComponent from '@/components/mainmenu/intro/IntroStart.vue'
 import MainComponent from '@/components/member/main.vue'
 import LoginComponent from '@/components/member/login.vue'
 import JoinComponent from '@/components/member/join.vue'
 import quizComponent from '@/components/quiz/quizMain.vue'
 import productComponent from '@/components/product/productMain.vue'
-import tutorialComponent from '@/components/tutorial/totorialMain.vue'
+import MainmenuComponent from '@/components/mainmenu/intro/Mainmenu.vue'
 import bankComponent from '@/components/bank/bankMain.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue'
+import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
 
 
 
@@ -43,22 +45,41 @@ const router = createRouter({
       name: 'product',
       component: productComponent
     },
-    {
-      path: '/tutorial',
-      name: 'tutorial',
-      component: tutorialComponent
-    },
+    // {
+    //   path: '/tutorial',
+    //   name: 'tutorial',
+    //   component: tutorialComponent
+    // },
     {
       path: '/bank',
       name: 'bank',
       component: bankComponent
     },
     {
-      path: '/mainMenu',
+      path: '/homeMenu',
       name: 'menu',
       component: HomeComponent 
     },
-    
+    {
+      path: '/mainmenu',
+      name: 'mainmenu',
+      component: MainmenuComponent,
+    },
+    {
+      path: '/introStart'
+      ,name:'introStart'
+      ,component:IntroStartComponent
+    },
+    {
+      path:'/linkOrderingTutorial'
+      ,name:'linkOrderingTutorial'
+      ,component:OrderingTuto
+    }
+    ,{
+      path:'/linkStorageTutorial'
+      ,name:'linkStorageTutorial'
+      ,component:StorageTuto
+    }
   ],
 })
 
