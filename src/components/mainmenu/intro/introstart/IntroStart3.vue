@@ -5,7 +5,9 @@
       SKIP >>|
     </div>
     
-    
+    <div id="bankman">
+      <img src="@/assets/tutorial/bankman.png">
+    </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
       <div class="dialog-arrow">▼</div>
@@ -23,11 +25,14 @@ export default {
     }
   },methods:{
     movePage(){
-      this.$router.push('/intro2')
+      this.$router.push('/intro4')
     }
   }
   ,mounted(){
-      let innerText = '어렸을 때부터 나의 꿈이었던 편의점을 드디어 개업했다!';
+    
+      
+
+      let innerText = `빌리신 돈은 1,000,000원이고 대출 상환 기한은 30일이며 만기일시 상환입니다.`;
       
         for(let i =0;i<innerText.length;i++){
           setTimeout(()=>{
@@ -75,6 +80,12 @@ export default {
   background-size:cover;
 
 }
+#bankman{
+  position:relative;
+        
+        top:200px;
+        
+}
 
 .skip-button {
   position: absolute;
@@ -90,7 +101,7 @@ export default {
 
 .dialog-box {
   
-  margin-top: 450px;
+  margin-top: 200px;
   width: 70%;
   background-color: #F2F1EC;
   border-radius: 24px;
@@ -98,6 +109,7 @@ export default {
   margin-bottom: 20px;
   min-height: 150px;
   display: flex;
+  
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     
-    <div class="skip-button" @click="movePage">
+    <div class="skip-button">
       SKIP >>|
     </div>
     
@@ -21,13 +21,12 @@ export default {
     return {
       inputText:''
     }
-  },methods:{
-    movePage(){
-      this.$router.push('/intro2')
-    }
   }
   ,mounted(){
-      let innerText = '어렸을 때부터 나의 꿈이었던 편의점을 드디어 개업했다!';
+    
+      
+
+      let innerText = '갚아야 할 돈이 100만원?! 내가 가진 현금은 50만원인데 어떻게 운영해야하지?';
       
         for(let i =0;i<innerText.length;i++){
           setTimeout(()=>{
