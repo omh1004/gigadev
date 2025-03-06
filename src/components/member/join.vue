@@ -74,12 +74,12 @@ label {
   color:red;
   padding-top: 0px;
   text-box-trim: trim-start;
-  margin-left: -334px;
   margin-top: 8px;
+  margin-left: 310px;
 }
 #alertPw {
-  margin-left: -150px;
   margin-top: -3px;
+  margin-left: 310px;
 }
 #maincontainer {
   background-image: url('@/resources/whiteimg.png');
@@ -148,7 +148,7 @@ label {
   text-box-trim:trim-start;
   margin-top: 8px;
   color: red;
-  margin-left: -380px;
+  margin-left: 310px;
 }
 #signbtnbox {
   display: flex;
