@@ -2,7 +2,7 @@
     <div style="display:flex;">
         <!-- 일단 프론트엔드만 만들어놓는 중 -->
         <p class="balloon">{{ dialog }}</p>
-        <img class="customer" :src="src[customer]" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
+        <img class="customer" :src="src[customerA]" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
     </div>
 </template>
 <script>
@@ -21,13 +21,12 @@ export default {
                 "/src/resources/customer8.png",
                 "/src/resources/customer9.png",
             ],
-            customer:Math.floor(Math.random()*9),
         }
     },
     mounted(){
         this.$emit('customer');
     },
-    props:['quizNum','dialog'],
+    props:['quizNum','dialog','customerA'],
     emit:['answer'],
 }
 </script>

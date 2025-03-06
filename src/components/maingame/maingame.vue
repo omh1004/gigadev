@@ -14,9 +14,9 @@
                     <p class="time">{{ timeleft }}초</p>
                 </div>
             </div>
-            <div style="display:flex;">
+            <div style="display:flex;align-items:center;">
                 <img src="@/resources/person.png" width="40" height="40">
-                <p>0/10</p>
+                <p style="margin:0;">{{ customerCount }}/10</p>
             </div>
             <div style="display:flex;align-items:center;">
                 <div class="moneybar">
@@ -28,7 +28,8 @@
             </div>
         </div>
         <div class="product-container">
-            <Cartlist @quizTime="quizTime" @customer="customer" :quizNum="quizNum" :interval="interval" :timeleft="timeleft"/>
+            <Cartlist :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft"
+                        @quizTime="quizTime" @customer="customer"/>
             <Productlist/>
         </div>
     </div>
@@ -45,16 +46,22 @@ export default {
             quizNum:Math.floor(Math.random()*10),
             timeleft:30,
             interval:'',
+            customerCount:1,
+            customerA:Math.floor(Math.random()*9),
         }
     },
     methods:{
         quizTime(){
+            this.quiztime=true;
             setTimeout(()=>{
                 this.quiztime=false;
                 this.timer();
             },3000);
         },
         customer(){
+            this.timebar=800;
+            this.timeleft=30;
+            this.customerA=Math.floor(Math.random()*9)
             this.timer();
         },
         timer(){
@@ -72,8 +79,12 @@ export default {
             },50)
         }
     },
-    mounted(){
-        this.$router.push("/maingame/1");
+    watch:{
+        '$route.params.customerCount':{
+            handler:function(curVal,oriVal){
+                this.customerCount=curVal;
+            }
+        }
     },
     components:{
         Cartlist,Productlist
@@ -92,13 +103,15 @@ export default {
     }
     .topbar{
         display:flex;
-        justify-content:space-between;
+        justify-content:space-around;
         align-items:center;
         width:1848px;
         height:89px;
         padding:0 40px;
         margin:auto;
         background-image:url(@/resources/gametopbar.png);
+        background-position:center;
+        background-repeat:no-repeat;
     }
     .timebar-container{
         display:flex;
@@ -123,11 +136,10 @@ export default {
     }
     .moneybar{
         display:flex;
-        justify-content:space-between;
+        justify-content:space-around;
         align-items:center;
         width:340px;
         height:56px;
-        padding:0 15px;
         margin-right:20px;
         background-image:url(@/resources/moneybar.png);
     }
@@ -138,7 +150,7 @@ export default {
     .money{
         display:flex;
         justify-content:flex-end;
-        min-width:200px;
+        min-width:160px;
     }
     .money p{
         color:#FFFFFF;

@@ -1,6 +1,6 @@
 <template>
     <div class="conv">
-        <RouterView name="customer" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum" class="background"
+        <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
@@ -71,14 +71,21 @@ export default {
                         this.quizDialog=quizComment[this.quizNum];
                     },3500);
                     setTimeout(()=>{
-                    this.$router.push('/maingame/'+this.customerCount);
+                        this.$router.push('/maingame/'+this.customerCount);
+                        this.$emit('customer');
                     },7000);
                 }else{
                     this.customerCount++;
                     if(this.customerCount==this.quizMan){
-                        this.$router.push('/maingame/quiz');
+                        setTimeout(()=>{
+                            this.$router.push('/maingame/quiz');
+                            this.$emit('quizTime');
+                        },3500);
                     }else{
-                        this.$router.push('/maingame/'+this.customerCount);
+                        setTimeout(()=>{
+                            this.$router.push('/maingame/'+this.customerCount);
+                            this.$emit('customer');
+                        },3500);
                     }
                 }
             }
@@ -87,7 +94,7 @@ export default {
     components:{
         QuizMain,QuizChoice,
     },
-    props:['quizNum','interval','timeleft']
+    props:['quizNum','interval','timeleft','customerA']
 }
 </script>
 <style scoped>
