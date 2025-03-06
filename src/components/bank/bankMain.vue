@@ -3,10 +3,11 @@
       <!-- ✅ 달력 (항상 보이게 유지) -->
       <div class="calandar">
         <!-- ✅ 대출 내역 표시 (대출내역 버튼 클릭 시) -->
-        <div class="loan-history" v-if="activeTab === 'loanHistory'">
-          <div class="loan-header">
-            <span class="title">대출 합계 : {{ totalLoan.toLocaleString() }}원</span>
+        <div class="loan-history" v-if="activeTab === 'loanHistory'" style="top: 13%;">
+          <div class="loan-header" style="display: flex; justify-content: end;">
+            <span class="title" style="text-align: end;">대출 합계 : {{ totalLoan.toLocaleString() }}원</span>
           </div>
+          <hr>
           <table class="loan-table">
             <tbody>
               <tr v-for="(loan, index) in loanRecords" :key="index">
@@ -100,10 +101,10 @@ export default {
 /* ✅ 대출 내역 스타일 */
 .loan-history {
   position: absolute;  /* ✅ 달력 내부에 고정되도록 수정 */
-  width: 65%; /* ✅ 달력 안에서 최대한 넓게 차지 */
+  width: 60%; /* ✅ 달력 안에서 최대한 넓게 차지 */
   max-height: 75%;  /* ✅ 달력 높이에 맞춤 (스크롤 추가) */
   overflow-y: auto;  /* ✅ 내용이 넘칠 경우 스크롤 추가 */
-  background: rgba(255, 255, 255, 0.95);
+  background: #F9F8F2;
   padding: 20px;
   border-radius: 10px;
 }
@@ -121,12 +122,17 @@ export default {
 .loan-table {
   width: 100%;
   border-collapse: collapse;
+  background-color: #F9F8F2;
 }
 
 .loan-table td {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #EBE5DD;
   font-size: 18px;
+}
+
+.loan-table tr:nth-child(even) {
+  background-color: #EBE5DD; /* 연한 회색 */
 }
 
 .loan-table .amount {
@@ -137,8 +143,8 @@ export default {
 /* ✅ 버튼 컨테이너 위치 조정 */
 .button-container {
   position: absolute;
-  top: 58%;
-  left: calc(50% + 360px); /* 버튼이 테이블과 겹치지 않도록 조정 */
+  top: 50%;
+  left: calc(50% + 341px); /* 버튼이 테이블과 겹치지 않도록 조정 */
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -186,6 +192,7 @@ export default {
 .tab-button.active {
   background: #F9F8F2;
   color: #481B0B;
+  /* border: 10px solid #481B0B;  조금 공부좀 해보고 사용해보기*/
 }
 
 /* ✅ 활성화된 버튼에 절취선 추가 */
