@@ -19,7 +19,7 @@
                 <div class="sell">
                     <input type="number" v-model.number="p.sell">
                 </div>  
-                <p>{{ p.name }}</p>
+                <p style="margin-top:15px;">{{ p.name }}</p>
             </div>
         </div>
     </div>
@@ -77,12 +77,14 @@ export default {
     }
     .amount{
         display:inline-block;
-        width:50%;
+        width:40%;
         text-align:center;
+        margin-top:5px;
     }
     .sell{
         display:inline-block;
-        width:50%;
+        width:40%;
+        margin-top:5px;
     }
     .amount *, .sell *{
         width:100%;

@@ -125,13 +125,6 @@ export default {
         width:100%;
         text-wrap:nowrap;
     }
-    #cartzone>div{
-        display:inline-block;
-        text-align:center;
-        width:20%;
-        height:100px;
-        margin:2.5%;
-    }
     .amount{
         display:inline-block;
         width:50%;

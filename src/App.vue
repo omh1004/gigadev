@@ -11,6 +11,9 @@ export default {
 }
 </script>
 <style>
+  *{
+      user-select:none;
+  }
   body,html {
     margin: 0;
     padding: 0;
