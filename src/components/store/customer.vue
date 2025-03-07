@@ -30,11 +30,10 @@ export default {
                 "/src/resources/customer8.png",
                 "/src/resources/customer9.png",
             ],
-            relability:90,  // 일단 임의의 값 지정
         }
     }
     ,mounted(){
-       
+        
         this.$emit('customer');
 
         // for(let i=0;i<this.dialog.length;i++){
@@ -46,7 +45,7 @@ export default {
 
 
     },
-    props:['quizNum','dialog','customerA'],
+    props:['quizNum','dialog','customerA','relability'],
     emit:['answer'],
 }
 </script>

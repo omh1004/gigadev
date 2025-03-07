@@ -1,7 +1,7 @@
 <template>
     <div class="conv">
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
-                    @quizTime="quizTime" @customer="customer"></RouterView>
+                    :relability="relability" @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
                     :timeleft="timeleft" :noclick="noclick" @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
@@ -28,6 +28,7 @@ export default {
                 {'strawberry':1,'pineapple':2},
             ],  // 일단 두개만
             currentWant:{},
+            relability:50,
         }
     },
     methods:{
@@ -135,26 +136,30 @@ export default {
             if(nothing){
                 this.dialog='손님이 화났습니다! ';
                 this.dialog+='신뢰도 -5';
+                this.relability-=5;
             }else if(perfect){
                 this.dialog='손님이 만족했습니다 ';
                 this.dialog+='신뢰도 +5';
+                this.relability+=5;
             }else{
                 if(over>0 && under>0){
                     timeout = 3500;
                     this.dialog=under + '개 덜 판매했습니다. ';
                     this.dialog+='신뢰도 -2';
+                    this.relability-=2;
                     setTimeout(()=>{
                         this.dialog=over + '개 더 판매했습니다. ';
                         this.dialog+='-' + loss + '원 ';
-                        this.dialog+='신뢰도 -2';   // 2번 떨어뜨릴지는 상의하기
                     },3500)
                 }else if(under>0){
                     this.dialog=under + '개 덜 판매했습니다. ';
                     this.dialog+='신뢰도 -2';
+                    this.relability-=2;
                 }else if(over>0){
                     this.dialog=over + '개 더 판매했습니다. ';
                     this.dialog+='-' + loss + '원 ';
                     this.dialog+='신뢰도 -2';
+                    this.relability-=2;
                 }
             }
             setTimeout(()=>{
@@ -191,6 +196,7 @@ export default {
                 }else{
                     this.dialog='손님이 화났습니다! ';
                     this.dialog+='신뢰도 -5';
+                    this.relability-=5;
                     if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
                             this.meetQuizMan=true;

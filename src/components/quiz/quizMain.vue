@@ -1,8 +1,14 @@
 <template>
     <div style="display:flex;">
-        <!-- 일단 프론트엔드만 만들어놓는 중 -->
-        <p class="balloon">{{ inputDialog }}</p>
-        <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
+        <div class="relability_bar">
+            <div class="bar_inside">
+                <p class="figure">{{ relability }}</p>
+                <div class="figure_bar" :style="`min-height:${4*relability}px`"></div>
+            </div>
+        </div>
+        <img class="relability" src="@/resources/relability.png" width="78px" height="70px">
+        <p class="balloon">{{ quizDialog }}</p>
+        <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px">
     </div>
 </template>
 <script>
@@ -21,7 +27,7 @@ export default {
         
         
         
-         this.$emit('quizTime');
+        this.$emit('quizTime');
 
 
         for(let i=0;i<this.quizDialog.length;i++){  
@@ -34,7 +40,7 @@ export default {
         }
 
     },
-    props:['quizNum','quizDialog'],
+    props:['quizNum','quizDialog','relability'],
     emit:['answer'],
 
 
@@ -67,5 +73,42 @@ export default {
         right:420px;
         top:85px;
         z-index:-1;
+    }
+    .relability_bar{
+        position:relative;
+        top:70px;
+        left:15px;
+        width:74px;
+        height:402px;
+        border:4px solid #FFFFFF;
+        border-radius:20px;
+        background-color:#FFFFFF;
+    }
+    .bar_inside{
+        display:flex;
+        flex-direction:column;
+        justify-content:flex-end;
+        width:60px;
+        height:394px;
+        border:3px solid #6F3533;
+        border-radius:20px;
+        background-color:#F9F8F2;
+        overflow:hidden;
+    }
+    .relability{
+        position:relative;
+        top:440px;
+        right:61px;
+    }
+    .figure{
+        font-size:20px;
+        margin:0;
+        text-align:center;
+    }
+    .figure_bar{
+        background-color:#E7C5B9;
+        border-width:3px 0;
+        border-style:solid;
+        border-color:#6F3533;
     }
 </style>
