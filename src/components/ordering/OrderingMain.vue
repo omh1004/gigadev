@@ -1,466 +1,347 @@
 <template>
-    <div class="game-container">
-    <!-- 상단 헤더 -->
-    <div class="header">
-      <div class="day-counter">
-        <div class="day-label">D-30</div>
-      </div>
-      <div class="money-display">
-        <div class="money-icon">원</div>
-        <div class="money-amount">500,000</div>
+  <div class="order-container">
+      <div class="header">
+      <div class="left-section">D-30</div>
+      <div class="right-section">
+        <div class="money-bag">
+          <span class="bag-icon">💰</span>
+          <span class="amount">500,00원</span>
+          <span class="settings-icon">⚙️</span>
+        </div>
       </div>
     </div>
 
-    <!-- 메인 콘텐츠 -->
-    <div class="main-content">
-      <!-- 왼쪽 농장 아이콘 -->
-      <div class="left-icon">
-        <img src="" alt="농장 아이콘" />
+    <div class="content">
+      <div class="back-button">
+        <span>◀</span>
       </div>
+      
+      <div class="order-section">
+        
+        <div class="product-table">
 
-      <!-- 메인 테이블 영역 -->
-      <div class="main-table-area">
-        <div class="table-header">
-          <span>밭주</span>
+          
+          <div class="product-row" v-for="product in products" :key="product.id">
+
+            <div class="product-cell">
+              <img :src="product.image" :alt="product.name" class="product-image" />
+              <div class="product-name">{{ product.name }}</div>
+            </div>
+            <div class="quantity-cell">
+              <button class="decrease-btn">−</button>
+              <span class="quantity">{{ product.quantity }}</span>
+              <button class="increase-btn">+</button>
+            </div>
+            <div class="price-cell">{{ product.price }}원</div>
+            <div class="stock-cell">{{ product.stock }}</div>
+          </div>
         </div>
+        
 
-        <table class="crop-table">
-          <thead>
-            <tr>
-              <th>본명</th>
-              <th>식물명</th>
-              <th>수량</th>
-              <th>판주 가격</th>
-              <th>보유 수량</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="crop-name">
-                <span>산삼 씨앗</span>
-              </td>
-              <td class="plant-cell">
-                <img src="" alt="산삼" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">1</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">
-                <span>2,000원</span>
-              </td>
-              <td class="owned-cell">0</td>
-            </tr>
-            <tr>
-              <td class="crop-name">
-                <span>루바 씨앗</span>
-              </td>
-              <td class="plant-cell">
-                <img src="" alt="루바" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">0</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">3,000원</td>
-              <td class="owned-cell">0</td>
-            </tr>
-            <tr>
-              <td class="crop-name">
-                <span>수박 씨앗</span>
-              </td>
-              <td class="plant-cell">
-                <img src="" alt="수박" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">0</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">3,500원</td>
-              <td class="owned-cell">0</td>
-            </tr>
-            <tr>
-              <td class="crop-name empty-cell"></td>
-              <td class="plant-cell">
-                <img src="" alt="파인애플" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">0</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">4,000원</td>
-              <td class="owned-cell">0</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-
-      <!-- 오른쪽 장바구니 영역 -->
-      <div class="cart-area">
-        <div class="cart-header">
-          <span>장바구니</span>
+      
+      <div class="cart-section">
+        <div class="section-title">장바구니</div>
+        
+        <div class="cart-item" v-for="(item, index) in cart" :key="index">
+          <div class="item-name">{{ item.name }} {{ item.quantity }}개</div>
+          <div class="item-price">{{ item.price }}원</div>
         </div>
-        <div class="cart-content">
-          <div class="cart-item">총 1개</div>
-          <div class="cart-total">총 2,000원</div>
-        </div>
-        <button class="purchase-button">
-          <span>밭사기</span>
-        </button>
+        
+        <button class="order-button">발주하기</button>
       </div>
-    </div>
-
-    <!-- 하단 푸터 -->
-    <div class="footer">
-      <span>밭주 3개: 0/50</span>
     </div>
   </div>
 </template>
+
 <script>
 export default {
-    name:'OrderingVue',
-    data() {
+  name: 'StoreOrderInterface',
+  data() {
     return {
-      day: 30,
       money: 500000,
-      crops: [
-        { id: 1, name: '산삼 씨앗', icon: '🌱', quantity: 1, price: 2000, owned: 0 },
-        { id: 2, name: '루바 씨앗', icon: '🍎', quantity: 0, price: 3000, owned: 0 },
-        { id: 3, name: '수박 씨앗', icon: '🍉', quantity: 0, price: 3500, owned: 0 },
-        { id: 4, name: '', icon: '🍍', quantity: 0, price: 4000, owned: 0 }
+      products: [
+        {
+          id: 1,
+          category: '신선 식품',
+          name: '딸기',
+          image: '@/assets/tutorial/fruit/strawberry.png',
+          quantity: 1,
+          price: 2000,
+          stock: 0
+        },
+        {
+          id: 2,
+          category: '즉석 식품',
+          name: '사과',
+          image: '@/assets/tutorial/fruit/strawberry.png',
+          quantity: 0,
+          price: 3000,
+          stock: 0
+        },
+        {
+          id: 3,
+          category: '전자 제품',
+          name: '양상추',
+          image: '@/assets/tutorial/fruit/fineapple.png',
+          quantity: 0,
+          price: 3500,
+          stock: 0
+        }
       ],
-      cartItems: 1,
-      cartTotal: 2000
+      cart: [
+        {
+          name: '딸기',
+          quantity: 1,
+          price: 2000
+        }
+      ]
     }
   },
   methods: {
-    increaseQuantity(crop) {
-      crop.quantity++;
-      this.updateCart();
-    },
-    decreaseQuantity(crop) {
-      if (crop.quantity > 0) {
-        crop.quantity--;
-        this.updateCart();
+    increaseQuantity(productId) {
+      const product = this.products.find(p => p.id === productId);
+      if (product) {
+        product.quantity++;
+        this.updateCart(product);
       }
     },
-    updateCart() {
-      this.cartItems = this.crops.reduce((sum, crop) => sum + crop.quantity, 0);
-      this.cartTotal = this.crops.reduce((sum, crop) => sum + (crop.price * crop.quantity), 0);
+    decreaseQuantity(productId) {
+      const product = this.products.find(p => p.id === productId);
+      if (product && product.quantity > 0) {
+        product.quantity--;
+        this.updateCart(product);
+      }
+    },
+    updateCart(product) {
+      const cartItem = this.cart.find(item => item.name === product.name);
+      if (product.quantity > 0) {
+        if (cartItem) {
+          cartItem.quantity = product.quantity;
+        } else {
+          this.cart.push({
+            name: product.name,
+            quantity: product.quantity,
+            price: product.price * product.quantity
+          });
+        }
+      } else if (cartItem) {
+        const index = this.cart.indexOf(cartItem);
+        this.cart.splice(index, 1);
+      }
+    },
+    submitOrder() {
+      // Order submission logic
     }
   }
 }
 </script>
-<style>
-    .game-container {
-  width: 700px;
-  border: 3px solid #c0a080;
-  border-radius: 15px;
-  background-color: #fff8e1;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  font-family: 'Arial', sans-serif;
+
+<style scoped>
+.order-container {
+  font-family: RecipekoreaOTF;
+font-size: 20px;
+margin-top: 50px;
+background-color: #f5f5f5;
+
+text-align: center;
+max-width: 100%;
+min-height: 90vh;
+
+background-image: url('@/assets/common/homeMain.png');
+background-size:cover;
+
+display: flex;
+flex-direction: column;
+justify-content: center; 
+align-items: center; 
+
 }
 
-/* 헤더 스타일 */
+
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 0 10px;
-}
-
-.day-counter {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-radius: 15px;
-  padding: 5px 15px;
-  position: relative;
-  border: 1px solid #ddd;
-}
-
-.day-label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.notification-icon {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  position: absolute;
-  top: -8px;
-  right: -8px;
+  padding: 8px 16px;
+  margin-bottom: 100px;
+  margin-top:50px;
+  border: 2px solid #8B4513;
+  border-radius: 24px;
+  min-width: 90vw;
+  
 }
 
 .money-display {
   display: flex;
   align-items: center;
-  background-color: #5a3921;
+  gap: 5px;
+  background-color: #5d4037;
   color: white;
-  border-radius: 15px;
-  padding: 5px 15px;
+  padding: 8px 15px;
+  border-radius: 20px;
 }
 
-.money-icon {
-  margin-right: 5px;
-  font-weight: bold;
-}
-
-/* 메인 콘텐츠 스타일 */
-.main-content {
+.content {
   display: flex;
-  margin-bottom: 10px;
-}
-
-.left-icon {
-  width: 50px;
   position: relative;
-  margin-right: 10px;
 }
 
-.icon-circle {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
+.back-button {
   position: absolute;
-  top: -8px;
-  left: -8px;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6a3e14;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-/* 테이블 영역 스타일 */
-.main-table-area {
-  flex: 1;
-  margin-right: 10px;
+.order-section {
+  flex: 3;
+min-width:50vw;
+min-height: 50vh;
+background-image: url('@/assets/storage/ordering.png');
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.product-table {
+  margin-top: 60px;
+  /* margin-right: 150px; */
+  margin-left:150px;
+  /* background-color: #fff8e1; */
+  border-radius: 10px;
+  overflow: hidden;
+  /* border: 2px solid #6a3e14; */
 }
 
 .table-header {
-  position: relative;
+  display: flex;
+  background-color: #f0e4ca;
+  padding: 10px 0;
+}
+
+.header-cell {
+  flex: 1;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
-.header-circle {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
+.product-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  position: absolute;
-  top: -8px;
-  left: -8px;
-}
-
-.crop-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.crop-table th, .crop-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px 0;
+  width:130px;
   text-align: center;
-  background-color: white;
 }
 
-.crop-table th {
-  background-color: #f0f0f0;
-  font-weight: normal;
-}
-
-.crop-name {
-  position: relative;
-  text-align: left;
-  background-color: #fff8e1 !important;
-}
-
-.crop-circle {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
+.category-cell {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  display: inline-block;
-  margin-right: 5px;
+  font-weight: bold;
+  
+  width:150px;
+}
+
+.fresh {
+  background-color: #5d4037;
+  color: white;
+}
+
+.product-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width:130px;
+  
+  
+}
+
+.product-image {
+  width: 40px;
+  height: 40px;
 }
 
 .quantity-cell {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-width:130px;
 }
 
 .decrease-btn, .increase-btn {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-  border: 1px solid #ddd;
-  background-color: #f5f5f5;
+  border: 1px solid #aaa;
+  background-color: white;
   cursor: pointer;
+}
+
+.price-cell, .stock-cell {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+
+
+  min-width:130px;
 }
 
-.quantity-value {
-  margin: 0 5px;
+.storage-info {
+  text-align: right;
+  padding: 10px;
+  font-size: 14px;
 }
 
-.price-cell {
-  position: relative;
-}
-
-.price-circle {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  position: absolute;
-  top: -8px;
-  left: -8px;
-}
-
-.empty-cell {
-  background-color: #fff8e1 !important;
-}
-
-/* 장바구니 영역 스타일 */
-.cart-area {
-  width: 150px;
+.cart-section {
+  flex: 1;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
+  min-width: 20vw;
 }
 
-.cart-header {
-  position: relative;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.cart-circle {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  position: absolute;
-  top: -8px;
-  left: -8px;
-}
-
-.cart-content {
+.cart-item {
   background-color: white;
-  border: 1px solid #ddd;
-  padding: 10px;
-  flex: 1;
   border-radius: 5px;
+  padding: 10px;
   margin-bottom: 10px;
-  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.cart-total {
-  margin-top: 60px;
-  text-align: right;
-}
-
-.purchase-button {
-  position: relative;
-  background-color: #f8d56f;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  padding: 8px 15px;
-  cursor: pointer;
+.order-button {
+  margin-top: auto;
+  background-color: #f0e4ca;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
   font-weight: bold;
-  color: #5a3921;
+  cursor: pointer;
 }
 
-.button-circle {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  position: absolute;
-  top: -8px;
-  left: -8px;
-}
-
-/* 푸터 스타일 */
-.footer {
-  position: relative;
-  text-align: center;
-}
-
-.footer-circle {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  position: absolute;
-  top: -8px;
-  left: 45%;
-}
-
-/* 반응형 스타일 */
-@media (max-width: 700px) {
-  .game-container {
-    width: 100%;
-  }
-  
-  .main-content {
-    flex-direction: column;
-  }
-  
-  .cart-area {
-    width: 100%;
-    margin-top: 20px;
-  }
+.order-button:hover {
+  background-color: #e6d9bd;
 }
 </style>

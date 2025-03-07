@@ -4,7 +4,7 @@
     <div class="skip-button" @click="movePage">
       <img src="@/assets/tutorial/button/skip.png">
     </div>
-    
+
     <div id="bankman">
       <img src="@/assets/tutorial/people/bankmember.png">
     </div>
@@ -57,7 +57,6 @@ export default {
 
     font-family: RecipekoreaOTF;
   font-size: 24px;
-  margin-top: 50px;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -89,9 +88,8 @@ export default {
 
 .skip-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
+  top: 100px;
+  right: 30px;
   padding: 4px 12px;
   border-radius: 16px;
   font-size: 16px;
@@ -100,8 +98,8 @@ export default {
 }
 
 .dialog-box {
-  
-  margin-top: 200px;
+  z-index: 1;
+  margin-top: -20px;
   width: 70%;
   background-color: #F2F1EC;
   border-radius: 24px;
@@ -109,7 +107,7 @@ export default {
   margin-bottom: 20px;
   min-height: 150px;
   display: flex;
-  
+
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
