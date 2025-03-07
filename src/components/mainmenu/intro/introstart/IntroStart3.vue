@@ -2,7 +2,7 @@
   <div class="main-container">
     
     <div class="skip-button" @click="movePage">
-      SKIP >>|
+      <img src="@/assets/tutorial/button/skip.png">
     </div>
     
     <div id="bankman">

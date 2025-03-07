@@ -2,7 +2,7 @@
   <div class="main-container">
     
     <div class="skip-button">
-      SKIP >>|
+      <img src="@/assets/tutorial/button/skip.png">
     </div>
     
     
@@ -77,12 +77,8 @@ export default {
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
+  
   padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #5d2906;
 }
 
 .dialog-box {
