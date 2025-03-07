@@ -2,14 +2,15 @@
     <div class="game-container">
     <!-- 상단 헤더 -->
     <div class="header">
-      <div class="day-counter">
-        <div class="day-label">D-30</div>
+        <div class="left-section">D-30</div>
+        <div class="right-section">
+          <div class="money-bag">
+            <span class="bag-icon">💰</span>
+            <span class="amount">500,000원</span>
+          </div>
+          <div class="settings-icon">⚙️</div>
+        </div>
       </div>
-      <div class="money-display">
-        <div class="money-icon">원</div>
-        <div class="money-amount">500,000</div>
-      </div>
-    </div>
 
     <!-- 메인 콘텐츠 -->
     <div class="main-content">
@@ -83,12 +84,18 @@ export default {
 
 /* 헤더 스타일 */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 0 10px;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    margin-bottom: 100px;
+    border: 3px solid #8B4513;
+    border-radius: 9999px;
+    min-width: 90vw;
+    margin-top: 30px;
+    height: 40px;
+  }
+  
 
 .day-counter {
   display: flex;
