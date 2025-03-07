@@ -1,13 +1,16 @@
 <template>
     <div class="conv">
         <div class="categorybutton">
-            <p @click="getcategory('all')">전체</p>
-            <p @click="getcategory('a')">신선식품</p>
-            <p @click="getcategory('b')">즉석식품</p>
-            <p @click="getcategory('c')">전자제품</p>
+            <p @click="getcategory($event,'all')">전체</p>
+            <div></div>
+            <p @click="getcategory($event,'a')">신선식품</p>
+            <div></div>
+            <p @click="getcategory($event,'b')">즉석식품</p>
+            <div></div>
+            <p @click="getcategory($event,'c')">전자제품</p>
         </div>
         <div class="category">
-            <p style="text-align:center;">전체 {{ product.length }} / 50</p>
+            <p style="text-align:center;">{{ categ }} {{ getproduct.length }} / 50</p>
         </div>
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
@@ -80,6 +83,7 @@ export default {
             getproduct:[],
             modal:false,
             target:{},
+            categ:'전체',
         }
     },
     methods:{
@@ -104,16 +108,21 @@ export default {
                 this.$emit('moveprod','cart',this.countertarget.id);
             }
         },
-        getcategory(category){
+        getcategory(e,category){
             this.getproduct=[];
+            this.categ = e.target.innerText;
             if(category!='all'){
                 this.product.forEach(p=>{
-                    if(p.type==category){
+                    if(p.type==category && p.amount>0){
                         this.getproduct.push(p);
                     }
                 });
             }else{
-                this.getproduct=this.product;
+                this.product.forEach(p=>{
+                    if(p.amount>0){
+                        this.getproduct.push(p);
+                    }
+                })
             }
         },
     },
@@ -144,6 +153,15 @@ export default {
         height:144px;
         background-color:#FFEFCA;
     }
+    .categorybutton p{
+        font-size:34px;
+        margin:0 35px;
+    }
+    .categorybutton div{
+        width:7px;
+        height:74px;
+        background-color:#4C1B0B;
+    }
     .category{
         display:flex;
         justify-content:center;
@@ -155,10 +173,11 @@ export default {
     }
     .product-container{
         width:100%;
-        height:100%;
+        height:80%;
         overflow-y:auto;
         flex-wrap:wrap;
         background-color:#4C1B0B;
+        scrollbar-color:#FFEFCA #4C1B0B;    /* 브라우저에 따라 적용 안됨 🤔 */
     }
     #prodzone>div{
         display:inline-block;
@@ -168,7 +187,7 @@ export default {
         min-height:190px;
         background-color:white;
         border-radius:30px;
-        margin:10px 14px;
+        margin:10px 13px;
     }
     .amount{
         width:100%;
@@ -185,8 +204,8 @@ export default {
         align-items:center;
         position:relative;
         width:100%;
-        height:100%;
-        bottom:100%;
+        height:105%;
+        bottom:105%;
         background-color:rgba(256,256,256,0.5);
     }
     .modalwin{

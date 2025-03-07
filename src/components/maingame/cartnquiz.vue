@@ -33,7 +33,7 @@ export default {
     methods:{
         result(ans){
             clearInterval(this.interval);
-            this.$emit('notclick',nc);
+            this.$emit('notclick',true);
             if(quizAnswer[this.quizNum]==ans){
                 this.quizDialog='정답입니다.';
                 // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
@@ -54,7 +54,12 @@ export default {
                 },3500);
             }
             setTimeout(()=>{
-                this.$router.push('/maingame/'+this.customerCount);
+                this.$emit('notclick',false);
+                if(this.customerCount>=10){
+                    this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                }else{
+                    this.$router.push('/maingame/'+ ++this.customerCount);
+                }
             },7000);
         },
         quizTime(){
@@ -154,8 +159,14 @@ export default {
             }
             setTimeout(()=>{
                 this.$emit('notclick',false);
-                this.$router.push('/maingame/'+ ++this.customerCount);
-                this.customer();
+                if((this.customerCount+1)==this.quizMan){
+                    this.$router.push('/maingame/quiz');
+                }else if(this.customerCount>=10){
+                    this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                }else{
+                    this.$router.push('/maingame/'+ ++this.customerCount);
+                    this.customer();
+                }
             },3500+timeout);
         }
     },
@@ -164,21 +175,25 @@ export default {
             if(curVal<=0){
                 clearInterval(this.interval);
                 this.$emit('notclick',true);
-                if((this.customerCount+1)==this.quizMan && !this.meetQuizMan){
-                    this.meetQuizMan=true;
+                if((this.customerCount+1)==this.quizMan && this.meetQuizMan){
                     this.quizDialog='시간을 초과하였습니다.';
                     setTimeout(()=>{
                         this.quizDialog=quizComment[this.quizNum];
                     },3500);
                     setTimeout(()=>{
-                        this.$emit('yesclick',false);
-                        this.$router.push('/maingame/'+ ++this.customerCount);
+                        this.$emit('notclick',false);
+                        if(this.customerCount>=10){
+                            this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                        }else{
+                            this.$router.push('/maingame/'+ ++this.customerCount);
+                        }
                     },7000);
                 }else{
                     this.dialog='손님이 화났습니다! ';
                     this.dialog+='신뢰도 -5';
                     if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
+                            this.meetQuizMan=true;
                             this.$emit('rollback');
                             this.$emit('notclick',false);
                             this.$router.push('/maingame/quiz');
@@ -187,8 +202,12 @@ export default {
                         setTimeout(()=>{
                             this.$emit('rollback');
                             this.$emit('notclick',false);
-                            this.$router.push('/maingame/'+ ++this.customerCount);
-                            this.customer();
+                            if(this.customerCount>=10){
+                                this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                            }else{
+                                this.$router.push('/maingame/'+ ++this.customerCount);
+                                this.customer();
+                            }
                         },3500);
                     }
                 }
