@@ -68,31 +68,26 @@
     height: 100vh;
     position: relative;
     overflow: hidden;
-    
+    background-repeat: no-repeat;
+    font-family: RecipekoreaOTF;
+    font-size: 24px;
+    background-color: #f5f5f5;
+  
+    text-align: center;
+    max-width: 100%;
+    min-height: 90%;
+
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+
+
+
     background-repeat: no-repeat;
 
-
-    font-family: RecipekoreaOTF;
-  font-size: 24px;
-  margin-top: 50px;
-  background-color: #f5f5f5;
-  
-  text-align: center;
-  max-width: 100%;
-  min-height: 90%;
-
-  background-size: cover;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
-
-
-
-  background-repeat: no-repeat;
-
-  background-image: url('@/assets/common/homeMenu.png');
+    background-image: url('@/resources/whiteimg.png');
  
 
 
@@ -129,10 +124,11 @@
     align-items: center;
     padding: 8px 16px;
     margin-bottom: 100px;
-    border: 2px solid #8B4513;
-    border-radius: 24px;
+    border: 3px solid #8B4513;
+    border-radius: 9999px;
     min-width: 90vw;
-    
+    margin-top: 30px;
+    height: 40px;
   }
   
   .left-section {
@@ -155,9 +151,15 @@
     background-color: #5D2906;
     color: white;
     padding: 8px 16px;
-    border-radius: 16px;
+    border-radius: 9999px;
+    gap:50px;
+    height: 27px;
   }
   
+.money-bag {
+  font-size: 20px;
+}
+
   .bag-icon {
     margin-right: 8px;
   }
@@ -186,23 +188,24 @@
   }
   
   .menu-container {
+    width: 80%;
     display: flex;
-    justify-content: space-around;
-    margin-top: 60px;
-    margin-bottom: 150px;
+    justify-content: space-between;
+    margin-top: 90px;
+    margin-bottom: 200px;
   }
   
   .button-text > img{
     width: 300px;
-    height: 80px;
+    height: 120px;
     /* background-color: #FFF8DC;
     border: 2px solid #8B4513; */
     border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 100px;
-    margin-bottom: 30px;
+    margin: 0 auto;
+   
   }
   
   .button-text {
@@ -217,13 +220,13 @@
   }
   
   .open-button {
-    width: 180px;
-    height: 60px;
+    width: 200px;
+    height: 70px;
     background-image: url('@/assets/tutorial/button/openbutton.png');
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     
-    /* border: none; */
-    /* border-radius: 16px; */
+    border: none;
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
