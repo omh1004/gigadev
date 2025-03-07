@@ -1,10 +1,9 @@
 <template>
     <div class="conv">
-        <img src="">
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     @quizTime="quizTime" @customer="customer"></RouterView>
-        <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" @result="result"
-                    @dragstart_cart="dragstart_cart" @dragover_cart="dragover_cart" @drop_cart="drop_cart"></RouterView>
+        <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart"
+                    @result="result" @revertprod="revertprod"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
         <!-- <QuizChoice v-show="quiz" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"/> -->
     </div>
@@ -59,15 +58,8 @@ export default {
         customer(){
             this.$emit('customer');
         },
-        dragstart_cart(ev){
-            this.$emit('dragstart_cart',ev);
-        },
-        dragover_cart(ev){
-            this.$emit('dragover_cart',ev);
-        },
-        drop_cart(ev){
-            console.log("여기까지 옴?");
-            this.$emit('drop_cart',ev);
+        revertprod(m,t){
+            this.$emit('revertprod',m,t);
         },
     },
     watch:{
@@ -98,6 +90,10 @@ export default {
                     }
                 }
             }
+        },
+        revertprod(modal,target){
+            console.log("2!");
+            this.$emit('revertprod',modal,target);
         }
     },
     components:{
@@ -107,9 +103,6 @@ export default {
 }
 </script>
 <style scoped>
-    div{
-        border:1px solid black;
-    }
     .conv{
         width:1000px;
         height:892px;
