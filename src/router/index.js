@@ -97,11 +97,7 @@ const router = createRouter({
       name: 'mainmenu',
       component: MainmenuComponent,
     },
-    {
-      path: '/introStart'
-      ,name:'introStart'
-      ,component:IntroStartComponent
-    },
+
     {
       path:'/linkOrderingTutorial'
       ,name:'linkOrderingTutorial'
