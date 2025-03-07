@@ -102,10 +102,23 @@ export default {
 </script>
 <style>
   .inventory-container {
-    width: 100%;
-    max-width: 670px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
+    font-family: RecipekoreaOTF;
+  font-size: 20px;
+  margin-top: 50px;
+  background-color: #f5f5f5;
+  
+  text-align: center;
+  max-width: 100%;
+  min-height: 90vh;
+
+  background-image: url('@/assets/common/homeMain.png');
+  background-size:cover;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+
   }
 
   .inventory-card {
