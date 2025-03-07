@@ -17,21 +17,12 @@
         </div>
         
         <div class="order-section">
-          <div class="section-title">발주</div>
           
           <div class="product-table">
-            <div class="table-header">
-              <div class="header-cell">분류</div>
-              <div class="header-cell">상품명</div>
-              <div class="header-cell">수량</div>
-              <div class="header-cell">발주 가격</div>
-              <div class="header-cell">보유 수량</div>
-            </div>
+
             
             <div class="product-row" v-for="product in products" :key="product.id">
-              <div class="category-cell" :class="{ 'fresh': product.category === '신선 식품' }">
-                {{ product.category }}
-              </div>
+
               <div class="product-cell">
                 <img :src="product.image" :alt="product.name" class="product-image" />
                 <div class="product-name">{{ product.name }}</div>
@@ -46,9 +37,7 @@
             </div>
           </div>
           
-          <div class="storage-info">
-            총 창고 개수: 0/50
-          </div>
+
         </div>
         
         <div class="cart-section">
@@ -211,9 +200,12 @@
   
   .order-section {
     flex: 3;
-    padding: 0 40px;
-    min-width:60vw;
-    min-height: 50vh;
+  min-width:50vw;
+  min-height: 50vh;
+  background-image: url('@/assets/storage/ordering.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  
   }
   
   .section-title {
@@ -224,10 +216,13 @@
   }
   
   .product-table {
-    background-color: #fff8e1;
+    margin-top: 60px;
+    /* margin-right: 150px; */
+    margin-left:150px;
+    /* background-color: #fff8e1; */
     border-radius: 10px;
     overflow: hidden;
-    border: 2px solid #6a3e14;
+    /* border: 2px solid #6a3e14; */
   }
   
   .table-header {
@@ -244,8 +239,9 @@
   
   .product-row {
     display: flex;
-    border-top: 1px solid #e0d6be;
     padding: 10px 0;
+    width:130px;
+    text-align: center;
   }
   
   .category-cell {
@@ -254,6 +250,8 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    
+    width:150px;
   }
   
   .fresh {
@@ -266,7 +264,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    min-width:130px;
+    
+    
   }
   
   .product-image {
@@ -280,6 +282,8 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+
+    min-width:130px;
   }
   
   .decrease-btn, .increase-btn {
@@ -296,6 +300,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+
+    min-width:130px;
   }
   
   .storage-info {
