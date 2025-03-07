@@ -7,8 +7,8 @@
           <div class="money-bag">
             <span class="bag-icon">💰</span>
             <span class="amount">500,00원</span>
-            <span class="settings-icon">⚙️</span>
           </div>
+          <span class="settings-icon">⚙️</span>
         </div>
       </div>
       
@@ -162,7 +162,6 @@
 
     font-family: RecipekoreaOTF;
   font-size: 24px;
-  margin-top: 50px;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -181,7 +180,7 @@
   
 
 
-  background-image: url('@/assets/common/homeMain.png');
+  background-image: url('@/resources/whiteimg.png');
 
   }
   
@@ -190,12 +189,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    margin-bottom: 100px;
-    margin-top:50px;
-    border: 2px solid #8B4513;
-    border-radius: 24px;
+    margin-bottom: 20px;
+    border: 3px solid #8B4513;
+    border-radius: 9999px;
     min-width: 90vw;
-    
+    margin-top: 30px;
+    height: 40px;
   }
 
   
@@ -209,6 +208,11 @@
     align-items: center;
     gap: 12px;
   }
+  .left-section {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+  }
   
   .money-display {
     background-color: #5d2906;
@@ -219,16 +223,31 @@
     align-items: center;
     gap: 8px;
   }
-  
-  .money-icon {
-    font-size: 16px;
+  .money-bag {
+  font-size: 20px;
+}
+
+  .bag-icon {
+    margin-right: 8px;
   }
   
   .settings-icon {
-    font-size: 20px;
+    font-size: 24px;
+  }
+  .money-bag {
+    display: flex;
+    align-items: center;
+    background-color: #5D2906;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    gap:50px;
+    height: 27px;
+    width: 180px;
   }
   
   .navigation {
+    width: 90%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -277,16 +296,18 @@
   }
   
   .tab-container {
-    border: 2px solid #8b4513;
+    width: 800px;
+    border: 4px solid #6F3533;
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 20px;
-    background-color: white;
+    background-color: #EAE5DE;
   }
   
   .tab-menu {
     display: flex;
     background-color: #fff3d4;
+    border-bottom:4px solid #6F3533;
   }
   
   .tab-item {
@@ -327,7 +348,6 @@
   .item {
     width: 80px;
     height: 100px;
-    background-color: #fff3d4;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
