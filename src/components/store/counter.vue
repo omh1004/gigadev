@@ -1,39 +1,33 @@
 <template>
     <div class="counter" style="display:flex;padding-top:15px;min-width:90%;">
-        <div id="cartzone" style="width:735px;display:flex;overflow-x:auto;" @dragover="dragover_handler" @drop="drop_handler">
+        <div id="cartzone" style="width:735px;display:flex;overflow-x:auto;">
             <!-- 카트의 상품 나열 -->
-            <div v-for="c in cart" v-show="c.amount>0">
-                <img :src="`${c.src}`" alt="상품" height="50%"
-                    draggable @dragstart="dragstart_handler" :id="`cart${c.id}`" :name="c.name"><br>
-                    <div class="amount">
-                        <p>{{ c.amount }}</p>
-                    </div>
-                    <div class="sell">
-                        <input type="number" v-model.number="c.sell">
-                    </div>
+            <div v-for="c in cart" v-show="c.amount>0" @click="revertprod($event)">
+                <img class="cart" :src="`${c.src}`" alt="상품" height="50%" :id="`cart${c.id}`" :name="c.name"><br>
                 <p style="margin-top:15px;">{{ c.name }}</p>
             </div>
         </div>
         <div style="width:265px">
-            <img class="counter_cal" src="@/resources/quiz_counter.png" @click="submit">
+            <img class="counter_cal" src="@/resources/counter.png" @click="submit">
         </div>
     </div>
 </template>
 <script>
 export default {
     methods:{
-        dragstart_handler(ev){
-            this.$emit('dragstart_cart',ev);
-        },
-        dragover_handler(ev){
-            ev.preventDefault();
-            console.log(ev.dataTransfer);
-            this.$emit('dragover_cart',ev);
-        },
-        drop_handler(ev){
-            ev.preventDefault();
-            console.log("어디까지 가지?");
-            this.$emit('drop_cart',ev);
+        revertprod(e){
+            let prod;
+            if(e.target.className=='cart'){
+                prod=e.target;
+            }else if(e.target.parentElement.className=='cart'){
+                prod=e.target.parentElement;
+            }
+
+            if(prod!=null){
+                const target=this.cart.find(c=>("cart"+c.id)==prod.id);
+                console.log("1!");
+                this.$emit('revertprod',true,target);
+            }
         },
         submit(){
             
@@ -74,5 +68,49 @@ export default {
     }
     .amount *, .sell *{
         width:100%;
+    }
+    .blind{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        position:relative;
+        width:100%;
+        height:100%;
+        bottom:100%;
+        background-color:rgba(256,256,256,0.5);
+    }
+    .modalwin{
+        width:655px;
+        height:365px;
+        background-image:url("/src/resources/prodmodal.png");
+        background-size:100% 100%;
+        border-radius:30px;
+        overflow:hidden;
+    }
+    .modaltop{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:655px;
+        height:57px;
+        background-color:#5E395A;
+        margin-top:5px;
+    }
+    .modaltop p{
+        width:85%;
+        text-align:center;
+    }
+    .modalcontent{
+        display:flex;
+        height:220px;
+        justify-content:space-around;
+        align-items:center;
+    }
+    .okbutton{
+        background-image:url('/src/resources/ok.png');
+        width:181px;
+        height:59px;
+        background-color:rgba(0,0,0,0);
+        border:0;
     }
 </style>
