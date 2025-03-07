@@ -7,12 +7,11 @@
 
         </div>
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
-        <div id="prodzone" class="product-container" @dragover="dragover_handler" @drop="drop_handler">
+        <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
-            <div class="product" v-for="p in product" v-show="p.amount>0">
+            <div class="product" :id="`prod${p.id}`" v-for="p in product" v-show="p.amount>0" @click="sellprod($event)">
                 <!-- draggable로 드래그 가능, dragstart 이벤트가 필요. -->
-                <img :src="`${p.src}`" alt="상품" height="50%"
-                    draggable @dragstart="dragstart_handler" :id="`prod${p.id}`" :name="p.name"><br>
+                <img :src="`${p.src}`" alt="상품" height="50%" :name="p.name"><br>
                 <div class="amount">
                     <p>{{ p.amount }}</p>
                 </div>
@@ -22,24 +21,33 @@
                 <p style="margin-top:15px;">{{ p.name }}</p>
             </div>
         </div>
+        <div v-show="modal" class="blind">
+            <div class="modalwin"></div>
+        </div>
     </div>
 </template>
 <script>
 export default {
+    data(){
+        return{
+            modal:false,
+            target:{},
+        }
+    },
     methods:{
-        dragstart_handler(ev){
-            this.$emit('dragstart_prod',ev);
-        },
-        dragover_handler(ev){
-            ev.preventDefault();
-            console.log(ev.dataTransfer);
-            this.$emit('dragover_prod',ev);
-        },
-        drop_handler(ev){
-            ev.preventDefault();
-            console.log("어디까지 가지?");
-            this.$emit('drop_prod',ev);
-        },
+        sellprod(e){
+            let prod;
+            if(e.target.className=='product'){
+                prod=e.target;
+            }else if(e.target.parentElement.className=='product'){
+                prod=e.target.parentElement;
+            }
+            
+            if(prod!=null){
+                this.modal=true;
+                this.target=this.product.find(p=>("prod"+p.id)==prod.id);
+            }
+        }
     },
     props:['product']
 }
@@ -88,5 +96,19 @@ export default {
     }
     .amount *, .sell *{
         width:100%;
+    }
+    .blind{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        position:relative;
+        width:100%;
+        height:100%;
+        bottom:100%;
+        background-color:rgba(256,256,256,0.5);
+    }
+    .modalwin{
+        width:655px;
+        height:308px;
     }
 </style>

@@ -1,10 +1,9 @@
 <template>
     <div class="counter" style="display:flex;padding-top:15px;min-width:90%;">
-        <div id="cartzone" style="width:735px;display:flex;overflow-x:auto;" @dragover="dragover_handler" @drop="drop_handler">
+        <div id="cartzone" style="width:735px;display:flex;overflow-x:auto;">
             <!-- 카트의 상품 나열 -->
-            <div v-for="c in cart" v-show="c.amount>0">
-                <img :src="`${c.src}`" alt="상품" height="50%"
-                    draggable @dragstart="dragstart_handler" :id="`cart${c.id}`" :name="c.name"><br>
+            <div v-for="c in cart" v-show="c.amount>0" @class="revertprod">
+                <img class="cart" :src="`${c.src}`" alt="상품" height="50%" :id="`cart${c.id}`" :name="c.name"><br>
                     <div class="amount">
                         <p>{{ c.amount }}</p>
                     </div>
@@ -22,18 +21,11 @@
 <script>
 export default {
     methods:{
-        dragstart_handler(ev){
-            this.$emit('dragstart_cart',ev);
-        },
-        dragover_handler(ev){
-            ev.preventDefault();
-            console.log(ev.dataTransfer);
-            this.$emit('dragover_cart',ev);
-        },
-        drop_handler(ev){
-            ev.preventDefault();
-            console.log("어디까지 가지?");
-            this.$emit('drop_cart',ev);
+        revertprod(){
+            let prod;
+            if(e.target.className=='cart'){
+                prod=e.target;
+            }
         },
         submit(){
             
