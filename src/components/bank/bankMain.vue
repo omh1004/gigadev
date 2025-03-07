@@ -21,32 +21,43 @@
 
       <!-- ✅ 대출 신청 화면 (대출 버튼 클릭 시) -->
       <div class="loan-apply" v-if="activeTab === 'loan'">
-        <h2 cla>중간 운영 대출</h2>
-        <hr>
-        <p>대출 가능 금액: {{ formattedLimit }}</p>
+        <h2 style="top: 10%;">중간 운영 대출</h2>
+        <hr class="loan-divider" style="border: 3px solid #481B0B">  <!-- ✅ 선 추가 -->
+        
+
+         <!-- ✅ 대출 최대 한도 -->
+      <div class="loan-info">
+        <span class="loan-label">대출 최대 한도</span>
+        <span class="loan-value">{{ formattedLimit }}</span>
+      </div>
+
       
 
- <!-- ✅ 대출 받을 금액 입력란 (정렬 개선) -->
-<div class="loan-input-container">
-  <label class="loan-label">대출 받을 금액</label>
-  <div class="loan-input-wrapper">
-    <input 
-      class="loan-input"
-      v-model="loanAmount" 
-      type="number" 
-      placeholder="금액 입력"
-      @input="validateInput"
-    />
-    <span class="currency">원</span>
-    <button class="info-btn" @mouseover="showHelp = true" @mouseleave="showHelp = false">?</button>
-  </div>
-  <p v-if="showHelp" class="loan-guide">대출 받을 금액을 입력하세요. 100원 단위부터 가능!</p>
-</div>
+    <!-- ✅ 대출 받을 금액 입력란 (정렬 개선) -->
+    <div class="loan-input-container loan-info">
+      <label class="loan-label">대출 받을 금액</label>
+      <div class="loan-input-wrapper">
+        <input 
+          class="loan-input"
+          v-model="loanAmount" 
+          type="number" 
+          placeholder="금액 입력"
+          @input="validateInput"
+        />
+        <span class="currency">원</span>
+        <button class="info-btn" @mouseover="showHelp = true" @mouseleave="showHelp = false">?</button>
+      </div>
+
+      <!-- ✅ 안내 문구 -->
+      <p v-if="showHelp" class="loan-guide">대출 받을 금액을 입력하세요. <br> 100원 단위부터 가능!</p>
+    </div>
 
 
 
-        <!-- 대출하기 버튼 -->
+      <!-- ✅ 대출하기 버튼 컨테이너 추가 -->
+      <div class="loan-button-container">
         <button class="loan-btn1" @click="applyLoan"></button>
+      </div>
 
 
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
@@ -195,11 +206,13 @@ export default {
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  margin-top: 50px; /* 기존보다 아래로 내리기 */
 }
 
 .loan-apply h2 {
   font-size: 24px;
   font-weight: bold;
+  
 }
 
 .loan-apply button:hover {
@@ -347,7 +360,17 @@ background-color: #EBE5DD; /* 연한 회색 */
 .loan-apply h2 {
   font-size: 24px;
   font-weight: bold;
+  margin-bottom: 15px; /* 아래 간격 조정 */
 }
+
+/* hr 선 위치 조정 */
+.loan-divider {
+  border: 2px solid #481B0B;
+  margin-top: 15px; /* 상단 여백 추가 */
+  margin-bottom: 30px; /* 아래 여백 추가 */
+  width: 100%;
+}
+
 
 /* .loan-apply input {
   width: 100%;
@@ -486,13 +509,12 @@ button.loan-btn1 {
 }
 
 
-
 /* ✅ 입력 필드 및 버튼 정렬 */
 .loan-input-container {
   display: flex;
-  flex-direction: column;  /* 세로 정렬 */
-  align-items: flex-start; /* 왼쪽 정렬 */
-  gap: 8px;
+  flex-direction: row;  /* 세로 정렬 */
+  align-items: center; /* 왼쪽 정렬 */
+  gap: 10px;
   margin-bottom: 15px;
 }
 
@@ -516,13 +538,24 @@ button.loan-btn1 {
 
 /* 대출 */
 
-/* ✅ 대출 정보 스타일 */
+/* 대출 최대 한도와 금액 정렬 */
 .loan-info {
   display: flex;
+  align-items: center; /* 수직 정렬 */
   justify-content: space-between;
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 50px; /* 아래 여백 줄이기 */
+  margin: 0px 60px 90px;
+  gap: 20px; /* 라벨과 금액 사이 간격 줄이기 */
+}
+
+/* 대출 받을 금액 정렬 */
+.loan-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px; /* 입력창과 "대출 받을 금액" 사이 간격 조정 */
 }
 
 
@@ -558,8 +591,8 @@ button.loan-btn1 {
 /* ✅ 도움말 말풍선 스타일 */
 .loan-guide {
   position: absolute;
-  top: 35%;
-  left: 50%;
+  top: 27%;
+  left: 80%;
   transform: translateX(-50%);
   background: #F9F8F2;
   padding: 5px 10px;
@@ -567,6 +600,52 @@ button.loan-btn1 {
   border-radius: 5px;
   font-size: 14px;
   white-space: nowrap;
+}
+
+/* "중간 운영 대출" 제목 조정 */
+.loan-apply h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: -50px; /* 기존보다 위쪽으로 이동 */
+  text-align: left;
+}
+
+
+
+/* ✅ 대출 입력 필드 및 단위 정렬 */
+.loan-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ✅ 대출 입력 필드 스타일 */
+.loan-input {
+  width: 150px;
+  padding: 8px;
+  border: 1px solid #A68A64;
+  border-radius: 5px;
+  text-align: right;
+  font-size: 18px;
+}
+
+/* ✅ 대출 안내 문구 */
+.loan-guide {
+  font-size: 14px;
+  color: #481B0B;
+  background: #F9F8F2;
+  border: 1px solid #A68A64;
+  border-radius: 8px;
+  padding: 5px 10px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+
+.loan-button-container {
+  display: flex;
+  justify-content: flex-end; /* ✅ 버튼을 오른쪽으로 정렬 */
+  margin-top: 20px; /* 버튼과 위 요소 간격 조정 */
 }
 
 
