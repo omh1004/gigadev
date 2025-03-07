@@ -1,7 +1,7 @@
 <template>
     <div style="display:flex;">
         <!-- 일단 프론트엔드만 만들어놓는 중 -->
-        <p class="balloon">{{ quizDialog }}</p>
+        <p class="balloon">{{ inputDialog }}</p>
         <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
     </div>
 </template>
@@ -9,13 +9,38 @@
 import quizChoice from './quizChoice.vue';
 import { quiz } from '../../resources/prodNquiz.js';
 
+
 export default {
     name:'quizcomponent',
-    mounted(){
-        this.$emit('quizTime');
+    data(){
+        return {
+            inputDialog:''
+        }
+    }
+    ,mounted(){
+        
+        
+        
+         this.$emit('quizTime');
+
+
+        for(let i=0;i<this.quizDialog.length;i++){  
+            
+            setTimeout(()=>{
+                this.inputDialog+=this.quizDialog[i];
+            },(i)*100)
+            
+            
+        }
+
     },
     props:['quizNum','quizDialog'],
     emit:['answer'],
+
+
+
+
+
 }
 </script>
 <style scoped>

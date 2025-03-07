@@ -22,7 +22,7 @@
           <div class="product-row" v-for="product in products" :key="product.id">
 
 <div class="product-cell">
-  <img :src="product.image" :alt="product.name" class="product-image" />
+  <img :src="'product.image'" :alt="product.name" class="product-image" />
   <div class="product-name">{{ product.name }}</div>
 </div>
 <div class="quantity-cell">
@@ -317,8 +317,9 @@ margin-left: 200px;
 }
 
 .product-image {
-  width: 40px;
-  height: 40px;
+  
+  width:auto;
+  heigt:auto;
 }
 
 .quantity-cell {

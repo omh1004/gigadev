@@ -13,7 +13,9 @@
     </div>
 </template>
 <script>
+
 export default {
+    
     name:'quizcomponent',
     data(){
         return{
@@ -30,9 +32,19 @@ export default {
             ],
             relability:90,  // 일단 임의의 값 지정
         }
-    },
-    mounted(){
+    }
+    ,mounted(){
+       
         this.$emit('customer');
+
+        // for(let i=0;i<this.dialog.length;i++){
+        //     setTimeout(()=>{
+        //         inputData+=this.dialog[i];
+        //     },i*100);
+        //
+
+
+
     },
     props:['quizNum','dialog','customerA'],
     emit:['answer'],
