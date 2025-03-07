@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-import { quizAnswer, quizSelect } from '../../resources/quiz.js';
+import { quizAnswer, quizSelect } from '../../resources/prodNquiz.js';
 
 export default {
     data(){

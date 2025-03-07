@@ -55,20 +55,27 @@ export const quizComment = [
 ]
 
 export const quizReward = [
-    // 보상
-    30000, 1.05, 1.1, 2, 'news',
+        // 보상
+        30000, 1.05, 1.1, 2, 'news',
 ]
 
 export const rewardDialog = [
-    // 1~10일차 하드코딩
-    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
-    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[1] + "% 상승합니다.", reward:1 },
-    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[2] + "배가 됩니다.", reward:3 },
-    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
-    { "dialog":"조류인플루엔자 어쩌구저쩌구 계란의 가격이 올라 어쩌구 저쩌구", reward:4 },
-    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
-    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[1] + "% 상승합니다.", reward:2 },
-    { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[2] + "배가 됩니다.", reward:3 },
-    { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
-    { "dialog":"조류인플루엔자 어쩌구저쩌구 계란의 가격이 올라 어쩌구 저쩌구", reward:4 },
+        // 1~10일차 하드코딩
+        { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+        { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[1] + "% 상승합니다.", reward:1 },
+        { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[2] + "배가 됩니다.", reward:3 },
+        { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+        { "dialog":"조류인플루엔자 어쩌구저쩌구 계란의 가격이 올라 어쩌구 저쩌구", reward:4 },
+        { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+        { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[1] + "% 상승합니다.", reward:2 },
+        { "dialog":"정답을 맞췄으니 내일 판매 수익이 " + quizReward[2] + "배가 됩니다.", reward:3 },
+        { "dialog":"정답을 맞췄으니 30,000원을 드리겠습니다.", reward:0 },
+        { "dialog":"조류인플루엔자 어쩌구저쩌구 계란의 가격이 올라 어쩌구 저쩌구", reward:4 },
+]
+
+export const a = [
+        { id:"strawberry",price:1000,type:'a', },
+        { id:"pineapple",price:1000,type:'b', },
+        { id:"strawberry_50",price:1000,type:'a', },
+        { id:"pineapple_50",price:1000,type:'b', },
 ]

@@ -1,10 +1,10 @@
 <template>
     <div class="conv">
-        <div style="height:144px;background-color:#FFEFCA;">
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
+        <div class="categorybutton">
+            <p @click="getcategory('all')">전체</p>
+            <p @click="getcategory('a')">신선식품</p>
+            <p @click="getcategory('b')">즉석식품</p>
+            <p @click="getcategory('c')">전자제품</p>
         </div>
         <div class="category">
             <p style="text-align:center;">전체 {{ product.length }} / 50</p>
@@ -12,7 +12,7 @@
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
-            <div class="product" :id="`prod${p.id}`" v-for="p in product" v-show="p.amount>0" @click="sellprod($event)">
+            <div class="product" :id="`prod${p.id}`" v-for="p in getproduct" v-show="p.amount>0" @click="sellprod($event)">
                 <div class="amount">
                     <p v-if="p.id.includes('50')" style="display:inline-block;width:35%;text-align:left;">D-1</p>
                     <p v-else style="display:inline-block;width:35%;text-align:right;"></p>
@@ -77,6 +77,7 @@
 export default {
     data(){
         return{
+            getproduct:[],
             modal:false,
             target:{},
         }
@@ -103,6 +104,21 @@ export default {
                 this.$emit('moveprod','cart',this.countertarget.id);
             }
         },
+        getcategory(category){
+            this.getproduct=[];
+            if(category!='all'){
+                this.product.forEach(p=>{
+                    if(p.type==category){
+                        this.getproduct.push(p);
+                    }
+                });
+            }else{
+                this.getproduct=this.product;
+            }
+        },
+    },
+    mounted(){
+        this.getproduct=this.product;
     },
     props:['product','countermodal','countertarget'],
 }
@@ -120,6 +136,13 @@ export default {
     }
     .conv p{
         margin:0;
+    }
+    .categorybutton{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:144px;
+        background-color:#FFEFCA;
     }
     .category{
         display:flex;
