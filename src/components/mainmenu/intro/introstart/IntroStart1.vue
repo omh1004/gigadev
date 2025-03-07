@@ -5,7 +5,6 @@
       <img src="@/assets/tutorial/button/skip.png">
     </div>
     
-    
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
       <div class="dialog-arrow">▼</div>
@@ -52,7 +51,6 @@ export default {
 
     font-family: RecipekoreaOTF;
   font-size: 24px;
-  margin-top: 50px;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -78,9 +76,8 @@ export default {
 
 .skip-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
+  top: 100px;
+  right: 30px;
   padding: 4px 12px;
   border-radius: 16px;
   font-size: 16px;
