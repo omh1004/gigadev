@@ -3,7 +3,7 @@
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
-                    :timeleft="timeleft" @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
+                    :timeleft="timeleft" :noclick="noclick" @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
         <!-- <QuizChoice v-show="quiz" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"/> -->
     </div>
@@ -78,6 +78,7 @@ export default {
             this.$emit('revertprod',m,t);
         },
         submit(){
+            this.$emit('notclick',true);
             const prodcount=[];
             const key = Object.keys(this.currentWant);
             for(let i=0;i<key.length;i++){
@@ -152,6 +153,7 @@ export default {
                 }
             }
             setTimeout(()=>{
+                this.$emit('notclick',false);
                 this.$router.push('/maingame/'+ ++this.customerCount);
                 this.customer();
             },3500+timeout);
@@ -161,6 +163,7 @@ export default {
         timeleft(curVal, oriVal){
             if(curVal<=0){
                 clearInterval(this.interval);
+                this.$emit('notclick',true);
                 if((this.customerCount+1)==this.quizMan && !this.meetQuizMan){
                     this.meetQuizMan=true;
                     this.quizDialog='시간을 초과하였습니다.';
@@ -168,6 +171,7 @@ export default {
                         this.quizDialog=quizComment[this.quizNum];
                     },3500);
                     setTimeout(()=>{
+                        this.$emit('yesclick',false);
                         this.$router.push('/maingame/'+ ++this.customerCount);
                     },7000);
                 }else{
@@ -176,11 +180,13 @@ export default {
                     if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
                             this.$emit('rollback');
+                            this.$emit('notclick',false);
                             this.$router.push('/maingame/quiz');
                         },3500);
                     }else{
                         setTimeout(()=>{
                             this.$emit('rollback');
+                            this.$emit('notclick',false);
                             this.$router.push('/maingame/'+ ++this.customerCount);
                             this.customer();
                         },3500);
@@ -196,7 +202,7 @@ export default {
     components:{
         QuizMain,QuizChoice,
     },
-    props:['quizNum','interval','timeleft','customerA','cart']
+    props:['quizNum','interval','timeleft','customerA','cart','noclick']
 }
 </script>
 <style scoped>

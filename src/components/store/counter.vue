@@ -11,15 +11,10 @@
             <img class="counter_cal" src="@/resources/counter.png" @click="submit">
         </div>
     </div>
-    <div v-show="timeleft==0" style="width:100%;height:330px;position:relative;bottom:330px;"></div>
+    <div v-show="timeleft==0 || noclick" style="width:100%;height:330px;position:relative;bottom:330px;"></div>
 </template>
 <script>
 export default {
-    data(){
-        return{
-            notclick:false,
-        }
-    },
     methods:{
         revertprod(e){
             let prod;
@@ -40,7 +35,7 @@ export default {
             this.$emit('submit');
         }
     },
-    props:['cart','interval','timeleft']
+    props:['cart','interval','timeleft','noclick']
 }
 </script>
 <style scoped>

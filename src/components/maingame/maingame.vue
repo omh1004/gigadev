@@ -29,9 +29,10 @@
         </div>
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"
-                        @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"/>
+                        :noclick="noclick" @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"
+                        @notclick="notclick"/>
             <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
-                        @moveprod="moveprod" @closemodal="closemodal"/>
+                        :noclick="noclick" @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
     </div>
 </template>
@@ -140,9 +141,9 @@ export default {
                 console.log("이후 : " + prod.amount);
             })
         },
-        notclick(nc){
-            this.noclick=nc;
-        }
+        notclick(yes){
+            this.noclick=yes;
+        },
     },
     watch:{
         '$route.params.customerCount':{

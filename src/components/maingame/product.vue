@@ -23,8 +23,8 @@
                 <p style="margin-top:15px;">{{ p.name }}</p>
             </div>
         </div>
-        <div v-show="modal || countermodal" class="blind">
-            <div v-if="modal && timeleft!=0" class="modalwin">
+        <div v-show="modal || countermodal || timeleft==0 || noclick" class="blind">
+            <div v-if="modal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>판매하기</p>
                     <img src="@/resources/close.png" width="28px;" @click="modal=false">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div v-else-if="countermodal && timeleft!=0" class="modalwin">
+            <div v-else-if="countermodal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>회수하기</p>
                     <img src="@/resources/close.png" width="28px;" @click="$emit('closemodal')">
