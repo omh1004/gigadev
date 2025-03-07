@@ -75,6 +75,7 @@ export default {
             },3000);
         },
         customer(){
+            this.cart=[];
             this.timebar=800;
             this.timeleft=30;
             this.customerA=Math.floor(Math.random()*9)

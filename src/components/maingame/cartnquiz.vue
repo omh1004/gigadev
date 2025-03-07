@@ -2,8 +2,8 @@
     <div class="conv">
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     @quizTime="quizTime" @customer="customer"></RouterView>
-        <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart"
-                    @result="result" @revertprod="revertprod"></RouterView>
+        <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
+                    @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
         <!-- <QuizChoice v-show="quiz" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"/> -->
     </div>
@@ -11,7 +11,7 @@
 <script>
 import QuizChoice from '../quiz/quizChoice.vue';
 import QuizMain from '../quiz/quizMain.vue';
-import { quiz, quizAnswer, quizComment, rewardDialog } from '@/resources/quiz.js';
+import { quiz, quizAnswer, quizComment, rewardDialog } from '@/resources/prodNquiz.js';
 
 export default {
     data(){
@@ -20,9 +20,14 @@ export default {
             dialog:'상품이 없어요',
             quizDialog:quiz[this.quizNum],
             day:Math.floor(Math.random()*10),   // 임의의 일수로 설정(1~10)
-            customerCount:1,
             quizMan:Math.floor(Math.random()*6)+6,
             meetQuizMan:false,
+            customerCount:1,
+            customerWant:[
+                {'strawberry':2,'pineapple':1},
+                {'strawberry':1,'pineapple':2},
+            ],  // 일단 두개만
+            currentWant:{},
         }
     },
     methods:{
@@ -48,7 +53,7 @@ export default {
                 },3500);
             }
             setTimeout(()=>{
-                this.$router.push('/');
+                this.$router.push('/maingame/'+this.customerCount);
             },7000);
         },
         quizTime(){
@@ -56,36 +61,125 @@ export default {
             this.$emit('quizTime');
         },
         customer(){
+            this.currentWant=this.customerWant[Math.floor(Math.random()*2)];
+            const key = Object.keys(this.currentWant);
+            this.dialog='';
+            key.forEach((p,i)=>{
+                this.dialog+=p + ' ' + this.currentWant[p] + '개';
+                if((i+1)!=key.length) this.dialog+=', ';
+            });
+            this.dialog+=' 주세요';
+            const value = Object.values(this.currentWant);
+            value.forEach(v=>console.log(v));
             this.$emit('customer');
         },
         revertprod(m,t){
             this.$emit('revertprod',m,t);
         },
+        submit(){
+            const prodcount=[];
+            const key = Object.keys(this.currentWant);
+            for(let i=0;i<key.length;i++){
+                console.log(i,key[i]);
+                prodcount.push(0);
+                this.cart.forEach(c=>{
+                    if(c.id.includes(key[i])){
+                        prodcount[i]+=c.amount;
+                    }
+                });
+            }
+            const prodwant = Object.values(this.currentWant);
+            let loss = 0;
+            let perfect = true;
+            let nothing = true;
+            let over = 0;
+            let under = 0;
+            for(let i=0;i<prodcount.length;i++){
+                console.log('prod',prodcount[i]);
+                console.log('want',prodwant[i]);
+                if(prodcount[i]==0 && nothing){
+                    perfect = false;
+                }else if(prodcount[i]==prodwant[i]){
+                    nothing = false;
+                }else if(prodcount[i]<prodwant[i]){
+                    nothing = false;
+                    perfect = false;
+                    under += prodwant[i]-prodcount[i];
+                }else if(prodcount[i]>prodwant[i]){
+                    nothing = false;
+                    perfect = false;
+                    over += prodcount[i]-prodwant[i];
+                    const prod_50 = this.cart.find(c=>
+                        c.id==(key[i]+'_50')
+                    );
+                    const prod = this.cart.find(c=>c.id==key[i]);
+                    if(prod_50!=null){
+                        if(prod_50.amount>=(prodcount[i]-prodwant[i])){
+                            loss += prod_50.price*(prodcount[i]-prodwant[i]);
+                        }else if(prod_50.amount<(prodcount[i]-prodwant[i])){
+                            loss += prod_50.price*prod_50.amount + prod*(prodcount[i]-prodwant[i]-prod_50.amount);
+                        }
+                    }else{
+                        loss += prod.price*(prodcount[i]-prodwant[i]);
+                    }
+                }
+            }
+            let timeout = 0;
+            if(nothing){
+                this.dialog='손님이 화났습니다! ';
+                this.dialog+='신뢰도 -5';
+            }else if(perfect){
+                this.dialog='손님이 만족했습니다 ';
+                this.dialog+='신뢰도 +5';
+            }else{
+                if(over>0 && under>0){
+                    timeout = 3500;
+                    this.dialog=under + '개 덜 판매했습니다. ';
+                    this.dialog+='신뢰도 -2';
+                    setTimeout(()=>{
+                        this.dialog=over + '개 더 판매했습니다. ';
+                        this.dialog+='-' + loss + '원 ';
+                        this.dialog+='신뢰도 -2';   // 2번 떨어뜨릴지는 상의하기
+                    },3500)
+                }else if(under>0){
+                    this.dialog=under + '개 덜 판매했습니다. ';
+                    this.dialog+='신뢰도 -2';
+                }else if(over>0){
+                    this.dialog=over + '개 더 판매했습니다. ';
+                    this.dialog+='-' + loss + '원 ';
+                    this.dialog+='신뢰도 -2';
+                }
+            }
+            setTimeout(()=>{
+                this.$router.push('/maingame/'+ ++this.customerCount);
+                this.customer();
+            },3500+timeout);
+        }
     },
     watch:{
         timeleft(curVal, oriVal){
             if(curVal<=0){
                 clearInterval(this.interval);
-                if(this.customerCount==this.quizMan && !this.meetQuizMan){
+                if((this.customerCount+1)==this.quizMan && !this.meetQuizMan){
                     this.meetQuizMan=true;
                     this.quizDialog='시간을 초과하였습니다.';
                     setTimeout(()=>{
                         this.quizDialog=quizComment[this.quizNum];
                     },3500);
                     setTimeout(()=>{
-                        this.$router.push('/maingame/'+this.customerCount);
+                        this.$router.push('/maingame/'+ ++this.customerCount);
                     },7000);
                 }else{
-                    this.customerCount++;
-                    console.log(this.customerCount);
-                    if(this.customerCount==this.quizMan){
+                    this.dialog='손님이 화났습니다! ';
+                    this.dialog+='신뢰도 -5';
+                    if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
                             this.$router.push('/maingame/quiz');
                         },3500);
                     }else{
                         setTimeout(()=>{
-                            this.$router.push('/maingame/'+this.customerCount);
-                            this.$emit('customer');
+                            this.$router.push('/maingame/'+ ++this.customerCount);
+                            this.customer();
                         },3500);
                     }
                 }

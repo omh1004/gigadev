@@ -7,7 +7,7 @@
 </template>
 <script>
 import quizChoice from './quizChoice.vue';
-import { quiz } from '../../resources/quiz.js';
+import { quiz } from '../../resources/prodNquiz.js';
 
 export default {
     name:'quizcomponent',

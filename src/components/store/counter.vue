@@ -30,10 +30,11 @@ export default {
             }
         },
         submit(){
-            
+            clearInterval(this.interval);
+            this.$emit('submit');
         }
     },
-    props:['cart']
+    props:['cart','interval']
 }
 </script>
 <style scoped>
