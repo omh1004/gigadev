@@ -85,7 +85,7 @@ export default {
 
 .dialog-box {
   
-  margin-top: 450px;
+  margin-top: 517px;
   width: 70%;
   background-color: #F2F1EC;
   border-radius: 24px;
