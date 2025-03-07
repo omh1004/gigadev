@@ -49,7 +49,6 @@ export default {
 
     font-family: RecipekoreaOTF;
   font-size: 24px;
-  margin-top: 50px;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -75,10 +74,13 @@ export default {
 
 .skip-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  
+  top: 100px;
+  right: 30px;
   padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #5d2906;
 }
 
 .dialog-box {
