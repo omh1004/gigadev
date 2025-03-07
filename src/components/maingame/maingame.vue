@@ -147,13 +147,17 @@ export default {
 </script>
 <style scoped>
     .maingame{
-        height:100vh;
+        width: 100vw;
+        height: 100vh;
         min-width:100vw;
         min-height:100vh;
-        padding-top:40px;
-        background-image:url(@/resources/mainbackimg.png);
+        background-image:url('@/resources/mainbackimg.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
         overflow:hidden;
         position:fixed;
+
     }
     .topbar{
         display:flex;
@@ -166,6 +170,7 @@ export default {
         background-image:url(@/resources/gametopbar.png);
         background-position:center;
         background-repeat:no-repeat;
+        background-size: contain;
     }
     .timebar-container{
         display:flex;
