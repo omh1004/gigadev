@@ -13,104 +13,10 @@
 
     <!-- 메인 콘텐츠 -->
     <div class="main-content">
-      <!-- 왼쪽 농장 아이콘 -->
-      <div class="left-icon">
-        <img src="" alt="농장 아이콘" />
-      </div>
+
 
       <!-- 메인 테이블 영역 -->
       <div class="main-table-area">
-        <div class="table-header">
-          <span>밭주</span>
-        </div>
-
-        <table class="crop-table">
-          <thead>
-            <tr>
-              <th>본명</th>
-              <th>식물명</th>
-              <th>수량</th>
-              <th>판주 가격</th>
-              <th>보유 수량</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="crop-name">
-                <span>산삼 씨앗</span>
-              </td>
-              <td class="plant-cell">
-                <img src="" alt="산삼" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">1</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">
-                <span>2,000원</span>
-              </td>
-              <td class="owned-cell">0</td>
-            </tr>
-            <tr>
-              <td class="crop-name">
-                <span>루바 씨앗</span>
-              </td>
-              <td class="plant-cell">
-                <img src="" alt="루바" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">0</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">3,000원</td>
-              <td class="owned-cell">0</td>
-            </tr>
-            <tr>
-              <td class="crop-name">
-                <span>수박 씨앗</span>
-              </td>
-              <td class="plant-cell">
-                <img src="" alt="수박" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">0</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">3,500원</td>
-              <td class="owned-cell">0</td>
-            </tr>
-            <tr>
-              <td class="crop-name empty-cell"></td>
-              <td class="plant-cell">
-                <img src="" alt="파인애플" class="crop-icon" />
-              </td>
-              <td class="quantity-cell">
-                <button class="decrease-btn">-</button>
-                <span class="quantity-value">0</span>
-                <button class="increase-btn">+</button>
-              </td>
-              <td class="price-cell">4,000원</td>
-              <td class="owned-cell">0</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- 오른쪽 장바구니 영역 -->
-      <div class="cart-area">
-        <div class="cart-header">
-          <span>장바구니</span>
-        </div>
-        <div class="cart-content">
-          <div class="cart-item">총 1개</div>
-          <div class="cart-total">총 2,000원</div>
-        </div>
-        <button class="purchase-button">
-          <span>밭사기</span>
-        </button>
       </div>
     </div>
 
@@ -157,14 +63,22 @@ export default {
 </script>
 <style>
     .game-container {
-  width: 700px;
-  border: 3px solid #c0a080;
-  border-radius: 15px;
-  background-color: #fff8e1;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  font-family: 'Arial', sans-serif;
+      font-family: RecipekoreaOTF;
+  font-size: 20px;
+  margin-top: 50px;
+  background-color: #f5f5f5;
+  
+  text-align: center;
+  max-width: 100%;
+  min-height: 90vh;
+
+  background-image: url('@/assets/common/homeMain.png');
+  background-size:cover;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
 }
 
 /* 헤더 스타일 */
@@ -223,7 +137,12 @@ export default {
 /* 메인 콘텐츠 스타일 */
 .main-content {
   display: flex;
-  margin-bottom: 10px;
+  padding-bottom: 15px;
+  padding-right: 15px;
+  width:50vw;
+  height: 50vh;
+  background-image: url(@/assets/storage/ordering.png);
+  background-size: cover;
 }
 
 .left-icon {
@@ -247,11 +166,7 @@ export default {
   left: -8px;
 }
 
-/* 테이블 영역 스타일 */
-.main-table-area {
-  flex: 1;
-  margin-right: 10px;
-}
+
 
 .table-header {
   position: relative;
@@ -430,6 +345,7 @@ export default {
 /* 푸터 스타일 */
 .footer {
   position: relative;
+  margin-top: 30px;
   text-align: center;
 }
 
