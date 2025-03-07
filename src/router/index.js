@@ -17,9 +17,13 @@ import bankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
-import Counter from '@/components/maingame/counter.vue'
-import Customer from '@/components/maingame/customer.vue'
+import Counter from '@/components/store/counter.vue'
+import Customer from '@/components/store/customer.vue'
+import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
+import IntroStart2 from '@/components/mainmenu/intro/introstart/IntroStart2.vue'
+import IntroStart3 from '@/components/mainmenu/intro/introstart/IntroStart3.vue'
 
+import IntroStart4 from '@/components/mainmenu/intro/introstart/IntroStart4.vue'
 
 
 
@@ -108,10 +112,30 @@ const router = createRouter({
       ,name:'linkStorageTutorial'
       ,component:StorageTuto
     }
-    ,   ,{
+       ,{
       path:'/linkBankTutorial'
       ,name:'linkBankTutorial'
       ,component:BankTuto
+    }
+    ,{
+      path:'/introStart'
+      ,name:'introStart'
+      ,component:IntroStart1
+    }
+    ,{
+      path:'/intro2'
+      ,name:'introStart2'
+      ,component:IntroStart2
+    }
+    ,{
+      path:'/intro3'
+      ,name:'introStart3'
+      ,component:IntroStart3
+    }
+    ,{
+      path:'/intro4'
+      ,name:'introStart4'
+      ,component:IntroStart4
     }
   ],
 })
