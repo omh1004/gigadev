@@ -16,40 +16,28 @@
         <span>◀</span>
       </div>
       
-      <div class="order-section">
-        <div class="section-title">발주</div>
-        
+      <div class="order-section">        
         <div class="product-table">
-          <div class="table-header">
-            <div class="header-cell">분류</div>
-            <div class="header-cell">상품명</div>
-            <div class="header-cell">수량</div>
-            <div class="header-cell">발주 가격</div>
-            <div class="header-cell">보유 수량</div>
-          </div>
           
           <div class="product-row" v-for="product in products" :key="product.id">
-            <div class="category-cell" :class="{ 'fresh': product.category === '신선 식품' }">
-              {{ product.category }}
-            </div>
-            <div class="product-cell">
-              <img :src="product.image" :alt="product.name" class="product-image" />
-              <div class="product-name">{{ product.name }}</div>
-            </div>
-            <div class="quantity-cell">
-              <button class="decrease-btn">−</button>
-              <span class="quantity">{{ product.quantity }}</span>
-              <button class="increase-btn">+</button>
-            </div>
-            <div class="price-cell">{{ product.price }}원</div>
-            <div class="stock-cell">{{ product.stock }}</div>
-          </div>
-        </div>
+
+<div class="product-cell">
+  <img :src="product.image" :alt="product.name" class="product-image" />
+  <div class="product-name">{{ product.name }}</div>
+</div>
+<div class="quantity-cell">
+  <button class="decrease-btn" @click="decreaseQuantity(product.id)">−</button>
+  <span class="quantity">{{ product.quantity }}</span>
+  <button class="increase-btn" @click="increaseQuantity(product.id)">+</button>
+</div>
+<div class="price-cell">{{ product.quantity*product.price }}원</div>
+<div class="stock-cell">{{ product.stock-product.quantity}}</div>
+</div>
+</div>
         
-        <div class="storage-info">
-          총 창고 개수: 0/50
-        </div>
+   
       </div>
+      
       
       <div class="cart-section">
         <div class="section-title">장바구니</div>
@@ -61,6 +49,7 @@
         
         <button class="order-button">발주하기</button>
       </div>
+      
     </div>
   </div>
 </template>
@@ -79,7 +68,7 @@ export default {
           image: '@/assets/tutorial/fruit/strawberry.png',
           quantity: 1,
           price: 2000,
-          stock: 0
+          stock: 50
         },
         {
           id: 2,
@@ -88,7 +77,7 @@ export default {
           image: '@/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 3000,
-          stock: 0
+          stock: 50
         },
         {
           id: 3,
@@ -97,7 +86,7 @@ export default {
           image: '@/assets/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
-          stock: 0
+          stock: 50
         }
       ],
       cart: [
@@ -242,9 +231,13 @@ font-size: 20px;
 
 .order-section {
   flex: 3;
-  padding: 0 40px;
-  min-width:60vw;
-  min-height: 50vh;
+min-width:65vw;
+min-height: 68vh;
+background-image: url('@/assets/storage/ordering.png');
+background-repeat: no-repeat;
+background-size: contain;
+margin-top:75px;
+margin-left: 200px;
 }
 
 .section-title {
@@ -254,11 +247,15 @@ font-size: 20px;
   text-align: center;
 }
 
+
 .product-table {
-  background-color: #fff8e1;
+  margin-top: 60px;
+  /* margin-right: 150px; */
+  margin-left:150px;
+  /* background-color: #fff8e1; */
   border-radius: 10px;
   overflow: hidden;
-  border: 2px solid #6a3e14;
+  /* border: 2px solid #6a3e14; */
 }
 
 .table-header {
@@ -271,12 +268,20 @@ font-size: 20px;
   flex: 1;
   text-align: center;
   font-weight: bold;
+  
 }
 
 .product-row {
   display: flex;
-  border-top: 1px solid #e0d6be;
-  padding: 10px 0;
+  /* padding: 10px 0; */
+  text-align: center;
+  min-height: 120px;
+  margin-top: 10px;
+  width: 50vw;
+  margin-left: 15px;
+  
+  
+  
 }
 
 .category-cell {
@@ -285,6 +290,9 @@ font-size: 20px;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+ 
+
+  min-width:100px;
 }
 
 .fresh {
@@ -297,7 +305,15 @@ font-size: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 5px;
+  /* min-width:140px; */
+   
+   
+   width:90px;
+   margin-left:30px;
+  
+  
 }
 
 .product-image {
@@ -311,6 +327,8 @@ font-size: 20px;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  
+  min-width:15px;
 }
 
 .decrease-btn, .increase-btn {
@@ -327,6 +345,9 @@ font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width:115px;
+  min-height: 100px;
+  
 }
 
 .storage-info {
@@ -336,11 +357,14 @@ font-size: 20px;
 }
 
 .cart-section {
+  margin-left: 0px;
+  margin-top: 80px;
+  width: 100px;
   flex: 1;
   background-color: #EAE5DE;
   border:5px solid #603421;
   border-radius: 40px;
-  padding: 15px;
+  
   display: flex;
   flex-direction: column;
   min-width: 13vw;
