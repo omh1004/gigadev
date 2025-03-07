@@ -26,17 +26,17 @@
   <div class="product-name">{{ product.name }}</div>
 </div>
 <div class="quantity-cell">
-  <button class="decrease-btn">−</button>
+  <button class="decrease-btn" @click="decreaseQuantity(product.id)">−</button>
   <span class="quantity">{{ product.quantity }}</span>
-  <button class="increase-btn">+</button>
+  <button class="increase-btn" @click="increaseQuantity(product.id)">+</button>
 </div>
-<div class="price-cell">{{ product.price }}원</div>
-<div class="stock-cell">{{ product.stock }}</div>
+<div class="price-cell">{{ product.quantity*product.price }}원</div>
+<div class="stock-cell">{{ product.stock-product.quantity}}</div>
 </div>
 </div>
         
         <div class="storage-info">
-          총 창고 개수: 0/50
+          총 창고 개수: 50/50
         </div>
       </div>
       
@@ -68,7 +68,7 @@ export default {
           image: '@/assets/tutorial/fruit/strawberry.png',
           quantity: 1,
           price: 2000,
-          stock: 0
+          stock: 50
         },
         {
           id: 2,
@@ -77,7 +77,7 @@ export default {
           image: '@/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 3000,
-          stock: 0
+          stock: 50
         },
         {
           id: 3,
@@ -86,7 +86,7 @@ export default {
           image: '@/assets/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
-          stock: 0
+          stock: 50
         }
       ],
       cart: [
