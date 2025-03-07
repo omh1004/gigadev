@@ -23,8 +23,6 @@ export default {
     }
   }
   ,mounted(){
-    
-      
 
       let innerText = '갚아야 할 돈이 100만원?! 내가 가진 현금은 50만원인데 어떻게 운영해야하지?';
       
