@@ -136,16 +136,7 @@
     font-weight: bold;
     text-align: left;
   }
-  
-  .right-section {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-align: right;
-    margin-left: auto;
-  }
-  
-  .money-bag {
+    .money-bag {
     display: flex;
     align-items: center;
     background-color: #5D2906;
@@ -154,12 +145,21 @@
     border-radius: 9999px;
     gap:50px;
     height: 27px;
+    width: 180px;
   }
   
 .money-bag {
   font-size: 20px;
 }
 
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: right;
+    margin-left: auto;
+  }
+  
   .bag-icon {
     margin-right: 8px;
   }
