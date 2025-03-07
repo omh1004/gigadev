@@ -3,7 +3,7 @@
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
-                    @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
+                    :timeleft="timeleft" @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
         <!-- <QuizChoice v-show="quiz" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"/> -->
     </div>
@@ -33,6 +33,7 @@ export default {
     methods:{
         result(ans){
             clearInterval(this.interval);
+            this.$emit('notclick',nc);
             if(quizAnswer[this.quizNum]==ans){
                 this.quizDialog='정답입니다.';
                 // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
@@ -174,10 +175,12 @@ export default {
                     this.dialog+='신뢰도 -5';
                     if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
+                            this.$emit('rollback');
                             this.$router.push('/maingame/quiz');
                         },3500);
                     }else{
                         setTimeout(()=>{
+                            this.$emit('rollback');
                             this.$router.push('/maingame/'+ ++this.customerCount);
                             this.customer();
                         },3500);

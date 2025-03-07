@@ -24,7 +24,7 @@
             </div>
         </div>
         <div v-show="modal || countermodal" class="blind">
-            <div v-if="modal" class="modalwin">
+            <div v-if="modal && timeleft!=0" class="modalwin">
                 <div class="modaltop">
                     <p>판매하기</p>
                     <img src="@/resources/close.png" width="28px;" @click="modal=false">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div v-else-if="countermodal" class="modalwin">
+            <div v-else-if="countermodal && timeleft!=0" class="modalwin">
                 <div class="modaltop">
                     <p>회수하기</p>
                     <img src="@/resources/close.png" width="28px;" @click="$emit('closemodal')">
@@ -120,7 +120,7 @@ export default {
     mounted(){
         this.getproduct=this.product;
     },
-    props:['product','countermodal','countertarget'],
+    props:['product','countermodal','countertarget','timeleft','noclick'],
 }
 </script>
 <style scoped>

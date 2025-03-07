@@ -29,8 +29,8 @@
         </div>
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"
-                        @quizTime="quizTime" @customer="customer" @revertprod="revertprod"/>
-            <Product :product="product" :countermodal="countermodal" :countertarget="countertarget"
+                        @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"/>
+            <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
                         @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
     </div>
@@ -62,6 +62,7 @@ export default {
             dragtarget:'',
             countermodal:false,
             countertarget:{},
+            noclick:false,
         }
     },
     methods:{
@@ -130,6 +131,17 @@ export default {
         },
         closemodal(){
             this.countermodal=false;
+        },
+        rollback(){
+            this.cart.forEach(c=>{
+                const prod = this.product.find(p=>p.id==c.id);
+                console.log("이전 : " + prod.amount);
+                prod.amount+=c.amount;
+                console.log("이후 : " + prod.amount);
+            })
+        },
+        notclick(nc){
+            this.noclick=nc;
         }
     },
     watch:{
