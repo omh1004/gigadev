@@ -35,10 +35,9 @@
 </div>
 </div>
         
-        <div class="storage-info">
-          총 창고 개수: 50/50
-        </div>
+   
       </div>
+      
       
       <div class="cart-section">
         <div class="section-title">장바구니</div>
@@ -50,6 +49,7 @@
         
         <button class="order-button">발주하기</button>
       </div>
+      
     </div>
   </div>
 </template>
@@ -268,7 +268,7 @@ margin-left: 200px;
   flex: 1;
   text-align: center;
   font-weight: bold;
-  border: 1px solid red;
+  
 }
 
 .product-row {
@@ -276,6 +276,10 @@ margin-left: 200px;
   /* padding: 10px 0; */
   text-align: center;
   min-height: 120px;
+  margin-top: 10px;
+  width: 50vw;
+  margin-left: 15px;
+  
   
   
 }
@@ -286,7 +290,7 @@ margin-left: 200px;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  border: 1px solid red;
+ 
 
   min-width:100px;
 }
@@ -304,9 +308,10 @@ margin-left: 200px;
   justify-content: center;
   gap: 5px;
   /* min-width:140px; */
-   border: 1px solid red;
-   min-width:90px;
-   width:100px;
+   
+   
+   width:90px;
+   margin-left:30px;
   
   
 }
@@ -323,7 +328,7 @@ margin-left: 200px;
   justify-content: center;
   gap: 10px;
   
-  min-width:15px;border: 1px solid red;
+  min-width:15px;
 }
 
 .decrease-btn, .increase-btn {
@@ -342,7 +347,7 @@ margin-left: 200px;
   justify-content: center;
   min-width:115px;
   min-height: 100px;
-  border: 1px solid red;
+  
 }
 
 .storage-info {
