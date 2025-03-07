@@ -23,7 +23,8 @@
                 </div>
                 <!-- draggable로 드래그 가능, dragstart 이벤트가 필요. -->
                 <img :src="`${p.src}`" alt="상품" height="50%" :name="p.name"><br>
-                <p style="margin-top:15px;">{{ p.name }}</p>
+                <p style="margin-top:5px;">{{ p.name }}</p>
+                <p style="margin-top:5px;">{{ p.price }}원</p>
             </div>
         </div>
         <div v-show="modal || countermodal || timeleft==0 || noclick" class="blind">
