@@ -275,8 +275,8 @@ margin-left: 200px;
   display: flex;
   /* padding: 10px 0; */
   text-align: center;
-  min-height: 130px;
-  margin-left:60px;
+  min-height: 120px;
+  
   
 }
 
@@ -287,8 +287,8 @@ margin-left: 200px;
   justify-content: center;
   font-weight: bold;
   border: 1px solid red;
-  
-  min-width:135px;
+
+  min-width:100px;
 }
 
 .fresh {
@@ -322,8 +322,8 @@ margin-left: 200px;
   align-items: center;
   justify-content: center;
   gap: 10px;
-
-  min-width:125px;border: 1px solid red;
+  
+  min-width:15px;border: 1px solid red;
 }
 
 .decrease-btn, .increase-btn {
@@ -352,9 +352,9 @@ margin-left: 200px;
 }
 
 .cart-section {
-  margin-left: 200px;
-  margin-top: 100px;
-  width: 100;
+  margin-left: 0px;
+  margin-top: 80px;
+  width: 100px;
   flex: 1;
   background-color: #EAE5DE;
   border:5px solid #603421;
