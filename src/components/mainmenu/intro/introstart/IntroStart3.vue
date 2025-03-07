@@ -2,11 +2,11 @@
   <div class="main-container">
     
     <div class="skip-button" @click="movePage">
-      SKIP >>|
+      <img src="@/assets/tutorial/button/skip.png">
     </div>
     
     <div id="bankman">
-      <img src="@/assets/tutorial/bankman.png">
+      <img src="@/assets/tutorial/people/bankmember.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>

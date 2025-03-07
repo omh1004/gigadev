@@ -6,8 +6,8 @@
           <div class="money-bag">
             <span class="bag-icon">💰</span>
             <span class="amount">500,00원</span>
-            <span class="settings-icon">⚙️</span>
           </div>
+          <span class="settings-icon">⚙️</span>
         </div>
       </div>
   
@@ -152,19 +152,17 @@
   .order-container {
     font-family: RecipekoreaOTF;
   font-size: 20px;
-  margin-top: 50px;
   background-color: #f5f5f5;
   
   text-align: center;
   max-width: 100%;
-  min-height: 90vh;
+  min-height: 100vh;
 
-  background-image: url('@/assets/common/homeMain.png');
+  background-image: url('@/resources/whiteimg.png');
   background-size:cover;
 
   display: flex;
   flex-direction: column;
-  justify-content: center; 
   align-items: center; 
 
   }
@@ -176,12 +174,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    margin-bottom: 100px;
-    margin-top:50px;
-    border: 2px solid #8B4513;
-    border-radius: 24px;
+    margin-bottom: 20px;
+    border: 3px solid #8B4513;
+    border-radius: 9999px;
     min-width: 90vw;
-    
+    margin-top: 30px;
+    height: 40px;
   }
 
   .money-display {
@@ -193,7 +191,40 @@
     padding: 8px 15px;
     border-radius: 20px;
   }
+  .money-bag {
+    display: flex;
+    align-items: center;
+    background-color: #5D2906;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    gap:50px;
+    height: 27px;
+    width: 180px;
+  }
+  .money-bag {
+  font-size: 20px;
+}
+
+  .bag-icon {
+    margin-right: 8px;
+  }
   
+  .settings-icon {
+    font-size: 24px;
+  }
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: right;
+    margin-left: auto;
+  }
+  .left-section {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+  }
   .content {
     display: flex;
     position: relative;
@@ -305,17 +336,19 @@
   }
   
   .cart-section {
-    flex: 1;
-    background-color: #f0f0f0;
-    border-radius: 10px;
+    flex: 1;    
+    background-color: #EAE5DE;
+    border:5px solid #603421;
+    border-radius: 40px;
     padding: 15px;
     display: flex;
     flex-direction: column;
-    min-width: 20vw;
+    min-width: 13vw;
+    
   }
   
   .cart-item {
-    background-color: white;
+    background-color: #EAE5DE;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
