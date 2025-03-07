@@ -1,6 +1,6 @@
 <template>
     <div class="store-layout" @click="linkMainMenu">
-     
+
     </div>
   </template>
 
@@ -28,12 +28,11 @@
 
 
     font-family: RecipekoreaOTF;
-  font-size: 24px;
-  margin-top: 50px;
-  background-color: #f5f5f5;
+    font-size: 24px;
+   background-color: #f5f5f5;
   
-  text-align: center;
-  max-width: 100%;
+   text-align: center;
+   max-width: 100%;
   min-height: 90%;
 
 
