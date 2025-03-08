@@ -1,5 +1,9 @@
 <template>
     <div style="display:flex;">
+        <!-- 일단 프론트엔드만 만들어놓는 중 -->
+        <p class="balloon">{{ quizDialog }}</p>
+        <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
+
         <div class="relability_bar">
             <div class="bar_inside">
                 <p v-show="relability==100" class="fever">FEVER<br>TIME</p>
@@ -21,12 +25,7 @@ import { quiz } from '../../resources/prodNquiz.js';
 
 
 export default {
-    name:'quizcomponent',
-    data(){
-        return {
-            inputDialog:''
-        }
-    }
+    name:'quizcomponent'
     ,mounted(){
         
         
@@ -34,14 +33,7 @@ export default {
         this.$emit('quizTime');
 
 
-        for(let i=0;i<this.quizDialog.length;i++){  
-            
-            setTimeout(()=>{
-                this.inputDialog+=this.quizDialog[i];
-            },(i)*100)
-            
-            
-        }
+        
 
     },
     props:['quizNum','quizDialog','relability'],
