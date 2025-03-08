@@ -1,10 +1,11 @@
 <template>
-  <div id="orderPopup">
+  <div v-show="popup" id="orderPopup">
     <div id="almTitle">
       <p>알림</p>
     </div>
     <div id="almText">
-      <p>알림내용</p>
+      <p v-for="item in cart">{{item.name}}+{{ item.quantity }}</p>
+      <p>발주완료</p>
     </div>
   </div>
   <div class="order-container">
@@ -55,7 +56,7 @@
           <div class="item-price">{{ item.price }}원</div>
         </div>
         
-        <button class="order-button" @click="clickOrder">발주하기</button>
+        <button class="order-button" @click="clickOrder(cart)">발주하기</button>
       </div>
       
     </div>
@@ -67,6 +68,9 @@ export default {
   name: 'StoreOrderInterface',
   data() {
     return {
+      cartList:[],
+      itemPrice:0,
+      popup:false,
       money: 500000,
       products: [
         {
@@ -126,7 +130,9 @@ export default {
       const cartItem = this.cart.find(item => item.name === product.name);
       if (product.quantity > 0) {
         if (cartItem) {
+          console.log(cartItem);
           cartItem.quantity = product.quantity;
+          cartItem.price = (product.price*product.quantity);
         } else {
           this.cart.push({
             name: product.name,
@@ -139,8 +145,21 @@ export default {
         this.cart.splice(index, 1);
       }
     },
-    clickOrder() {
+    clickOrder(cart) {
+      console.log(cart);
+
+      cart.forEach(i=>{
+        console.log(i.name);
+        this.itemPrice+=i.price;
+      })
+
+
+      this.popup=true;
       
+      
+      
+
+
     }
   }
 }
