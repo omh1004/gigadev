@@ -1,11 +1,11 @@
 <template>
   <div v-show="popup" id="orderPopup" @click="closePopup">
-    <div id="almTitle">
-      <p>알림</p>
-    </div>
-    <div id="almText">
-      <p v-for="item in cart">{{item.name}}+{{ item.quantity }}</p>
-      <p>발주완료</p>
+    <div id="popupbox">
+        <p id="almTitle">알림</p>
+      <div id="almText">
+        <p v-for="item in cart">{{item.name}}+{{ item.quantity }}</p>
+        <p>발주완료</p>
+      </div>
     </div>
   </div>
   <div class="order-container">
@@ -161,6 +161,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  box-sizing: border-box;
+}
 .order-container {
   font-family: RecipekoreaOTF;
 font-size: 20px;
@@ -414,7 +417,6 @@ margin-left: 200px;
 }
 
 #orderPopup{
-  background-color:#F2F1EC ;
   position: absolute;
   width: 40vw;
   height: 20vw;
@@ -424,63 +426,42 @@ margin-left: 200px;
   border-radius: 30px;
 }
 
-#almTitle{
+#popupbox {
+  width: 100%;
+  height: 100%;
   font-family: RecipekoreaOTF;
   background-color: #6A396C;
   z-index: 3;
-  margin-top: 0px;
   padding: 0px;
-  text-align: center;
   border-radius: 30px;
-
-}
-
-#almTitle p{
-  margin: 0px;
-  height: 20;
   display: flex;
+  flex-direction: column;
 }
-
-
-#almText{
+#almTitle {
   font-family: RecipekoreaOTF;
+  font-size: 1.5vw;
+  font-weight: bold;
+  text-align: center;
+  height: 0.3vw;
+  color: #ffffff;
+  margin-top: 1vw;
+}
+#almText {
+  background-color: #ffffff;
+  width: 98%;
+  height: 98%;
+  margin: 1vw auto 0.5vw;
+  border-radius: 0 0 25px 25px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  font-weight: bold;
+}
+#almText p {
+  margin: 0.1vw 0;
 }
 
-  .popup-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .popup {
-    width: 90%;
-    max-width: 600px;
-    height: 400px;
-    background-color: white;
-    border-radius: 15px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .popup-header {
-    background-color: #6A396C;
-    color: white;
-    padding: 15px 20px;
-    font-size: 20px;
-    text-align: center;
-  }
-  
-  .popup-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
   .quiz-title {
     font-size: 40px;
     font-weight: bold;
