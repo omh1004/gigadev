@@ -24,29 +24,26 @@
       </div>
     </div>
     
-
-    
     <!-- Tab Menu -->
     <div class="tab-container">
       <div class="tab-menu">
-        <div class="tab-item">신선식품</div>
+        <div class="tab-item" :class="{ active: selectedTab === '신선식품' }" @click="selectTab('신선식품')">신선식품</div>
         <div class="tab-divider"></div>
-        <div class="tab-item active">즉석식품</div>
+        <div class="tab-item" :class="{ active: selectedTab === '즉석식품' }" @click="selectTab('즉석식품')">즉석식품</div>
         <div class="tab-divider"></div>
-        <div class="tab-item">전자제품</div>
+        <div class="tab-item" :class="{ active: selectedTab === '전자제품' }" @click="selectTab('전자제품')">전자제품</div>
       </div>
 
       <!-- Inventory Content -->
       <div class="fruit-container" :style="containerStyle">
-  <div class="fruit-row" v-for="(row, rowIndex) in fruitRows" :key="rowIndex">
-    <div class="fruit-item" v-for="(fruit, fruitIndex) in row" :key="fruitIndex">
-      <img :src="fruit.image" :alt="fruit.name" class="fruit-image">
-      <div class="fruit-discount" v-if="fruit.discount">{{ fruit.discount }}</div>
-      <div class="fruit-name">{{ fruit.name }}</div>
-      <div class="fruit-quantity">x{{ fruit.quantity }}</div>
-    </div>
-  </div>
-</div>
+        <div class="fruit-row" v-for="(row, rowIndex) in filteredFruitRows" :key="rowIndex">
+          <div class="fruit-item" v-for="(fruit, fruitIndex) in row" :key="fruitIndex">
+            <img :src="fruit.image" :alt="fruit.name" class="fruit-image">
+            <div class="fruit-discount" v-if="fruit.discount">{{ fruit.discount }}</div>
+            <div class="fruit-quantity">x{{ fruit.quantity }}</div>
+          </div>
+        </div>
+      </div>
     </div>
     
     <!-- Confirm Button -->
@@ -60,85 +57,132 @@
 </template>
 
 <script>
-
-const model={  
-  image:'src/assets/common/fruit/strawberry.png',
+const model = {
+  image: 'src/assets/common/fruit/strawberry.png',
   fruits: [
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
-      { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
-      // 과일 데이터 더 추가 가능
-    ],
-    itemsPerRow: 5,
-    maxVisibleRows: 3,
-    rowHeight: 150, 
-}
-
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+    { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
+    { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
+    { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
+    { name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
+    { name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
+    { name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
+    { name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+    // Add more items as needed
+  ],
+  itemsPerRow: 5,
+  maxVisibleRows: 3,
+  rowHeight: 150, // Reverted row height to original
+  selectedTab: '신선식품'
+};
 
 export default {
-  name: 'KoreanInventoryInterface'
-  ,data(){
+  name: 'KoreanInventoryInterface',
+  data() {
     return model;
-  }
-  ,computed: {
-      // 과일 배열을 5개씩 나누어 2차원 배열로 변환
-      fruitRows() {
-        const rows = [];
-        for (let i = 0; i < this.fruits.length; i += this.itemsPerRow) {
-          rows.push(this.fruits.slice(i, i + this.itemsPerRow));
-        }
-        return rows;
-      },
-      // 컨테이너 스타일 (스크롤 설정)
-      containerStyle() {
-        // 행의 개수가 maxVisibleRows보다 많으면 스크롤 설정
-        if (this.fruitRows.length > this.maxVisibleRows) {
-          return {
-            height: `${this.maxVisibleRows * this.rowHeight}px`,
-            overflowY: 'scroll'
-          };
-        }
-        return {};
+  },
+  computed: {
+    fruitRows() {
+      const rows = [];
+      for (let i = 0; i < this.fruits.length; i += this.itemsPerRow) {
+        rows.push(this.fruits.slice(i, i + this.itemsPerRow));
       }
+      return rows;
+    },
+    filteredFruitRows() {
+      const filteredFruits = this.fruits.filter(fruit => fruit.category === this.selectedTab);
+      const rows = [];
+      for (let i = 0; i < filteredFruits.length; i += this.itemsPerRow) {
+        rows.push(filteredFruits.slice(i, i + this.itemsPerRow));
+      }
+      return rows;
+    },
+    containerStyle() {
+      if (this.filteredFruitRows.length > this.maxVisibleRows) {
+        return {
+          height: `${this.maxVisibleRows * this.rowHeight}px`,
+          overflowY: 'scroll'
+        };
+      }
+      return {};
     }
-}
+  },
+  methods: {
+    selectTab(tab) {
+      this.selectedTab = tab;
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -147,32 +191,19 @@ export default {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  
   background-repeat: no-repeat;
-
-
   font-family: RecipekoreaOTF;
-font-size: 24px;
-background-color: #f5f5f5;
-
-text-align: center;
-max-width: 100%;
-min-height: 90%;
-
-background-size: cover;
-
-display: flex;
-flex-direction: column;
-justify-content: center; 
-align-items: center; 
-
-
-
-
-
-
-background-image: url('@/resources/whiteimg.png');
-
+  font-size: 24px;
+  background-color: #f5f5f5;
+  text-align: center;
+  max-width: 100%;
+  min-height: 90%;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('@/resources/whiteimg.png');
 }
 
 .header {
@@ -186,8 +217,13 @@ background-image: url('@/resources/whiteimg.png');
   min-width: 90vw;
   margin-top: 30px;
   height: 40px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  z-index: 1000;
 }
-
 
 .left-label {
   font-weight: bold;
@@ -199,6 +235,7 @@ background-image: url('@/resources/whiteimg.png');
   align-items: center;
   gap: 12px;
 }
+
 .left-section {
   font-size: 20px;
   font-weight: bold;
@@ -214,8 +251,9 @@ background-image: url('@/resources/whiteimg.png');
   align-items: center;
   gap: 8px;
 }
+
 .money-bag {
-font-size: 20px;
+  font-size: 20px;
 }
 
 .bag-icon {
@@ -225,6 +263,7 @@ font-size: 20px;
 .settings-icon {
   font-size: 24px;
 }
+
 .money-bag {
   display: flex;
   align-items: center;
@@ -232,7 +271,7 @@ font-size: 20px;
   color: white;
   padding: 8px 16px;
   border-radius: 9999px;
-  gap:50px;
+  gap: 50px;
   height: 27px;
   width: 180px;
 }
@@ -244,6 +283,7 @@ font-size: 20px;
   align-items: center;
   padding: 8px 16px;
   margin-bottom: 12px;
+  margin-top: 60px; /* Adjusted to account for fixed header */
 }
 
 .back-button {
@@ -298,7 +338,7 @@ font-size: 20px;
 .tab-menu {
   display: flex;
   background-color: #fff3d4;
-  border-bottom:4px solid #6F3533;
+  border-bottom: 4px solid #6F3533;
 }
 
 .tab-item {
@@ -402,67 +442,66 @@ font-size: 20px;
 }
 
 .fruit-container {
-border: 2px solid #8B4513;
-border-radius: 10px;
-background-color: #f5f5dc;
-padding: 10px;
-width: 100%;
+  border: 2px solid #8B4513;
+  border-radius: 10px;
+  background-color: #f5f5dc;
+  padding: 10px;
+  width: 100%;
 }
 
 .fruit-row {
-display: flex;
-justify-content: space-around;
-margin-bottom: 15px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
 }
 
 .fruit-item {
-display: flex;
-flex-direction: column;
-align-items: center;
-position: relative;
-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 160px; /* Reverted width */
+  margin: 5px; /* Reverted margin */
 }
 
 .fruit-image {
-width: 60px;
-height: 60px;
+  width: 120px; /* Reverted width */
+  height: 120px; /* Reverted height */
 }
 
 .fruit-discount {
-position: absolute;
-bottom: 40px;
-left: 10px;
-background-color: #ff6b6b;
-color: white;
-border-radius: 50%;
-padding: 2px 5px;
-font-size: 12px;
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  background-color: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 12px;
 }
 
 .fruit-name {
-margin-top: 5px;
-font-size: 14px;
+  margin-top: 5px;
+  font-size: 14px;
 }
 
 .fruit-quantity {
-font-size: 12px;
-margin-top: 3px;
+  font-size: 12px;
+  margin-top: 3px;
 }
 
 /* Webkit 브라우저용 스크롤바 스타일링 */
 .fruit-container::-webkit-scrollbar {
-width: 8px;
+  width: 8px;
 }
 
-
 .fruit-container::-webkit-scrollbar-track {
-background: #f0f0f0;
+  background: #f0f0f0;
 }
 
 .fruit-container::-webkit-scrollbar-thumb {
-background-color: #523629;
-border-radius: 10px;
-border: 2px solid #f0f0f0;
+  background-color: #523629;
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
 }
-
 </style>
