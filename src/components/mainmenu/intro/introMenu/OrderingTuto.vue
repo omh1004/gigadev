@@ -1,5 +1,5 @@
 <template>
-  <div v-show="popup" id="orderPopup">
+  <div v-show="popup" id="orderPopup" @click="closePopup">
     <div id="almTitle">
       <p>알림</p>
     </div>
@@ -43,11 +43,7 @@
 <div class="stock-cell">{{ product.stock-product.quantity}}</div>
 </div>
 </div>
-        
-   
       </div>
-      
-      
       <div class="cart-section">
         <div class="section-title">장바구니</div>
         
@@ -155,11 +151,10 @@ export default {
 
 
       this.popup=true;
-      
-      
-      
 
-
+    },
+    closePopup(){
+      this.popup=false;
     }
   }
 }
@@ -307,9 +302,6 @@ margin-left: 200px;
   margin-top: 10px;
   width: 50vw;
   margin-left: 15px;
-  
-  
-  
 }
 
 .category-cell {
@@ -318,8 +310,6 @@ margin-left: 200px;
   align-items: center;
   justify-content: center;
   font-weight: bold;
- 
-
   min-width:100px;
 }
 
@@ -345,7 +335,6 @@ margin-left: 200px;
 }
 
 .product-image {
-  
   width:auto;
   heigt:auto;
 }
