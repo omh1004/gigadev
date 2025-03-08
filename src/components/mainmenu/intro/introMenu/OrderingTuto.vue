@@ -64,6 +64,7 @@ export default {
   name: 'StoreOrderInterface',
   data() {
     return {
+      popupMessage:'',
       cartList:[],
       itemPrice:0,
       popup:false,
@@ -144,10 +145,20 @@ export default {
     clickOrder(cart) {
       console.log(cart);
 
+
+
+
+
       cart.forEach(i=>{
         console.log(i.name);
-        this.itemPrice+=i.price;
+        this.itemPrice+=i.price;        
       })
+
+
+    
+
+
+
 
 
       this.popup=true;

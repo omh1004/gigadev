@@ -24,11 +24,7 @@
         </div>
       </div>
       
-      <!-- Inventory Status -->
-      <div class="inventory-status-bar">
-        <div class="info-text">발주된 상품은 다음과 같이 창고에 표시 됩니다.</div>
-        <div class="capacity-text">창고 개수 : 110/150</div>
-      </div>
+
       
       <!-- Tab Menu -->
       <div class="tab-container">
@@ -39,98 +35,23 @@
           <div class="tab-divider"></div>
           <div class="tab-item">전자제품</div>
         </div>
-        
+  
         <!-- Inventory Content -->
         <div class="inventory-content">
           <!-- Info Row 1 -->
-          <div class="info-row">
-            <div class="info-text">
-              유통기한 하루 전(D-1) 상품가격이 50% 할인됩니다.
-            </div>
-          </div>
-          
-          <!-- Items Row 1 -->
+
           <div class="items-row">
-            <div class="item">
-              <div class="discount-badge">50%</div>
-              <div class="item-image">🍓</div>
-              <div class="item-name">딸기</div>
-              <div class="item-count">× 2</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🍓</div>
-              <div class="item-name">딸기</div>
-              <div class="item-count">× 8</div>
-            </div>
-            
-            <div class="item">
-              <div class="discount-badge">50%</div>
-              <div class="item-image">🍎</div>
-              <div class="item-name">사과</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🍎</div>
-              <div class="item-name">사과</div>
-              <div class="item-count">× 5</div>
-            </div>
-            
-            <div class="item">
-              <div class="discount-badge">50%</div>
-              <div class="item-image">🍉</div>
-              <div class="item-name">왕상추</div>
-              <div class="item-count">× 25</div>
+            <div class="item" v-for="item in this.fruits">
+              <div class="item-image">   <img :src=item.image ></div>
+              <div class="item-count">x{{ item.quentity }}</div>
             </div>
           </div>
+        
           
-          <!-- Info Row 2 -->
-          <div class="info-row">
-            <div class="info-text">
-              유통기한 임박 상품은 모두 판매되지 않으면 다음 날 자동 폐기됩니다.
-            </div>
-          </div>
+
+         
           
-          <!-- Items Row 2 -->
-          <div class="items-row">
-            <div class="item">
-              <div class="item-image">🍅</div>
-              <div class="item-name">방울주</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🍍</div>
-              <div class="item-name">파인애플</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🦐</div>
-              <div class="item-name">파인애플</div>
-              <div class="item-count">× 20</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🥚</div>
-              <div class="item-name">세포</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🥚</div>
-              <div class="item-name">계란</div>
-              <div class="item-count">× 10</div>
-            </div>
-          </div>
-          
-          <!-- Info Row 3 -->
-          <div class="info-row">
-            <div class="info-text">
-              자동 폐기될 대비해 상품을 20%로 조기 판매할 수 있습니다.
-            </div>
-          </div>
+
         </div>
       </div>
       
@@ -145,8 +66,101 @@
   </template>
   
   <script>
+
+  const model={
+    
+    image:'src/assets/common/fruit/strawberry.png',
+
+
+    fruits:[
+      {
+        name:'딸기'
+        ,price:1000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/strawberry.png'
+      },
+      {
+        name:'파인애플'
+        ,price:3000
+        ,quentity:3
+        ,image:'src/assets/common/fruit/fineapple_s.png'
+      },
+      {
+        name:'사과'
+        ,price:10000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/apple.png'
+      },
+      {
+        name:'딸기'
+        ,price:1000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/strawberry.png'
+      },
+      {
+        name:'파인애플'
+        ,price:3000
+        ,quentity:3
+        ,image:'src/assets/common/fruit/fineapple_s.png'
+      },
+      {
+        name:'사과'
+        ,price:10000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/apple.png'
+      },
+      {
+        name:'딸기'
+        ,price:1000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/strawberry.png'
+      },
+      {
+        name:'파인애플'
+        ,price:3000
+        ,quentity:3
+        ,image:'src/assets/common/fruit/fineapple_s.png'
+      },
+      {
+        name:'사과'
+        ,price:10000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/apple.png'
+      },
+      {
+        name:'딸기'
+        ,price:1000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/strawberry.png'
+      },
+      {
+        name:'파인애플'
+        ,price:3000
+        ,quentity:3
+        ,image:'src/assets/common/fruit/fineapple_s.png'
+      },
+      {
+        name:'사과'
+        ,price:10000
+        ,quentity:1
+        ,image:'src/assets/common/fruit/apple.png'
+      }
+    ]
+    ,fruit:{
+      name:''
+      ,price:0
+      ,quentity:0
+      ,image:''
+    }
+
+  }
+
+
   export default {
     name: 'KoreanInventoryInterface'
+    ,data(){
+      return model;
+    }
   }
   </script>
   
