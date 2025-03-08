@@ -83,7 +83,7 @@ export default {
         quizTime(){
             this.quiztime=true;
             this.timebar=800;
-            this.timeleft=3;
+            this.timeleft=30;   // 빠른 진행 : 3초 설정
             setTimeout(()=>{
                 this.quiztime=false;
                 this.timer();
@@ -92,7 +92,7 @@ export default {
         customer(){
             this.cart=[];
             this.timebar=800;
-            this.timeleft=30;   // 개발 : 3초로 설정하기
+            this.timeleft=30;   // 빠른 진행 : 3초 설정
             this.customerA=Math.floor(Math.random()*9)
             this.timer();
         },
@@ -106,8 +106,8 @@ export default {
                     clearInterval(this.interval);
                 }
                 quizend = new Date();
-                this.timebar = 800/30*(30-(quizend-quizstart)/1000);           // 개발 : 3초로 설정하기
-                this.timeleft = 30-Math.floor((quizend-quizstart)/1000);       // 개발 : 3초로 설정하기
+                this.timebar = 800/30*(30-(quizend-quizstart)/1000);           // 빠른 진행 : 3초 설정
+                this.timeleft = 30-Math.floor((quizend-quizstart)/1000);       // 빠른 진행 : 3초 설정
             },50)
         },
         moveprod(container,prodid){

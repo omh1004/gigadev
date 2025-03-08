@@ -1,9 +1,8 @@
 <template>
     <div style="display:flex;">
-        <!-- 일단 프론트엔드만 만들어놓는 중 -->
+        <!-- 일단 프론트엔드만 만들어놓는 중
         <p class="balloon">{{ quizDialog }}</p>
-        <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
-
+        <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px"> -->
         <div class="relability_bar">
             <div class="bar_inside">
                 <p v-show="relability==100" class="fever">FEVER<br>TIME</p>
