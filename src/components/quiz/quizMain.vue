@@ -46,6 +46,9 @@ export default {
 }
 </script>
 <style scoped>
+div{
+    background-repeat: no-repeat;
+}
     .balloon{
         display:flex;
         justify-content:center;
@@ -69,6 +72,8 @@ export default {
         right:420px;
         top:85px;
         z-index:-1;
+        background-repeat: no-repeat;
+        background-repeat: no-repeat;
     }
     .relability_bar{
         position:relative;
