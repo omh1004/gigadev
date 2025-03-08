@@ -2,8 +2,12 @@
     <div style="display:flex;">
         <div class="relability_bar">
             <div class="bar_inside">
-                <p class="figure">{{ relability }}</p>
-                <div class="figure_bar" :style="`min-height:${4*relability}px`"></div>
+                <p v-show="relability==100" class="fever">FEVER<br>TIME</p>
+                <p v-show="relability<=90" class="figure">{{ relability }}</p>
+                <div class="figure_bar" :class="{'lowrela':relability<=40,'rela':relability>40 && relability<100,'maxrela':relability==100}"
+                        :style="`min-height:${4*relability}px`">
+                    <p v-show="relability>90 && relability<100" class="figure" style="margin-top:3px;">{{ relability }}</p>
+                </div>
             </div>
         </div>
         <!-- <img class="relability_bar" src="@/resources/relability_bar.png" width="74px" height="410px"> -->
@@ -30,11 +34,10 @@ export default {
                 "/src/resources/customer8.png",
                 "/src/resources/customer9.png",
             ],
-            relability:90,  // 일단 임의의 값 지정
         }
     }
     ,mounted(){
-       
+
         this.$emit('customer');
 
         // for(let i=0;i<this.dialog.length;i++){
@@ -46,7 +49,7 @@ export default {
 
 
     },
-    props:['quizNum','dialog','customerA'],
+    props:['quizNum','dialog','customerA','relability'],
     emit:['answer'],
 }
 </script>
@@ -107,9 +110,23 @@ export default {
         text-align:center;
     }
     .figure_bar{
-        background-color:#E7C5B9;
         border-width:3px 0;
         border-style:solid;
         border-color:#6F3533;
+    }
+    .lowrela{
+        background-color:#E42200;
+    }
+    .rela{
+        background-color:#E7C5B9;
+    }
+    .maxrela{
+        background-color:#FFEFCA;
+    }
+    .fever{
+        position:relative;
+        top:60px;
+        margin:0;
+        text-align:center;
     }
 </style>

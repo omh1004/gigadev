@@ -1,9 +1,9 @@
 <template>
     <div class="conv">
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
-                    @quizTime="quizTime" @customer="customer"></RouterView>
+                    :relability="relability" @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
-                    @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
+                    :timeleft="timeleft" :noclick="noclick" @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
         <!-- <QuizChoice v-show="quiz" :quizNum="quizNum" :quizAnswer="quizAnswer" @result="result"/> -->
     </div>
@@ -28,11 +28,13 @@ export default {
                 {'strawberry':1,'pineapple':2},
             ],  // 일단 두개만
             currentWant:{},
+            relability:50,
         }
     },
     methods:{
         result(ans){
             clearInterval(this.interval);
+            this.$emit('notclick',true);
             if(quizAnswer[this.quizNum]==ans){
                 this.quizDialog='정답입니다.';
                 // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
@@ -53,7 +55,12 @@ export default {
                 },3500);
             }
             setTimeout(()=>{
-                this.$router.push('/maingame/'+this.customerCount);
+                this.$emit('notclick',false);
+                if(this.customerCount>=10){
+                    this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                }else{
+                    this.$router.push('/maingame/'+ ++this.customerCount);
+                }
             },7000);
         },
         quizTime(){
@@ -77,6 +84,7 @@ export default {
             this.$emit('revertprod',m,t);
         },
         submit(){
+            this.$emit('notclick',true);
             const prodcount=[];
             const key = Object.keys(this.currentWant);
             for(let i=0;i<key.length;i++){
@@ -128,31 +136,42 @@ export default {
             if(nothing){
                 this.dialog='손님이 화났습니다! ';
                 this.dialog+='신뢰도 -5';
+                this.relability-=5;
             }else if(perfect){
                 this.dialog='손님이 만족했습니다 ';
                 this.dialog+='신뢰도 +5';
+                this.relability+=5;
             }else{
                 if(over>0 && under>0){
                     timeout = 3500;
                     this.dialog=under + '개 덜 판매했습니다. ';
                     this.dialog+='신뢰도 -2';
+                    this.relability-=2;
                     setTimeout(()=>{
                         this.dialog=over + '개 더 판매했습니다. ';
                         this.dialog+='-' + loss + '원 ';
-                        this.dialog+='신뢰도 -2';   // 2번 떨어뜨릴지는 상의하기
                     },3500)
                 }else if(under>0){
                     this.dialog=under + '개 덜 판매했습니다. ';
                     this.dialog+='신뢰도 -2';
+                    this.relability-=2;
                 }else if(over>0){
                     this.dialog=over + '개 더 판매했습니다. ';
                     this.dialog+='-' + loss + '원 ';
                     this.dialog+='신뢰도 -2';
+                    this.relability-=2;
                 }
             }
             setTimeout(()=>{
-                this.$router.push('/maingame/'+ ++this.customerCount);
-                this.customer();
+                this.$emit('notclick',false);
+                if((this.customerCount+1)==this.quizMan){
+                    this.$router.push('/maingame/quiz');
+                }else if(this.customerCount>=10){
+                    this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                }else{
+                    this.$router.push('/maingame/'+ ++this.customerCount);
+                    this.customer();
+                }
             },3500+timeout);
         }
     },
@@ -160,26 +179,41 @@ export default {
         timeleft(curVal, oriVal){
             if(curVal<=0){
                 clearInterval(this.interval);
-                if((this.customerCount+1)==this.quizMan && !this.meetQuizMan){
-                    this.meetQuizMan=true;
+                this.$emit('notclick',true);
+                if((this.customerCount+1)==this.quizMan && this.meetQuizMan){
                     this.quizDialog='시간을 초과하였습니다.';
                     setTimeout(()=>{
                         this.quizDialog=quizComment[this.quizNum];
                     },3500);
                     setTimeout(()=>{
-                        this.$router.push('/maingame/'+ ++this.customerCount);
+                        this.$emit('notclick',false);
+                        if(this.customerCount>=10){
+                            this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                        }else{
+                            this.$router.push('/maingame/'+ ++this.customerCount);
+                        }
                     },7000);
                 }else{
                     this.dialog='손님이 화났습니다! ';
                     this.dialog+='신뢰도 -5';
+                    this.relability-=5;
                     if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
+                            this.meetQuizMan=true;
+                            this.$emit('rollback');
+                            this.$emit('notclick',false);
                             this.$router.push('/maingame/quiz');
                         },3500);
                     }else{
                         setTimeout(()=>{
-                            this.$router.push('/maingame/'+ ++this.customerCount);
-                            this.customer();
+                            this.$emit('rollback');
+                            this.$emit('notclick',false);
+                            if(this.customerCount>=10){
+                                this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                            }else{
+                                this.$router.push('/maingame/'+ ++this.customerCount);
+                                this.customer();
+                            }
                         },3500);
                     }
                 }
@@ -193,7 +227,7 @@ export default {
     components:{
         QuizMain,QuizChoice,
     },
-    props:['quizNum','interval','timeleft','customerA','cart']
+    props:['quizNum','interval','timeleft','customerA','cart','noclick']
 }
 </script>
 <style scoped>

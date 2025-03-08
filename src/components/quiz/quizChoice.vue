@@ -6,6 +6,7 @@
         </div>
         <img class="counter" src="@/resources/quiz_counter.png" @click="submit">
     </div>
+    <div v-show="timeleft==0 || noclick" style="width:100%;height:330px;position:relative;bottom:330px;"></div>
 </template>
 <script>
 import { quizAnswer, quizSelect } from '../../resources/prodNquiz.js';
@@ -45,27 +46,29 @@ export default {
                         i = this.quizClass.length;     // break 안쓰기(?)
                     }
                 }
-                if(quizAnswer[this.quizNum]==answer){
-                    this.quizClass[answer-1].select=false;
-                    this.quizClass[answer-1].correct=true;
-                }else{
-                    this.quizClass[answer-1].select=false;
-                    this.quizClass[answer-1].incorrect=true;
+                if(answer!=0){
+                    if(quizAnswer[this.quizNum]==answer){
+                        this.quizClass[answer-1].select=false;
+                        this.quizClass[answer-1].correct=true;
+                    }else{
+                        this.quizClass[answer-1].select=false;
+                        this.quizClass[answer-1].incorrect=true;
+                    }
+                    this.$emit('result',answer);
+
+                    this.submitAnswer=true;
+
+                    setTimeout(()=>{
+                        this.quizClass[answer-1].select=false;
+                        this.quizClass[answer-1].correct=false;
+                        this.quizClass[answer-1].incorrect=false;
+                        this.submitAnswer=false;
+                    },7500);
                 }
-                this.$emit('result',answer);
-
-                this.submitAnswer=true;
-
-                setTimeout(()=>{
-                    this.quizClass[answer-1].select=false;
-                    this.quizClass[answer-1].correct=false;
-                    this.quizClass[answer-1].incorrect=false;
-                    this.submitAnswer=false;
-                },7500);
             }
         }
     },
-    props:['quizNum'],
+    props:['quizNum','timeleft','noclick'],
 }
 </script>
 <style scoped>

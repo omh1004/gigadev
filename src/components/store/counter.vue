@@ -3,6 +3,7 @@
         <div id="cartzone" style="width:735px;display:flex;overflow-x:auto;">
             <!-- 카트의 상품 나열 -->
             <div v-for="c in cart" v-show="c.amount>0" @click="revertprod($event)">
+                <div style="display:flex;justify-content:flex-end;align-items:center;"><p style="color:white;background-color:black;border-radius:10px;min-width:20px;min-height:20px;">{{ c.amount }}</p></div>
                 <img class="cart" :src="`${c.src}`" alt="상품" height="50%" :id="`cart${c.id}`" :name="c.name"><br>
                 <p style="margin-top:15px;">{{ c.name }}</p>
             </div>
@@ -11,6 +12,7 @@
             <img class="counter_cal" src="@/resources/counter.png" @click="submit">
         </div>
     </div>
+    <div v-show="timeleft==0 || noclick" style="width:100%;height:330px;position:relative;bottom:330px;"></div>
 </template>
 <script>
 export default {
@@ -34,7 +36,7 @@ export default {
             this.$emit('submit');
         }
     },
-    props:['cart','interval']
+    props:['cart','interval','timeleft','noclick']
 }
 </script>
 <style scoped>
@@ -44,12 +46,10 @@ export default {
     #cartzone>div{
         display:inline-block;
         text-align:center;
-        width:170px;
-        min-width:170px;
-        height:190px;
-        min-height:190px;
-        background-color:white;
-        border-radius:30px;
+        width:80px;
+        min-width:80px;
+        height:114px;
+        min-height:114px;
         margin:10px 14px;
     }
     .amount{

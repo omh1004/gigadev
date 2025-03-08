@@ -29,9 +29,10 @@
         </div>
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"
-                        @quizTime="quizTime" @customer="customer" @revertprod="revertprod"/>
-            <Product :product="product" :countermodal="countermodal" :countertarget="countertarget"
-                        @moveprod="moveprod" @closemodal="closemodal"/>
+                        :noclick="noclick" @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"
+                        @notclick="notclick"/>
+            <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
+                        :noclick="noclick" @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
     </div>
 </template>
@@ -45,7 +46,7 @@ export default {
             timebar:800,
             quiztime:false,
             quizNum:Math.floor(Math.random()*10),
-            timeleft:30,
+            timeleft:3,
             interval:'',
             customerCount:1,
             customerA:Math.floor(Math.random()*9),
@@ -55,6 +56,19 @@ export default {
                 { id:"pineapple",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/fineapple.png",sell:0,price:1000,type:'b', },
                 { id:"strawberry_50",name:"딸기",amount:3,src:"/src/assets/tutorial/fruit/Group 2348.png",sell:0,price:1000,type:'a', },
                 { id:"pineapple_50",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/Frame 7370.png",sell:0,price:1000,type:'b', },
+                // 스크롤바 확인 용도 데이터. 절대 사용하지 마시오!
+                // { id:"strawberry",name:"딸기",amount:10,src:"/src/assets/tutorial/fruit/strawberry.png",sell:0,price:1000,type:'a', },
+                // { id:"pineapple",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/fineapple.png",sell:0,price:1000,type:'b', },
+                // { id:"strawberry_50",name:"딸기",amount:3,src:"/src/assets/tutorial/fruit/Group 2348.png",sell:0,price:1000,type:'a', },
+                // { id:"pineapple_50",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/Frame 7370.png",sell:0,price:1000,type:'b', },
+                // { id:"strawberry",name:"딸기",amount:10,src:"/src/assets/tutorial/fruit/strawberry.png",sell:0,price:1000,type:'a', },
+                // { id:"pineapple",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/fineapple.png",sell:0,price:1000,type:'b', },
+                // { id:"strawberry_50",name:"딸기",amount:3,src:"/src/assets/tutorial/fruit/Group 2348.png",sell:0,price:1000,type:'a', },
+                // { id:"pineapple_50",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/Frame 7370.png",sell:0,price:1000,type:'b', },
+                // { id:"strawberry",name:"딸기",amount:10,src:"/src/assets/tutorial/fruit/strawberry.png",sell:0,price:1000,type:'a', },
+                // { id:"pineapple",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/fineapple.png",sell:0,price:1000,type:'b', },
+                // { id:"strawberry_50",name:"딸기",amount:3,src:"/src/assets/tutorial/fruit/Group 2348.png",sell:0,price:1000,type:'a', },
+                // { id:"pineapple_50",name:"파인애플",amount:3,src:"/src/assets/tutorial/fruit/Frame 7370.png",sell:0,price:1000,type:'b', },
             ],
             // 판매 시 cart 초기화
             cart:[],
@@ -62,13 +76,14 @@ export default {
             dragtarget:'',
             countermodal:false,
             countertarget:{},
+            noclick:false,
         }
     },
     methods:{
         quizTime(){
             this.quiztime=true;
             this.timebar=800;
-            this.timeleft=30;
+            this.timeleft=3;
             setTimeout(()=>{
                 this.quiztime=false;
                 this.timer();
@@ -77,7 +92,7 @@ export default {
         customer(){
             this.cart=[];
             this.timebar=800;
-            this.timeleft=30;
+            this.timeleft=30;   // 개발 : 3초로 설정하기
             this.customerA=Math.floor(Math.random()*9)
             this.timer();
         },
@@ -91,8 +106,8 @@ export default {
                     clearInterval(this.interval);
                 }
                 quizend = new Date();
-                this.timebar = 800/30*(30-(quizend-quizstart)/1000);
-                this.timeleft = 30-Math.floor((quizend-quizstart)/1000);
+                this.timebar = 800/30*(30-(quizend-quizstart)/1000);           // 개발 : 3초로 설정하기
+                this.timeleft = 30-Math.floor((quizend-quizstart)/1000);       // 개발 : 3초로 설정하기
             },50)
         },
         moveprod(container,prodid){
@@ -130,7 +145,18 @@ export default {
         },
         closemodal(){
             this.countermodal=false;
-        }
+        },
+        rollback(){
+            this.cart.forEach(c=>{
+                const prod = this.product.find(p=>p.id==c.id);
+                console.log("이전 : " + prod.amount);
+                prod.amount+=c.amount;
+                console.log("이후 : " + prod.amount);
+            })
+        },
+        notclick(yes){
+            this.noclick=yes;
+        },
     },
     watch:{
         '$route.params.customerCount':{
