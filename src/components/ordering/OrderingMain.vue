@@ -4,7 +4,7 @@
       <p>알림</p>
     </div>
     <div id="almText">
-      <p>발주완료</p>
+      <p>알림내용</p>
     </div>
   </div>
   <div class="order-container">
