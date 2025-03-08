@@ -5,11 +5,11 @@
     <div class="maingame">
         <div class="topbar">
             <p>D-30</p>
-            <div style="display:flex;">
-                <img src="@/resources/timer.png" width="50" height="52">
+            <div style="displㅋay:flex;">
+                 <!-- <img src="@/resources/timer.png" width="10" height="52"> -- -->
                 <div class="timebar-container">
                     <div class="timerbar">
-                        <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}px`"></div>
+                        <div v-show="timebar>0" class="timeleft" :style="`width:${timebar-350}px`"></div>
                     </div>
                     <p class="time">{{ timeleft }}초</p>
                 </div>
@@ -190,7 +190,7 @@ export default {
         display:flex;
         justify-content:space-around;
         align-items:center;
-        width:1848px;
+        width:80vw;
         height:89px;
         padding:0 40px;
         margin:auto;
@@ -202,17 +202,18 @@ export default {
     .timebar-container{
         display:flex;
         align-items:center;
-        width:860px;
+        width:30vw;
+        max-height: 10px;
     }
     .timerbar{
-        width:800px;
+        width:30vw;
         height:40px;
         border:3px solid #6F3533;
         border-radius:30px;
         overflow:hidden;
     }
     .timeleft{
-        width:800px;
+        width:30vw;
         height:40px;
         background-color:#5E395A;
     }
@@ -224,10 +225,10 @@ export default {
         display:flex;
         justify-content:space-around;
         align-items:center;
-        width:340px;
+        width:10vw;
         height:56px;
         margin-right:20px;
-        background-image:url(@/resources/moneybar.png);
+        /* background-image:url(@/resources/moneybar.png); */
     }
     .line{
         min-height:28px;
