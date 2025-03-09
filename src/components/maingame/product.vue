@@ -208,6 +208,7 @@ export default {
         height:105%;
         bottom:105%;
         background-color:rgba(256,256,256,0.5);
+        z-index:0;
     }
     .modalwin{
         width:655px;

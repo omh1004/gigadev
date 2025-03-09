@@ -2,43 +2,56 @@
     <div v-show="quiztime" class="quiztime">
         <img src="@/resources/quiz_time.png">
     </div>
+    <Settings/>
     <div class="maingame">
-        <div class="topbar">
-            <p>D-30</p>
-            <div style="display:flex;">
-                <!-- <img src="@/resources/timer.png" width="10" height="52"> -- -->
-                <div class="timebar-container">
-                    <div class="timerbar">
-                        <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}vw`"></div>
+        <div style="height:10vh;overflow:visible;text-align:right;">
+            <div class="topbar">
+                <p>D-30</p>
+                <div style="display:flex;">
+                    <!-- <img src="@/resources/timer.png" width="10" height="52"> -- -->
+                    <div class="timebar-container">
+                        <div class="timerbar">
+                            <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}vw`"></div>
+                        </div>
+                        <p class="time">{{ timeleft }}초</p>
                     </div>
-                    <p class="time">{{ timeleft }}초</p>
+                </div>
+                <div style="display:flex;align-items:center;">
+                    <img src="@/resources/person.png" width="40" height="40">
+                    <p style="margin:0;">{{ customerCount }}/10</p>
+                </div>
+                <div style="display:flex;align-items:center;">
+                    <div class="moneybar">
+                        <img src="@/resources/money.png" width="48" height="48">
+                        <div class="line"></div>
+                        <div class="money"><p>0원</p></div>
+                    </div>
+                    <img src="@/resources/gameoption.png" width="40" height="40" @click="opensettings=!opensettings">
                 </div>
             </div>
-            <div style="display:flex;align-items:center;">
-                <img src="@/resources/person.png" width="40" height="40">
-                <p style="margin:0;">{{ customerCount }}/10</p>
-            </div>
-            <div style="display:flex;align-items:center;">
-                <div class="moneybar">
-                    <img src="@/resources/money.png" width="48" height="48">
-                    <div class="line"></div>
-                    <div class="money"><p>0원</p></div>
+            <div v-show="opensettings" class="settings">
+                <div class="settingslist">
+                    <p>사운드</p>
+                    <p>초보자메뉴얼</p>
+                    <p style="background-color:#56174F;color:#FFFFFF;">저장하기</p>
                 </div>
-                <img src="@/resources/gameoption.png" width="40" height="40">
             </div>
         </div>
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"
                         :noclick="noclick" @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"
-                        @notclick="notclick"/>
+                        @notclick="notclick" @bgmstop="bgmstop" @bgmrestart="bgmrestart"/>
             <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
                         :noclick="noclick" :quizblind="quizblind" @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
     </div>
 </template>
 <script scoped>
+import Settings from '../common/settings.vue';
 import cartNquiz from './cartnquiz.vue';
 import Product from './product.vue';
+import ConvenientLove from '@/resources/[suno]ConvenientLove.mp3';
+import QuizmanOnConvenient from '@/resources/[suno]QuizmanOnConvenient.mp3';
 
 export default {
     data(){
@@ -78,6 +91,9 @@ export default {
             countermodal:false,
             countertarget:{},
             noclick:false,
+            opensettings:false,
+            bgm:new Audio(ConvenientLove),
+            quizbgm:new Audio(QuizmanOnConvenient),
         }
     },
     methods:{
@@ -159,6 +175,26 @@ export default {
         notclick(yes){
             this.noclick=yes;
         },
+        bgmstop(){
+            this.bgm.pause();
+            this.bgm.load();
+        },
+        bgmchange(type){
+            if(type=='quiz'){
+                this.bgm.pause();
+                this.bgm.load();
+                this.quizbgm.start();
+            }else if(type=='customer'){
+                this.quizbgm.pause();
+                this.quizbgm.load();
+                this.bgm.start();
+            }
+        },
+    },
+    mounted(){
+        this.bgm.play();
+        this.bgm.loop=true;
+        this.quizbgm.loop=true;
     },
     watch:{
         '$route.params.customerCount':{
@@ -199,7 +235,7 @@ export default {
         display:flex;
         justify-content:space-between;
         align-items:center;
-        width:80vw;
+        width:90vw;
         height:89px;
         padding:0 40px;
         margin:auto;
@@ -269,5 +305,36 @@ export default {
         align-items:center;
         z-index:10;
         background-color:rgba(0,0,0,0.3);
+    }
+    .settings{
+        display:inline-block;
+        width:19vw;
+        height:28vh;
+        position:relative;
+        right:5vw;
+        background-color:#F5F5F5;
+        border:7px solid #6F3533;
+        border-radius:20px;
+        z-index:3;
+    }
+    .settingslist{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-around;
+        align-items:center;
+        width:19vw;
+        height:28vh;
+        text-align:center;
+    }
+    .settingslist p{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:10vw;
+        height:6vh;
+        margin:0;
+        background-color:#F5F5F5;
+        border:5px solid #56174F;
+        border-radius:20px;
     }
 </style>
