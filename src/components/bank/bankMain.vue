@@ -23,36 +23,33 @@
       <div class="day-summary-container" v-if="activeTab === 'daySummary'">
         <div class="day-summary">
           <div class="summary-header">
-            <img src="@/resources/DailySalesSettlement.png" alt="매출 정산 배너" class="summary-banner">
-              <h2>{{ selectedDay }}일차 매출 정산</h2>
+            <div class="summary-banner">📜 {{ selectedDay }}일차 매출 정산</div>
               </div>
 
-           <!-- ✅ 수입 섹션 -->
-    <div class="summary-box">
-      <h3>수입</h3>
-      <p>판매 수익</p>
-      <ul>
-        <li>*퀴즈 혜택</li>
-        <li>*FEVER DAY</li>
-      </ul>
-      <p>폐기 수익(20% 상품 판매 수익)</p>
-      <p class="summary-income">{{ income.toLocaleString() }}원</p>
-    </div>
+              <!-- 수입 섹션 -->
+      <div class="summary-box">
+        <h3>💰 수입</h3>
+        <p>판매 수익: {{ income.toLocaleString() }}원</p>
+        <p>✨ 퀴즈 혜택</p>
+        <p>🔥 FEVER DAY</p>
+        <p>🛒 폐기 수익 (20% 상품 판매 수익): {{ (income * 0.2).toLocaleString() }}원</p>
+      </div>
 
-    <!-- ✅ 지출 섹션 -->
+    <!-- 지출 섹션 -->
     <div class="summary-box">
-      <h3>지출</h3>
-      <p>발주 비용</p>
-      <p>운영비</p>
-      <p class="summary-expense">{{ expense.toLocaleString() }}원</p>
-    </div>
+        <h3>💸 지출</h3>
+        <p>발주 비용: -{{ expense.toLocaleString() }}원</p>
+        <p>운영비: -20,000원</p>
+      </div>
 
-    <!-- ✅ 총합 섹션 -->
-    <div class="summary-total">
-      <h3>총계</h3>
-      <p class="total-amount">{{ total.toLocaleString() }}원</p>
-      <button class="balance-btn">내 잔고</button>
-    </div>
+      <!-- 총합 -->
+      <div class="summary-total">
+        <h3>📊 총 매출</h3>
+        <p class="total-amount">{{ total.toLocaleString() }}원</p>
+      </div>
+
+       <!-- 내 잔고 버튼 -->
+       <button class="balance-btn">💰 내 잔고</button>
 
     <!-- ✅ 나가기 버튼 -->
     <button class="exit-btn" @click="closeDaySummary"></button>
@@ -799,22 +796,21 @@ button.loan-btn1 {
 
 .day-summary-container {
   position: fixed; /* 화면에 고정 */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* ✅ 중앙 정렬 */
+  top: 0%;
+  left: 0%;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6); /* 반투명 배경 추가 */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3; /* 가장 위에 오도록 설정 */
+  z-index: 10; /* 가장 위에 오도록 설정 */
 }
 
 
 
 .day-summary {
-  width: 500px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
+  width: 600px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
   max-width: 90%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
   max-height: 70vh; /* ✅ 화면에 맞게 자동 조정 */
   background: #F9F8F2;
@@ -822,7 +818,10 @@ button.loan-btn1 {
   padding: 30px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
-  overflow-y: auto; /* ✅ 내부 요소가 넘칠 경우 스크롤 추가 */
+  overflow: auto;
+  display: flex;
+  flex-direction: column; /* ✅ 내부 요소를 세로 정렬 */
+  align-items: center; /* ✅ 가로 가운데 정렬 */
 }
 
 
@@ -844,11 +843,13 @@ button.loan-btn1 {
 .summary-box {
   background: #EBE5DD;
   padding: 15px;
-  border-radius: 10px; /* ✅ 둥글게 */
+  border-radius: 10px;
   margin-bottom: 15px;
-  width: 90%; /* ✅ 너비를 줄여서 정리 */
-  margin-left: auto;
-  margin-right: auto;
+  width: 90%; /* ✅ 요소 너비 통일 */
+  text-align: left; /* ✅ 내부 텍스트 왼쪽 정렬 */
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* ✅ 요소 간격 조정 */
 }
 
 
@@ -861,6 +862,7 @@ button.loan-btn1 {
 .summary-income {
   color: #007bff;
   font-weight: bold;
+  margin-bottom: 5px; /* ✅ 제목과 내용 간격 */
 }
 
 .summary-expense {
