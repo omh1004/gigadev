@@ -1,21 +1,25 @@
 <template>
-    <div v-show="soundsetting" class="settings-container">
+    <div v-show="true" class="settings-container"> <!-- v-show=soundsetting으로 바꾸기 -->
         <div class="settings-modal">
-            <div>
+            <div style="width:90%;text-align:right;">
                 <img src="@/resources/purpleclose.png" @click="$emit('closesound');">
             </div>
             <div class="sound-settings">
-                <div  style="display:flex;justify-content:space-around;align-items:center;width:16vw;" @mousemove.left="asdf4($event)" @dragover="asdf4($event)">
+                <div  style="display:flex;justify-content:space-around;align-items:center;width:16vw;">
                     <img src="@/resources/bgm.png" alt="bgm">
-                    <div id="bgm" class="sound-bar" @dragover="asdf4($event)">
-                        <img src="@/resources/soundcircle.png" alt="sound-circle" style="position:relative" :style="`left:${bgmsound-5}vw`" id="bgmimg">
+                    <div style="height:100%;display:flex;align-items:center;" id="bgmbar" @mouseup="asdf($event)" @dragend="asdf($event)" @mousemove.left="asdf4($event)" @dragover="asdf3($event)">
+                        <div id="bgm" class="sound-bar" @dragover="asdf4($event)">
+                            <img src="@/resources/soundcircle.png" alt="sound-circle" style="position:relative" :style="`left:${bgmsound-5}vw`" id="bgmimg">
+                        </div>
                     </div>
                     <p>10</p>
                 </div>
-                <div style="display:flex;justify-content:space-around;align-items:center;width:16vw;" @mousemove.left="asdf4($event)" @dragover="asdf4($event)">
+                <div style="display:flex;justify-content:space-around;align-items:center;width:16vw;">
                     <img src="@/resources/effect.png" alt="sound">
-                    <div id="effect" class="sound-bar" @dragover="asdf4($event)">
-                        <img src="@/resources/soundcircle.png" alt="sound-circle" style="position:relative" :style="`left:${effectsound-5}vw`" id="effectimg">
+                    <div style="height:100%;display:flex;align-items:center;" id="effectbar" @mouseup="asdf($event)" @dragend="asdf($event)" @mousemove.left="asdf4($event)" @dragover="asdf3($event)">
+                        <div id="effect" class="sound-bar" @dragover="asdf4($event)">
+                            <img src="@/resources/soundcircle.png" alt="sound-circle" style="position:relative" :style="`left:${effectsound-5}vw`" id="effectimg">
+                        </div>
                     </div>
                     <p>10</p>
                 </div>
@@ -29,11 +33,12 @@ export default {
         return{
             bgmsound:10,
             effectsound:10,
+            dragid:'',
         }
     },
     methods:{
         asdf(e){
-            console.log('asdf1',e);
+            this.dragid='';
         },
         asdf2(e){
             console.log('asdf2',e);
@@ -43,9 +48,13 @@ export default {
         },
         asdf4(e){
             if(e.buttons===1){
-                console.log('asdf4',e);
-                console.log(e.target);
-                console.log(e.offsetX);
+                if(this.dragid==''){
+                    this.dragid=e.target.id;
+                    console.log(this.dragid);
+                }
+                if(!this.dragid.includes('bar')){
+                    console.log("오!");
+                }
             }
         }
     },

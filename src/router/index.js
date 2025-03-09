@@ -25,8 +25,9 @@ import StorageMain from '@/components/storage/StorageMain.vue'
 import bankComponent from '@/components/bank/bankMain.vue'
 import quizComponent from '@/components/quiz/quizMain.vue'
 
-import { createRouter, createWebHistory } from 'vue-router'
+import Settings from '@/components/common/settings.vue' // 개발용으로 추가가
 
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -138,6 +139,11 @@ const router = createRouter({
       path:'/storageMain'
       ,name:'storageMain'
       ,component:StorageMain
+    },
+    {
+      path:'/settings',
+      name:'settings',
+      component:Settings,
     }
   ],
 })
