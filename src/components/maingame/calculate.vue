@@ -2,7 +2,7 @@
     <div class="calculate-container">
         <div style="text-align:center;">
             <div class="calculate-paper">
-                <div class="title"><p></p></div>
+                <div class="calculate-title"><p></p></div>
             </div>
             <button class="dayend">퇴근하기</button>
         </div>
@@ -37,7 +37,7 @@ export default {
         background-color:rgba(0,0,0,0);
         border:0;
     }
-    .title{
+    .calculate-title{
         width:15vw;
         height:5vh;
         background-image:url("@/resources/calculatetitle.png");
