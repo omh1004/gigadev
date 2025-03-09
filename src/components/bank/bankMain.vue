@@ -70,15 +70,22 @@
       <!-- ✅ 절취선 추가 -->
 <div class="dashed-line"></div>
 
-      <!-- 총합 -->
+      <!-- 총계 및 내 잔고 -->
+    <div class="summary-bottom">
       <div class="summary-total">
         <h3>총계</h3>
         <p class="total-amount">{{ total.toLocaleString() }}원</p>
       </div>
 
-       <!-- 내 잔고 버튼 -->
-       <button class="balance-btn">내 잔고</button>
+      <div class="balance-container">
+        <button class="balance-btn">내 잔고</button>
+        <p class="balance-amount">{{ balance.toLocaleString() }}원</p>
+      </div>
+    </div>
 
+
+
+       
     <!-- ✅ 나가기 버튼 -->
     <button class="exit-btn" @click="closeDaySummary"></button>
   </div>
@@ -208,7 +215,7 @@ export default {
       expense: 0,  // ✅ 선택한 날짜의 지출
       total: 0, // ✅ 선택한 날짜의 총 매출 (income - expense)
       completedDays: [1,2,3,4], // ✅ 완료된 날짜 (예제: DAY1만 활성화)
-
+      balance:0,
       // 물음표 호버 기능!!
       showHelp:false,
 
@@ -843,9 +850,9 @@ button.loan-btn1 {
 
 
 .day-summary {
-  width: 719px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
+  width: 690px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
   max-width: 90%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
-  max-height: 700vh; /* ✅ 화면에 맞게 자동 조정 */
+  max-height: 600vh; /* ✅ 화면에 맞게 자동 조정 */
   /* height: auto; 높이는 자동 조정 */
   background: #F9F8F2;
   border-radius: 20px;
@@ -856,7 +863,7 @@ button.loan-btn1 {
   display: flex;
   flex-direction: column; /* ✅ 내부 요소를 세로 정렬 */
   align-items: center; /* ✅ 가로 가운데 정렬 */
-  margin-top: -60px; /* 창 전체를 위로 30px 이동 */
+  margin-top: -70px; /* 창 전체를 위로 30px 이동 */
 }
 
 
@@ -904,44 +911,6 @@ button.loan-btn1 {
   font-weight: bold;
 }
 
-/* ✅ 총합 스타일 */
-.summary-total {
-   display: flex;
-  justify-content: space-between; /* 좌우 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-  padding: 15px 20px;
-  font-size: 15px; /* 글자 크기 */
-  font-weight: bold; /* 글자 굵게 */
-  color: black; /* 글자 색상 */
-  margin-top: 3px; /* 위쪽 여백 */
-  margin-bottom: -30px; /* ✅ 기존보다 간격을 줄이기 */
-  padding-top: 0px; /* ✅ 내부 간격 조정 */
-}
-
-
-.summary-total h3,
-.summary-total p {
-  display: inline-block;
-  margin-right: 200px; /* 제목과 금액 사이 간격 조절 */
-}
-
-
-.total-amount {
-  font-size: 15rpx;
-  font-weight: bold;
-  color: #000;
-}
-
-/* ✅ 내 잔고 버튼 */
-.balance-btn {
-  background: #4C1D0D;
-  color: white;
-  padding: 10px 20px;
-  font-weight: bold;
-  border-radius: 10px;
-  width: 80%;
-  margin-top: 10px;
-}
 
 /* ✅ 나가기 버튼 */
 .exit-btn {
@@ -953,7 +922,7 @@ button.loan-btn1 {
   border: none;
   cursor: pointer;
   position: absolute;
-  bottom:0px; /* ✅ 아래쪽 정렬 */
+  bottom:-5px; /* ✅ 아래쪽 정렬 */
   left: 50%;
   transform: translateX(-50%);
 }
@@ -974,11 +943,11 @@ button.loan-btn1 {
 
 .ribbon-text {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 57%;
   transform: translate(-50%, -50%); /* 가운데 정렬 */
   color: white;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
@@ -1063,6 +1032,74 @@ button.loan-btn1 {
   font-size: 16px;
   margin-bottom: -15px;
 }
+
+
+/* 🔹 총계와 내 잔고를 한 줄로 배치 */
+.summary-bottom {
+  display: flex;
+  flex-direction: column; /* 🔥 세로 정렬 (총계와 내 잔고 버튼을 분리) */
+  align-items: center; /* 가운데 정렬 */
+  gap: 10px; /* 🔥 요소 간 간격 추가 */
+  padding: 5px 10px;
+  font-size: 22px;
+  font-weight: bold;
+  color: black;
+  margin-top: 0px;
+  gap: 0px;
+}
+
+/* 🔹 총계 스타일 */
+.summary-total {
+  display: flex;
+  align-items: center;
+  gap:400px; /* 총계와 금액 사이 간격 조정 */
+}
+
+.summary-total h3 {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.total-amount {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+}
+
+
+/* 🔹 내 잔고 컨테이너 - 길고 같은 색의 버튼으로 변경 */
+.balance-container {
+  display: flex;
+  justify-content: space-between; /* 좌우 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  background: #4C1D0D; /* 버튼과 같은 색 */
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  width: 550px; /* 박스 길이 늘리기 */
+  height: 30px;
+  margin-top: -2px; /* 위쪽 여백 추가 */
+}
+
+/* 🔹 내 잔고 버튼을 박스 내부에 포함 */
+.balance-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: left; /* 텍스트도 왼쪽 정렬 */
+}
+
+/* 🔹 내 잔고 금액 스타일 */
+.balance-amount {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
 
 
 </style>
