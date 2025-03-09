@@ -1,33 +1,32 @@
-
-
 import HomeComponent from '@/components/mainmenu/HomeComponent.vue'
-import IntroStartComponent from '@/components/mainmenu/intro/IntroStart.vue'
 import MainComponent from '@/components/member/main.vue'
 import LoginComponent from '@/components/member/login.vue'
 import JoinComponent from '@/components/member/join.vue'
-import quizComponent from '@/components/quiz/quizMain.vue'
 
 import MainmenuComponent from '@/components/mainmenu/intro/Mainmenu.vue'
-import bankComponent from '@/components/bank/bankMain.vue'
-import maingameComponent from '@/components/maingame/maingame.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
+import IntroStart2 from '@/components/mainmenu/intro/introstart/IntroStart2.vue'
+import IntroStart3 from '@/components/mainmenu/intro/introstart/IntroStart3.vue'
+import IntroStart4 from '@/components/mainmenu/intro/introstart/IntroStart4.vue'
 import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue'
 import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
-import bankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
+
+import maingameComponent from '@/components/maingame/maingame.vue'
 import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
 import Counter from '@/components/store/counter.vue'
 import Customer from '@/components/store/customer.vue'
-import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
-import IntroStart2 from '@/components/mainmenu/intro/introstart/IntroStart2.vue'
-import IntroStart3 from '@/components/mainmenu/intro/introstart/IntroStart3.vue'
+import calculate from '@/components/maingame/calculate.vue'
 
-import IntroStart4 from '@/components/mainmenu/intro/introstart/IntroStart4.vue'
 import OrderingMain from '@/components/ordering/OrderingMain.vue'
 import StorageMain from '@/components/storage/StorageMain.vue'
 
+import bankComponent from '@/components/bank/bankMain.vue'
+import quizComponent from '@/components/quiz/quizMain.vue'
 
+import { createRouter, createWebHistory } from 'vue-router'
+import Calculate from '@/components/maingame/calculate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,6 +77,11 @@ const router = createRouter({
           }
         }
       ]
+    },
+    {
+      path: '/calculate',
+      name: 'calculate',
+      component: Calculate,
     },
     {
       path: '/homeMenu',
