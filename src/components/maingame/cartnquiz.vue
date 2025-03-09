@@ -164,12 +164,12 @@ export default {
             setTimeout(()=>{
                 this.$emit('notclick',false);
                 if((this.customerCount+1)==this.quizMan){
+                    this.$emit('bgmchange','quiz');
                     this.$router.push('/maingame/quiz');
                 }else if(this.customerCount>=10){
                     this.$emit('bgmstop');
                     this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
                 }else{
-                    this.$emit('bgmrestart');
                     this.$router.push('/maingame/'+ ++this.customerCount);
                     this.customer();
                 }
@@ -192,6 +192,7 @@ export default {
                             this.$emit('bgmstop');
                             this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
                         }else{
+                            this.$emit('bgmchange','customer');
                             this.$router.push('/maingame/'+ ++this.customerCount);
                         }
                     },7000);
@@ -204,6 +205,7 @@ export default {
                             this.meetQuizMan=true;
                             this.$emit('rollback');
                             this.$emit('notclick',false);
+                            this.$emit('bgmchange','quiz');
                             this.$router.push('/maingame/quiz');
                         },3500);
                     }else{
