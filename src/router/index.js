@@ -17,7 +17,7 @@ import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
 import Counter from '@/components/store/counter.vue'
 import Customer from '@/components/store/customer.vue'
-import calculate from '@/components/maingame/calculate.vue'
+import Calculate from '@/components/maingame/calculate.vue'
 
 import OrderingMain from '@/components/ordering/OrderingMain.vue'
 import StorageMain from '@/components/storage/StorageMain.vue'
@@ -26,7 +26,7 @@ import bankComponent from '@/components/bank/bankMain.vue'
 import quizComponent from '@/components/quiz/quizMain.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
-import Calculate from '@/components/maingame/calculate.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

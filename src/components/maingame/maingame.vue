@@ -2,7 +2,7 @@
     <div v-show="quiztime" class="quiztime">
         <img src="@/resources/quiz_time.png">
     </div>
-    <Settings/>
+    <Settings :soundsetting="soundsetting" @closesound="closesound"/>
     <div class="maingame">
         <div style="height:10vh;overflow:visible;text-align:right;">
             <div class="topbar">
@@ -31,7 +31,7 @@
             </div>
             <div v-show="opensettings" class="settings">
                 <div class="settingslist">
-                    <p>사운드</p>
+                    <p @click="soundsetting=true;">사운드</p>
                     <p>초보자메뉴얼</p>
                     <p style="background-color:#56174F;color:#FFFFFF;">저장하기</p>
                 </div>
@@ -40,7 +40,7 @@
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"
                         :noclick="noclick" @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"
-                        @notclick="notclick" @bgmstop="bgmstop" @bgmrestart="bgmrestart"/>
+                        @notclick="notclick" @bgmstop="bgmstop"  @bgmchange="bgmchange"/>
             <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
                         :noclick="noclick" :quizblind="quizblind" @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
@@ -94,6 +94,7 @@ export default {
             opensettings:false,
             bgm:new Audio(ConvenientLove),
             quizbgm:new Audio(QuizmanOnConvenient),
+            soundsetting:false,
         }
     },
     methods:{
@@ -190,6 +191,9 @@ export default {
                 this.bgm.start();
             }
         },
+        closesound(){
+            this.soundsetting=false;
+        }
     },
     mounted(){
         this.bgm.play();
@@ -213,7 +217,7 @@ export default {
         }
     },
     components:{
-        cartNquiz,Product
+        cartNquiz,Product,Settings
     }
 }
 </script>
