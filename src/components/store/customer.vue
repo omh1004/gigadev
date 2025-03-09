@@ -65,7 +65,7 @@ export default {
         background-size: 100% 100%;
         position:relative;
         /* top:160px; */
-        left:440px;
+        left:340px;
         font-family:"Pretendard";
         font-size:28px;
         padding-left:100px;
