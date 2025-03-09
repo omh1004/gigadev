@@ -2,7 +2,7 @@
     <div v-show="quiztime" class="quiztime">
         <img src="@/resources/quiz_time.png">
     </div>
-    <Settings :soundsetting="soundsetting" @closesound="closesound"/>
+    <Settings :soundsetting="soundsetting" @closesound="closesound" @changebgmvol="changebgmvol" @changeeffectvol="changeeffectvol"/>
     <div class="maingame">
         <div style="height:10vh;overflow:visible;text-align:right;">
             <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
@@ -193,6 +193,12 @@ export default {
         },
         closesound(){
             this.soundsetting=false;
+        },
+        changebgmvol(vol){
+            this.bgm.volume=vol/10;
+        },
+        changeeffectvol(vol){
+            // effect 생기면 추가하기
         }
     },
     mounted(){

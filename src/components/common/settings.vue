@@ -1,5 +1,5 @@
 <template>
-    <div v-show="true" class="settings-container"> <!-- v-show=soundsetting으로 바꾸기 -->
+    <div v-show="soundsetting" class="settings-container"> <!-- v-show=soundsetting으로 바꾸기 -->
         <div class="settings-modal">
             <div style="width:90%;text-align:right;">
                 <img src="@/resources/purpleclose.png" @click="$emit('closesound');">
@@ -7,19 +7,15 @@
             <div class="sound-settings">
                 <div  style="display:flex;justify-content:space-around;align-items:center;width:16vw;">
                     <img src="@/resources/bgm.png" alt="bgm">
-                    <div style="height:100%;display:flex;align-items:center;" id="bgmbar" @mouseup="asdf($event)" @dragend="asdf($event)" @mousemove.left="asdf4($event)" @dragover="asdf3($event)">
-                        <div id="bgm" class="sound-bar" @dragover="asdf4($event)">
-                            <img src="@/resources/soundcircle.png" alt="sound-circle" style="position:relative" :style="`left:${bgmsound-5}vw`" id="bgmimg">
-                        </div>
+                    <div style="height:100%;display:flex;align-items:center;">
+                        <input id="bgm" type="range" max="10" step="1" class="sound-bar" :value="bgmsound" @change="changevol($event)">
                     </div>
                     <p>10</p>
                 </div>
                 <div style="display:flex;justify-content:space-around;align-items:center;width:16vw;">
                     <img src="@/resources/effect.png" alt="sound">
-                    <div style="height:100%;display:flex;align-items:center;" id="effectbar" @mouseup="asdf($event)" @dragend="asdf($event)" @mousemove.left="asdf4($event)" @dragover="asdf3($event)">
-                        <div id="effect" class="sound-bar" @dragover="asdf4($event)">
-                            <img src="@/resources/soundcircle.png" alt="sound-circle" style="position:relative" :style="`left:${effectsound-5}vw`" id="effectimg">
-                        </div>
+                    <div style="height:100%;display:flex;align-items:center;">
+                        <input id="effect" type="range" max="10" step="1" class="sound-bar" :value="effectsound" @change="changevol($event)">
                     </div>
                     <p>10</p>
                 </div>
@@ -37,24 +33,13 @@ export default {
         }
     },
     methods:{
-        asdf(e){
-            this.dragid='';
-        },
-        asdf2(e){
-            console.log('asdf2',e);
-        },
-        asdf3(e){
-            console.log('asdf3',e);
-        },
-        asdf4(e){
-            if(e.buttons===1){
-                if(this.dragid==''){
-                    this.dragid=e.target.id;
-                    console.log(this.dragid);
-                }
-                if(!this.dragid.includes('bar')){
-                    console.log("오!");
-                }
+        changevol(e){
+            if(e.target.id=='bgm'){
+                this.bgmsound=Math.round(e.target.value);
+                this.$emit('changebgmvol',this.bgmsound);
+            }else if(e.target.id=='effect'){
+                this.effectsound=Math.round(e.target.value);
+                this.$emit('changeeffectvol',this.effectsound);
             }
         }
     },
@@ -95,12 +80,17 @@ export default {
         align-items:center;
     }
     .sound-bar{
-        display:flex;
-        justify-content:center;
-        align-items:center;
+        appearance:unset;
         width:10vw;
         height:1vh;
         background-color:#56174F;
         border-radius:5px;
+    }
+    .sound-bar::-webkit-slider-thumb{
+        appearance:unset;
+        width:2vh;
+        height:2vh;
+        background-image:url("@/resources/soundcircle.png");
+        background-size:100% 100%;
     }
 </style>
