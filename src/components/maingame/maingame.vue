@@ -184,11 +184,11 @@ export default {
             if(type=='quiz'){
                 this.bgm.pause();
                 this.bgm.load();
-                this.quizbgm.start();
+                this.quizbgm.play();
             }else if(type=='customer'){
                 this.quizbgm.pause();
                 this.quizbgm.load();
-                this.bgm.start();
+                this.bgm.play();
             }
         },
         closesound(){
