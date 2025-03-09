@@ -1,8 +1,67 @@
-<!-- test -->
 <template>  
   <div class="bank-container">
     <!-- ✅ 달력 (항상 보이게 유지) -->
     <div class="calandar">
+
+
+       <!-- ✅ 매출 정산 화면 (D-30) 매출 정산 클릭시!! -->
+    <div class="sales-settlement" v-if="activeTab === 'salesSettlement'">
+        <div class="calendar">
+          <div
+            v-for="(day, index) in 30"
+            :key="index"
+            class="day-button"
+            :class="{ completed: completedDays.includes(index + 1) }"
+            @click="openDaySummary(index + 1)"
+          >
+            DAY {{ index + 1 }}
+          </div>
+        </div>
+      </div>
+
+           <!-- ✅ 매출 정산 상세 화면 (DAY 버튼 클릭 시) -->
+      <div class="day-summary-container" v-if="activeTab === 'daySummary'">
+        <div class="day-summary">
+          <div class="summary-header">
+            <img src="@/resources/DailySalesSettlement.png" alt="매출 정산 배너" class="summary-banner">
+              <h2>{{ selectedDay }}일차 매출 정산</h2>
+              </div>
+
+           <!-- ✅ 수입 섹션 -->
+    <div class="summary-box">
+      <h3>수입</h3>
+      <p>판매 수익</p>
+      <ul>
+        <li>*퀴즈 혜택</li>
+        <li>*FEVER DAY</li>
+      </ul>
+      <p>폐기 수익(20% 상품 판매 수익)</p>
+      <p class="summary-income">{{ income.toLocaleString() }}원</p>
+    </div>
+
+    <!-- ✅ 지출 섹션 -->
+    <div class="summary-box">
+      <h3>지출</h3>
+      <p>발주 비용</p>
+      <p>운영비</p>
+      <p class="summary-expense">{{ expense.toLocaleString() }}원</p>
+    </div>
+
+    <!-- ✅ 총합 섹션 -->
+    <div class="summary-total">
+      <h3>총계</h3>
+      <p class="total-amount">{{ total.toLocaleString() }}원</p>
+      <button class="balance-btn">내 잔고</button>
+    </div>
+
+    <!-- ✅ 나가기 버튼 -->
+    <button class="exit-btn" @click="closeDaySummary"></button>
+  </div>
+</div>
+
+
+
+
       <!-- ✅ 대출 내역 표시 (대출내역 버튼 클릭 시) -->
       <div class="loan-history" v-if="activeTab === 'loanHistory'" style="top: 13%;">
         <div class="loan-header" style="display: flex; justify-content: end;">
@@ -65,6 +124,12 @@
       </div>
     </div>
 
+
+
+   
+
+
+
     <!-- ✅ 버튼 컨테이너 (달력 옆으로 배치) -->
     <div class="button-container">
       <button 
@@ -112,8 +177,17 @@ export default {
         { date: "2025.01.01", type: "초기 운영 대출금", amount: 1000000 },
       ],
 
+      // ✅ 매출 정산 관련 데이터
+      selectedDay: null, // ✅ 선택한 날짜 (DAY 버튼 클릭 시 저장)
+      income: 0, // ✅ 선택한 날짜의 수입
+      expense: 0,  // ✅ 선택한 날짜의 지출
+      total: 0, // ✅ 선택한 날짜의 총 매출 (income - expense)
+      completedDays: [1,2,3,4], // ✅ 완료된 날짜 (예제: DAY1만 활성화)
+
       // 물음표 호버 기능!!
       showHelp:false,
+
+      
     };
   },
   computed: {
@@ -166,7 +240,26 @@ export default {
       this.loanAmount = "";
       this.errorMessage = "";
       alert("대출 신청이 완료되었습니다.");
+    },
+
+    openDaySummary(day) {
+      if (this.completedDays.includes(day)) {
+        this.selectedDay = day;
+        this.income = 100000 + (day * 10000);
+        this.expense = 20000 + (day * 5000);
+        this.total = this.income - this.expense;
+        this.activeTab = "daySummary";
+      } else {
+        alert("아직 완료되지 않은 날짜입니다!"); // ✅ 클릭 불가 알림
+      }
+
+    },
+    closeDaySummary() {
+      this.selectedDay = null;
+      this.activeTab = "salesSettlement";
     }
+
+
   }
 };
 </script>
@@ -647,6 +740,169 @@ button.loan-btn1 {
   display: flex;
   justify-content: flex-end; /* ✅ 버튼을 오른쪽으로 정렬 */
   margin-top: 20px; /* 버튼과 위 요소 간격 조정 */
+}
+
+
+
+/* 매출정산 화면 ======================= */
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* ✅ 6개씩 가로 배치 */
+  column-gap: 32px;
+  row-gap: 10px;
+  margin-top: 20px;
+}
+
+.day-button {
+  background: #D8D6D6;
+  padding: 10px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  width: 55px; /* ✅ 버튼 크기 조정 */
+  height: 48px; /* ✅ 버튼 높이 조정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: lighter;
+  font-size: 15px; /* ✅ 글자 크기 */
+  color: black; /* ✅ 글자 색상 */
+  
+}
+
+/* ✅ 완료된 날짜 스타일 */
+.day-button.completed {
+  background: #EBE5DD;
+  color: black;
+}
+
+
+/* 피그마 색깔 */
+.day-button:hover {
+  background: #56174F; /* ✅ 피그마 색깔 */
+  color: #ffffff;
+}
+
+.day-button:active {
+  background: #b9b8b8; /* ✅ 피그마 색깔 */
+}
+
+
+
+
+
+
+
+
+/* 매출 정산 상세 화면 스타일 ========= !! ======== */
+
+.day-summary-container {
+  position: fixed; /* 화면에 고정 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* ✅ 중앙 정렬 */
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* 반투명 배경 추가 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3; /* 가장 위에 오도록 설정 */
+}
+
+
+
+.day-summary {
+  width: 500px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
+  max-width: 90%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
+  max-height: 70vh; /* ✅ 화면에 맞게 자동 조정 */
+  background: #F9F8F2;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  overflow-y: auto; /* ✅ 내부 요소가 넘칠 경우 스크롤 추가 */
+}
+
+
+/* ✅ 헤더 디자인 */
+.summary-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-banner {
+  width: 80%; /* ✅ 배너 크기 조절 */
+  max-width: 400px; /* ✅ 최대 크기 제한 */
+  margin-top: -20px; /* ✅ 상단 배너가 겹치지 않도록 */
+}
+
+
+/* ✅ 개별 정보 박스 */
+.summary-box {
+  background: #EBE5DD;
+  padding: 15px;
+  border-radius: 10px; /* ✅ 둥글게 */
+  margin-bottom: 15px;
+  width: 90%; /* ✅ 너비를 줄여서 정리 */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.summary-box h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ✅ 수입 / 지출 스타일 */
+.summary-income {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.summary-expense {
+  color: #D9534F;
+  font-weight: bold;
+}
+
+/* ✅ 총합 스타일 */
+.summary-total {
+  padding: 20px;
+}
+
+.total-amount {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* ✅ 내 잔고 버튼 */
+.balance-btn {
+  background: #4C1D0D;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  width: 80%;
+  margin-top: 10px;
+}
+
+/* ✅ 나가기 버튼 */
+.exit-btn {
+  background: url("@/resources/Getout.png") no-repeat center;
+  background-size: contain;
+  display: block;
+  width: 150px; /* ✅ 크기 조정 */
+  height: 45px; /* ✅ 크기 조정 */
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px; /* ✅ 아래쪽 정렬 */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 
