@@ -40,7 +40,7 @@
       </div>
       
       <div class="open-button-container">
-        <button class="open-button"></button>
+        <button class="open-button" @click="$router.push('/maingame/1')"></button>  <!-- 실험용 이벤트 -->
       </div>
     </div>
   </template>
