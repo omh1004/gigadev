@@ -23,16 +23,20 @@
       <div class="day-summary-container" v-if="activeTab === 'daySummary'">
         <div class="day-summary">
           <div class="summary-header">
-            <div class="summary-banner">📜 {{ selectedDay }}일차 매출 정산</div>
+            <div class="ribbon-container">
+              <img src = "@/resources/Ribbon.png" alt="Ribbon" class=""ribbon-image>
+              <span class = "ribbon-text">{{ selectedDay }}일차 매출 정산</span>
+              </img>
+              </div>
               </div>
 
               <!-- 수입 섹션 -->
       <div class="summary-box">
-        <h3>💰 수입</h3>
+        <h3>수입</h3>
         <p>판매 수익: {{ income.toLocaleString() }}원</p>
-        <p>✨ 퀴즈 혜택</p>
-        <p>🔥 FEVER DAY</p>
-        <p>🛒 폐기 수익 (20% 상품 판매 수익): {{ (income * 0.2).toLocaleString() }}원</p>
+        <p>*퀴즈 혜택</p>
+        <p>*FEVER DAY</p>
+        <p>폐기 수익 (20% 상품 판매 수익): {{ (income * 0.2).toLocaleString() }}원</p>
       </div>
 
     <!-- 지출 섹션 -->
@@ -44,7 +48,7 @@
 
       <!-- 총합 -->
       <div class="summary-total">
-        <h3>📊 총 매출</h3>
+        <h3>총매출</h3>
         <p class="total-amount">{{ total.toLocaleString() }}원</p>
       </div>
 
@@ -794,6 +798,11 @@ button.loan-btn1 {
 
 /* 매출 정산 상세 화면 스타일 ========= !! ======== */
 
+
+
+
+
+
 .day-summary-container {
   position: fixed; /* 화면에 고정 */
   top: 0%;
@@ -810,9 +819,10 @@ button.loan-btn1 {
 
 
 .day-summary {
-  width: 600px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
-  max-width: 90%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
+  width: 650px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
+  max-width: 95%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
   max-height: 70vh; /* ✅ 화면에 맞게 자동 조정 */
+  /* height: auto; 높이는 자동 조정 */
   background: #F9F8F2;
   border-radius: 20px;
   padding: 30px;
@@ -832,19 +842,15 @@ button.loan-btn1 {
   align-items: center;
 }
 
-.summary-banner {
-  width: 80%; /* ✅ 배너 크기 조절 */
-  max-width: 400px; /* ✅ 최대 크기 제한 */
-  margin-top: -20px; /* ✅ 상단 배너가 겹치지 않도록 */
-}
 
 
 /* ✅ 개별 정보 박스 */
 .summary-box {
   background: #EBE5DD;
-  padding: 15px;
+  padding: 1spx;
   border-radius: 10px;
-  margin-bottom: 15px;
+  line-height: 0.8; /* 기본값은 1.5 정도일 수 있음 */
+  margin-bottom: 20px;
   width: 90%; /* ✅ 요소 너비 통일 */
   text-align: left; /* ✅ 내부 텍스트 왼쪽 정렬 */
   display: flex;
@@ -873,7 +879,15 @@ button.loan-btn1 {
 /* ✅ 총합 스타일 */
 .summary-total {
   padding: 20px;
+  
 }
+
+.summary-total h3,
+.summary-total p {
+  display: inline-block;
+  margin-right: 200px; /* 제목과 금액 사이 간격 조절 */
+}
+
 
 .total-amount {
   font-size: 22px;
@@ -906,6 +920,32 @@ button.loan-btn1 {
   left: 50%;
   transform: translateX(-50%);
 }
+
+
+.ribbon-container {
+  position: relative;
+  display: inline-block;
+  width: 300px; /* 리본 크기 조절 */
+  transform: scale(0.8); /* 🔥 80% 크기로 줄이기 */
+  margin-top: -25px; /* 🔥 위쪽 여백을 줄임 (값을 더 줄이면 더 올라감) */
+}
+
+.ribbon-image {
+  width: 80%; /* 리본 이미지를 컨테이너에 맞춤 */
+  display: block;
+}
+
+.ribbon-text {
+  position: absolute;
+  top: 50%;
+  left: 57%;
+  transform: translate(-50%, -50%); /* 가운데 정렬 */
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
 
 
 </style>
