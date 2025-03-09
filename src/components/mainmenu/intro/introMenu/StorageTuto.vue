@@ -24,11 +24,7 @@
         </div>
       </div>
       
-      <!-- Inventory Status -->
-      <div class="inventory-status-bar">
-        <div class="info-text">발주된 상품은 다음과 같이 창고에 표시 됩니다.</div>
-        <div class="capacity-text">창고 개수 : 110/150</div>
-      </div>
+
       
       <!-- Tab Menu -->
       <div class="tab-container">
@@ -39,99 +35,18 @@
           <div class="tab-divider"></div>
           <div class="tab-item">전자제품</div>
         </div>
-        
+  
         <!-- Inventory Content -->
-        <div class="inventory-content">
-          <!-- Info Row 1 -->
-          <div class="info-row">
-            <div class="info-text">
-              유통기한 하루 전(D-1) 상품가격이 50% 할인됩니다.
-            </div>
-          </div>
-          
-          <!-- Items Row 1 -->
-          <div class="items-row">
-            <div class="item">
-              <div class="discount-badge">50%</div>
-              <div class="item-image">🍓</div>
-              <div class="item-name">딸기</div>
-              <div class="item-count">× 2</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🍓</div>
-              <div class="item-name">딸기</div>
-              <div class="item-count">× 8</div>
-            </div>
-            
-            <div class="item">
-              <div class="discount-badge">50%</div>
-              <div class="item-image">🍎</div>
-              <div class="item-name">사과</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🍎</div>
-              <div class="item-name">사과</div>
-              <div class="item-count">× 5</div>
-            </div>
-            
-            <div class="item">
-              <div class="discount-badge">50%</div>
-              <div class="item-image">🍉</div>
-              <div class="item-name">왕상추</div>
-              <div class="item-count">× 25</div>
-            </div>
-          </div>
-          
-          <!-- Info Row 2 -->
-          <div class="info-row">
-            <div class="info-text">
-              유통기한 임박 상품은 모두 판매되지 않으면 다음 날 자동 폐기됩니다.
-            </div>
-          </div>
-          
-          <!-- Items Row 2 -->
-          <div class="items-row">
-            <div class="item">
-              <div class="item-image">🍅</div>
-              <div class="item-name">방울주</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🍍</div>
-              <div class="item-name">파인애플</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🦐</div>
-              <div class="item-name">파인애플</div>
-              <div class="item-count">× 20</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🥚</div>
-              <div class="item-name">세포</div>
-              <div class="item-count">× 10</div>
-            </div>
-            
-            <div class="item">
-              <div class="item-image">🥚</div>
-              <div class="item-name">계란</div>
-              <div class="item-count">× 10</div>
-            </div>
-          </div>
-          
-          <!-- Info Row 3 -->
-          <div class="info-row">
-            <div class="info-text">
-              자동 폐기될 대비해 상품을 20%로 조기 판매할 수 있습니다.
-            </div>
-          </div>
-        </div>
+        <div class="fruit-container" :style="containerStyle">
+    <div class="fruit-row" v-for="(row, rowIndex) in fruitRows" :key="rowIndex">
+      <div class="fruit-item" v-for="(fruit, fruitIndex) in row" :key="fruitIndex">
+        <img :src="fruit.image" :alt="fruit.name" class="fruit-image">
+        <div class="fruit-discount" v-if="fruit.discount">{{ fruit.discount }}</div>
+        <div class="fruit-name">{{ fruit.name }}</div>
+        <div class="fruit-quantity">x{{ fruit.quantity }}</div>
+      </div>
+    </div>
+  </div>
       </div>
       
       <!-- Confirm Button -->
@@ -145,8 +60,84 @@
   </template>
   
   <script>
+
+  const model={  
+    image:'src/assets/common/fruit/strawberry.png',
+    fruits: [
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null },
+        { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: null },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%' },
+        // 과일 데이터 더 추가 가능
+      ],
+      itemsPerRow: 5,
+      maxVisibleRows: 3,
+      rowHeight: 150, 
+  }
+
+
   export default {
     name: 'KoreanInventoryInterface'
+    ,data(){
+      return model;
+    }
+    ,computed: {
+        // 과일 배열을 5개씩 나누어 2차원 배열로 변환
+        fruitRows() {
+          const rows = [];
+          for (let i = 0; i < this.fruits.length; i += this.itemsPerRow) {
+            rows.push(this.fruits.slice(i, i + this.itemsPerRow));
+          }
+          return rows;
+        },
+        // 컨테이너 스타일 (스크롤 설정)
+        containerStyle() {
+          // 행의 개수가 maxVisibleRows보다 많으면 스크롤 설정
+          if (this.fruitRows.length > this.maxVisibleRows) {
+            return {
+              height: `${this.maxVisibleRows * this.rowHeight}px`,
+              overflowY: 'scroll'
+            };
+          }
+          return {};
+        }
+      }
   }
   </script>
   
@@ -409,4 +400,69 @@
     font-weight: bold;
     font-size: 18px;
   }
+
+  .fruit-container {
+  border: 2px solid #8B4513;
+  border-radius: 10px;
+  background-color: #f5f5dc;
+  padding: 10px;
+  width: 100%;
+}
+
+.fruit-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.fruit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 80px;
+}
+
+.fruit-image {
+  width: 60px;
+  height: 60px;
+}
+
+.fruit-discount {
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  background-color: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 12px;
+}
+
+.fruit-name {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.fruit-quantity {
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+/* Webkit 브라우저용 스크롤바 스타일링 */
+.fruit-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+.fruit-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.fruit-container::-webkit-scrollbar-thumb {
+  background-color: #523629;
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
   </style>

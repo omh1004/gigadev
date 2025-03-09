@@ -6,10 +6,10 @@
         <div class="topbar">
             <p>D-30</p>
             <div style="display:flex;">
-                <img src="@/resources/timer.png" width="50" height="52">
+                <!-- <img src="@/resources/timer.png" width="10" height="52"> -- -->
                 <div class="timebar-container">
                     <div class="timerbar">
-                        <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}px`"></div>
+                        <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}vw`"></div>
                     </div>
                     <p class="time">{{ timeleft }}초</p>
                 </div>
@@ -32,7 +32,7 @@
                         :noclick="noclick" @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"
                         @notclick="notclick"/>
             <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
-                        :noclick="noclick" @moveprod="moveprod" @closemodal="closemodal"/>
+                        :noclick="noclick" :quizblind="quizblind" @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
     </div>
 </template>
@@ -43,7 +43,8 @@ import Product from './product.vue';
 export default {
     data(){
         return{
-            timebar:800,
+            quizblind:false,
+            timebar:30,
             quiztime:false,
             quizNum:Math.floor(Math.random()*10),
             timeleft:3,
@@ -83,7 +84,8 @@ export default {
         quizTime(){
             this.quiztime=true;
             this.timebar=800;
-            this.timeleft=3;
+            this.timeleft=30;   // 빠른 진행 : 3초 설정
+            console.log(this.customerCount);
             setTimeout(()=>{
                 this.quiztime=false;
                 this.timer();
@@ -91,8 +93,8 @@ export default {
         },
         customer(){
             this.cart=[];
-            this.timebar=800;
-            this.timeleft=30;   // 개발 : 3초로 설정하기
+            this.timebar=30;
+            this.timeleft=30;   // 빠른 진행 : 3초 설정
             this.customerA=Math.floor(Math.random()*9)
             this.timer();
         },
@@ -106,8 +108,8 @@ export default {
                     clearInterval(this.interval);
                 }
                 quizend = new Date();
-                this.timebar = 800/30*(30-(quizend-quizstart)/1000);           // 개발 : 3초로 설정하기
-                this.timeleft = 30-Math.floor((quizend-quizstart)/1000);       // 개발 : 3초로 설정하기
+                this.timebar = 30/30*(30-(quizend-quizstart)/1000);           // 빠른 진행 : 3초 설정
+                this.timeleft = 30-Math.floor((quizend-quizstart)/1000);       // 빠른 진행 : 3초 설정
             },50)
         },
         moveprod(container,prodid){
@@ -161,8 +163,15 @@ export default {
     watch:{
         '$route.params.customerCount':{
             handler:function(curVal,oriVal){
-                if(curVal!=='quiz'){
+                console.log(this.customerCount);
+                console.log(curVal);
+                if(curVal!=null){
+                    console.log("와!");
                     this.customerCount=curVal;
+                    this.quizblind=false;
+                }else{
+                    console.log("우");
+                    this.quizblind=true;
                 }
             }
         }
@@ -188,9 +197,9 @@ export default {
     }
     .topbar{
         display:flex;
-        justify-content:space-around;
+        justify-content:space-between;
         align-items:center;
-        width:1848px;
+        width:80vw;
         height:89px;
         padding:0 40px;
         margin:auto;
@@ -202,17 +211,18 @@ export default {
     .timebar-container{
         display:flex;
         align-items:center;
-        width:860px;
+        width:33vw;
+        max-height: 10px;
     }
     .timerbar{
-        width:800px;
+        width:30vw;
         height:40px;
         border:3px solid #6F3533;
         border-radius:30px;
         overflow:hidden;
     }
     .timeleft{
-        width:800px;
+        width:30vw;
         height:40px;
         background-color:#5E395A;
     }
@@ -224,10 +234,11 @@ export default {
         display:flex;
         justify-content:space-around;
         align-items:center;
-        width:340px;
+        width: 15vw;
         height:56px;
         margin-right:20px;
         background-image:url(@/resources/moneybar.png);
+        background-size: 100% 100%;
     }
     .line{
         min-height:28px;

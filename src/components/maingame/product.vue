@@ -27,7 +27,7 @@
                 <p style="margin-top:5px;">{{ p.price }}원</p>
             </div>
         </div>
-        <div v-show="modal || countermodal || timeleft==0 || noclick" class="blind">
+        <div v-show="modal || countermodal || timeleft==0 || noclick || quizblind" class="blind">
             <div v-if="modal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>판매하기</p>
@@ -130,7 +130,7 @@ export default {
     mounted(){
         this.getproduct=this.product;
     },
-    props:['product','countermodal','countertarget','timeleft','noclick'],
+    props:['product','countermodal','countertarget','timeleft','noclick','quizblind'],
 }
 </script>
 <style scoped>

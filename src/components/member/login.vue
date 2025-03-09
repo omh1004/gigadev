@@ -12,6 +12,9 @@
         <button id="loginbtn" type="submit">로그인</button>
         <button id="resetbtn" type="reset" @click="goToMain">취소</button>
       </div>
+      <div id="findbox">
+        <button id="findbtn" type="submit" @click="goToFind">Id / Password 찾기</button>
+      </div>
     </main>
   </form>
   </div>
@@ -23,7 +26,9 @@ export default {
   methods: {
     goToMain() {
       this.$router.push('/'); //메인페이지로 이동
-
+    },
+    goToFind() {
+      this.$router.push('/find'); //id,pw찾기 페이지로 이동
     }
   }
 }
@@ -116,5 +121,12 @@ export default {
 }
 #btns {
   margin-top: 30px;
+}
+#findbtn {
+  all:unset;
+  margin-top:15px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
 }
 </style>

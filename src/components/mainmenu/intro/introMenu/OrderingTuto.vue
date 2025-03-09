@@ -1,4 +1,13 @@
 <template>
+  <div v-show="popup" id="orderPopup" @click="closePopup">
+    <div id="almTitle">
+      <p>알림</p>
+    </div>
+    <div id="almText">
+      <p v-for="item in cart">{{item.name}}+{{ item.quantity }}</p>
+      <p>발주완료</p>
+    </div>
+  </div>
   <div class="order-container">
       <div class="header">
       <div class="left-section">D-30</div>
@@ -34,11 +43,7 @@
 <div class="stock-cell">{{ product.stock-product.quantity}}</div>
 </div>
 </div>
-        
-   
       </div>
-      
-      
       <div class="cart-section">
         <div class="section-title">장바구니</div>
         
@@ -47,7 +52,7 @@
           <div class="item-price">{{ item.price }}원</div>
         </div>
         
-        <button class="order-button">발주하기</button>
+        <button class="order-button" @click="clickOrder(cart)">발주하기</button>
       </div>
       
     </div>
@@ -59,9 +64,14 @@ export default {
   name: 'StoreOrderInterface',
   data() {
     return {
+      popupMessage:'',
+      cartList:[],
+      itemPrice:0,
+      popup:false,
       money: 500000,
       products: [
         {
+          mount:500000,
           id: 1,
           category: '신선 식품',
           name: '딸기',
@@ -117,7 +127,9 @@ export default {
       const cartItem = this.cart.find(item => item.name === product.name);
       if (product.quantity > 0) {
         if (cartItem) {
+          console.log(cartItem);
           cartItem.quantity = product.quantity;
+          cartItem.price = (product.price*product.quantity);
         } else {
           this.cart.push({
             name: product.name,
@@ -130,8 +142,30 @@ export default {
         this.cart.splice(index, 1);
       }
     },
-    submitOrder() {
-      // Order submission logic
+    clickOrder(cart) {
+      console.log(cart);
+
+
+
+
+
+      cart.forEach(i=>{
+        console.log(i.name);
+        this.itemPrice+=i.price;        
+      })
+
+
+    
+
+
+
+
+
+      this.popup=true;
+
+    },
+    closePopup(){
+      this.popup=false;
     }
   }
 }
@@ -233,7 +267,7 @@ font-size: 20px;
   flex: 3;
 min-width:65vw;
 min-height: 68vh;
-background-image: url('@/assets/storage/ordering.png');
+background-image: url('@/assets/ordering/ordering.png');
 background-repeat: no-repeat;
 background-size: contain;
 margin-top:75px;
@@ -279,9 +313,6 @@ margin-left: 200px;
   margin-top: 10px;
   width: 50vw;
   margin-left: 15px;
-  
-  
-  
 }
 
 .category-cell {
@@ -290,8 +321,6 @@ margin-left: 200px;
   align-items: center;
   justify-content: center;
   font-weight: bold;
- 
-
   min-width:100px;
 }
 
@@ -317,7 +346,6 @@ margin-left: 200px;
 }
 
 .product-image {
-  
   width:auto;
   heigt:auto;
 }
@@ -395,5 +423,83 @@ margin-left: 200px;
 .order-button:hover {
   background-color: #e6d9bd;
 }
-</style>
 
+#orderPopup{
+  background-color:#F2F1EC ;
+  position: absolute;
+  width: 40vw;
+  height: 20vw;
+  top:30%;
+  left:30%;
+  z-index:1;
+  border-radius: 30px;
+}
+
+#almTitle{
+  font-family: RecipekoreaOTF;
+  background-color: #6A396C;
+  z-index: 3;
+  margin-top: 0px;
+  padding: 0px;
+  text-align: center;
+  border-radius: 30px;
+
+}
+
+#almTitle p{
+  margin: 0px;
+  height: 20;
+  display: flex;
+}
+
+
+#almText{
+  font-family: RecipekoreaOTF;
+}
+
+  .popup-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup {
+    width: 90%;
+    max-width: 600px;
+    height: 400px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .popup-header {
+    background-color: #6A396C;
+    color: white;
+    padding: 15px 20px;
+    font-size: 20px;
+    text-align: center;
+  }
+  
+  .popup-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .quiz-title {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+
+
+
+
+</style>

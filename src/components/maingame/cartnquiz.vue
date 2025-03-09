@@ -16,7 +16,6 @@ import { quiz, quizAnswer, quizComment, rewardDialog } from '@/resources/prodNqu
 export default {
     data(){
         return{
-            quiz:false,
             dialog:'상품이 없어요',
             quizDialog:quiz[this.quizNum],
             day:Math.floor(Math.random()*10),   // 임의의 일수로 설정(1~10)
@@ -64,7 +63,6 @@ export default {
             },7000);
         },
         quizTime(){
-            this.quiz=true;
             this.$emit('quizTime');
         },
         customer(){
