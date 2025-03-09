@@ -5,7 +5,7 @@
     <Settings :soundsetting="soundsetting" @closesound="closesound"/>
     <div class="maingame">
         <div style="height:10vh;overflow:visible;text-align:right;">
-            <div class="topbar">
+            <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
                 <p>D-30</p>
                 <div style="display:flex;">
                     <!-- <img src="@/resources/timer.png" width="10" height="52"> -- -->

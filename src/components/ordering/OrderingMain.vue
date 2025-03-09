@@ -1,12 +1,23 @@
 <template>
   <div class="app-container">
-    <div class="header">
+    <!-- <div class="header">
       <div class="d-30">D-30</div>
       <div class="money-display">
         <span class="money-icon">💰</span>
         <span class="money-amount">{{ money.toLocaleString() }}원</span>
       </div>
       <div class="settings-icon">⚙️</div>
+    </div> -->
+    <div class="topbar">
+      <p>D-30</p>
+      <div style="display:flex;align-items:center;">
+          <div class="moneybar">
+              <img src="@/resources/money.png" width="48" height="48">
+              <div class="line"></div>
+              <div class="money"><p>{{ money.toLocaleString() }}원</p></div>
+          </div>
+          <img src="@/resources/gameoption.png" width="40" height="40" @click="opensettings=!opensettings">
+      </div>
     </div>
 
     <div class="main-content">
@@ -19,77 +30,86 @@
       </div>
 
       <div class="product-section">
-        <div class="product-table">
-          <div class="table-header">
-            <div class="category-header">분류</div>
-            <div class="name-header">상품명</div>
-            <div class="quantity-header">수량</div>
-            <div class="price-header">발주 가격</div>
-            <div class="stock-header">보유 수량</div>
-          </div>
+        <div style="margin-top:4vh;">
+          <div class="product-table">
+            <div class="table-header">
+              <div class="category-header">분류</div>
+              <div class="name-header">상품명</div>
+              <div class="quantity-header">수량</div>
+              <div class="price-header">발주 가격</div>
+              <div class="stock-header">보유 수량</div>
+            </div>
 
-          <div class="categories-menu">
-            <div 
-              class="category-item" 
-              :class="{ active: selectedCategory === '신선 식품' }"
-              @click="selectedCategory = '신선 식품'"
-            >
-              <div class="category-name">신선 식품</div>
-            </div>
-            <div 
-              class="category-item" 
-              :class="{ active: selectedCategory === '즉석 식품' }"
-              @click="selectedCategory = '즉석 식품'"
-            >
-              <div class="category-name">즉석 식품</div>
-            </div>
-            <div 
-              class="category-item" 
-              :class="{ active: selectedCategory === '전자 제품' }"
-              @click="selectedCategory = '전자 제품'"
-            >
-              <div class="category-name">전자 제품</div>
-            </div>
-          </div>
-
-          <div class="product-items-container">
-            <div class="product-items">
-              <div v-for="product in filteredProducts" :key="product.id" class="product-row">
-                
-                <div class="product-image-container">
-                  <img class="product-image" :src="product.image" :alt="product.name">
-                  <div class="product-name">{{ product.name }}</div>
+            <div style="display:flex;align-items:flex-start;height:55vh;">
+              <div style="width:20%;height:55vh;">
+                <div class="categories-menu">
+                  <div 
+                    class="category-item" 
+                    :class="{ active: selectedCategory === '신선 식품' }"
+                    @click="selectedCategory = '신선 식품'"
+                  >
+                    <div class="category-name">신선 식품</div>
+                  </div>
+                  <div 
+                    class="category-item" 
+                    :class="{ active: selectedCategory === '즉석 식품' }"
+                    @click="selectedCategory = '즉석 식품'"
+                  >
+                    <div class="category-name">즉석 식품</div>
+                  </div>
+                  <div 
+                    class="category-item" 
+                    :class="{ active: selectedCategory === '전자 제품' }"
+                    @click="selectedCategory = '전자 제품'"
+                  >
+                    <div class="category-name">전자 제품</div>
+                  </div>
                 </div>
-                <div class="quantity-control">
-                  <button class="decrease-button" @click="decreaseQuantity(product)">−</button>
-                  <span class="quantity-display">{{ product.quantity }}</span>
-                  <button class="increase-button" @click="increaseQuantity(product)">+</button>
+              </div>
+              <div style="width:80%;height:55vh;">
+                <div class="product-items-container">
+                  <div class="product-items">
+                    <div v-for="product in filteredProducts" :key="product.id" class="product-row">
+                      
+                      <div class="product-image-container">
+                        <img class="product-image" :src="product.image" :alt="product.name">
+                        <div class="product-name">{{ product.name }}</div>
+                      </div>
+                      <div class="quantity-control">
+                        <button class="decrease-button" @click="decreaseQuantity(product)">−</button>
+                        <span class="quantity-display">{{ product.quantity }}</span>
+                        <button class="increase-button" @click="increaseQuantity(product)">+</button>
+                      </div>
+                      <div class="price-display">{{ product.price.toLocaleString() }}원</div>
+                      <div class="stock-display">{{ product.stock }}</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="price-display">{{ product.price.toLocaleString() }}원</div>
-                <div class="stock-display">{{ product.stock }}</div>
               </div>
             </div>
           </div>
+          <div class="total-products-fake">총 상품 개수: {{ getTotalProductCount() }}/50</div>
         </div>
-
-        <div class="cart-section">
-          <div class="cart-title">장바구니</div>
-          <div v-if="cart.length > 0" class="cart-items">
-            <div v-for="(item, index) in cart" :key="index" class="cart-item">
-              <div class="cart-item-name">{{ item.name }} {{ item.quantity }}개</div>
+        <div style="text-align:center;">
+          <div class="cart-section">
+            <div class="cart-title">장바구니</div>
+            <div class="cart-items">
+              <div v-for="(item, index) in cart" :key="index" class="cart-item">
+                <div class="cart-item-name">{{ item.name }} {{ item.quantity }}개</div>
+              </div>
             </div>
             <div class="cart-total">
               총 {{ getTotalItems() }}개
               <br>
               총 {{ getTotalPrice().toLocaleString() }}원
-            </div>
+              </div>
           </div>
-          <button class="order-button" @click="placeOrder">발주하기</button>
+          <button class="order-button" @click="placeOrder"></button>
         </div>
       </div>
 
       <div class="footer">
-        <div class="total-products">총 상품 개수: {{ getTotalProductCount() }}/50</div>
+        <!-- <div class="total-products">총 상품 개수: {{ getTotalProductCount() }}/50</div> -->
       </div>
     </div>
     
@@ -122,7 +142,7 @@ export default {
           id: 1,
           category: '신선 식품',
           name: '딸기',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 1,
           price: 2000,
           stock: 50
@@ -131,7 +151,7 @@ export default {
           id: 2,
           category: '즉석 식품',
           name: '사과',
-          image: '@/assets/tutorial/fruit/apple.png',
+          image: '/src/assets/tutorial/fruit/apple.png',
           quantity: 0,
           price: 3000,
           stock: 50
@@ -140,7 +160,7 @@ export default {
           id: 3,
           category: '전자 제품',
           name: '양상추',
-          image: '@/assets/tutorial/fruit/fineapple.png',
+          image: '/src/assets/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
           stock: 50
@@ -149,7 +169,7 @@ export default {
           id: 4,
           category: '전자 제품',
           name: '파인애플',
-          image: '@/assets/tutorial/fruit/pineapple.png',
+          image: '/src/assets/tutorial/fruit/pineapple.png',
           quantity: 0,
           price: 4000,
           stock: 50
@@ -158,7 +178,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -167,7 +187,7 @@ export default {
           id: 6,
           category: '즉석 식품',
           name: '사과2',
-          image: '@/assets/tutorial/fruit/apple.png',
+          image: '/src/assets/tutorial/fruit/apple.png',
           quantity: 0,
           price: 3000,
           stock: 50
@@ -176,7 +196,7 @@ export default {
           id: 7,
           category: '전자 제품',
           name: '양상추2',
-          image: '@/assets/tutorial/fruit/fineapple.png',
+          image: '/src/assets/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
           stock: 50
@@ -185,7 +205,7 @@ export default {
           id: 8,
           category: '전자 제품',
           name: '파인애플2',
-          image: '@/assets/tutorial/fruit/pineapple.png',
+          image: '/src/assets/tutorial/fruit/pineapple.png',
           quantity: 0,
           price: 4000,
           stock: 50
@@ -194,7 +214,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -203,7 +223,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -212,7 +232,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -221,7 +241,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -230,7 +250,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -239,7 +259,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -248,7 +268,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '@/assets/tutorial/fruit/strawberry.png',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
           stock: 50
@@ -328,19 +348,21 @@ export default {
     closePopup() {
       this.popup = false;
       this.popupMessage = '';
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style scoped>
 .app-container {
-  width: 100%;
-  
+  width: 100vw;
+  height:100vh;
   margin: 0 auto;
-  border: 2px solid #753422;
-  border-radius: 15px;
-  background-color: #ffffff;
+  /* border: 2px solid #753422; */
+  /* border-radius: 15px; */
+  /* background-color: #ffffff; */
+  background-image:url('@/resources/whiteimg.png');
+  background-size:100% 100%;
   font-family: Arial, sans-serif;
   overflow: hidden;
   position: relative;
@@ -380,12 +402,10 @@ export default {
 
 .back-button {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 4vh;
+  left: 4vw;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background-color: #e74c3c;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -394,13 +414,13 @@ export default {
 }
 
 .back-button img {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 }
 
 .title-section {
   text-align: center;
-  margin-bottom: 20px;
+  margin: 1.5vh 0;
 }
 
 .delivery-title {
@@ -414,13 +434,18 @@ export default {
 
 .product-section {
   display: flex;
+  justify-content:space-around;
+  align-items:center;
   gap: 20px;
 }
 
 .product-table {
-  flex: 3;
-  border: 1px solid #d0bc95;
-  border-radius: 5px;
+  /* flex: 3; */
+  width:54vw;
+  height:61vh;
+  border: 7px solid #5e2813;
+  border-top-left-radius: 52px;
+  border-radius: 52px;
   overflow: hidden;
 }
 
@@ -428,21 +453,38 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   background-color: #f5e9d0;
-  padding: 10px 0;
   text-align: center;
   font-weight: bold;
-  border-bottom: 1px solid #d0bc95;
+  border-bottom: 7px solid #5e2813;
+  height:6vh;
+}
+.table-header div{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:38px;
+  min-height:6vh;
+  border-right:7px solid #5e2813;
+}
+.table-header>.stock-header{
+  border-right:0;
 }
 
 .categories-menu {
   display: flex;
   flex-direction: column;
+  height:55vh;
+  border-right:7px solid #5e2813;
 }
 
 .category-item {
-  padding: 15px;
-  border-bottom: 1px solid #d0bc95;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: 1vh;
+  border-bottom:7px solid #5e2813;
   cursor: pointer;
+  height:11vh;
 }
 
 .category-item.active {
@@ -452,7 +494,7 @@ export default {
 
 .product-items-container {
   border-left: 1px solid #d0bc95;
-  max-height: 400px;
+  /* max-height: 400px; */
   overflow-y: auto;
 }
 
@@ -475,17 +517,36 @@ export default {
 }
 
 .product-items {
-  display: flex;
-  flex-direction: column;
+  overflow:auto;
+  max-height:55vh;
+  scrollbar-width:none;
 }
 
 .product-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  padding: 10px;
-  border-bottom: 1px solid #d0bc95;
+  border-bottom:7px solid #5e2813;
   align-items: center;
   text-align: center;
+  height:13vh;
+}
+
+.product-row>div{
+  height:13vh;
+  border-right:7px solid #5e2813;
+}
+
+.product-row>.stock-display{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-right:0;
+}
+
+.product-row>.price-display{
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 .product-image-container {
@@ -526,19 +587,22 @@ export default {
 }
 
 .cart-section {
-  flex: 1;
-  border: 1px solid #d0bc95;
-  border-radius: 5px;
-  padding: 15px;
+  /* flex: 1; */
+  width:15vw;
+  height:56vh;
+  border: 7px solid #5e2813;
+  border-radius: 52px;
+  padding: 1%;
   display: flex;
   flex-direction: column;
+  background-color:rgba(94,40,19,0.3);
 }
 
 .cart-title {
   font-weight: bold;
   text-align: center;
   font-size: 18px;
-  margin-bottom: 15px;
+  margin: 15px;
 }
 
 .cart-items {
@@ -546,6 +610,12 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items:flex-start;
+  margin-left:0.5vw;
+}
+
+.cart-itme-name{
+  text-align:left;
 }
 
 .cart-item {
@@ -556,18 +626,21 @@ export default {
   margin-top: auto;
   text-align: right;
   font-weight: bold;
-  padding: 10px 0;
+  padding: 1vh 1vw;
 }
 
 .order-button {
-  background-color: #e74c3c;
+  width:9vw;
+  height:6.5vh;
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 10px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
+  background-image:url('/src/resources/orderbutton.png');
+  background-color:rgba(0,0,0,0);
+  background-size:100% 100%;
+  margin-top:1vh;
 }
 
 .footer {
@@ -583,6 +656,12 @@ export default {
   border-radius: 20px;
   font-size: 14px;
   position: relative;
+}
+
+.total-products-fake{
+  text-align:right;
+  padding-right:0.5vw;
+  padding-top:1vh;
 }
 
 
@@ -621,5 +700,64 @@ export default {
 .popup-body {
   padding: 20px;
   text-align: center;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:90vw;
+  height:89px;
+  padding:0 40px;
+  margin:auto;
+  margin-top:40px;
+  background-image:url(@/resources/gametopbar.png);
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size: contain;
+}
+.timebar-container{
+  display:flex;
+  align-items:center;
+  width:33vw;
+  max-height: 10px;
+}
+.timerbar{
+  width:30vw;
+  height:40px;
+  border:3px solid #6F3533;
+  border-radius:30px;
+  overflow:hidden;
+}
+.timeleft{
+  width:30vw;
+  height:40px;
+  background-color:#5E395A;
+}
+.time{
+  position:relative;
+  right:70px;
+}
+.moneybar{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  width: 15vw;
+  height:56px;
+  margin-right:20px;
+  background-image:url(@/resources/moneybar.png);
+  background-size: 100% 100%;
+}
+.line{
+  min-height:28px;
+  border-left:2px dashed rgba(256,256,256,0.2);
+}
+.money{
+  display:flex;
+  justify-content:flex-end;
+  min-width:160px;
+}
+.money p{
+  color:#FFFFFF;
 }
 </style>
