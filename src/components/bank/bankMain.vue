@@ -31,29 +31,53 @@
               </div>
 
               <!-- 수입 섹션 -->
-      <div class="summary-box">
+      <div class="summary-box income-box">
         <h3>수입</h3>
-        <p>판매 수익: {{ income.toLocaleString() }}원</p>
+       
+        <div class="income-details">
+        <span>판매 수익</span>
+        <span class="income-amount">{{ income.toLocaleString() }}원</span>
+        </div>
+
+        <div class="income-sub">
         <p>*퀴즈 혜택</p>
         <p>*FEVER DAY</p>
-        <p>폐기 수익 (20% 상품 판매 수익): {{ (income * 0.2).toLocaleString() }}원</p>
+        </div>
+
+        <div class="income-details">
+        <span>폐기 수익 (20% 상품 판매 수익)</span>
+        <span class="income-amount">{{ (income * 0.2).toLocaleString() }}원</span>
+        </div>
       </div>
 
     <!-- 지출 섹션 -->
-    <div class="summary-box">
-        <h3>💸 지출</h3>
-        <p>발주 비용: -{{ expense.toLocaleString() }}원</p>
-        <p>운영비: -20,000원</p>
-      </div>
+  <div class="summary-box expense-box">
+    <div class="summary-header">
+      <h3>지출</h3>
+      <span class="summary-expense-amount">{{ expense.toLocaleString() }}원</span>
+    </div>
+    <div class="summary-content">
+      <p>발주 비용</p>
+      <span>-{{ expense.toLocaleString() }}원</span>
+    </div>
+    <div class="summary-content">
+      <p>운영비</p>
+      <span>-20,000원</span>
+    </div>
+  </div>
+
+
+      <!-- ✅ 절취선 추가 -->
+<div class="dashed-line"></div>
 
       <!-- 총합 -->
       <div class="summary-total">
-        <h3>총매출</h3>
+        <h3>총계</h3>
         <p class="total-amount">{{ total.toLocaleString() }}원</p>
       </div>
 
        <!-- 내 잔고 버튼 -->
-       <button class="balance-btn">💰 내 잔고</button>
+       <button class="balance-btn">내 잔고</button>
 
     <!-- ✅ 나가기 버튼 -->
     <button class="exit-btn" @click="closeDaySummary"></button>
@@ -805,7 +829,7 @@ button.loan-btn1 {
 
 .day-summary-container {
   position: fixed; /* 화면에 고정 */
-  top: 0%;
+  top: -0%;
   left: 0%;
   width: 100vw;
   height: 100vh;
@@ -819,9 +843,9 @@ button.loan-btn1 {
 
 
 .day-summary {
-  width: 650px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
-  max-width: 95%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
-  max-height: 70vh; /* ✅ 화면에 맞게 자동 조정 */
+  width: 719px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
+  max-width: 90%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
+  max-height: 700vh; /* ✅ 화면에 맞게 자동 조정 */
   /* height: auto; 높이는 자동 조정 */
   background: #F9F8F2;
   border-radius: 20px;
@@ -832,15 +856,16 @@ button.loan-btn1 {
   display: flex;
   flex-direction: column; /* ✅ 내부 요소를 세로 정렬 */
   align-items: center; /* ✅ 가로 가운데 정렬 */
+  margin-top: -60px; /* 창 전체를 위로 30px 이동 */
 }
 
 
 /* ✅ 헤더 디자인 */
-.summary-header {
+/* .summary-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 
 
@@ -864,6 +889,9 @@ button.loan-btn1 {
   font-weight: bold;
 }
 
+
+
+
 /* ✅ 수입 / 지출 스타일 */
 .summary-income {
   color: #007bff;
@@ -878,9 +906,18 @@ button.loan-btn1 {
 
 /* ✅ 총합 스타일 */
 .summary-total {
-  padding: 20px;
-  
+   display: flex;
+  justify-content: space-between; /* 좌우 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  padding: 15px 20px;
+  font-size: 15px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵게 */
+  color: black; /* 글자 색상 */
+  margin-top: 3px; /* 위쪽 여백 */
+  margin-bottom: -30px; /* ✅ 기존보다 간격을 줄이기 */
+  padding-top: 0px; /* ✅ 내부 간격 조정 */
 }
+
 
 .summary-total h3,
 .summary-total p {
@@ -890,7 +927,7 @@ button.loan-btn1 {
 
 
 .total-amount {
-  font-size: 22px;
+  font-size: 15rpx;
   font-weight: bold;
   color: #000;
 }
@@ -911,12 +948,12 @@ button.loan-btn1 {
   background: url("@/resources/Getout.png") no-repeat center;
   background-size: contain;
   display: block;
-  width: 150px; /* ✅ 크기 조정 */
-  height: 45px; /* ✅ 크기 조정 */
+  width: 250px; /* ✅ 크기 조정 */
+  height: 90px; /* ✅ 크기 조정 */
   border: none;
   cursor: pointer;
   position: absolute;
-  bottom: 20px; /* ✅ 아래쪽 정렬 */
+  bottom:0px; /* ✅ 아래쪽 정렬 */
   left: 50%;
   transform: translateX(-50%);
 }
@@ -926,7 +963,7 @@ button.loan-btn1 {
   position: relative;
   display: inline-block;
   width: 300px; /* 리본 크기 조절 */
-  transform: scale(0.8); /* 🔥 80% 크기로 줄이기 */
+  transform: scale(0.7); /* 🔥 80% 크기로 줄이기 */
   margin-top: -25px; /* 🔥 위쪽 여백을 줄임 (값을 더 줄이면 더 올라감) */
 }
 
@@ -946,6 +983,86 @@ button.loan-btn1 {
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
+.dashed-line {
+  border-top: 2px dashed #8B6F47; /* ✅ 절취선 스타일 */
+  width: 90%; /* ✅ 총계와 정렬 */
+  margin: 10px auto; /* ✅ 위, 아래 간격 조정 */
+  margin-bottom: -15px; /* ✅ 절취선 아래쪽 여백 줄이기 */
+}
+
+/* 수익 박스 스타일 */
+.income-box {
+  background: #EBE5DD;
+  padding: 15px;
+  border-radius: 10px;
+  width: 90%;
+  text-align: left;
+}
+
+/* "수입" 제목 스타일 */
+.income-box h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10x;
+}
+
+/* 개별 라인 (판매 수익 / 폐기 수익) */
+.income-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: lighter;
+  margin-bottom: 5px; /* 행 간격 조절 */
+}
+
+/* 금액 정렬 */
+.income-amount {
+  color: #016Eff;  /* 파란색 */
+  font-weight: bold;
+}
+
+/* 퀴즈 혜택 및 FEVER DAY */
+.income-sub {
+  font-size: 16px;
+  color: #666;
+  margin-left: 10px;
+}
+
+/* ✅ 지출 박스 스타일 */
+.expense-box {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  background: #F2EAE2;
+  border-radius: 10px;
+  width: 90%;
+  text-align: left;
+}
+
+/* ✅ 지출 헤더 (제목과 총 지출 금액) */
+.expense-box .summary-header {
+  display: flex;
+  justify-content: space-between; /* 좌우 정렬 */
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/* ✅ 지출 총액 빨간색 강조 */
+.summary-expense-amount {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ✅ 개별 지출 항목 정렬 */
+.summary-content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin-bottom: -15px;
+}
 
 
 </style>
