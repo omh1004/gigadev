@@ -44,7 +44,6 @@ export default {
     position: relative;
     overflow: hidden;
     
-    background-repeat: no-repeat;
 
 
     font-family: RecipekoreaOTF;
@@ -64,11 +63,11 @@ export default {
 
 
 
-  background-repeat: no-repeat;
+
 
 
   background-image: url('@/assets/tutorial/tutorialMain.png');
-  background-size:cover;
+  background-size: 100% 100%;
 
 }
 

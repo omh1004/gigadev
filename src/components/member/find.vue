@@ -44,8 +44,7 @@ export default {
   height: auto;
   min-height: 100vh;
   background-image: url('@/resources/whiteimg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100% 100%;
   padding: 5%;
   
 }

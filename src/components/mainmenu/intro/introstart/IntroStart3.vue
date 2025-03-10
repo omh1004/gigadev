@@ -52,7 +52,7 @@ export default {
     position: relative;
     overflow: hidden;
     
-    background-repeat: no-repeat;
+
 
 
     font-family: RecipekoreaOTF;
@@ -63,7 +63,7 @@ export default {
   max-width: 100%;
   min-height: 90%;
 
-  background-size: cover;
+
 
   display: flex;
   flex-direction: column;
@@ -72,11 +72,11 @@ export default {
 
 
 
-  background-repeat: no-repeat;
+  
 
 
   background-image: url('@/assets/tutorial/tutorialMain.png');
-  background-size:cover;
+  background-size: 100% 100%;
 
 }
 #bankman{
