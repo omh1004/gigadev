@@ -62,7 +62,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100wh;
+  height: 100vh;
   background-image: url(@/resources/mainback2.png);
   background-size: 100% 100%;
   min-height: 100vh;
@@ -78,29 +78,29 @@ export default {
   margin-top: -10vh;
 }
 #loginbtn {
-  width: 160px;
-  height: 60px;
+  width: 12vw;
+  height: 7.6vh;
   border: 0.3vw solid #6F3533;
-  border-radius: 15px;
+  border-radius: 1.1vw;
   background-color: #6F3533;
   color:#FFFFFF;
-  padding: 10px 30px;
+  padding: 1vw 2vw;
   font-weight: 900;
-  font-size: 18px;
-  margin-right: 20px;
+  font-size: 1.4vw;
+  margin-right: 1.7vw;
   cursor: pointer;
 }
 #resetbtn {
-  width: 160px;
-  height: 60px;
+  width: 12vw;
+  height: 7.6vh;
   border: 0.3vw solid #6F3533;
   color: #6F3533;
-  padding: 10px 30px;
-  border-radius: 15px;
+  padding: 1vw 2vw;
+  border-radius: 1.1vw;
   background-color: #FFEFCA;
-  font-size: 18px;
+  font-size: 1.5vw;
   font-weight: 900; 
-  margin-left: 20px;
+  margin-left: 1.7vw;
   cursor: pointer;
 }
 
@@ -109,13 +109,18 @@ export default {
   align-items: center;
   justify-content: flex-start; 
   gap: 0.4vw;
-  margin-left: 2.5vw; 
-  width: 400px; 
-  font-size: 18px;
+  margin-left: 9vw; 
+  width: 100%; 
+  font-size: 1.3vw;
   font-weight: 600;
-  height: 16px; 
+  height: 2vh;
   accent-color: #6F3533;
   cursor: pointer; 
+}
+#inputcheck {
+  width: 2.2vw;
+  height: 2.2vh;
+
 }
 #btns {
   margin-top: 4vh;
@@ -124,7 +129,7 @@ export default {
   all:unset;
   margin-top:5vh;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 1vw;
   cursor: pointer;
 }
 </style>

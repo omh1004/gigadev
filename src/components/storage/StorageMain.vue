@@ -196,7 +196,7 @@ export default {
       this.selectedTab = tab;
     },
     goBack(){
-      this.$router.push('/');
+      this.$router.push('/mainmenu');
     },
     placeOrder() {
       this.popupMessage = '50 >> 70 필요금액 30,000';

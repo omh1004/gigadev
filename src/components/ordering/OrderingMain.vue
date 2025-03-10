@@ -21,7 +21,7 @@
     </div>
 
     <div class="main-content">
-      <div class="back-button">
+      <div class="back-button" @click="backToMain">
         <img src="@/assets/common/Vector.png" alt="back" />
       </div>
 
@@ -367,6 +367,7 @@ export default {
       this.storage = false;
       this.popupMessage = '';
     },
+
     gotostorage(){
       this.$router.push({
         name:"storageMain",
