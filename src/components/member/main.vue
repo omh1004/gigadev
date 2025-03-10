@@ -27,25 +27,25 @@ export default {
 <style scoped>
 #loginbtn {
     font-family: RecipekoreaOTF;
-    font-size: 20px;
+    font-size: 1.5vw;
     font-weight: 900;
-    border: 5px solid #5E395A;
-    border-radius: 20px;
-    width: 150px;
-    height: 62px;
-    padding: 15px 30px;
-    background-color: #FFEFCA;
+    border: 0.4vw solid #5E395A;
+    border-radius: 1.5vw;
+    width: 11vw;
+    height: 4.8vw;
+    padding: 1vw 2vw;
+    background-color: #FFEFCA;  
     color: #5E395A;
 }
 #joinbtn {
     font-family: RecipekoreaOTF;
-    font-size: 20px;
+    font-size: 1.5vw;
     font-weight: 900;
-    border: 5px solid #873511;
-    border-radius: 20px;
-    width: 150px;
-    height: 62px;
-    padding: 15px 30px;
+    border: 0.4vw solid #873511;
+    border-radius: 1.5vw;
+    width: 11vw;
+    height: 4.8vw;
+    padding: 1vw 2vw;
     background-color: #FFEFCA;
     color: #873511;
 }
@@ -53,20 +53,25 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center; 
-  height: 100vh; 
-  gap:40px;
+  height: 100vh;
+  gap:3vw   ;
   width: 100vw;
-  height: 100wh;
   background-image: url('@/resources/mainbackimg.png');
-  background-size: cover;
+  background-size: contain;
   min-height: 100vh;
 }
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.6vw;
 }
 #firstimg {
-   margin-top: 80px;
+   margin-top: 6vw;
+   width: 25vw;
+   height: 28vh;
+}
+#secondimg {
+    width: 25vw;
+    height: 15vh;
 }
 </style>

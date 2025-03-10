@@ -38,22 +38,21 @@ export default {
   box-sizing: border-box;
 }
 #inputId {
-  width: 400px;
-  height: 58px;
-  border: 4px solid #5E395A;
-  border-radius: 20px;
-  padding: 27px 32px;
-  gap: 8px;
-  margin-top:60px;
+  width: 29.4vw;
+  height: 8vh;
+  border: 0.3vw solid #5E395A;
+  border-radius: 1.2vw;
+  padding: 1vw 1vw;
+  margin-top:6vh;
   margin-bottom: 20px;
   font-size: 18px;
 }
 #inputPw {
-  width: 400px;
-  height: 58px;
-  border: 4px solid #5E395A;
-  border-radius: 20px;
-  padding: 27px 32px;
+  width: 29.4vw;
+  height: 8vh;
+  border: 0.3vw solid #5E395A;
+  border-radius: 1.2vw;
+  padding: 1vw 1vw;
   gap: 8px;
   margin-bottom: 20px;
   font-size: 18px;
@@ -72,17 +71,17 @@ export default {
 #mainbox {
   display: block;
   justify-items: center;
-  width: 500px;
-  height: 400px;
+  width: 37vw;
+  height: 53vh;
   border-radius: 30px;
-  border:4px solid #5E395A;
+  border:0.3vw solid #5E395A;
   background-color : #FFEFCA;
   margin-top: -120px;
 }
 #loginbtn {
   width: 160px;
   height: 60px;
-  border: 5px solid #6F3533;
+  border: 0.3vw solid #6F3533;
   border-radius: 15px;
   background-color: #6F3533;
   color:#FFFFFF;
@@ -95,7 +94,7 @@ export default {
 #resetbtn {
   width: 160px;
   height: 60px;
-  border: 4px solid #6F3533;
+  border: 0.3vw solid #6F3533;
   color: #6F3533;
   padding: 10px 30px;
   border-radius: 15px;
