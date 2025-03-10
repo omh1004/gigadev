@@ -9,19 +9,16 @@
           <span class="amount">500,00원</span>
         </div>
         <span class="settings-icon">⚙️</span>
+        
       </div>
     </div>
     
     <!-- Navigation -->
     <div class="navigation">
-      <div class="back-button">
-        <span class="arrow">◀</span>
+      <div class="back-button" @click="goBack">
+        <img src="@/assets/common/Vector.png" alt="back" />
       </div>
       <div class="title">창고</div>
-      <div class="skip-button">
-        <span>SKIP</span>
-        <span class="double-arrow">▶▶</span>
-      </div>
     </div>
     
     <!-- Tab Menu -->
@@ -48,10 +45,24 @@
     
     <!-- Confirm Button -->
     <div class="button-container">
-      <button class="confirm-button">
+      <button class="confirm-button" @click="placeOrder">
         <span class="plus-icon">+</span>
         <span>확장하기</span>
       </button>
+    </div>
+
+
+    <div v-show="popup" class="popup-overlay" @click="closePopup">
+      <div class="popup-content" @click.stop>
+        <div class="popup-header">
+          <p>알림</p>
+        </div>
+        <div class="popup-body">
+          <p>50 >> 70</p>
+          <p>필요금액</p>
+          <p>30,000</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -59,6 +70,7 @@
 <script>
 const model = {
   image: 'src/assets/common/fruit/strawberry.png',
+  popup:false,
   fruits: [
     { name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
     { name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
@@ -144,6 +156,7 @@ const model = {
   maxVisibleRows: 3,
   rowHeight: 150, // Reverted row height to original
   selectedTab: '신선식품'
+  ,  popupMessage: ''
 };
 
 export default {
@@ -180,7 +193,14 @@ export default {
   methods: {
     selectTab(tab) {
       this.selectedTab = tab;
-    }
+    },
+    goBack(){
+      this.$router.push('/');
+    },
+    placeOrder() {
+      this.popupMessage = '50 >> 70 필요금액 30,000';
+      this.popup = true;
+    },
   }
 };
 </script>
@@ -504,4 +524,45 @@ export default {
   border-radius: 10px;
   border: 2px solid #f0f0f0;
 }
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.popup-content {
+  background-color: #F2F1EC;
+  width: 400px;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.popup-header {
+  background-color: #6A396C;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.popup-header p {
+  margin: 0;
+}
+
+.popup-body {
+  padding: 20px;
+  text-align: center;
+}
+
+
+
 </style>
