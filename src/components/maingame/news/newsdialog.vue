@@ -1,6 +1,7 @@
 <template>
   <div class="newsdialog">
     <h1>{{ dialog }}</h1>
+    <img src="@/resources/nextdialog.png">
   </div>
 </template>
 <script>
@@ -12,7 +13,7 @@ export default {
     }
   },
   mounted(){
-    const dial = '어쩌구저쩌구 솰라솰라... 나 주식 모른다고!';
+    const dial = '어느 대학을 갈지, 어떤 직업을 선택할지 고민해 본 적 있나요? 금융에서도 비슷한 고민이 필요합니다.';
     for(let i=0;i<dial.length;i++){
       setTimeout(()=>{
         this.dialog+=dial[i];
@@ -23,6 +24,8 @@ export default {
 </script>
 <style>
   .newsdialog{
+    display:flex;
+    justify-content:space-around;
     width:97.2vw;
     height:27vh;
     margin:auto;
@@ -33,7 +36,14 @@ export default {
   }
   .newsdialog>h1{
     font-size:4.5vh;
-    margin-top:4.5vh;
-    margin-left:2.5vw;
+    margin-top:2.5vh;
+    margin-left:2.5vh;
+    margin-right:2.5vh;
+  }
+  .newsdialog>img{
+    width:3.5vh;
+    height:3.5vh;
+    margin-top:10vh;
+    margin-right:2.5vh;
   }
 </style>

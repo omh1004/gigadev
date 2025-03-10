@@ -47,7 +47,7 @@
     <div class="button-container">
       <button class="confirm-button" @click="placeOrder">
         <span class="plus-icon">+</span>
-        <span>확장하기</span>
+        <span @click="">확장하기</span>
       </button>
     </div>
 

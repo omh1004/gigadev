@@ -180,6 +180,8 @@ export default {
         bgmstop(){
             this.bgm.pause();
             this.bgm.load();
+            this.quizbgm.pause();
+            this.quizbgm.load();
         },
         bgmchange(type){
             if(type=='quiz'){
@@ -197,6 +199,7 @@ export default {
         },
         changebgmvol(vol){
             this.bgm.volume=vol/10;
+            this.quizbgm.volume=vol/10;
         },
         changeeffectvol(vol){
             // effect 생기면 추가하기
