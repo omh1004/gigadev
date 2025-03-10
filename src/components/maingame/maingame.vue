@@ -24,7 +24,7 @@
                     <div class="moneybar">
                         <img src="@/resources/money.png" width="48" height="48">
                         <div class="line"></div>
-                        <div class="money"><p>0원</p></div>
+                        <div class="money"><p>{{ moneyhave }}원</p></div>
                     </div>
                     <img src="@/resources/gameoption.png" width="40" height="40" @click="opensettings=!opensettings">
                 </div>
@@ -39,8 +39,8 @@
         </div>
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"
-                        :noclick="noclick" @quizTime="quizTime" @customer="customer" @revertprod="revertprod" @rollback="rollback"
-                        @notclick="notclick" @bgmstop="bgmstop"  @bgmchange="bgmchange"/>
+                        :noclick="noclick" :moneyhave="moneyhave" @quizTime="quizTime" @customer="customer" @revertprod="revertprod"
+                        @rollback="rollback" @notclick="notclick" @bgmstop="bgmstop"  @bgmchange="bgmchange"/>
             <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
                         :noclick="noclick" :quizblind="quizblind" @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
@@ -95,6 +95,7 @@ export default {
             bgm:new Audio(ConvenientLove),
             quizbgm:new Audio(QuizmanOnConvenient),
             soundsetting:false,
+            moneyhave:500000,
         }
     },
     methods:{

@@ -17,7 +17,7 @@ import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
 import Counter from '@/components/store/counter.vue'
 import Customer from '@/components/store/customer.vue'
-import Calculate from '@/components/maingame/calculation.vue'
+import Calculation from '@/components/maingame/calculation.vue'
 
 import OrderingMain from '@/components/ordering/OrderingMain.vue'
 import StorageMain from '@/components/storage/StorageMain.vue'
@@ -80,9 +80,9 @@ const router = createRouter({
       ]
     },
     {
-      path: '/calculate',
-      name: 'calculate',
-      component: Calculate,
+      path: '/calculation',
+      name: 'calculation',
+      component: Calculation,
     },
     {
       path: '/homeMenu',
