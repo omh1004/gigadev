@@ -56,7 +56,7 @@ export default {
             }
             setTimeout(()=>{
                 this.$emit('notclick',false);
-                if(this.customerCount>=2){
+                if(this.customerCount>=10){
                     this.$emit('bgmstop');
                     this.$router.push({
                         name:'calculation',
@@ -66,6 +66,7 @@ export default {
                         }
                     }); // 나중에 결과화면 이동으로 바꾸기
                 }else{
+                    this.$emit('bgmchange','customer');
                     this.$router.push('/maingame/'+ ++this.customerCount);
                 }
             },7000);
@@ -180,7 +181,7 @@ export default {
                 if((this.customerCount+1)==this.quizMan){
                     this.$emit('bgmchange','quiz');
                     this.$router.push('/maingame/quiz');
-                }else if(this.customerCount>=2){
+                }else if(this.customerCount>=10){
                     this.$emit('bgmstop');
                     this.$router.push({
                         name:'calculation',
@@ -208,7 +209,7 @@ export default {
                     },3500);
                     setTimeout(()=>{
                         this.$emit('notclick',false);
-                        if(this.customerCount>=2){
+                        if(this.customerCount>=10){
                             this.$emit('bgmstop');
                             this.$router.push({
                                 name:'calculation',
@@ -238,7 +239,7 @@ export default {
                         setTimeout(()=>{
                             this.$emit('rollback');
                             this.$emit('notclick',false);
-                            if(this.customerCount>=2){
+                            if(this.customerCount>=10){
                                 this.$emit('bgmstop');
                                 this.$router.push({
                                     name:'calculation',

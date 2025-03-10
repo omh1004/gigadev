@@ -13,6 +13,7 @@ import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue
 import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
 import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 
+import news from '@/components/maingame/news/news.vue'
 import maingameComponent from '@/components/maingame/maingame.vue'
 import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
@@ -63,6 +64,11 @@ const router = createRouter({
       path: '/bank',
       name: 'bank',
       component: bankComponent
+    },
+    {
+      path:'/news',
+      name:'news',
+      component:news
     },
     {
       path: '/maingame',

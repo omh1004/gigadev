@@ -235,6 +235,7 @@ export default {
         min-width:100vw;
         min-height:100vh;
         background-image:url('@/resources/mainbackimg.png');
+
         background-size: 100% 100%;
         background-position: center;
         overflow:hidden;
@@ -247,7 +248,7 @@ export default {
         align-items:center;
         width:90vw;
         height:89px;
-        padding:0 40px;
+        padding:40px;
         margin:auto;
         background-image:url(@/resources/gametopbar.png);
         background-position:center;
