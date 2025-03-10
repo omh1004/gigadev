@@ -2,6 +2,7 @@ import HomeComponent from '@/components/mainmenu/HomeComponent.vue'
 import MainComponent from '@/components/member/main.vue'
 import LoginComponent from '@/components/member/login.vue'
 import JoinComponent from '@/components/member/join.vue'
+import FindComponent from '@/components/member/find.vue'
 
 import MainmenuComponent from '@/components/mainmenu/intro/Mainmenu.vue'
 import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
@@ -46,6 +47,11 @@ const router = createRouter({
       path: '/join',
       name: 'join',
       component: JoinComponent,
+    },
+    {
+      path: '/find',
+      name: 'find',
+      component: FindComponent,
     },
     {
       path: '/quiz',
