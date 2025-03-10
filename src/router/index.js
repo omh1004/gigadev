@@ -27,7 +27,7 @@ import StorageMain from '@/components/storage/StorageMain.vue'
 import bankComponent from '@/components/bank/bankMain.vue'
 import quizComponent from '@/components/quiz/quizMain.vue'
 
-import Settings from '@/components/common/settings.vue' // 개발용으로 추가가
+import Settings from '@/components/common/volumesettings.vue' // 개발용으로 추가가
 
 import { createRouter, createWebHistory } from 'vue-router'
 

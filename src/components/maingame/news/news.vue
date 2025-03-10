@@ -1,10 +1,10 @@
 <template>
-  <div class="news-background">
+  <div class="news-background" @click="nextdialog">
     <div class="news-page">
       <NewsMain :day="day"/>
       <NewsImage/>
     </div>
-    <NewsDialog/>
+    <NewsDialog :newsCount="newsCount" @notnextdial="notnextdial"/>
   </div>
 </template>
 <script>
@@ -16,6 +16,17 @@ export default {
   data(){
     return{
       day:1,
+      newsCount:0,
+    }
+  },
+  methods:{
+    nextdialog(){
+      console.log("클릭함");
+      this.newsCount++;
+      console.log(this.newsCount);
+    },
+    notnextdial(){
+      this.newsCount--;
     }
   },
   components:{ NewsMain,NewsImage,NewsDialog }

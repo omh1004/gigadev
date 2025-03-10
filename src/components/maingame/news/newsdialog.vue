@@ -8,18 +8,56 @@
 export default {
   data(){
     return{
+      dialInterval:'',
       dialog:'',
       // 일수마다 news dialog 가져오기
+      dialex:[
+        '어느 대학을 갈지, 어떤 직업을 선택할지 고민해 본 적 있나요? 금융에서도 비슷한 고민이 필요합니다.',
+        '기회비용(Opportunity Cost)이란 한 가지 선택을 했을 때 포기해야 하는 다른 선택의 가치를 의미합니다.',
+        '예를 들어 100만 원을 정기예금에 넣으면 안전하지만 같은 돈을 주식에 투자하면 더 큰 이익을 얻을 수도 있습니다.',
+      ],
+      newsdialnum:0,
+      dialpoint:0,
+    }
+  },
+  methods:{
+    printdialog(){
+      this.dialInterval = setInterval(()=>{
+        if(this.dialpoint<this.dialex[this.newsdialnum].length){
+          console.log(":)");
+          this.dialog+=this.dialex[this.newsdialnum][this.dialpoint];
+        }else{
+          clearInterval(this.dialInterval);
+        }
+        this.dialpoint++;
+      },50);
     }
   },
   mounted(){
-    const dial = '어느 대학을 갈지, 어떤 직업을 선택할지 고민해 본 적 있나요? 금융에서도 비슷한 고민이 필요합니다.';
-    for(let i=0;i<dial.length;i++){
-      setTimeout(()=>{
-        this.dialog+=dial[i];
-      },i*50);
-    }
+    console.log("하이");
+    this.printdialog();
   },
+  props:['newsCount'],
+  watch:{
+    newsCount(curVal,oriVal){
+      console.log("헉 클릭함!");
+      if(oriVal<this.dialex.length){
+        if(curVal>oriVal && this.dialog!=this.dialex[oriVal]){
+          this.dialog=this.dialex[oriVal];
+          this.dialpoint=this.dialex[oriVal].length;
+          this.$emit('notnextdial');
+        }else if(curVal>oriVal && this.dialog==this.dialex[oriVal] && curVal<this.dialex.length){
+          this.dialog='';
+          this.newsdialnum=curVal;
+          this.dialpoint=0;
+          this.printdialog();
+        }else if(curVal<oriVal){}
+        else{
+          this.$router.push('/mainMenu');
+        }
+      }
+    }
+  }
 }
 </script>
 <style>
@@ -35,6 +73,8 @@ export default {
     border-bottom-right-radius:3vw;
   }
   .newsdialog>h1{
+    min-width:83.5vw;
+    max-width:83.5vw;
     font-size:4.5vh;
     margin-top:2.5vh;
     margin-left:2.5vh;

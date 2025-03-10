@@ -270,30 +270,30 @@ export default {
 </script>
 <style scoped>
     .conv{
-        width:1000px;
-        height:892px;
+        width:52vw;
+        height:82.5vh;
     }
     .conv p{
         margin:0;
     }
     .background{
-        width:100%;
-        height:65%;
+        width:52vw;
+        height:53.5vh;
     }
     .counter{
-        width:100%;
+        width:52vw;
         text-wrap:nowrap;
     }
     .amount{
         display:inline-block;
-        width:50%;
+        width:26vw;
         text-align:center;
     }
     .sell{
         display:inline-block;
-        width:50%;
+        width:26vw;
     }
     .amount *, .sell *{
-        width:100%;
+        width:52vw;
     }
 </style>

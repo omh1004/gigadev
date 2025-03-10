@@ -351,7 +351,7 @@ export default {
         return;
       }
 
-      if( this.storageCount+cartquan ){
+      if( this.storageCount+cartquan>50 ){
         this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
         this.storage = true;
         this.popup = true;
@@ -368,10 +368,16 @@ export default {
       this.popupMessage = '';
     },
     gotostorage(){
-      this.$router.push("/storageMain");
+      this.$router.push({
+        name:"storageMain",
+        state:{
+          popup:true,
+        }
+      });
     }
   },
 }
+
 </script>
 
 <style scoped>

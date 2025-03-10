@@ -61,6 +61,7 @@
           <p>50 >> 70</p>
           <p>필요금액</p>
           <p>30,000</p>
+          <button class="expansionButton">확장하기</button>
         </div>
       </div>
     </div>
@@ -201,6 +202,15 @@ export default {
       this.popupMessage = '50 >> 70 필요금액 30,000';
       this.popup = true;
     },
+    closePopup(){
+      this.popup=false;
+    }
+  },
+  mounted(){
+    if(history.state.popup!=null){
+      console.log(history.state.popup);
+      this.popup = history.state.popup;
+    }
   }
 };
 </script>
@@ -243,7 +253,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   background-color: white;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .left-label {
@@ -564,6 +574,13 @@ export default {
   text-align: center;
 }
 
-
+.expansionButton{
+  width:9.5vw;
+  height:5.5vh;
+  background-color:rgba(0, 0, 0, 0);
+  border:0;
+  background-image:url("/src/resources/increasestorage.png");
+  background-size:100% 100%;
+}
 
 </style>
