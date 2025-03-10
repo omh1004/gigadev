@@ -10,14 +10,14 @@
                     <div style="height:100%;display:flex;align-items:center;">
                         <input id="bgm" type="range" max="10" step="1" class="sound-bar" :value="bgmsound" @change="changevol($event)">
                     </div>
-                    <p>10</p>
+                    <p>{{ bgmsound }}</p>
                 </div>
                 <div style="display:flex;justify-content:space-around;align-items:center;width:16vw;">
                     <img src="@/resources/effect.png" alt="sound">
                     <div style="height:100%;display:flex;align-items:center;">
                         <input id="effect" type="range" max="10" step="1" class="sound-bar" :value="effectsound" @change="changevol($event)">
                     </div>
-                    <p>10</p>
+                    <p>{{ effectsound }}</p>
                 </div>
             </div>
         </div>

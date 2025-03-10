@@ -38,25 +38,23 @@ export default {
   box-sizing: border-box;
 }
 #inputId {
-  width: 400px;
-  height: 58px;
-  border: 4px solid #5E395A;
-  border-radius: 20px;
-  padding: 27px 32px;
-  gap: 8px;
-  margin-top:60px;
-  margin-bottom: 20px;
-  font-size: 18px;
+  width: 29.4vw;
+  height: 8vh;
+  border: 0.3vw solid #5E395A;
+  border-radius: 1.2vw;
+  padding: 1vw 1vw;
+  margin-top:6vh;
+  margin-bottom: 3vh;
+  font-size: 1.3vw;
 }
 #inputPw {
-  width: 400px;
-  height: 58px;
-  border: 4px solid #5E395A;
-  border-radius: 20px;
-  padding: 27px 32px;
-  gap: 8px;
-  margin-bottom: 20px;
-  font-size: 18px;
+  width: 29.4vw;
+  height: 8vh;
+  border: 0.3vw solid #5E395A;
+  border-radius: 1.2vw;
+  padding: 1vw 1vw;
+  margin-bottom: 2vh;
+  font-size: 1.3vw;
 }
 
 #maincontainer {
@@ -64,45 +62,45 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100wh;
+  height: 100vh;
   background-image: url(@/resources/mainback2.png);
-  background-size: cover;
+  background-size: 100% 100%;
   min-height: 100vh;
 }
 #mainbox {
   display: block;
   justify-items: center;
-  width: 500px;
-  height: 400px;
-  border-radius: 30px;
-  border:4px solid #5E395A;
+  width: 37vw;
+  height: 53vh;
+  border:0.3vw solid #5E395A;
+  border-radius: 2.2vw;
   background-color : #FFEFCA;
-  margin-top: -120px;
+  margin-top: -10vh;
 }
 #loginbtn {
-  width: 160px;
-  height: 60px;
-  border: 5px solid #6F3533;
-  border-radius: 15px;
+  width: 12vw;
+  height: 7.6vh;
+  border: 0.3vw solid #6F3533;
+  border-radius: 1.1vw;
   background-color: #6F3533;
   color:#FFFFFF;
-  padding: 10px 30px;
+  padding: 1vw 2vw;
   font-weight: 900;
-  font-size: 18px;
-  margin-right: 20px;
+  font-size: 1.4vw;
+  margin-right: 1.7vw;
   cursor: pointer;
 }
 #resetbtn {
-  width: 160px;
-  height: 60px;
-  border: 4px solid #6F3533;
+  width: 12vw;
+  height: 7.6vh;
+  border: 0.3vw solid #6F3533;
   color: #6F3533;
-  padding: 10px 30px;
-  border-radius: 15px;
+  padding: 1vw 2vw;
+  border-radius: 1.1vw;
   background-color: #FFEFCA;
-  font-size: 18px;
+  font-size: 1.5vw;
   font-weight: 900; 
-  margin-left: 20px;
+  margin-left: 1.7vw;
   cursor: pointer;
 }
 
@@ -110,23 +108,28 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-start; 
-  gap: 8px;
-  margin-left: 32px; 
-  width: 400px; 
-  font-size: 18px;
+  gap: 0.4vw;
+  margin-left: 9vw; 
+  width: 100%; 
+  font-size: 1.3vw;
   font-weight: 600;
-  height: 16px; 
+  height: 2vh;
   accent-color: #6F3533;
   cursor: pointer; 
 }
+#inputcheck {
+  width: 2.2vw;
+  height: 2.2vh;
+
+}
 #btns {
-  margin-top: 30px;
+  margin-top: 4vh;
 }
 #findbtn {
   all:unset;
-  margin-top:15px;
+  margin-top:5vh;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 1vw;
   cursor: pointer;
 }
 </style>

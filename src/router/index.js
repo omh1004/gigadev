@@ -2,6 +2,7 @@ import HomeComponent from '@/components/mainmenu/HomeComponent.vue'
 import MainComponent from '@/components/member/main.vue'
 import LoginComponent from '@/components/member/login.vue'
 import JoinComponent from '@/components/member/join.vue'
+import FindComponent from '@/components/member/find.vue'
 
 import MainmenuComponent from '@/components/mainmenu/intro/Mainmenu.vue'
 import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
@@ -12,12 +13,13 @@ import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue
 import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
 import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 
+import news from '@/components/maingame/news/news.vue'
 import maingameComponent from '@/components/maingame/maingame.vue'
 import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
 import Counter from '@/components/store/counter.vue'
 import Customer from '@/components/store/customer.vue'
-import Calculate from '@/components/maingame/calculate.vue'
+import Calculation from '@/components/maingame/calculation.vue'
 
 import OrderingMain from '@/components/ordering/OrderingMain.vue'
 import StorageMain from '@/components/storage/StorageMain.vue'
@@ -25,7 +27,7 @@ import StorageMain from '@/components/storage/StorageMain.vue'
 import bankComponent from '@/components/bank/bankMain.vue'
 import quizComponent from '@/components/quiz/quizMain.vue'
 
-import Settings from '@/components/common/settings.vue' // 개발용으로 추가가
+import Settings from '@/components/common/volumesettings.vue' // 개발용으로 추가가
 
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -48,6 +50,11 @@ const router = createRouter({
       component: JoinComponent,
     },
     {
+      path: '/find',
+      name: 'find',
+      component: FindComponent,
+    },
+    {
       path: '/quiz',
       name: 'quiz',
       component: quizComponent
@@ -57,6 +64,11 @@ const router = createRouter({
       path: '/bank',
       name: 'bank',
       component: bankComponent
+    },
+    {
+      path:'/news',
+      name:'news',
+      component:news
     },
     {
       path: '/maingame',
@@ -80,9 +92,9 @@ const router = createRouter({
       ]
     },
     {
-      path: '/calculate',
-      name: 'calculate',
-      component: Calculate,
+      path: '/calculation',
+      name: 'calculation',
+      component: Calculation,
     },
     {
       path: '/homeMenu',

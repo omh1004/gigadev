@@ -50,118 +50,120 @@ export default {
 }
 #title {
   text-align: center;
+  font-size: 2vw;
+  margin-top: 5vh;
 }
 span {
   color: red;
-  margin-right: 5px;
+  margin-right: 0.7vw;
 }
 label {
-  font-size: 20px;
+  font-size: 1.4vw;
   font-weight: 900;
 }
 #must {
   text-align: end;
-  font-size: 16px;
-  margin-right: 20px;
+  font-size: 1.2vw;
 }
 #first {
-  margin-top: 20px;
+  margin-top: 1.2vh;
 }
 .p {
-  font-size: 14px;
+  font-size: 1vw;
 }
 #alertId {
   color:red;
-  padding-top: 0px;
+  padding-top: 0;
   text-box-trim: trim-start;
-  margin-top: 8px;
-  margin-left: 310px;
+  margin-top: 1vh;
+  margin-left: 23vw;
 }
 #alertPw {
-  margin-top: -3px;
-  margin-left: 310px;
+  margin-top: -0.3vh;
+  margin-left: 23vw;
 }
 #maincontainer {
+  width: 100vw;
+  height: 100vh;
   background-image: url('@/resources/whiteimg.png');
-  background-size: cover;
+  background-size: 100% 100%;
   min-height: 100vh;
 }
 #mainbox {
   display: flex;
   justify-content: center;
-  padding: 30px 70px;
 }
 .input-group {
-  line-height: 40px;
+  line-height: 5vh;
 }
 #userId {
-  margin-left: 197px;
-  width: 901px;
-  height: 40px;
-  border:3px solid #6F3533;
-  border-radius: 5px;
+  margin-left: 14vw;
+  width: 67vw;
+  height: 5vh;
+  border:0.25vw solid #6F3533;
+  border-radius: 0.4vw;
 }
 #checkbtn {
   color:#ffffff;
   background-color: #6F3533;
-  border: 3px solid #6F3533;
-  border-radius: 5px;
-  padding: 5px 10px;
-  width: 1200px;
-  height: 30px;
+  border: 0.25vw solid #6F3533;
+  border-radius: 0.25vw;
+  width: 88.65vw;
+  height: 3.8vh;
+  font-size: 1vw;
   font-weight: 600;
   cursor: pointer;
 }
 #userPw {
-  margin-top: 20px;
-  margin-left: 170px;
-  width: 900px;
-  height: 40px;
-  border:3px solid #6F3533;
-  border-radius: 5px;
+  margin-top: 3vh;
+  margin-left: 12vw;
+  width: 67.1vw;
+  height: 5vh;
+  border:0.25vw solid #6F3533;
+  border-radius: 0.25vw;
 }
 #pwCheck {
-  margin-top: 20px;
-  margin-left: 113px;
-  width: 900px;
-  height: 40px;
-  border:3px solid #6F3533;
-  border-radius: 5px;
+  margin-top: 3vh;
+  margin-left: 8vw;
+  width: 67vw;
+  height: 5vh;
+  border:0.25vw solid #6F3533;
+  border-radius: 0.25vw;
 }
 #email {
-  margin-top: 20px;
-  margin-left: 170px;
-  width: 900px;
-  height: 40px;
-  border:3px solid #6F3533;
-  border-radius: 5px;
+  margin-top: 3vh;
+  margin-left: 12vw;
+  width: 66.9vw;
+  height: 5vh;
+  border:0.25vw solid #6F3533;
+  border-radius: 0.25vw;
 }
 #nick {
-  margin-top: 20px;
-  margin-left: 197px;
-  width: 900px;
-  height: 40px;
-  border:3px solid #6F3533;
-  border-radius: 5px;
+  margin-top: 3vh;
+  margin-left: 14vw;
+  width: 66.8vw;
+  height: 5vh;
+  border:0.25vw solid #6F3533;
+  border-radius: 0.25vw;
 }
 #alertNick {
   text-box-trim:trim-start;
-  margin-top: 8px;
+  margin-top: 1vh;
   color: red;
-  margin-left: 310px;
+  margin-left: 23vw;
 }
 #signbtnbox {
   display: flex;
   justify-content: center;
 }
 #signbtn {
-  margin-top: 30px;
-  padding: 5px 10px;
-  border:3px solid #56174F;
-  border-radius: 10px;
+  margin-top: 4vh;
+  padding: 0.6vw 2vw;
+  border:0.25vw solid #56174F;
+  border-radius: 0.6vw;
   background-color: #56174F;
   color:#ffffff;
-  font-size: 18px;
+  font-size: 1.3vw;
   font-weight: 600;
   cursor: pointer;
 }

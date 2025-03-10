@@ -28,6 +28,7 @@ export default {
             ],  // 일단 두개만
             currentWant:{},
             relability:50,
+            profit:0,
         }
     },
     methods:{
@@ -57,8 +58,15 @@ export default {
                 this.$emit('notclick',false);
                 if(this.customerCount>=10){
                     this.$emit('bgmstop');
-                    this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                    this.$router.push({
+                        name:'calculation',
+                        state:{
+                            profit:this.profit,
+                            moneyhave:this.moneyhave,
+                        }
+                    }); // 나중에 결과화면 이동으로 바꾸기
                 }else{
+                    this.$emit('bgmchange','customer');
                     this.$router.push('/maingame/'+ ++this.customerCount);
                 }
             },7000);
@@ -104,6 +112,17 @@ export default {
             for(let i=0;i<prodcount.length;i++){
                 console.log('prod',prodcount[i]);
                 console.log('want',prodwant[i]);
+
+                const prod_50 = this.cart.find(c=>c.id==(key[i]+'_50'));
+                const prod = this.cart.find(c=>c.id==key[i]);
+
+                if(prod_50!=null){
+                    this.profit += prod_50.amount*prod_50.price;
+                }
+                if(prod!=null){
+                    this.profit += prod.amount * prod.price;
+                }
+                
                 if(prodcount[i]==0 && nothing){
                     perfect = false;
                 }else if(prodcount[i]==prodwant[i]){
@@ -116,10 +135,6 @@ export default {
                     nothing = false;
                     perfect = false;
                     over += prodcount[i]-prodwant[i];
-                    const prod_50 = this.cart.find(c=>
-                        c.id==(key[i]+'_50')
-                    );
-                    const prod = this.cart.find(c=>c.id==key[i]);
                     if(prod_50!=null){
                         if(prod_50.amount>=(prodcount[i]-prodwant[i])){
                             loss += prod_50.price*(prodcount[i]-prodwant[i]);
@@ -168,7 +183,13 @@ export default {
                     this.$router.push('/maingame/quiz');
                 }else if(this.customerCount>=10){
                     this.$emit('bgmstop');
-                    this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                    this.$router.push({
+                        name:'calculation',
+                        state:{
+                            profit:this.profit,
+                            moneyhave:this.moneyhave,
+                        }
+                    }); // 나중에 결과화면 이동으로 바꾸기
                 }else{
                     this.$router.push('/maingame/'+ ++this.customerCount);
                     this.customer();
@@ -190,7 +211,13 @@ export default {
                         this.$emit('notclick',false);
                         if(this.customerCount>=10){
                             this.$emit('bgmstop');
-                            this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                            this.$router.push({
+                                name:'calculation',
+                                state:{
+                                    profit:this.profit,
+                                    moneyhave:this.moneyhave,
+                                }
+                            }); // 나중에 결과화면 이동으로 바꾸기
                         }else{
                             this.$emit('bgmchange','customer');
                             this.$router.push('/maingame/'+ ++this.customerCount);
@@ -214,7 +241,13 @@ export default {
                             this.$emit('notclick',false);
                             if(this.customerCount>=10){
                                 this.$emit('bgmstop');
-                                this.$router.push('/'); // 나중에 결과화면 이동으로 바꾸기
+                                this.$router.push({
+                                    name:'calculation',
+                                    state:{
+                                        profit:this.profit,
+                                        moneyhave:this.moneyhave,
+                                    }
+                                }); // 나중에 결과화면 이동으로 바꾸기
                             }else{
                                 this.$router.push('/maingame/'+ ++this.customerCount);
                                 this.customer();
@@ -232,35 +265,35 @@ export default {
     components:{
         QuizMain,QuizChoice,
     },
-    props:['quizNum','interval','timeleft','customerA','cart','noclick']
+    props:['quizNum','interval','timeleft','customerA','cart','noclick','moneyhave']
 }
 </script>
 <style scoped>
     .conv{
-        width:1000px;
-        height:892px;
+        width:52vw;
+        height:82.5vh;
     }
     .conv p{
         margin:0;
     }
     .background{
-        width:100%;
-        height:65%;
+        width:52vw;
+        height:53.5vh;
     }
     .counter{
-        width:100%;
+        width:52vw;
         text-wrap:nowrap;
     }
     .amount{
         display:inline-block;
-        width:50%;
+        width:26vw;
         text-align:center;
     }
     .sell{
         display:inline-block;
-        width:50%;
+        width:26vw;
     }
     .amount *, .sell *{
-        width:100%;
+        width:52vw;
     }
 </style>

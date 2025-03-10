@@ -21,7 +21,7 @@
     </div>
 
     <div class="main-content">
-      <div class="back-button">
+      <div class="back-button" @click="backToMain">
         <img src="@/assets/common/Vector.png" alt="back" />
       </div>
 
@@ -119,8 +119,9 @@
           <p>알림</p>
         </div>
         <div class="popup-body">
-          <p v-for="(item, index) in cart" :key="index">{{ item.name }}+{{ item.quantity }}</p>
+          <p v-if="!storage" v-for="(item, index) in cart" :key="index">{{ item.name }}+{{ item.quantity }}</p>
           <p v-if="popupMessage">{{ popupMessage }}</p>
+          <button v-if="storage" class="storagebutton" @click="gotostorage">확장하러 가기</button>
         </div>
       </div>
     </div>
@@ -137,6 +138,8 @@ export default {
       popup: false,
       money: 500000,
       selectedCategory: '신선 식품',
+      storageCount:0,
+      storage:false,
       products: [
         {
           id: 1,
@@ -329,6 +332,13 @@ export default {
     placeOrder() {
       const totalPrice = this.getTotalPrice();
       
+      // 창고 안 상품 개수 데이터(변수)가 필요
+      // 임시로 여기에 storageCount 변수를 추가
+      let cartquan = 0;
+      this.cart.forEach(c=>{
+        cartquan += c.quantity;
+      })
+
       if (totalPrice > this.money) {
         this.popupMessage = '잔액이 부족합니다.';
         this.popup = true;
@@ -340,6 +350,13 @@ export default {
         this.popup = true;
         return;
       }
+
+      if( this.storageCount+cartquan>50 ){
+        this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
+        this.storage = true;
+        this.popup = true;
+        return;
+      }
       
       this.money -= totalPrice;
       this.popupMessage = '발주완료';
@@ -347,10 +364,21 @@ export default {
     },
     closePopup() {
       this.popup = false;
+      this.storage = false;
       this.popupMessage = '';
     },
+
+    gotostorage(){
+      this.$router.push({
+        name:"storageMain",
+        state:{
+          popup:true,
+        }
+      });
+    }
   },
 }
+
 </script>
 
 <style scoped>
@@ -700,6 +728,15 @@ export default {
 .popup-body {
   padding: 20px;
   text-align: center;
+}
+
+.storagebutton{
+  width:12.5vw;
+  height:5.5vh;
+  background-color:rgba(0,0,0,0);
+  border:0;
+  background-image:url("@/resources/increasestorage.png");
+  background-size:100% 100%;
 }
 
 .topbar{
