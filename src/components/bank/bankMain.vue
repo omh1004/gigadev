@@ -134,8 +134,11 @@
           v-model="loanAmount" 
           type="number" 
           placeholder="금액 입력"
-          @input="validateInput"
+          min="100"  
+          step="100" 
+          @input="validateLoanAmount"
         />
+        <!-- @input="validateInput" -->
         <span class="currency">원</span>
         <button class="info-btn" @mouseover="showHelp = true" @mouseleave="showHelp = false">?</button>
       </div>
@@ -224,7 +227,7 @@ export default {
   },
   computed: {
     formattedLimit() {
-      return this.loanLimit.toLocaleString() + "원";
+      return this.loanLimit.toLocaleString() + " 원";
     }
   },
   methods: { 
@@ -238,6 +241,27 @@ export default {
         this.errorMessage = "";
       }
     },
+
+    validateLoanAmount() {
+    let amount = Number(this.loanAmount);
+
+    // 100원 단위가 아니면 자동 보정
+    if (amount % 100 !== 0) {
+      this.loanAmount = Math.round(amount / 100) * 100;
+    }
+
+    // 최소 100원 미만일 경우 100원으로 설정
+    if (this.loanAmount < 100) {
+      this.loanAmount = 100;
+    }
+
+    // 최대 대출 한도 초과 방지
+    if (this.loanAmount > this.loanLimit) {
+      this.loanAmount = this.loanLimit;
+    }
+
+    this.errorMessage = ""; // 에러 메시지 초기화
+  },
     
     applyLoan() {
       const amount = Number(this.loanAmount);
@@ -345,10 +369,12 @@ export default {
   background-color: #0056b3;
 }
 
+
 .error {
   color: red;
   margin-top: 8px;
 }
+
 
 /* ✅ 버튼 컨테이너 */
 .button-container {
@@ -674,6 +700,10 @@ button.loan-btn1 {
   margin-bottom: 50px; /* 아래 여백 줄이기 */
   margin: 0px 60px 90px;
   gap: 20px; /* 라벨과 금액 사이 간격 줄이기 */
+}
+
+.loan-value {
+  margin-right: 40px; /* 🔥 값을 조정해서 왼쪽으로 이동 */
 }
 
 /* 대출 받을 금액 정렬 */
