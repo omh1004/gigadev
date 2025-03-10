@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  
+  // 일수마다 news image 가져오기
 }
 </script>
 <style scoped>

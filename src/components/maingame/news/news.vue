@@ -1,10 +1,10 @@
 <template>
   <div class="news-background">
     <div class="news-page">
-      <NewsMain />
-      <NewsImage />
+      <NewsMain :day="day"/>
+      <NewsImage/>
     </div>
-    <NewsDialog />
+    <NewsDialog/>
   </div>
 </template>
 <script>
@@ -13,6 +13,11 @@ import NewsImage from './newsimage.vue';
 import NewsDialog from './newsdialog.vue';
 
 export default {
+  data(){
+    return{
+      day:1,
+    }
+  },
   components:{ NewsMain,NewsImage,NewsDialog }
 }
 </script>

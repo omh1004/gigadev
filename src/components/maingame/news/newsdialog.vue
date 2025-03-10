@@ -8,6 +8,7 @@ export default {
   data(){
     return{
       dialog:'',
+      // 일수마다 news dialog 가져오기
     }
   },
   mounted(){
