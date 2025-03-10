@@ -10,28 +10,28 @@
             <p @click="getcategory($event,'c')">전자제품</p>
         </div>
         <div class="category">
-            <p style="text-align:center;">{{ categ }} {{ getproduct.length }} / 50</p>
+            <p style="text-align:center;font-size:2vh;">{{ categ }} {{ getproduct.length }} / 50</p>
         </div>
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
             <div class="product" :id="`prod${p.id}`" v-for="p in getproduct" v-show="p.amount>0" @click="sellprod($event)">
                 <div class="amount">
-                    <p v-if="p.id.includes('50')" style="display:inline-block;width:35%;text-align:left;">D-1</p>
-                    <p v-else style="display:inline-block;width:35%;text-align:right;"></p>
-                    <p style="display:inline-block;width:35%;text-align:right;">{{ p.amount }}</p>
+                    <p v-if="p.id.includes('50')" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
+                    <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
+                    <p style="display:inline-block;width:3vw;height:2vh;text-align:right;font-size:2vh;">{{ p.amount }}</p>
                 </div>
                 <!-- draggable로 드래그 가능, dragstart 이벤트가 필요. -->
-                <img :src="`${p.src}`" alt="상품" height="50%" :name="p.name"><br>
-                <p style="margin-top:5px;">{{ p.name }}</p>
-                <p style="margin-top:5px;">{{ p.price }}원</p>
+                <img :src="`${p.src}`" alt="상품" style="width:8vh;height:8vh;" :name="p.name">
+                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.name }}</p>
+                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.price }}원</p>
             </div>
         </div>
         <div v-show="modal || countermodal || timeleft==0 || noclick || quizblind" class="blind">
             <div v-if="modal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>판매하기</p>
-                    <img src="@/resources/close.png" width="28px;" @click="modal=false">
+                    <img src="@/resources/close.png" width="1.5vw;" @click="modal=false">
                 </div>
                 <div>
                     <div class="modalcontent">
@@ -40,13 +40,13 @@
                             <p>{{ target.name }}</p>
                             <p>{{ target.price }}원</p>
                         </div>
-                        <div style="display:flex;justify-content:space-between;width:150px;">
+                        <div style="display:flex;justify-content:space-between;width:8vw">
                             <p @click="target.sell>0?target.sell--:''">-</p>
                             <p>{{ target.sell }}</p>
                             <p @click="target.sell<target.amount?target.sell++:''">+</p>
                         </div>
                     </div>
-                    <div style="display:flex;justify-content:flex-end;padding-right:20px;">
+                    <div style="display:flex;justify-content:flex-end;padding-right:1vw;">
                         <button class="okbutton" @click="moveprod"></button>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
             <div v-else-if="countermodal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>회수하기</p>
-                    <img src="@/resources/close.png" width="28px;" @click="$emit('closemodal')">
+                    <img src="@/resources/close.png" width="1.5vw;" @click="$emit('closemodal')">
                 </div>
                 <div>
                     <div class="modalcontent">
@@ -63,13 +63,13 @@
                             <p>{{ countertarget.name }}</p>
                             <p>{{ countertarget.price }}원</p>
                         </div>
-                        <div style="display:flex;justify-content:space-between;width:150px;">
+                        <div style="display:flex;justify-content:space-between;width:8vw;">
                             <p @click="countertarget.sell>0?countertarget.sell--:''">-</p>
                             <p>{{ countertarget.sell }}</p>
                             <p @click="countertarget.sell<countertarget.amount?countertarget.sell++:''">+</p>
                         </div>
                     </div>
-                    <div style="display:flex;justify-content:flex-end;padding-right:20px;">
+                    <div style="display:flex;justify-content:flex-end;padding-right:2vh;">
                         <button class="okbutton" @click="moveprod"></button>
                     </div>
                 </div>
@@ -151,96 +151,91 @@ export default {
         display:flex;
         justify-content:center;
         align-items:center;
-        height:144px;
+        height:13vh;
         background-color:#FFEFCA;
     }
     .categorybutton p{
-        font-size:34px;
-        margin:0 35px;
+        font-size:3vh;
+        margin:0 2vw;
     }
     .categorybutton div{
-        width:7px;
-        height:74px;
+        width:0.3vw;
+        height:7vh;
         background-color:#4C1B0B;
     }
     .category{
         display:flex;
         justify-content:center;
         align-items:center;
-        height:50px;
-        border-top:7px solid #4C1B0B;
-        border-bottom:7px solid #4C1B0B;
+        height:4.5vh;
+        border-top:0.6vh solid #4C1B0B;
+        border-bottom:0.6vh solid #4C1B0B;
         background-color:#FFEFCA;
     }
     .product-container{
-        width:100%;
-        height:80%;
+        width:42.5vw;
+        height:66vh;
         overflow-y:auto;
         flex-wrap:wrap;
         background-color:#4C1B0B;
         scrollbar-color:#FFEFCA #4C1B0B;    /* 브라우저에 따라 적용 안됨 🤔 */
     }
-    #prodzone>div{
+    .product{
         display:inline-block;
         text-align:center;
-        width:170px;
-        min-width:170px;
-        min-height:190px;
+        width:9vw;
+        height:18vh;
         background-color:white;
-        border-radius:30px;
-        margin:10px 13px;
+        border-radius:3vh;
+        margin:0.9vh 0.7vw;
     }
     .amount{
-        width:100%;
-        margin-top:5px;
-    }
-    .sell{
-        display:inline-block;
-        width:40%;
-        margin-top:5px;
+        width:9vw;
+        height:2vh;
+        margin-top:0.5vh;
     }
     .blind{
         display:flex;
         justify-content:center;
         align-items:center;
         position:relative;
-        width:100%;
-        height:105%;
-        bottom:105%;
+        width:42.5vw;
+        height:74vh;
+        bottom:74vh;
         background-color:rgba(256,256,256,0.5);
         z-index:0;
     }
     .modalwin{
-        width:655px;
-        height:365px;
+        width:34vw;
+        height:34vh;
         background-image:url("/src/resources/prodmodal.png");
         background-size:100% 100%;
-        border-radius:30px;
+        border-radius:3vh;
         overflow:hidden;
     }
     .modaltop{
         display:flex;
         justify-content:center;
         align-items:center;
-        width:655px;
-        height:57px;
+        width:34vw;
+        height:5vh;
         background-color:#5E395A;
-        margin-top:5px;
+        margin-top:0.5vh;
     }
     .modaltop p{
-        width:85%;
+        width:29vw;
         text-align:center;
     }
     .modalcontent{
         display:flex;
-        height:220px;
+        height:20vh;
         justify-content:space-around;
         align-items:center;
     }
     .okbutton{
         background-image:url('/src/resources/ok.png');
-        width:181px;
-        height:59px;
+        width:9.5vw;
+        height:5.5vh;
         background-color:rgba(0,0,0,0);
         border:0;
     }

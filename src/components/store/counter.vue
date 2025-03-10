@@ -3,9 +3,9 @@
         <div id="cartzone" style="width:38vw;display:flex;overflow-x:auto;">
             <!-- 카트의 상품 나열 -->
             <div v-for="c in cart" v-show="c.amount>0" @click="revertprod($event)">
-                <div style="display:flex;justify-content:flex-end;align-items:center;"><p style="color:white;background-color:black;border-radius:1vh;min-width:1vw;min-height:2vh;">{{ c.amount }}</p></div>
-                <img class="cart" :src="`${c.src}`" alt="상품" height="1vh" :id="`cart${c.id}`" :name="c.name"><br>
-                <p style="margin-top:1.5vh;">{{ c.name }}</p>
+                <div style="display:flex;justify-content:flex-end;align-items:center;"><p style="color:white;background-color:black;border-radius:1vh;min-width:1vw;min-height:2vh;font-size:2vh;">{{ c.amount }}</p></div>
+                <img class="cart" :src="`${c.src}`" alt="상품" style="width:10vh;height:10vh;" :id="`cart${c.id}`" :name="c.name"><br>
+                <p style="width:4vw;height:2vh;margin-top:1.5vh;font-size:2vh;">{{ c.name }}</p>
             </div>
         </div>
         <div style="width:14vw">
@@ -53,6 +53,8 @@ export default {
         margin:1vh 0.5vw;
     }
     .counter_cal{
+        width:11.5vw;
+        height:23vh;
         position:relative;
         top:-9vh;
     }
