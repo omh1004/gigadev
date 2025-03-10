@@ -18,7 +18,7 @@ import QuizChoice from '@/components/quiz/quizChoice.vue'
 import QuizMain from '@/components/quiz/quizMain.vue'
 import Counter from '@/components/store/counter.vue'
 import Customer from '@/components/store/customer.vue'
-import Calculate from '@/components/maingame/calculate.vue'
+import Calculate from '@/components/maingame/calculation.vue'
 
 import OrderingMain from '@/components/ordering/OrderingMain.vue'
 import StorageMain from '@/components/storage/StorageMain.vue'

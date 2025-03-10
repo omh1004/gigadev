@@ -3,6 +3,11 @@
         <div style="text-align:center;">
             <div class="calculate-paper">
                 <div class="calculate-title"><p>일차 매출 정산</p></div>
+                <div></div>
+                <div></div>
+                <div><p>선</p></div>
+                <div></div>
+                <div></div>
             </div>
             <button class="dayend">퇴근하기</button>
         </div>
