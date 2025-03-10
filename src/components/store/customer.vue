@@ -5,15 +5,15 @@
                 <p v-show="relability==100" class="fever">FEVER<br>TIME</p>
                 <p v-show="relability<=90" class="figure">{{ relability }}</p>
                 <div class="figure_bar" :class="{'lowrela':relability<=40,'rela':relability>40 && relability<100,'maxrela':relability==100}"
-                        :style="`min-height:${4*relability}px`">
+                        :style="`min-height:${0.37*relability}vh`">
                     <p v-show="relability>90 && relability<100" class="figure" style="margin-top:3px;">{{ relability }}</p>
                 </div>
             </div>
         </div>
         <!-- <img class="relability_bar" src="@/resources/relability_bar.png" width="74px" height="410px"> -->
-        <img class="relability" src="@/resources/relability.png" width="78px" height="70px">
+        <img class="relability" src="@/resources/relability.png" style="width:4vw;height:6.5vh;">
         <p class="balloon">{{ dialog }}</p>
-        <img class="customer" :src="src[customerA]" width="400px" height="500px">   <!-- 이미지가 약 4:5 비율-->
+        <img class="customer" :src="src[customerA]" style="width:21vw;height:46vh;">   <!-- 이미지가 약 4:5 비율-->
     </div>
 </template>
 <script>
@@ -58,59 +58,59 @@ export default {
         display:flex;
         justify-content:center;
         align-items:center;
-        width:550px;
-        height:240px;
-        min-height:250px;
+        width:28.5vw;
+        height:22vh;
+        min-height:22vh;
         background-image:url("@/resources/speech_balloon.png"); /* 약 21:10 비율 */
         background-size: 100% 100%;
         position:relative;
         /* top:160px; */
-        left:340px;
+        left:17.5vw;
         font-family:"Pretendard";
-        font-size:28px;
-        padding-left:100px;
-        padding-right:60px;
+        font-size:2.5vh;
+        padding-left:5vw;
+        padding-right:3vw;
         z-index:0;
     }
     .customer{
         position:relative;
-        right:420px;
-        top:85px;
+        right:22vw;
+        top:8vh;
         z-index:-1;
     }
     .relability_bar{
         position:relative;
-        top:70px;
-        left:15px;
-        width:74px;
-        height:402px;
-        border:4px solid #FFFFFF;
-        border-radius:20px;
+        top:6.5vh;
+        left:0.5vw;
+        width:4vw;
+        height:37vh;
+        border:0.3vh solid #FFFFFF;
+        border-radius:2vh;
         background-color:#FFFFFF;
     }
     .bar_inside{
         display:flex;
         flex-direction:column;
         justify-content:flex-end;
-        width:60px;
-        height:394px;
-        border:3px solid #6F3533;
-        border-radius:20px;
+        width:3vw;
+        height:36.5vh;
+        border:0.3vh solid #6F3533;
+        border-radius:2vh;
         background-color:#F9F8F2;
         overflow:hidden;
     }
     .relability{
         position:relative;
-        top:440px;
-        right:61px;
+        top:40.5vh;
+        right:3vw;
     }
     .figure{
-        font-size:20px;
+        font-size:2vh;
         margin:0;
         text-align:center;
     }
     .figure_bar{
-        border-width:3px 0;
+        border-width:0.3vh 0;
         border-style:solid;
         border-color:#6F3533;
     }
@@ -125,7 +125,7 @@ export default {
     }
     .fever{
         position:relative;
-        top:60px;
+        top:5.5vh;
         margin:0;
         text-align:center;
     }

@@ -135,13 +135,13 @@ export default {
 </script>
 <style scoped>
     .conv{
-        width:817px;
-        height:892px;
-        border:7px solid #4C1B0B;
-        border-top-left-radius:52px;
-        border-top-right-radius:52px;
-        border-bottom-left-radius:30px;
-        border-bottom-right-radius:30px;
+        width:42.5vw;
+        height:82.5vh;
+        border:0.6vh solid #4C1B0B;
+        border-top-left-radius:5vh;
+        border-top-right-radius:5vh;
+        border-bottom-left-radius:3vh;
+        border-bottom-right-radius:3vh;
         overflow:hidden;
     }
     .conv p{
