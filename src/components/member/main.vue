@@ -57,7 +57,7 @@ export default {
   gap:3vw   ;
   width: 100vw;
   background-image: url('@/resources/mainbackimg.png');
-  background-size: contain;
+  background-size: 100% 100%;
   min-height: 100vh;
 }
 .button-container {

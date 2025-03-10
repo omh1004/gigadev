@@ -24,7 +24,7 @@
     position: relative;
     overflow: hidden;
     background-image: url('@/assets/common/intro/introMain.png');
-    background-repeat: no-repeat;
+    background-size: 100% 100%;
 
 
     font-family: RecipekoreaOTF;

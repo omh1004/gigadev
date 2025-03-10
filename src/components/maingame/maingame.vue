@@ -238,7 +238,7 @@ export default {
         min-width:100vw;
         min-height:100vh;
         background-image:url('@/resources/mainbackimg.png');
-        background-repeat: no-repeat;
+
         background-size: 100% 100%;
         background-position: center;
         overflow:hidden;

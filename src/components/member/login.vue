@@ -44,8 +44,8 @@ export default {
   border-radius: 1.2vw;
   padding: 1vw 1vw;
   margin-top:6vh;
-  margin-bottom: 20px;
-  font-size: 18px;
+  margin-bottom: 3vh;
+  font-size: 1.3vw;
 }
 #inputPw {
   width: 29.4vw;
@@ -53,9 +53,8 @@ export default {
   border: 0.3vw solid #5E395A;
   border-radius: 1.2vw;
   padding: 1vw 1vw;
-  gap: 8px;
-  margin-bottom: 20px;
-  font-size: 18px;
+  margin-bottom: 2vh;
+  font-size: 1.3vw;
 }
 
 #maincontainer {
@@ -65,7 +64,7 @@ export default {
   width: 100vw;
   height: 100wh;
   background-image: url(@/resources/mainback2.png);
-  background-size: cover;
+  background-size: 100% 100%;
   min-height: 100vh;
 }
 #mainbox {
@@ -73,10 +72,10 @@ export default {
   justify-items: center;
   width: 37vw;
   height: 53vh;
-  border-radius: 30px;
   border:0.3vw solid #5E395A;
+  border-radius: 2.2vw;
   background-color : #FFEFCA;
-  margin-top: -120px;
+  margin-top: -10vh;
 }
 #loginbtn {
   width: 160px;
@@ -109,8 +108,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-start; 
-  gap: 8px;
-  margin-left: 32px; 
+  gap: 0.4vw;
+  margin-left: 2.5vw; 
   width: 400px; 
   font-size: 18px;
   font-weight: 600;
@@ -119,11 +118,11 @@ export default {
   cursor: pointer; 
 }
 #btns {
-  margin-top: 30px;
+  margin-top: 4vh;
 }
 #findbtn {
   all:unset;
-  margin-top:15px;
+  margin-top:5vh;
   font-weight: bold;
   font-size: 13px;
   cursor: pointer;

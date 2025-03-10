@@ -83,7 +83,7 @@ label {
 }
 #maincontainer {
   background-image: url('@/resources/whiteimg.png');
-  background-size: cover;
+  background-size: 100% 100%;
   min-height: 100vh;
 }
 #mainbox {
