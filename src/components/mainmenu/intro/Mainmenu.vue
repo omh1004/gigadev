@@ -68,7 +68,7 @@
     height: 100vh;
     position: relative;
     overflow: hidden;
-    background-repeat: no-repeat;
+  
     font-family: RecipekoreaOTF;
     font-size: 24px;
     background-color: #f5f5f5;
@@ -85,11 +85,10 @@
 
 
 
-    background-repeat: no-repeat;
+
 
     background-image: url('@/resources/whiteimg.png');
- 
-
+    background-size: 100% 100%;
 
   }
   .speech-bubble {

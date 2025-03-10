@@ -204,6 +204,7 @@ export default {
   justify-content: center;
   align-items: center;
   background-image: url('@/resources/whiteimg.png');
+  background-size: 100% 100%;
 }
 
 .header {
