@@ -236,7 +236,7 @@ export default {
         min-height:100vh;
         background-image:url('@/resources/mainbackimg.png');
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: center;
         overflow:hidden;
         position:fixed;
@@ -248,7 +248,7 @@ export default {
         align-items:center;
         width:90vw;
         height:89px;
-        padding:0 40px;
+        padding:40px;
         margin:auto;
         background-image:url(@/resources/gametopbar.png);
         background-position:center;
