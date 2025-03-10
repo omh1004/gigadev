@@ -1,7 +1,7 @@
 <template>
   <div id="maincontainer">
     <div id="titlebox">
-      <button id="backbtn"></button>
+      <button id="backbtn" @click="goToLogin"></button>
       <h1 id="maintitle">Id / Password 찾기</h1>
     </div>
     <main id="mainbox">
@@ -27,7 +27,12 @@
 </template>
 <script>
 export default {
-  
+  name: 'findVue',
+  methods: {
+    goToLogin() {
+      this.$router.push('/login'); // 로그인 페이지로 이동
+    }
+  }
 }
 </script>
 <style scoped>
@@ -40,7 +45,7 @@ export default {
   min-height: 100vh;
   background-image: url('@/resources/whiteimg.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   padding: 5%;
   
 }
@@ -59,6 +64,12 @@ export default {
 #maintitle {
   margin: 0 auto;
 }
+h1 {
+  font-size: 2.2vw;
+}
+h2 {
+  font-size: 1.6vw;
+}
 #mainbox {
   display: flex;
   flex-direction: row;
@@ -76,8 +87,8 @@ export default {
   justify-content: center;
   align-items: center;
   gap:5%;
-  border:3px solid #56174F;
-  border-radius: 30px;
+  border:0.3vw solid #56174F;
+  border-radius: 2vw;
   width: 30vw;
   height: 40vh;
 }
@@ -88,8 +99,8 @@ export default {
   justify-content: center;
   align-items: center;
   gap:5%;
-  border:3px solid #56174F;
-  border-radius: 30px;
+  border:0.3vw solid #56174F;
+  border-radius: 2vw;
   width: 30vw;
   height: 40vh;
 }
@@ -97,11 +108,14 @@ span {
   color: red;
 }
 input {
-  border:3px solid #56174F;
-  border-radius: 6px;
+  border:0.2vw solid #56174F;
+  border-radius: 0.8vw;
   width: 24vw;
   height: 5vh;
   padding-left: 1vw;
+}
+input::placeholder {
+  font-size: 1vw;
 }
 .firstinput {
   margin-top: 0;
@@ -113,7 +127,7 @@ input {
   font-weight: bold;
   padding: 2% 10%;
   border: #56174F;
-  border-radius: 7px;
+  border-radius: 0.5vw;
   cursor: pointer;
 
 }
