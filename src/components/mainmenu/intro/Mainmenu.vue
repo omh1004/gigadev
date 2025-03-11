@@ -50,13 +50,15 @@
     name: 'KoreanMenuInterface'
     ,methods:{
       linkOrdering(){
-        this.$router.push('/linkOrderingTutorial');
+        // this.$router.push('/linkOrderingTutorial');
+        this.$router.push('/orderingMain');
       }
       ,linkStorage(){
-        this.$router.push('/linkStorageTutorial')
+        // this.$router.push('/linkStorageTutorial')
+        this.$router.push('/storageMain');
       }
       ,linkBank(){
-        this.$router.push('/linkBankTutorial')
+        this.$router.push('/bank')
       }
     }
   }

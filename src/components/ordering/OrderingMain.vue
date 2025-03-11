@@ -69,7 +69,8 @@
               <div style="width:80%;height:55vh;">
                 <div class="product-items-container">
                   <div class="product-items">
-                    <div v-for="product in filteredProducts" :key="product.id" class="product-row">
+                    <div v-if="selectedCategory=='신선 식품' || selectedCategory=='즉석 식품' && days>=5 || selectedCategory=='전자 제품' && days>=15 "
+                          v-for="product in filteredProducts" :key="product.id" class="product-row">
                       
                       <div class="product-image-container">
                         <img class="product-image" :src="product.image" :alt="product.name">
@@ -81,7 +82,15 @@
                         <button class="increase-button" @click="increaseQuantity(product)">+</button>
                       </div>
                       <div class="price-display">{{ product.price.toLocaleString() }}원</div>
-                      <div class="stock-display">{{ product.stock }}</div>
+                      <!-- <div class="stock-display">{{ product.stock }}</div> -->
+                      <!-- 창고 더미데이터 추가, 창고 데이터에서 가져오는 것으로 수정중 -->
+                      <div class="stock-display">{{ getStock(product.id) }}</div>
+                    </div>
+                    <div v-else-if="selectedCategory=='즉석 식품'" class="comingsoon">
+                      <h1>5일차 오픈 예정</h1>
+                    </div>
+                    <div v-else-if="selectedCategory=='전자 제품'" class="comingsoon">
+                      <h1>15일차 오픈 예정</h1>
                     </div>
                   </div>
                 </div>
@@ -140,6 +149,7 @@ export default {
       selectedCategory: '신선 식품',
       storageCount:0,
       storage:false,
+      days:5,
       products: [
         {
           id: 1,
@@ -148,7 +158,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 1,
           price: 2000,
-          stock: 50
         },
         {
           id: 2,
@@ -157,7 +166,6 @@ export default {
           image: '/src/assets/tutorial/fruit/apple.png',
           quantity: 0,
           price: 3000,
-          stock: 50
         },
         {
           id: 3,
@@ -166,7 +174,6 @@ export default {
           image: '/src/assets/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
-          stock: 50
         },
         {
           id: 4,
@@ -175,7 +182,6 @@ export default {
           image: '/src/assets/tutorial/fruit/pineapple.png',
           quantity: 0,
           price: 4000,
-          stock: 50
         },
         {
           id: 5,
@@ -184,7 +190,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
         {
           id: 6,
@@ -193,7 +198,6 @@ export default {
           image: '/src/assets/tutorial/fruit/apple.png',
           quantity: 0,
           price: 3000,
-          stock: 50
         },
         {
           id: 7,
@@ -202,7 +206,6 @@ export default {
           image: '/src/assets/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
-          stock: 50
         },
         {
           id: 8,
@@ -211,7 +214,6 @@ export default {
           image: '/src/assets/tutorial/fruit/pineapple.png',
           quantity: 0,
           price: 4000,
-          stock: 50
         },
         {
           id: 5,
@@ -220,7 +222,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
         {
           id: 5,
@@ -229,7 +230,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
         {
           id: 5,
@@ -238,7 +238,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
         {
           id: 5,
@@ -247,7 +246,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
         {
           id: 5,
@@ -256,7 +254,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
         {
           id: 5,
@@ -265,7 +262,6 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
         {
           id: 5,
@@ -274,16 +270,56 @@ export default {
           image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
-          stock: 50
         },
       ],
       cart: [
         {
+          id: 1,
+          category: '신선 식품',
           name: '딸기',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
           quantity: 1,
-          price: 2000
+          price: 2000,
         }
-      ]
+      ],
+      storageProduct:[
+        {
+          id: 1,
+          category: '신선 식품',
+          name: '딸기',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
+          // 창고 DB에 있는 데이터. category, name, image column 추가하기?
+          ExpDate:2,  // 유통기한
+          quantity: 10,   // 발주수량, orderQuantity
+          price: 2000,   // 판매가, salesPrice
+          saledgree:4,  // 발주일자
+          disposeYn:false,  // 폐기여부
+        },
+        {
+          id: 1,
+          category: '신선 식품',
+          name: '딸기',
+          image: '/src/assets/tutorial/fruit/strawberry.png',
+          // 창고 DB에 있는 데이터. category, name, image column 추가하기?
+          ExpDate:1,  // 유통기한
+          quantity: 5,   // 발주수량
+          salesPrice: 1000,   // 판매가
+          saledgree:3,  // 발주일자
+          disposeYn:false,  // 폐기여부
+        },
+        {
+          id: 6,
+          category: '즉석 식품',
+          name: '사과2',
+          image: '/src/assets/tutorial/fruit/apple.png',
+          // 창고 DB에 있는 데이터. category, name, image column 추가하기?
+          ExpDate:4,  // 유통기한
+          quantity: 5,   // 발주수량
+          salesPrice: 1000,   // 판매가
+          saledgree:5,  // 발주일자
+          disposeYn:false,  // 폐기여부
+        },
+      ],
     }
   },
   computed: {
@@ -309,11 +345,12 @@ export default {
         if (existingItem) {
           existingItem.quantity = product.quantity;
         } else {
-          this.cart.push({
-            name: product.name,
-            quantity: product.quantity,
-            price: product.price
-          });
+          // this.cart.push({
+          //   name: product.name,
+          //   quantity: product.quantity,
+          //   price: product.price
+          // });
+          this.cart.push({...product});
         }
       } else if (existingItem) {
         const index = this.cart.indexOf(existingItem);
@@ -326,11 +363,15 @@ export default {
     getTotalPrice() {
       return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     },
-    getTotalProductCount() {
-      return this.products.reduce((total, product) => total + product.quantity, 0);
+    // getTotalProductCount() {
+    //   return this.products.reduce((total, product) => total + product.quantity, 0);
+    // },
+    getTotalProductCount(){
+      return this.storageProduct.reduce((total, product) => total + product.quantity, 0);
     },
     placeOrder() {
       const totalPrice = this.getTotalPrice();
+      const productamount = this.storageProduct.reduce((amount, product) => amount + product.quantity, 0);
       
       // 창고 안 상품 개수 데이터(변수)가 필요
       // 임시로 여기에 storageCount 변수를 추가
@@ -351,13 +392,42 @@ export default {
         return;
       }
 
-      if( this.storageCount+cartquan>50 ){
+      if( productamount+cartquan>50 ){
         this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
         this.storage = true;
         this.popup = true;
         return;
       }
       
+      this.cart.forEach(c=>{
+        const existProduct = this.storageProduct.find(p=>{
+          if(c.category=='신선 식품'){
+            if(p.id==c.id && p.ExpDate==3){
+              return p;
+            }
+          }else if(c.category=='즉석 식품'){
+            if(p.id==c.id && p.ExpDate==4){
+              return p;
+            }
+          }else if(c.category=='전자 제품'){
+            if(p.id==c.id){
+              return p;
+            }
+          }
+        });
+
+        if(existProduct!=null){
+          existProduct.quantity += c.quantity;
+        }else{
+          let expdate = 0;
+          if(c.category=='신선 식품') expdate = 3;
+          else if(c.category=='즉석 식품') expdate = 4;
+          else if(c.category=='전자 제품') expdate = 999;
+          else expdate = 0;
+          this.storageProduct.push({...c,ExpDate:expdate,saledgree:this.days,disposeYn:false,});
+        }
+      });
+
       this.money -= totalPrice;
       this.popupMessage = '발주완료';
       this.popup = true;
@@ -375,6 +445,15 @@ export default {
           popup:true,
         }
       });
+    },
+    backToMain(){
+      this.$router.push("/mainMenu");
+      // this.$router.back();
+    },
+    getStock(id){
+      let stock = 0;
+      this.storageProduct.filter(p=>p.id==id).forEach(p=>stock+=p.quantity);
+      return stock;
     }
   },
 }
@@ -503,6 +582,18 @@ export default {
   flex-direction: column;
   height:55vh;
   border-right:7px solid #5e2813;
+}
+
+.comingsoon{
+  width:100%;
+  height:48vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.comingsoon>h1{
+  font-size:4vh;
 }
 
 .category-item {
