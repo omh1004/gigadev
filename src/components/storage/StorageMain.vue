@@ -21,9 +21,9 @@
       <div class="title">창고</div>
       <img src="@/assets/tutorial/button/skip.png" width="35vw">
     </div>
-    
-    <div class="storageCount">
-      <h5 style="margin:0;">창고 개수 : 110/150</h5>
+
+    <div>
+      <h5 class="storageCount">창고 개수 : 110/150</h5>
     </div>
 
     <!-- Tab Menu -->
@@ -293,7 +293,7 @@ export default {
     border: 0.25vw solid #8B4513;
     border-radius: 9999px;
     min-width: 90vw;
-    margin-top: -8vh;
+    margin-top: -2vh;
     height: 5vh;
   }
   .left-section {
@@ -614,8 +614,8 @@ export default {
   padding: 20px;
   text-align: center;
 }
-#storagecount {
-  margin-left: 37vw;
+.storageCount {
+  margin-left: -10vw;
   margin-bottom: 0;
   font-size: 1.5vw;
   font-weight: bold;
