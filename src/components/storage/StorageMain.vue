@@ -615,8 +615,9 @@ export default {
   text-align: center;
 }
 .storageCount {
-  margin-left: -10vw;
-  margin-bottom: 0;
+  width: 50vw;
+  height: 3vh;
+  margin: 2vh 0;
   font-size: 1.5vw;
   font-weight: bold;
 }
