@@ -1,8 +1,8 @@
 <template>
   <div class="main-container">
     
-    <div class="skip-button" @click="movePage">
-      <img src="@/assets/tutorial/button/skip.png">
+    <div @click="movePage">
+      <img class="skip-button" src="@/assets/tutorial/button/skip.png">
     </div>
 
     <div id="bankman">
@@ -88,22 +88,17 @@ export default {
 
 .skip-button {
   position: absolute;
-  top: 100px;
-  right: 30px;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #5d2906;
+  top: 16vh;
+  right: 4vw;
+  width: 3vw;
 }
 
 .dialog-box {
   z-index: 1;
-  margin-top: -20px;
+  margin-top: -2.5vh;
   width: 70%;
   background-color: #F2F1EC;
-  border-radius: 24px;
-  padding: 16px 20px;
+  padding: 1vw 1.5vw;
   margin-bottom: 20px;
   min-height: 150px;
   display: flex;
