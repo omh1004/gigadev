@@ -9,20 +9,20 @@
       <div class="settings-icon">⚙️</div>
     </div> -->
     <div class="topbar">
-      <p>D-30</p>
+      <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="@/resources/money.png" width="48" height="48">
+              <img src="@/resources/money.png" width="35vw" height="35vw">
               <div class="line"></div>
               <div class="money"><p>{{ money.toLocaleString() }}원</p></div>
           </div>
-          <img src="@/resources/gameoption.png" width="40" height="40" @click="opensettings=!opensettings">
+          <img src="@/resources/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
       </div>
     </div>
 
     <div class="main-content">
       <div class="back-button" @click="backToMain">
-        <img src="@/assets/common/Vector.png" alt="back" />
+        <img id="backbtn" src="@/assets/common/Vector.png" alt="back" />
       </div>
 
       <div class="title-section">
@@ -474,19 +474,24 @@ export default {
   overflow: hidden;
   position: relative;
 }
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #e0d0b0;
-}
-
-.d-30 {
-  font-weight: bold;
-  font-size: 18px;
-}
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6vw 1.7vw;
+    margin-bottom: 1vh;
+    border: 0.25vw solid #8B4513;
+    border-radius: 9999px;
+    width: 90vw;
+    margin-top: 4vh;
+    margin-left: 3vw;
+    height: 5vh;
+  }
+  .left-section {
+    font-size: 1.5vw;
+    font-weight: bold;
+    text-align: left;
+  }
 
 .money-display {
   background-color: #5e2813;
@@ -496,10 +501,6 @@ export default {
   display: flex;
   align-items: center;
   gap: 5px;
-}
-
-.settings-icon {
-  font-size: 24px;
 }
 
 .main-content {
@@ -531,7 +532,7 @@ export default {
 }
 
 .delivery-title {
-  font-size: 24px;
+  font-size: 2vw;
   font-weight: bold;
   margin: 0;
   display: inline-block;
@@ -569,7 +570,7 @@ export default {
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:38px;
+  font-size:1.2vw;
   min-height:6vh;
   border-right:7px solid #5e2813;
 }
@@ -830,26 +831,6 @@ export default {
   background-size:100% 100%;
 }
 
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  width:90vw;
-  height:89px;
-  padding:0 40px;
-  margin:auto;
-  margin-top:40px;
-  background-image:url(@/resources/gametopbar.png);
-  background-position:center;
-  background-repeat:no-repeat;
-  background-size: contain;
-}
-.timebar-container{
-  display:flex;
-  align-items:center;
-  width:33vw;
-  max-height: 10px;
-}
 .timerbar{
   width:30vw;
   height:40px;
@@ -871,8 +852,8 @@ export default {
   justify-content:space-around;
   align-items:center;
   width: 15vw;
-  height:56px;
-  margin-right:20px;
+  height:7vh;
+  margin-right:1.5vw;
   background-image:url(@/resources/moneybar.png);
   background-size: 100% 100%;
 }
@@ -883,9 +864,15 @@ export default {
 .money{
   display:flex;
   justify-content:flex-end;
-  min-width:160px;
+  width:6vw;
+  font-size: 1.3vw;
 }
 .money p{
   color:#FFFFFF;
+}
+#backbtn {
+  width: 2vw;
+  height: 3vh;
+  margin-top: 0;
 }
 </style>
