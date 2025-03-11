@@ -66,8 +66,7 @@ export default {
 <style scoped>
 .game-container {
   font-family: RecipekoreaOTF;
-  font-size: 24px;
-  margin-top: 50px;
+  font-size: 2vw;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -75,16 +74,19 @@ export default {
   min-height: 100vh;
 
   background-image: url('@/assets/common/homeMenu.png');
-  background-size:cover;
+  background-size: 100% 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center; 
-
-
-
-  background-repeat: no-repeat;
+  position: relative;
+}
+#secondimg {
+  width: 28vw;
+  height: 14vh;
+  position: absolute;
+  top:8vh;
 }
 
 .title-section {
@@ -104,7 +106,7 @@ export default {
 }
 
 .action-buttons {
-  margin-top: 50px;
+  margin-top: 20vh;
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -135,15 +137,16 @@ export default {
 .ranking-board {
   font-family: RecipekoreaOTF;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 3vw;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 15vw;
+  margin-right: 15vw;
   min-height:400px;
   width: 800px;
-  margin-top: 50px;
+  margin-top: 0vh;
   background-image: url('@/assets/common/rankingboard.png');
-  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow:hidden;
 }
 
 .ranking-header {
@@ -168,7 +171,6 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  border-bottom: 1px solid #eee;
 }
 
 </style>
