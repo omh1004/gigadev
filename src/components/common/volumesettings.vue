@@ -2,18 +2,18 @@
     <div v-show="soundsetting" class="settings-container"> <!-- v-show=soundsetting으로 바꾸기 -->
         <div class="settings-modal">
             <div style="width:90%;text-align:right;">
-                <img src="@/resources/purpleclose.png" @click="$emit('closesound');">
+                <img src="@/assets/icons/purpleclose.png" @click="$emit('closesound');">
             </div>
             <div class="sound-settings">
                 <div  style="display:flex;justify-content:space-around;align-items:center;width:16vw;">
-                    <img src="@/resources/bgm.png" alt="bgm">
+                    <img src="@/assets/icons/bgm.png" alt="bgm">
                     <div style="height:100%;display:flex;align-items:center;">
                         <input id="bgm" type="range" max="10" step="1" class="sound-bar" :value="bgmsound" @change="changevol($event)">
                     </div>
                     <p>{{ bgmsound }}</p>
                 </div>
                 <div style="display:flex;justify-content:space-around;align-items:center;width:16vw;">
-                    <img src="@/resources/effect.png" alt="sound">
+                    <img src="@/assets/icons/effect.png" alt="sound">
                     <div style="height:100%;display:flex;align-items:center;">
                         <input id="effect" type="range" max="10" step="1" class="sound-bar" :value="effectsound" @change="changevol($event)">
                     </div>
@@ -90,7 +90,7 @@ export default {
         appearance:unset;
         width:2vh;
         height:2vh;
-        background-image:url("@/resources/soundcircle.png");
+        background-image:url("@/assets/element/soundcircle.png");
         background-size:100% 100%;
     }
 </style>

@@ -317,7 +317,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('@/resources/whiteimg.png');
+  background-image: url('@/assets/background/whitebg.png');
   background-size: 100% 100%;
 }
 
@@ -693,7 +693,7 @@ export default {
   height:59px;
   background-color:rgba(0, 0, 0, 0);
   border:0;
-  background-image:url("/src/resources/increasestorage.png");
+  background-image:url("/src/assets/element/increasestorage.png");
   background-size:100% 100%;
 }
 
@@ -708,7 +708,7 @@ export default {
   height:6vh;
   background-color:rgba(0, 0, 0, 0);
   border:0;
-  background-image:url("/src/resources/increasestorage.png");
+  background-image:url("/src/assets/element/increasestorage.png");
   background-size:100% 100%;
 }
 

@@ -2,7 +2,7 @@
   <div></div>
   <div class="game-container">  
 
-    <img id="secondimg" src="@/resources/tycoonname.png" alt="타이쿤 이름 이미지">
+    <img id="secondimg" src="@/assets/images/tycoonname.png" alt="타이쿤 이름 이미지">
     <div class="action-buttons">
       <button class="load-button" >불러오기</button>
       <button class="start-button" @click="startgame">게임시작</button>

@@ -36,7 +36,7 @@ export default {
   .news-background{
     width:100vw;
     height:100vh;
-    background-image:url("/src/assets/tutorial.jpg");
+    background-image:url("/src/assets/background/yellowbg.jpg");
     /* background-size:contain; */
     background-size:100% 100%;
     background-repeat:no-repeat;

@@ -143,6 +143,11 @@ const router = createRouter({
       ,component:IntroStart4
     },
     {
+      path:'/tutorialStart',
+      name:'tutorialStart',
+      component:'',
+    },
+    {
       path:'/orderingMain'
       ,name:'orderingMain'
       ,component:OrderingMain

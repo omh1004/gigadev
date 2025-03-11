@@ -63,7 +63,7 @@ export default {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url(@/resources/mainback2.png);
+  background-image: url(@/assets/background/convenientbg2.png);
   background-size: 100% 100%;
   min-height: 100vh;
 }

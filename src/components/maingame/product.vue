@@ -31,7 +31,7 @@
             <div v-if="modal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>판매하기</p>
-                    <img src="@/resources/close.png" width="1.5vw;" @click="modal=false">
+                    <img src="@/assets/icons/close.png" width="1.5vw;" @click="modal=false">
                 </div>
                 <div>
                     <div class="modalcontent">
@@ -54,7 +54,7 @@
             <div v-else-if="countermodal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>회수하기</p>
-                    <img src="@/resources/close.png" width="1.5vw;" @click="$emit('closemodal')">
+                    <img src="@/assets/icons/close.png" width="1.5vw;" @click="$emit('closemodal')">
                 </div>
                 <div>
                     <div class="modalcontent">
@@ -208,7 +208,7 @@ export default {
     .modalwin{
         width:34vw;
         height:34vh;
-        background-image:url("/src/resources/prodmodal.png");
+        background-image:url("/src/assets/element/prodmodal.png");
         background-size:100% 100%;
         border-radius:3vh;
         overflow:hidden;
@@ -233,7 +233,7 @@ export default {
         align-items:center;
     }
     .okbutton{
-        background-image:url('/src/resources/ok.png');
+        background-image:url('/src/assets/element/ok.png');
         width:9.5vw;
         height:5.5vh;
         background-color:rgba(0,0,0,0);

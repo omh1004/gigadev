@@ -75,7 +75,7 @@ height: 100vh;
 display: flex;
 align-items: center;
 justify-content: center;
-background-image: url("@/resources/bankbg.png");
+background-image: url("@/assets/background/bankbg.png");
 background-size: 100% 100%;
 position: relative;
 }
@@ -85,7 +85,7 @@ position: relative;
 position: relative;  /* ✅ 대출 내역과 함께 유지 */
 width: 1025px;
 height: 525px;
-background-image: url("@/resources/calendar.png");
+background-image: url("@/assets/element/calendar.png");
 background-size: contain;
 background-position: center;
 background-repeat: no-repeat;

@@ -85,7 +85,7 @@
     align-items: center; 
 
 
-    background-image: url('@/resources/whiteimg.png');
+    background-image: url('@/assets/background/whitebg.png');
     background-size: 100% 100%;
 
   }

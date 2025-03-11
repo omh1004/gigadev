@@ -2,7 +2,7 @@
     <div style="display:flex;">
         <!-- 일단 프론트엔드만 만들어놓는 중
         <p class="balloon">{{ quizDialog }}</p>
-        <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px"> -->
+        <img class="manInBlack" src="@/assets/man_in_black.png" width="400px" height="500px"> -->
         <div class="relability_bar">
             <div class="bar_inside">
                 <p v-show="relability==100" class="fever">FEVER<br>TIME</p>
@@ -13,15 +13,15 @@
                 </div>
             </div>
         </div>
-        <img class="relability" src="@/resources/relability.png" width="78px" height="70px">
+        <img class="relability" src="@/assets/element/relability.png" width="78px" height="70px">
         <p class="balloon">{{ quizDialog }}</p>
-        <img class="manInBlack" src="@/resources/man_in_black.png" width="400px" height="500px">
+        <img class="manInBlack" src="@/assets/person/quizman.png" width="400px" height="500px">
     </div>
 </template>
 
 <script>
 import quizChoice from './quizChoice.vue';
-import { quiz } from '../../resources/prodNquiz.js';
+import { quiz } from '../../assets/data/prodNquiz.js';
 
 export default {
     name: 'quizcomponent',
@@ -45,7 +45,7 @@ div {
     width: 550px;
     height: 240px;
     min-height: 250px;
-    background-image: url("@/resources/speech_balloon.png"); /* 약 21:10 비율 */
+    background-image: url("@/assets/images/speechballoon.png"); /* 약 21:10 비율 */
     background-size: 100% 100%;
     position: relative;
     /* top: 160px; */

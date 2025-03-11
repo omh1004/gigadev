@@ -43,7 +43,7 @@ export default {
   width: 100%;
   height: auto;
   min-height: 100vh;
-  background-image: url('@/resources/whiteimg.png');
+  background-image: url('@/assets/background/whiteimg.png');
   background-size: 100% 100%;
   padding: 5%;
   
@@ -52,7 +52,7 @@ export default {
   all:unset;
   width: 2vw;
   height: 2vw;
-  background-image: url('@/resources/back.png');
+  background-image: url('@/assets/icons/back.png');
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;

@@ -12,11 +12,11 @@
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="@/resources/money.png" width="35vw" height="35vw">
+              <img src="@/assets//icons/money.png" width="35vw" height="35vw">
               <div class="line"></div>
               <div class="money"><p>{{ money.toLocaleString() }}원</p></div>
           </div>
-          <img src="@/resources/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
+          <img src="@/assets/icons/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
       </div>
     </div>
 
@@ -389,7 +389,7 @@ export default {
   /* border: 2px solid #753422; */
   /* border-radius: 15px; */
   /* background-color: #ffffff; */
-  background-image:url('@/resources/whiteimg.png');
+  background-image:url('@/assets/background/whitebg.png');
   background-size:100% 100%;
   font-family: Arial, sans-serif;
   overflow: hidden;
@@ -666,7 +666,7 @@ export default {
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
-  background-image:url('/src/resources/orderbutton.png');
+  background-image:url('/src/assets/element/orderbutton.png');
   background-color:rgba(0,0,0,0);
   background-size:100% 100%;
   margin-top:1vh;
@@ -736,7 +736,7 @@ export default {
   height:5.5vh;
   background-color:rgba(0,0,0,0);
   border:0;
-  background-image:url("@/resources/increasestorage.png");
+  background-image:url("@/assets/element/increasestorage.png");
   background-size:100% 100%;
 }
 
@@ -763,7 +763,7 @@ export default {
   width: 15vw;
   height:7vh;
   margin-right:1.5vw;
-  background-image:url(@/resources/moneybar.png);
+  background-image:url(@/assets/element/moneybar.png);
   background-size: 100% 100%;
 }
 .line{
