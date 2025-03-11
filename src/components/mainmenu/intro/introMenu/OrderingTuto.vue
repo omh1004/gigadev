@@ -1,4 +1,5 @@
 <template>
+  <div class="blind" @click="nextTutoPage"/>
   <div class="app-container">
     <!-- <div class="header">
       <div class="d-30">D-30</div>
@@ -12,16 +13,16 @@
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="@/assets//icons/money.png" width="35vw" height="35vw">
+              <img src="@/assets//icons/money.png" style="width:3.5vh;height:3.5vh;">
               <div class="line"></div>
-              <div class="money"><p>{{ money.toLocaleString() }}원</p></div>
+              <div class="money"><p>{{ money }}원</p></div>
           </div>
-          <img src="@/assets/icons/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
+          <img src="@/assets/icons/gameoption.png" style="width:3vh;height:3vh;" class="settings-icon">
       </div>
     </div>
 
     <div class="main-content">
-      <div class="back-button" @click="backToMain">
+      <div class="back-button">
         <img id="backbtn" src="@/assets/common/Vector.png" alt="back" />
       </div>
 
@@ -46,21 +47,18 @@
                   <div 
                     class="category-item" 
                     :class="{ active: selectedCategory === '신선 식품' }"
-                    @click="selectedCategory = '신선 식품'"
                   >
                     <div class="category-name">신선 식품</div>
                   </div>
                   <div 
                     class="category-item" 
                     :class="{ active: selectedCategory === '즉석 식품' }"
-                    @click="selectedCategory = '즉석 식품'"
                   >
                     <div class="category-name">즉석 식품</div>
                   </div>
                   <div 
                     class="category-item" 
                     :class="{ active: selectedCategory === '전자 제품' }"
-                    @click="selectedCategory = '전자 제품'"
                   >
                     <div class="category-name">전자 제품</div>
                   </div>
@@ -76,9 +74,9 @@
                         <div class="product-name">{{ product.name }}</div>
                       </div>
                       <div class="quantity-control">
-                        <button class="decrease-button" @click="decreaseQuantity(product)">−</button>
+                        <button class="decrease-button">−</button>
                         <span class="quantity-display">{{ product.quantity }}</span>
-                        <button class="increase-button" @click="increaseQuantity(product)">+</button>
+                        <button class="increase-button">+</button>
                       </div>
                       <div class="price-display">{{ product.price.toLocaleString() }}원</div>
                       <div class="stock-display">{{ product.stock }}</div>
@@ -104,7 +102,7 @@
               총 {{ getTotalPrice().toLocaleString() }}원
               </div>
           </div>
-          <button class="order-button" @click="placeOrder"></button>
+          <button class="order-button" :style="{'z-index':tutoPage*15}" @click="placeOrder"></button>
         </div>
       </div>
 
@@ -126,6 +124,18 @@
       </div>
     </div>
   </div>
+  <div v-show="tutoPage==0" class="tuto win1"><p>1. 원하는 수량만큼 상품을 발주할 수 있습니다.</p></div>
+  <div v-show="tutoPage==0" class="tuto win2">
+    <p>2. 발주한 상품들은 유통 기한이 존재합니다.</p>
+    <p>(신선식품은 4일 / 즉석식품은 5일)</p>
+    <p>창고에서 상품들을 관리할 수 있습니다.</p>
+  </div>
+  <div v-show="tutoPage==0" class="tuto win3">
+    <p>3. 창고에서 상품들을 관리할 수 있습니다.</p>
+    <p>기본 창고의 개수는 50개이며</p>
+    <p>남은 창고 개수만큼 발주가 가능합니다.</p>
+  </div>
+  <div v-show="tutoPage==1" class="tuto win4"><p>발주하기 버튼을 눌러 완료하세요.</p></div>
 </template>
 
 <script>
@@ -136,10 +146,10 @@ export default {
       cartList: [],
       itemPrice: 0,
       popup: false,
-      money: 500000,
       selectedCategory: '신선 식품',
       storageCount:0,
       storage:false,
+      tutoPage:0,
       products: [
         {
           id: 1,
@@ -292,34 +302,6 @@ export default {
     }
   },
   methods: {
-    increaseQuantity(product) {
-      product.quantity++;
-      this.updateCart(product);
-    },
-    decreaseQuantity(product) {
-      if (product.quantity > 0) {
-        product.quantity--;
-        this.updateCart(product);
-      }
-    },
-    updateCart(product) {
-      const existingItem = this.cart.find(item => item.name === product.name);
-      
-      if (product.quantity > 0) {
-        if (existingItem) {
-          existingItem.quantity = product.quantity;
-        } else {
-          this.cart.push({
-            name: product.name,
-            quantity: product.quantity,
-            price: product.price
-          });
-        }
-      } else if (existingItem) {
-        const index = this.cart.indexOf(existingItem);
-        this.cart.splice(index, 1);
-      }
-    },
     getTotalItems() {
       return this.cart.reduce((total, item) => total + item.quantity, 0);
     },
@@ -339,18 +321,6 @@ export default {
         cartquan += c.quantity;
       })
 
-      if (totalPrice > this.money) {
-        this.popupMessage = '잔액이 부족합니다.';
-        this.popup = true;
-        return;
-      }
-      
-      if (this.cart.length === 0) {
-        this.popupMessage = '주문할 상품을 선택해주세요.';
-        this.popup = true;
-        return;
-      }
-
       if( this.storageCount+cartquan>50 ){
         this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
         this.storage = true;
@@ -367,14 +337,8 @@ export default {
       this.storage = false;
       this.popupMessage = '';
     },
-
-    gotostorage(){
-      this.$router.push({
-        name:"storageMain",
-        state:{
-          popup:true,
-        }
-      });
+    nextTutoPage(){
+      this.tutoPage++;
     }
   },
 }
@@ -382,6 +346,12 @@ export default {
 </script>
 
 <style scoped>
+.blind{
+  width:100vw;
+  height:100vh;
+  position:absolute;
+  z-index:10;
+}
 .app-container {
   width: 100vw;
   height:100vh;
@@ -439,7 +409,6 @@ export default {
   justify-content: center;
   align-items: center;
   color: white;
-  cursor: pointer;
 }
 
 .back-button img {
@@ -512,7 +481,6 @@ export default {
   align-items:center;
   padding: 1vh;
   border-bottom:7px solid #5e2813;
-  cursor: pointer;
   height:11vh;
 }
 
@@ -607,7 +575,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
 .quantity-display {
@@ -670,6 +637,7 @@ export default {
   background-color:rgba(0,0,0,0);
   background-size:100% 100%;
   margin-top:1vh;
+  position:relative;
 }
 
 .footer {
@@ -767,8 +735,8 @@ export default {
   background-size: 100% 100%;
 }
 .line{
-  min-height:28px;
-  border-left:2px dashed rgba(256,256,256,0.2);
+  min-height:2.5vh;
+  border-left:0.2vw dashed rgba(256,256,256,0.2);
 }
 .money{
   display:flex;
@@ -783,5 +751,29 @@ export default {
   width: 2vw;
   height: 3vh;
   margin-top: 0;
+}
+.tuto{
+  position:absolute;
+  background-color:#FFEDDE;
+  font-size:2vh;
+}
+.tuto p{
+  margin:1vh 2vw;
+}
+.win1{
+  top:18vh;
+  left:54vw;
+}
+.win2{
+  top:50vh;
+  left:65vw;
+}
+.win3{
+  top:80vh;
+  left:32vw;
+}
+.win4{
+  top:77vh;
+  left:65vw;
 }
 </style>

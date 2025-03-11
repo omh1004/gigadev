@@ -4,7 +4,7 @@ import LoginComponent from '@/components/member/login.vue'
 import JoinComponent from '@/components/member/join.vue'
 import FindComponent from '@/components/member/find.vue'
 
-import MainmenuComponent from '@/components/mainmenu/intro/Mainmenu.vue'
+import MainmenuComponent from '@/components/maingame/Mainmenu.vue'
 import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
 import IntroStart2 from '@/components/mainmenu/intro/introstart/IntroStart2.vue'
 import IntroStart3 from '@/components/mainmenu/intro/introstart/IntroStart3.vue'
@@ -30,7 +30,8 @@ import quizComponent from '@/components/quiz/quizMain.vue'
 import Settings from '@/components/common/volumesettings.vue' // 개발용으로 추가가
 
 import { createRouter, createWebHistory } from 'vue-router'
-import TutorialStart from '@/components/mainmenu/intro/tutorialStart.vue'
+import TutorialStart from '@/components/mainmenu/tutorial/tutorialStart.vue'
+import TutorialMain from '@/components/mainmenu/tutorial/tutorialMain.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -147,6 +148,11 @@ const router = createRouter({
       path:'/tutorialStart',
       name:'tutorialStart',
       component:TutorialStart,
+    },
+    {
+      path:'/tutorialMain',
+      name:'tutorialMain',
+      component:TutorialMain,
     },
     {
       path:'/orderingMain'
