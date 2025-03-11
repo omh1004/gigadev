@@ -16,9 +16,14 @@
     <!-- Navigation -->
     <div class="navigation">
       <div class="back-button" @click="goBack">
-        <img src="@/assets/common/Vector.png" alt="back" />
+        <img class="back-button" src="@/assets/common/Vector.png" alt="back" />
       </div>
       <div class="title">창고</div>
+      <img src="@/assets/tutorial/button/skip.png" width="35vw">
+    </div>
+
+    <div>
+      <p id="storagecount">창고 개수 : 110/150</p>
     </div>
     
     <!-- Tab Menu -->
@@ -61,7 +66,6 @@
           <p>50 >> 70</p>
           <p>필요금액</p>
           <p>30,000</p>
-          <button class="expansionButton">확장하기</button>
         </div>
       </div>
     </div>
@@ -202,15 +206,6 @@ export default {
       this.popupMessage = '50 >> 70 필요금액 30,000';
       this.popup = true;
     },
-    closePopup(){
-      this.popup=false;
-    }
-  },
-  mounted(){
-    if(history.state.popup!=null){
-      console.log(history.state.popup);
-      this.popup = history.state.popup;
-    }
   }
 };
 </script>
@@ -228,7 +223,6 @@ export default {
   text-align: center;
   max-width: 100%;
   min-height: 90%;
-  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -238,93 +232,72 @@ export default {
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 16px;
-  margin-bottom: 20px;
-  border: 3px solid #8B4513;
-  border-radius: 9999px;
-  min-width: 90vw;
-  margin-top: 30px;
-  height: 40px;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  z-index: 10;
-}
-
-.left-label {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.right-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.left-section {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: left;
-}
-
-.money-display {
-  background-color: #5d2906;
-  color: white;
-  padding: 6px 16px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6vw 1.7vw;
+    margin-bottom: -11vh;
+    border: 0.25vw solid #8B4513;
+    border-radius: 9999px;
+    min-width: 90vw;
+    margin-top: -8vh;
+    height: 5vh;
+  }
+  .left-section {
+    font-size: 1.5vw;
+    font-weight: bold;
+    text-align: left;
+  }
+    .money-bag {
+    display: flex;
+    align-items: center;
+    background-color: #5D2906;
+    color: white;
+    padding: 0.6vw 1.4vw;
+    border-radius: 9999px;
+    gap:3.5vw;
+    height: 3.3vh;
+    width: 13vw;
+  }
+  
 .money-bag {
-  font-size: 20px;
+  font-size: 1.5vw;
 }
 
-.bag-icon {
-  margin-right: 8px;
-}
-
-.settings-icon {
-  font-size: 24px;
-}
-
-.money-bag {
-  display: flex;
-  align-items: center;
-  background-color: #5D2906;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  gap: 50px;
-  height: 27px;
-  width: 180px;
-}
-
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    text-align: right;
+    margin-left: auto;
+  }
+  
+  .bag-icon {
+    margin-right: 0.3vw;
+  }
+  
+  .settings-icon {
+    font-size: 2vw;
+  }
 .navigation {
   width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
-  margin-bottom: 12px;
-  margin-top: 60px; /* Adjusted to account for fixed header */
+  margin-bottom: 0;
+  margin-top: 12vh; /* Adjusted to account for fixed header */
 }
 
 .back-button {
   color: #5d2906;
-  font-size: 24px;
   cursor: pointer;
+  width: 2vw;
+  height: 2vw;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 2vw;
   font-weight: bold;
   text-align: center;
 }
@@ -358,7 +331,8 @@ export default {
 }
 
 .tab-container {
-  width: 800px;
+  width: 50vw;
+  height: 50vh;
   border: 4px solid #6F3533;
   border-radius: 16px;
   overflow: hidden;
@@ -457,7 +431,7 @@ export default {
 
 .confirm-button {
   background-color: #fff3d4;
-  border: 2px solid #8b4513;
+  border: 0.25vw solid #8b4513;
   border-radius: 16px;
   padding: 8px 24px;
   display: flex;
@@ -465,6 +439,7 @@ export default {
   gap: 8px;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 0;
 }
 
 .plus-icon {
@@ -473,11 +448,13 @@ export default {
 }
 
 .fruit-container {
-  border: 2px solid #8B4513;
+  border: none;
   border-radius: 10px;
   background-color: #f5f5dc;
-  padding: 10px;
   width: 100%;
+  overflow-y: auto;
+  max-height: 400px;
+
 }
 
 .fruit-row {
@@ -496,8 +473,8 @@ export default {
 }
 
 .fruit-image {
-  width: 120px; /* Reverted width */
-  height: 120px; /* Reverted height */
+  width: 100%; /* Reverted width */
+  height: 100%; /* Reverted height */
 }
 
 .fruit-discount {
@@ -573,14 +550,12 @@ export default {
   padding: 20px;
   text-align: center;
 }
-
-.expansionButton{
-  width:9.5vw;
-  height:5.5vh;
-  background-color:rgba(0, 0, 0, 0);
-  border:0;
-  background-image:url("/src/resources/increasestorage.png");
-  background-size:100% 100%;
+#storagecount {
+  margin-left: 37vw;
+  margin-bottom: 0;
+  font-size: 1.5vw;
+  font-weight: bold;
 }
+
 
 </style>

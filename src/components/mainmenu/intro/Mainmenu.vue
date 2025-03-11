@@ -77,14 +77,10 @@
     max-width: 100%;
     min-height: 90%;
 
-    background-size: cover;
 
     display: flex;
     flex-direction: column;
     align-items: center; 
-
-
-
 
 
     background-image: url('@/resources/whiteimg.png');
@@ -121,17 +117,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
-    margin-bottom: 100px;
-    border: 3px solid #8B4513;
+    padding: 0.6vw 1.7vw;
+    margin-bottom: 11vh;
+    border: 0.25vw solid #8B4513;
     border-radius: 9999px;
     min-width: 90vw;
-    margin-top: 30px;
-    height: 40px;
+    margin-top: 3vh;
+    height: 5vh;
   }
   
   .left-section {
-    font-size: 20px;
+    font-size: 1.5vw;
     font-weight: bold;
     text-align: left;
   }
@@ -140,31 +136,31 @@
     align-items: center;
     background-color: #5D2906;
     color: white;
-    padding: 8px 16px;
+    padding: 0.6vw 1.4vw;
     border-radius: 9999px;
-    gap:50px;
-    height: 27px;
-    width: 180px;
+    gap:3.5vw;
+    height: 3.3vh;
+    width: 13vw;
   }
   
 .money-bag {
-  font-size: 20px;
+  font-size: 1.5vw;
 }
 
   .right-section {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 1vw;
     text-align: right;
     margin-left: auto;
   }
   
   .bag-icon {
-    margin-right: 8px;
+    margin-right: 0.3vw;
   }
   
   .settings-icon {
-    font-size: 24px;
+    font-size: 2vw;
   }
   
   .notification {
@@ -190,16 +186,16 @@
     width: 80%;
     display: flex;
     justify-content: space-between;
-    margin-top: 90px;
-    margin-bottom: 200px;
+    margin-top: 14vh;
+    margin-bottom: 20vh;
   }
   
   .button-text > img{
-    width: 300px;
-    height: 120px;
+    width: 20vw;
+    height: 15vh;
     /* background-color: #FFF8DC;
     border: 2px solid #8B4513; */
-    border-radius: 24px;
+    border-radius: 2vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -207,10 +203,6 @@
    
   }
   
-  .button-text {
-    font-size: 24px;
-    font-weight: bold;
-  }
   
   .open-button-container {
     display: flex;
@@ -219,15 +211,14 @@
   }
   
   .open-button {
-    width: 200px;
-    height: 70px;
+    width: 14.5vw;
+    height: 9vh;
     background-image: url('@/assets/tutorial/button/openbutton.png');
     background-size: contain;
     background-repeat: no-repeat;
     
     border: none;
-    font-size: 20px;
-    font-weight: bold;
+    border-radius: 1vw;
     cursor: pointer;
   }
 
