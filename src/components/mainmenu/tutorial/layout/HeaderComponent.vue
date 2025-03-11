@@ -5,10 +5,6 @@
     </div>
 </template>
 <script>
-import defaultLogo from '@/assets/chunjaelogo.jpg';
-// import mylogo from '@/assets/chunjaelogo2.jpg';
-
-
 export default {
     name:"headerComponent",
    

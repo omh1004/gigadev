@@ -16,8 +16,6 @@ const model ={
       }
   }
 }
-
-import tutorialImg from '@/assets/tutorialMain.png';
 export default {
     name:"layoutComponent"
     ,data(){
@@ -44,7 +42,7 @@ export default {
     section>article{
         width:100%;
         background-color: lightblue;
-        background-image: url('@/assets/tutorialMain.png');
+        background-image: url('@/assets/background/convenientbg.png');
     }
     footer{
         width:100%;
