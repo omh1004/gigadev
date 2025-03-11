@@ -6,7 +6,7 @@
       <div class="right-section">
         <div class="money-bag">
           <span class="bag-icon">💰</span>
-          <span class="amount">500,00원</span>
+          <span class="amount">{{ money }}원</span>
         </div>
         <span class="settings-icon">⚙️</span>
         
@@ -23,7 +23,7 @@
     </div>
 
     <div>
-      <h5 class="storageCount">창고 개수 : 110/150</h5>
+      <h5 class="storageCount">창고 개수 : 50/{{ storageSize }}</h5>
     </div>
 
     <!-- Tab Menu -->
@@ -52,7 +52,7 @@
     <div class="button-container">
       <button class="confirm-button" @click="placeOrder">
         <span class="plus-icon">+</span>
-        <span @click="">확장하기</span>
+        <span>확장하기</span>
       </button>
     </div>
 
@@ -62,17 +62,25 @@
         <div class="popup-header">
           <p>{{ popupTitle }}</p>
         </div>
-        <div v-if="storage" class="popup-body">
-          <p>50 >> 70</p>
+
+        <div v-if="storage && storageSize<150" class="popup-body">
+          <p>{{ storageSize }} >> {{ storageSize+20 }}</p>
           <p>필요금액</p>
-          <p>30,000</p>
+          <p>{{ 30000+((storageSize-50)/20)*10000 }}</p>
+          <button class="expansionButton" @click="expansionStorage">확장하기</button>
         </div>
+
+        <div v-if="storage && storageSize>=150" class="popup-body oneExplan">
+          <p>창고 상한에 도달하였습니다.</p>
+          <div style="text-align:right;"><button class="expansionButton" @click="closePopup">확인</button></div>
+        </div>
+
         <div v-if="dispose" class="popup-body">
           <div style="display:flex;justify-content:space-around;align-items:center;">
             <div v-html="disproduct"></div>
             <div>
               <h4>{{ disfruit.name }}</h4>
-              <h4>가격</h4>
+              <h4>{{ disfruit.price }}</h4>
             </div>
             <div class="quantity-control">
               <button class="decrease-button" @click="decreaseQuantity">−</button>
@@ -83,9 +91,15 @@
           <div style="display:flex;justify-content:space-around;align-items:center;">
             <div></div>
             <div><h5 style="color:#FF5353;">물품의 20% 가격으로 판매</h5></div>
-            <div><button class="disposeButton">폐기하기</button></div>
+            <div><button class="disposeButton" :disabled="disquantity==0" @click="disposeAction">폐기하기</button></div>
           </div>
         </div>
+
+        <div v-if="realdispose" class="popup-body oneExplan">
+          <p>정말 폐기하시겠습니까?</p>
+          <div style="text-align:right;"><button class="disposeButton" @click="disposeNow">폐기</button></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -96,89 +110,85 @@ const model = {
   image: 'src/assets/common/fruit/strawberry.png',
   popup:false,
   popupTitle:'알림',
+  money:500000,
+  storageSize:50,
   storage:false,
+  dispose:false,
+  realdispose:false,
   disproduct:'',
   disquantity:0,
   disfruit:{},
   fruits: [
-    { id:1, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id:2, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id:3, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id:4, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id:5, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id:6, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id:7, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    { id:8, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id:9, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id:10, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id:11, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id:12, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id:13, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id:14, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 15, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 16, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 17, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 18, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 19, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 20, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 21, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 22, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 23, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 24, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 25, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 26, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 27, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 28, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 29, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 30, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 31, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 32, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 33, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 34, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 35, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 36, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 37, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 38, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 39, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 40, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 41, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 42, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 43, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 44, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 45, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 46, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 47, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 48, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 49, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 50, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 51, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 52, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 53, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 54, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 55, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 56, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 57, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 58, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 59, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 60, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 61, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 62, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 63, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
-    // Add more items as needed
-    { id: 64, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품' },
-    { id: 65, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품' },
-    { id: 66, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품' },
-    { id: 67, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품' },
-    { id: 68, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품' },
-    { id: 69, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품' },
-    { id: 70, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품' },
+  { id: 1, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 2000 },
+    { id: 2, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 3, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 1000 },
+    { id: 4, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 5, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 6, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 7, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 8, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 9, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 10, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 11, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 12, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 1000 },
+    { id: 13, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 14, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 15, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 2000 },
+    { id: 16, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 17, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 1000 },
+    { id: 18, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 19, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 20, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 21, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 22, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 23, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 24, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 25, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 2000 },
+    { id: 26, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 1000 },
+    { id: 27, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 28, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 29, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 30, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 31, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 32, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 33, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 34, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 35, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 36, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 37, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 38, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 39, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 40, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 41, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 42, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 43, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 44, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 45, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 46, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 47, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 48, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 49, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 50, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 51, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 52, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 53, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 54, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 55, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 56, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 57, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 58, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 59, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 60, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 61, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 62, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 63, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
+    { id: 64, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 1000 },
+    { id: 65, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
+    { id: 66, name: '사과', image: 'src/assets/common/fruit/apple.png', quantity: 1, discount: null, category: '신선식품', price: 2000 },
+    { id: 67, name: '라면', image: 'src/assets/common/food/ramen.png', quantity: 5, discount: '20%', category: '즉석식품', price: 1000 },
+    { id: 68, name: '햄버거', image: 'src/assets/common/food/burger.png', quantity: 2, discount: null, category: '즉석식품', price: 2000 },
+    { id: 69, name: '노트북', image: 'src/assets/common/electronics/laptop.png', quantity: 1, discount: '10%', category: '전자제품', price: 3000 },
+    { id: 70, name: '스마트폰', image: 'src/assets/common/electronics/phone.png', quantity: 1, discount: null, category: '전자제품', price: 2000 },
     // Add more items as needed
   ],
   itemsPerRow: 5,
@@ -234,12 +244,14 @@ export default {
     closePopup(){
       this.storage = false;
       this.dispose = false;
+      this.realdispose = false;
       this.popup = false;
     },
     disposePopup(e){
       this.disquantity = 0;
       this.disproduct = e.target.parentElement.innerHTML;
       this.disfruit = this.fruits.find(f=>f.id==e.target.id);
+      console.log(this.disfruit);
       this.popup = true;
       this.dispose = true;
     },
@@ -253,11 +265,36 @@ export default {
         this.disquantity--;
       }
     },
+    disposeAction(){
+      this.dispose = false;
+      this.realdispose = true;
+    },
+    disposeNow(){
+      this.money += this.disfruit.price * this.disquantity;
+      this.disfruit.quantity -= this.disquantity;
+      // 잔액 증가 로직 추가하기
+      if(this.disfruit.quantity==0){
+        const index = this.fruits.findIndex(f=>this.disfruit.id==f.id);
+        console.log(index);
+        this.fruits.splice(index,1);
+      }
+      this.realdispose = false;
+      this.popup = false;
+    },
+    expansionStorage(){
+      if(this.storageSize<150){
+        this.money -= 30000+((this.storageSize-50)/20)*10000;
+        this.storageSize += 20;
+        this.storage = false;
+        this.popup = false;
+      }
+    }
   },
   mounted(){
     if(history.state.popup!=null){
       console.log(history.state.popup);
       this.popup = history.state.popup;
+      this.storage = history.state.popup;
     }
   }
 };
@@ -356,9 +393,12 @@ export default {
 }
 
 .storageCount{
-  width:808px;
-  height:30px;
+  width:50vw;
+  height:3vh;
   text-align:right;
+  margin:2vh 0;
+  font-size: 1.5vw;
+  font-weight: bold;
 }
 
 .skip-button {
@@ -513,6 +553,7 @@ export default {
   width: 100%;
   overflow-y: auto;
   max-height: 400px;
+  flex-wrap:wrap;
 
 }
 
@@ -611,6 +652,7 @@ export default {
 }
 
 .popup-body {
+  height:332px;
   padding: 20px;
   text-align: center;
 }
@@ -649,11 +691,21 @@ export default {
 .disposeButton{
   width:181px;
   height:59px;
+  background-color:rgba(0, 0, 0, 0);
+  border:0;
+  background-image:url("/src/resources/increasestorage.png");
+  background-size:100% 100%;
+}
+
+.oneExplan{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
 }
 
 .expansionButton{
   width:9.5vw;
-  height:5.5vh;
+  height:6vh;
   background-color:rgba(0, 0, 0, 0);
   border:0;
   background-image:url("/src/resources/increasestorage.png");
