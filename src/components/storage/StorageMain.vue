@@ -83,8 +83,12 @@
           <div style="display:flex;justify-content:space-around;align-items:center;">
             <div></div>
             <div><h5 style="color:#FF5353;">물품의 20% 가격으로 판매</h5></div>
-            <div><button class="disposeButton">폐기하기</button></div>
+            <div><button class="disposeButton" @click="disposeAction">폐기하기</button></div>
           </div>
+        </div>
+        <div v-if="realdispose" class="popup-body disposeConfirm">
+          <p>정말 폐기하시겠습니까?</p>
+          <div style="text-align:right;"><button class="disposeButton" @click="disposeNow">폐기</button></div>
         </div>
       </div>
     </div>
@@ -97,6 +101,8 @@ const model = {
   popup:false,
   popupTitle:'알림',
   storage:false,
+  dispose:false,
+  realdispose:false,
   disproduct:'',
   disquantity:0,
   disfruit:{},
@@ -253,11 +259,16 @@ export default {
         this.disquantity--;
       }
     },
+    disposeAction(){
+      this.dispose = false;
+      this.realdispose = true;
+    }
   },
   mounted(){
     if(history.state.popup!=null){
       console.log(history.state.popup);
       this.popup = history.state.popup;
+      this.storage = history.state.popup;
     }
   }
 };
@@ -629,6 +640,7 @@ export default {
 }
 
 .popup-body {
+  height:332px;
   padding: 20px;
   text-align: center;
 }
@@ -660,6 +672,13 @@ export default {
 .disposeButton{
   width:181px;
   height:59px;
+  background-color:
+}
+
+.disposeConfirm{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
 }
 
 .expansionButton{
