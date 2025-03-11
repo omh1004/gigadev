@@ -85,7 +85,7 @@ label {
 #maincontainer {
   width: 100vw;
   height: 100vh;
-  background-image: url('@/assets/background/whiteimg.png');
+  background-image: url('@/assets/background/whitebg.png');
   background-size: 100% 100%;
   min-height: 100vh;
 }

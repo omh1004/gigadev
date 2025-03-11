@@ -30,6 +30,7 @@ import quizComponent from '@/components/quiz/quizMain.vue'
 import Settings from '@/components/common/volumesettings.vue' // 개발용으로 추가가
 
 import { createRouter, createWebHistory } from 'vue-router'
+import TutorialStart from '@/components/mainmenu/intro/tutorialStart.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -145,7 +146,7 @@ const router = createRouter({
     {
       path:'/tutorialStart',
       name:'tutorialStart',
-      component:'',
+      component:TutorialStart,
     },
     {
       path:'/orderingMain'

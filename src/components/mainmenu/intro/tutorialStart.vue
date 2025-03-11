@@ -1,6 +1,16 @@
 <template>
     <div class="store-layout" @click="linkMainMenu">
+      <div @click="movePage">
+        <img class="skip-button" src="@/assets/tutorial/button/skip.png">
+      </div>
 
+      <div id="bankman">
+        <img src="@/assets/tutorial/people/bankmember.png">
+      </div>
+      <div class="dialog-box">
+        <div class="dialog-text">{{ inputText }}</div>
+        <div class="dialog-arrow">▼</div>
+      </div>
     </div>
   </template>
 
@@ -19,7 +29,7 @@
   
   <style scoped>
   .store-layout {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     position: relative;
     overflow: hidden;
