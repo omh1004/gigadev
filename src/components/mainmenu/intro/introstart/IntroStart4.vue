@@ -1,8 +1,8 @@
 <template>
   <div class="main-container">
     
-    <div class="skip-button">
-      <img src="@/assets/tutorial/button/skip.png">
+    <div>
+      <img class="skip-button" src="@/assets/tutorial/button/skip.png">
     </div>
     
     
@@ -73,22 +73,18 @@ export default {
 
 .skip-button {
   position: absolute;
-  top: 100px;
-  right: 30px;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #5d2906;
+  top: 16vh;
+  right: 4vw;
+  width: 3vw;
 }
 
 .dialog-box {
   
-  margin-top: 517px;
+  margin-top: 68.5vh;
   width: 70%;
   background-color: #F2F1EC;
   border-radius: 24px;
-  padding: 16px 20px;
+  padding: 1vw 1.5vw;
   margin-bottom: 20px;
   min-height: 150px;
   display: flex;
@@ -99,7 +95,7 @@ export default {
 
 .dialog-text {
   text-align: left;
-  font-size: 24px;
+  font-size: 1.8vw;
   margin: 0;
   flex-grow: 1;
   color: #333;

@@ -656,6 +656,13 @@ export default {
   padding: 20px;
   text-align: center;
 }
+.storageCount {
+  width: 50vw;
+  height: 3vh;
+  margin: 2vh 0;
+  font-size: 1.5vw;
+  font-weight: bold;
+}
 
 .quantity-control {
   display: flex;
