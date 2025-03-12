@@ -9,7 +9,7 @@
         <span id="remembertext">아이디 기억하기</span>
       </div><br>
       <div id="btns">
-        <button id="loginbtn" type="submit">로그인</button>
+        <button id="loginbtn" @click="loginAccess">로그인</button>
         <button id="resetbtn" type="reset" @click="goToMain">취소</button>
       </div>
       <div id="findbox">
@@ -24,6 +24,9 @@
 export default {
   name:'loginVue',
   methods: {
+    loginAccess() {
+      this.$router.push('/homeMenu'); //로그인 성공시 메인페이지로 이동
+    },
     goToMain() {
       this.$router.push('/'); //메인페이지로 이동
     },

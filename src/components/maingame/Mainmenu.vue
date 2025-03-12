@@ -40,7 +40,7 @@
       </div>
       
       <div class="open-button-container">
-        <button class="open-button" @click="$router.push('/maingame/1')"></button>  <!-- 실험용 이벤트 -->
+        <button class="open-button" @click="convOpen"></button>  <!-- 실험용 이벤트 -->
       </div>
     </div>
   </template>
@@ -57,6 +57,18 @@
       }
       ,linkBank(){
         this.$router.push('/bank')
+      },
+      convOpen(){
+        // fetch("",{
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({
+        //     // 근데 뭐 넣지?
+        //   })
+        // });
+        $router.push('/maingame/1');
       }
     }
   }
