@@ -31,7 +31,7 @@
       </div>
 
       <div id="signbtnbox">
-      <button id="signbtn">sign up (회원가입)</button>
+      <button id="signbtn" @click="signMember">sign up (회원가입)</button>
       </div>
     </div>
     </main>
@@ -40,9 +40,38 @@
 </template>
 <script>
 export default {
-  name:'joinVue',
+  name:'joinVue'
+  ,methods:{
+    signMember() {
+      
+      fetch('http://localhost:9090/spring/api/enrollMember',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: document.getElementsByName('userId')[0].value,
+          userPw: document.getElementsByName('userPw')[0].value,
+          email: document.getElementsByName('email')[0].value,
+          nick: document.getElementsByName('nick')[0].value
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      }); 
+
+      
+       
   
+    
+  }
 }
+}
+
 </script>
 <style scoped>
 * {

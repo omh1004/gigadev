@@ -12,17 +12,17 @@
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="@/assets/icons/money.png" width="35vw" height="35vw">
+              <img src="/icons/money.png" width="35vw" height="35vw">
               <div class="line"></div>
               <div class="money"><p>{{ money.toLocaleString() }}원</p></div>
           </div>
-          <img src="@/assets/icons/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
+          <img src="/icons/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
       </div>
     </div>
 
     <div class="main-content">
       <div class="back-button" @click="backToMain">
-        <img id="backbtn" src="@/assets/common/Vector.png" alt="back" />
+        <img id="backbtn" src="/common/Vector.png" alt="back" />
       </div>
 
       <div class="title-section">
@@ -155,7 +155,7 @@ export default {
           id: 1,
           category: '신선 식품',
           name: '딸기',
-          image: '../../src/assets/tutorial/fruit/strawberry.png',
+          image: '/tutorial/fruit/strawberry.png',
           quantity: 1,
           price: 2000,
         },
@@ -163,7 +163,7 @@ export default {
           id: 2,
           category: '즉석 식품',
           name: '사과',
-          image: '../../src/assets/tutorial/fruit/apple.png',
+          image: '/tutorial/fruit/apple.png',
           quantity: 0,
           price: 3000,
         },
@@ -171,7 +171,7 @@ export default {
           id: 3,
           category: '전자 제품',
           name: '양상추',
-          image: '../../src/assets/tutorial/fruit/fineapple.png',
+          image: '/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
         },

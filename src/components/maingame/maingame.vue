@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div style="display:flex;align-items:center;">
-                    <img src="@/assets/icons/person.png" style="width:2vw;height:3.5vh;">
+                    <img src="/icons/person.png" style="width:2vw;height:3.5vh;">
                     <p style="margin:0;font-size:2vh;">{{ customerCount }}/10</p>
                 </div>
                 <div style="display:flex;align-items:center;">
@@ -68,10 +68,10 @@ export default {
             customerA:Math.floor(Math.random()*9),
             // 구매, 판매 시에는 product만 수정, 하루가 끝날 때 DB에 저장
             product:[
-                { id:"strawberry",name:"딸기",amount:10,src:"/src/assets/items/fresh/strawberry.png",sell:0,price:1000,type:'a', },
-                { id:"pineapple",name:"파인애플",amount:3,src:"/src/assets/items/fresh/pineapple.png",sell:0,price:1000,type:'b', },
-                { id:"strawberry_50",name:"딸기",amount:3,src:"/src/assets/items/fresh/strawberry50.png",sell:0,price:1000,type:'a', },
-                { id:"pineapple_50",name:"파인애플",amount:3,src:"/src/assets/items/fresh/pineapple50.png",sell:0,price:1000,type:'b', },
+                { id:"strawberry",name:"딸기",amount:10,src:"/items/fresh/strawberry.png",sell:0,price:1000,type:'a', },
+                { id:"pineapple",name:"파인애플",amount:3,src:"/items/fresh/pineapple.png",sell:0,price:1000,type:'b', },
+                { id:"strawberry_50",name:"딸기",amount:3,src:"/items/fresh/strawberry50.png",sell:0,price:1000,type:'a', },
+                { id:"pineapple_50",name:"파인애플",amount:3,src:"/items/fresh/pineapple50.png",sell:0,price:1000,type:'b', },
             ],
             // 판매 시 cart 초기화
             cart:[],
