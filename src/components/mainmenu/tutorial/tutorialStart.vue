@@ -5,7 +5,7 @@
     </div>
 
     <div id="bankman">
-      <img src="/person/headquartersstaff.png">
+      <img src="@/assets/person/headquartersstaff.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>

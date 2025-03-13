@@ -40,12 +40,12 @@ export default {
   data() {
     return {
       rankings: [
-        { nickname: '도토리뚜껑', profit: 1000000 },
-        { nickname: '멋지당', profit: 980000 },
-        { nickname: '방구벨트', profit: 970000 },
-        { nickname: '소잉냥', profit: 970000 },
-        { nickname: '보리', profit: 970000 },
-        { nickname: '지냥', profit: 970000 }
+        // { nickname: '도토리뚜껑', profit: 1000000 },
+        // { nickname: '멋지당', profit: 980000 },
+        // { nickname: '방구벨트', profit: 970000 },
+        // { nickname: '소잉냥', profit: 970000 },
+        // { nickname: '보리', profit: 970000 },
+        // { nickname: '지냥', profit: 970000 }
       ]
     }
   },
@@ -62,7 +62,7 @@ export default {
   },mounted(){
 
     
-
+      fetch('http://localhost:3000/rankings')
       
       // for(let i =0;i<innerText.length;i++){
       //   setTimeout(()=>{

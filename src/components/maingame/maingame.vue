@@ -1,6 +1,6 @@
 <template>
     <div v-show="quiztime" class="quiztime">
-        <img src="/element/quiztime.png">
+        <img src="@/assets/element/quiztime.png">
     </div>
     <Settings :soundsetting="soundsetting" @closesound="closesound" @changebgmvol="changebgmvol" @changeeffectvol="changeeffectvol"/>
     <Usermanual :manualon="manualon" @manualoff="manualoff"/>
@@ -23,11 +23,11 @@
                 </div>
                 <div style="display:flex;align-items:center;">
                     <div class="moneybar">
-                        <img src="/icons/money.png" style="width:2.5vw;height:4.5vh;">
+                        <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">
                         <div class="line"></div>
                         <div class="money"><p style="font-size:2vh;">{{ moneyhave }}원</p></div>
                     </div>
-                    <img src="/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
+                    <img src="@/assets/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
                 </div>
             </div>
             <div v-show="opensettings" class="settings">
