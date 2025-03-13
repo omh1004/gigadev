@@ -1,11 +1,11 @@
 <template>
   <div class="store-layout" @click="linkMainMenu">
     <div @click="movePage">
-      <img class="skip-button" src="@/assets/tutorial/button/skip.png">
+      <img class="skip-button" src="/tutorial/button/skip.png">
     </div>
 
     <div id="bankman">
-      <img src="@/assets/person/headquartersstaff.png">
+      <img src="/person/headquartersstaff.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
@@ -60,7 +60,7 @@ export default {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background-image: url('@/assets/background/convenientbg.png');
+  background-image: url('/background/convenientbg.png');
   background-size: 100% 100%;
 
   font-family: RecipekoreaOTF;

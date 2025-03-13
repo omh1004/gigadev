@@ -24,7 +24,7 @@
         <div class="day-summary">
           <div class="summary-header">
             <div class="ribbon-container">
-              <img src = "@/assets/element/Ribbon.png" alt="Ribbon" class=""ribbon-image>
+              <img src = "/element/Ribbon.png" alt="Ribbon" class=""ribbon-image>
               <span class = "ribbon-text">{{ selectedDay }}일차 매출 정산</span>
               </img>
               </div>
@@ -354,7 +354,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("@/assets/background/bankbg.png");
+  background-image: url("/background/bankbg.png");
   background-size: 100% 100%;
   position: relative;
 }
@@ -363,7 +363,7 @@ export default {
   position: relative;
   width: 1025px;
   height: 525px;
-  background-image: url("@/assets/element/calendar.png");
+  background-image: url("/element/calendar.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -458,7 +458,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("@/assets/background/bankbg.png");
+  background-image: url("/background/bankbg.png");
   background-size: 100% 100%;
   position: relative;
 }
@@ -467,7 +467,7 @@ export default {
   position: relative;
   width: 1025px;
   height: 525px;
-  background-image: url("@/assets/element/calendar.png");
+  background-image: url("/element/calendar.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -638,7 +638,7 @@ border-left: 2px dashed #D5CCC4;
 /* ✅ 버튼의 기본 스타일 제거  ======= */
 /* ✅ 버튼의 기본 스타일 제거 */
 .loan-btn1 {
-  background: url("@/assets/element/loanbtn.png") no-repeat center;
+  background: url("/element/loanbtn.png") no-repeat center;
   background-size: contain;
   display: block;
   width: 186px;
@@ -672,7 +672,7 @@ button.loan-btn1 {
   display: block;
   width: 120px;
   height: 68px;
-  background: url("@/assets/element/loanbtn.png") no-repeat center;
+  background: url("/element/loanbtn.png") no-repeat center;
   background-size: contain;
   cursor: pointer;
 }
@@ -970,7 +970,7 @@ button.loan-btn1 {
 
 /* ✅ 나가기 버튼 */
 .exit-btn {
-  background: url("@/assets/element/Getout.png") no-repeat center;
+  background: url("/element/Getout.png") no-repeat center;
   background-size: contain;
   display: block;
   width: 250px; /* ✅ 크기 조정 */

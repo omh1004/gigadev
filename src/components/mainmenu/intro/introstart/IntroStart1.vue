@@ -2,7 +2,7 @@
   <div class="main-container">
     
     <div @click="quickStart" >
-      <img class="skip-button" src="@/assets/tutorial/button/skip.png">
+      <img class="skip-button" src="/tutorial/button/skip.png">
     </div>
     
     <div class="dialog-box">
@@ -70,7 +70,7 @@ export default {
   
 
 
-  background-image: url('@/assets/tutorial/tutorialMain.png');
+  background-image: url('/tutorial/tutorialMain.png');
   background-size: 100% 100%;
 
 }

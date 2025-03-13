@@ -2,7 +2,7 @@
   <div></div>
   <div class="game-container">  
 
-    <img id="secondimg" src="@/assets/images/tycoonname.png" alt="타이쿤 이름 이미지">
+    <img id="secondimg" src="/images/tycoonname.png" alt="타이쿤 이름 이미지">
     <div class="action-buttons">
       <button class="load-button" >불러오기</button>
       <button class="start-button" @click="startgame">게임시작</button>
@@ -59,6 +59,16 @@ export default {
     ,startgame(){
       return this.$router.push('/introstart')
     }
+  },mounted(){
+
+    
+
+      
+      // for(let i =0;i<innerText.length;i++){
+      //   setTimeout(()=>{
+      //     this.inputText+=innerText[i];
+      //   },i*50)
+      // }
   }
 }
 </script>
@@ -73,7 +83,7 @@ export default {
   max-width: 100%;
   min-height: 100vh;
 
-  background-image: url('@/assets/common/homeMenu.png');
+  background-image: url('/common/homeMenu.png');
   background-size: 100% 100%;
 
   display: flex;
@@ -144,7 +154,7 @@ export default {
   min-height:400px;
   width: 800px;
   margin-top: 0vh;
-  background-image: url('@/assets/common/rankingboard.png');
+  background-image: url('/common/rankingboard.png');
   background-size: 100% 100%;
   overflow:hidden;
 }

@@ -50,8 +50,8 @@ export default {
       })
       .then(response => {
         console.log('response'+response.status)
-        alert('response'+response.status)
-        alert('response'+response.ok)
+   
+        console.log('response'+response.ok)
       if (!(response.ok)) {
         if (response.status == '404') {
           alert('회원을 찾을 수 없습니다.');
@@ -62,15 +62,18 @@ export default {
         }
       }else{
         alert('로그인성공!');
-        this.goToMain();
+        this.goToHome();
       }
       
       return response.json();
     })
 
  
-    },
-    goToMain() {
+    }
+    ,goToHome(){
+      this.$router.push('/homeMenu');
+    }
+    ,goToMain() {
       this.$router.push('/'); //메인페이지로 이동
     },
     goToFind() {
@@ -109,7 +112,7 @@ export default {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url(@/assets/background/convenientbg2.png);
+  background-image: url(/background/convenientbg2.png);
   background-size: 100% 100%;
   min-height: 100vh;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="newsdialog">
     <h1>{{ dialog }}</h1>
-    <img src="@/assets/icons/nextdialog.png">
+    <img src="/icons/nextdialog.png">
   </div>
 </template>
 <script>

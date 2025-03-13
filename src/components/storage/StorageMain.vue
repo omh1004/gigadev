@@ -16,7 +16,7 @@
     <!-- Navigation -->
     <div class="navigation">
       <div class="back-button" @click="goBack">
-        <img class="back-button" src="@/assets/common/Vector.png" alt="back" />
+        <img class="back-button" src="/common/Vector.png" alt="back" />
       </div>
       <div class="title">창고</div>
     </div>
@@ -320,7 +320,7 @@ export default {
     align-items: center; 
 
 
-    background-image: url('@/assets/background/whitebg.png');
+    background-image: url('/background/whitebg.png');
     background-size: 100% 100%;
 
 }

@@ -102,7 +102,7 @@ export default {
     .calculation-container{
         width:100vw;
         height:100vh;
-        background-image:url("@/assets/background/bankbg.png");
+        background-image:url("/background/bankbg.png");
         background-size:100% 100%;
         display:flex;
         justify-content:center;
@@ -121,7 +121,7 @@ export default {
     .dayend{
         width:23vw;
         height:9vh;
-        background-image:url("@/assets/element/emptydayendbtn.png");
+        background-image:url("/element/emptydayendbtn.png");
         background-size:100% 100%;
         background-color:rgba(0,0,0,0);
         border:0;
@@ -131,7 +131,7 @@ export default {
     .calculation-title{
         max-width:18vw;
         height:5vh;
-        background-image:url("@/assets/element/Ribbon.png");
+        background-image:url("/element/Ribbon.png");
         background-size:100% 100%;
     }
     .calculation-paper>div{

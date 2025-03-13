@@ -11,7 +11,7 @@
 <script>
 import QuizChoice from '../quiz/quizChoice.vue';
 import QuizMain from '../quiz/quizMain.vue';
-import { quiz, quizAnswer, quizComment, rewardDialog } from '@/assets/data/prodNquiz.js';
+import { quiz, quizAnswer, quizComment, rewardDialog } from '/data/prodNquiz.js';
 
 export default {
     data(){

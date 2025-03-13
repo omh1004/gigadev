@@ -483,7 +483,7 @@ export default {
     flex-direction: column;
     align-items: center; 
   
-  background-image:url('@/assets/background/whitebg.png');
+  background-image:url('/background/whitebg.png');
   background-size:100% 100%;
  
 }
@@ -872,7 +872,7 @@ export default {
   height:5.5vh;
   background-color:rgba(0,0,0,0);
   border:0;
-  background-image:url("@/assets/element/increasestorage.png");
+  background-image:url("/element/increasestorage.png");
   background-size:100% 100%;
 }
 
@@ -899,7 +899,7 @@ export default {
   width: 15vw;
   height:7vh;
   margin-right:1.5vw;
-  background-image:url(@/assets/element/moneybar.png);
+  background-image:url(/element/moneybar.png);
   background-size: 100% 100%;
 }
 .line{

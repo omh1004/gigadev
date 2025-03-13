@@ -1,8 +1,8 @@
 <template>
     <div>
         <div id="maincontainer">
-            <img id="firstimg" src="@/assets/images/tycoon.png" alt="지붕있는 타이쿤 이미지" width="340" height="220">
-            <img id="secondimg" src="@/assets/images/tycoonname.png" alt="타이쿤 이름 이미지" width="400" height="120">
+            <img id="firstimg" src="/images/tycoon.png" alt="지붕있는 타이쿤 이미지" width="340" height="220">
+            <img id="secondimg" src="/images/tycoonname.png" alt="타이쿤 이름 이미지" width="400" height="120">
             <div class="button-container">
                 <button id="loginbtn" @click="goToLogin">로그인</button>
                 <button id="joinbtn" @click="goToJoin">회원가입</button>
@@ -58,7 +58,7 @@ export default {
   height: 100vh;
   gap:3vw   ;
   width: 100vw;
-  background-image: url('@/assets/background/convenientbg.png');
+  background-image: url('/background/convenientbg.png');
   background-size: 100% 100%;
   min-height: 100vh;
 }
