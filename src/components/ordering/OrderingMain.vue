@@ -1,28 +1,31 @@
 <template>
   <div class="app-container">
-    <!-- <div class="header">
-      <div class="d-30">D-30</div>
-      <div class="money-display">
-        <span class="money-icon">💰</span>
-        <span class="money-amount">{{ money.toLocaleString() }}원</span>
-      </div>
+    <div class="header">
+      <div class="left-section">D-30</div>
+      <div class="right-section">
+        <div class="money-bag">
+          <span class="bag-icon">💰</span>
+          <span class="amount">{{ money.toLocaleString() }}원</span>
+        </div>
       <div class="settings-icon">⚙️</div>
-    </div> -->
-    <div class="topbar">
+     </div>
+    </div> 
+
+    <!--<div class="topbar">
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="@/assets/icons/money.png" width="35vw" height="35vw">
+              <img src="/icons/money.png" width="35vw" height="35vw">
               <div class="line"></div>
               <div class="money"><p>{{ money.toLocaleString() }}원</p></div>
           </div>
-          <img src="@/assets/icons/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
+          <img src="/icons/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
       </div>
-    </div>
+    </div>-->
 
     <div class="main-content">
       <div class="back-button" @click="backToMain">
-        <img id="backbtn" src="@/assets/common/Vector.png" alt="back" />
+        <img id="backbtn" src="/common/Vector.png" alt="back" />
       </div>
 
       <div class="title-section">
@@ -30,7 +33,7 @@
       </div>
 
       <div class="product-section">
-        <div style="margin-top:4vh;">
+        <div style="margin-top:1vh;">
           <div class="product-table">
             <div class="table-header">
               <div class="category-header">분류</div>
@@ -155,7 +158,7 @@ export default {
           id: 1,
           category: '신선 식품',
           name: '딸기',
-          image: '../../src/assets/tutorial/fruit/strawberry.png',
+          image: '/tutorial/fruit/strawberry.png',
           quantity: 1,
           price: 2000,
         },
@@ -163,7 +166,7 @@ export default {
           id: 2,
           category: '즉석 식품',
           name: '사과',
-          image: '../../src/assets/tutorial/fruit/apple.png',
+          image: '/tutorial/fruit/apple.png',
           quantity: 0,
           price: 3000,
         },
@@ -171,7 +174,7 @@ export default {
           id: 3,
           category: '전자 제품',
           name: '양상추',
-          image: '../../src/assets/tutorial/fruit/fineapple.png',
+          image: '/tutorial/fruit/fineapple.png',
           quantity: 0,
           price: 3500,
         },
@@ -462,35 +465,77 @@ export default {
 
 <style scoped>
 .app-container {
-  width: 100vw;
-  height:100vh;
-  margin: 0 auto;
-  /* border: 2px solid #753422; */
-  /* border-radius: 15px; */
-  /* background-color: #ffffff; */
+  width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  
+    font-family: RecipekoreaOTF;
+    font-size: 24px;
+    background-color: #f5f5f5;
+  
+    text-align: center;
+    max-width: 100%;
+    min-height: 90%;
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  
   background-image:url('@/assets/background/whitebg.png');
   background-size:100% 100%;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-  position: relative;
+ 
 }
-.topbar {
+
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.6vw 1.7vw;
-    margin-bottom: 1vh;
+    margin-bottom: 0;
     border: 0.25vw solid #8B4513;
     border-radius: 9999px;
-    width: 90vw;
+    min-width: 90vw;
     margin-top: 4vh;
-    margin-left: 3vw;
     height: 5vh;
   }
+  
   .left-section {
     font-size: 1.5vw;
     font-weight: bold;
     text-align: left;
+  }
+    .money-bag {
+    display: flex;
+    align-items: center;
+    background-color: #5D2906;
+    color: white;
+    padding: 0.6vw 1.4vw;
+    border-radius: 9999px;
+    gap:3.5vw;
+    height: 3.3vh;
+    width: 14vw;  
+  }
+  
+.money-bag {
+  font-size: 1.5vw;
+}
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    text-align: right;
+    margin-left: auto;
+  }
+  
+  .bag-icon {
+    margin-right: 0.3vw;
+  }
+  
+  .settings-icon {
+    font-size: 2vw;
   }
 
 .money-display {
@@ -510,10 +555,10 @@ export default {
 
 .back-button {
   position: absolute;
-  top: 4vh;
-  left: 4vw;
-  width: 40px;
-  height: 40px;
+  top:5vh;
+  left: -7vw;
+  width: 2vw;
+  height: 2vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -522,8 +567,8 @@ export default {
 }
 
 .back-button img {
-  width: 40px;
-  height: 40px;
+  width: 2vw;
+  height: 2vh;
 }
 
 .title-section {

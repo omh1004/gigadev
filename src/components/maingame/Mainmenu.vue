@@ -134,7 +134,7 @@
     border: 0.25vw solid #8B4513;
     border-radius: 9999px;
     min-width: 90vw;
-    margin-top: 3vh;
+    margin-top: 4vh;
     height: 5vh;
   }
   
@@ -152,7 +152,7 @@
     border-radius: 9999px;
     gap:3.5vw;
     height: 3.3vh;
-    width: 13vw;
+    width: 14vw;  
   }
   
 .money-bag {
