@@ -179,7 +179,7 @@ export default {
           price: 3500,
         },
         {
-          id: 4,
+          id: 4,   
           category: '전자 제품',
           name: '파인애플',
           image: '/src/assets/tutorial/fruit/pineapple.png',
@@ -190,7 +190,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '/src/assets/tutorial/fruit/strawberry.png',
+          image: '/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
         },

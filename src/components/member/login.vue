@@ -48,12 +48,13 @@ export default {
           password: this.inputPw
         })
       })
-      .then(response => {
-        console.log('response'+response.status)
+      .then(response => response.json)
+      .then(data => {
+        console.log('response'+data.status)
    
-        console.log('response'+response.ok)
-      if (!(response.ok)) {
-        if (response.status == '404') {
+        console.log('response'+data.ok)
+      if (!(data.ok)) {
+        if (data.status == '404') {
           alert('회원을 찾을 수 없습니다.');
           
         } else {
@@ -65,7 +66,7 @@ export default {
         this.goToHome();
       }
       
-      return response.json();
+      // return response.json();
     })
 
  
