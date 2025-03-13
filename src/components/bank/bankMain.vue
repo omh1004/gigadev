@@ -45,7 +45,7 @@
 
         <div class="income-details">
         <span>폐기 수익 (20% 상품 판매 수익)</span>
-        <span class="income-amount">{{ (income * 0.2).toLocaleString() }}원</span>
+        <span>{{ (income * 0.2).toLocaleString() }}원</span>
         </div>
       </div>
 
@@ -61,8 +61,7 @@
     </div>
     <div class="summary-content">
       <p>운영비</p>
-      <span class="summary-expense-amount">-{{ (expense + 20000).toLocaleString() }}원</span>
-
+      <span>-{{ (expense + 20000).toLocaleString() }}원</span>
     </div>
   </div>
 
