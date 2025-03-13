@@ -41,7 +41,6 @@
 
         <div class="income-sub">
         <p>*퀴즈 혜택</p>
-        <p>*FEVER DAY</p>
         </div>
 
         <div class="income-details">
@@ -62,7 +61,8 @@
     </div>
     <div class="summary-content">
       <p>운영비</p>
-      <span>-20,000원</span>
+      <span class="summary-expense-amount">-{{ (expense + 20000).toLocaleString() }}원</span>
+
     </div>
   </div>
 
@@ -136,9 +136,10 @@
           placeholder="금액 입력"
           min="100"  
           step="100" 
-          @input="validateLoanAmount"
+          @blur="correctLoanAmount"
         />
         <!-- @input="validateInput" -->
+        <!-- @input="validateLoanAmount" -->
         <span class="currency">원</span>
         <button class="info-btn" @mouseover="showHelp = true" @mouseleave="showHelp = false">?</button>
       </div>
@@ -262,6 +263,27 @@ export default {
 
     this.errorMessage = ""; // 에러 메시지 초기화
   },
+
+  correctLoanAmount() {
+    let amount = Number(this.loanAmount);
+
+    // 사용자가 입력을 완료한 후(blur 이벤트 발생) 100원 단위로 변환
+    if (amount % 100 !== 0) {
+      this.loanAmount = Math.round(amount / 100) * 100;
+    }
+
+    // 최소 100원 미만일 경우 100원으로 설정
+    if (this.loanAmount < 100) {
+      this.loanAmount = 100;
+    }
+
+    // 최대 대출 한도 초과 방지
+    if (this.loanAmount > this.loanLimit) {
+      this.loanAmount = this.loanLimit;
+    }
+
+    this.errorMessage = ""; // 에러 메시지 초기화
+  },
     
     applyLoan() {
       const amount = Number(this.loanAmount);
@@ -303,12 +325,17 @@ export default {
         this.selectedDay = day;
         this.income = 100000 + (day * 10000);
         this.expense = 20000 + (day * 5000);
-        this.total = this.income - this.expense;
+        
+        // ✅ 총 지출 = 발주 비용 + 운영비(20,000원)
+        let totalExpense = this.expense + 20000;
+        
+        // ✅ 총계 = 총 수입 - 총 지출
+        this.total = this.income - totalExpense;
+        
         this.activeTab = "daySummary";
       } else {
         alert("아직 완료되지 않은 날짜입니다!"); // ✅ 클릭 불가 알림
       }
-
     },
     closeDaySummary() {
       this.selectedDay = null;
