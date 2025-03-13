@@ -36,6 +36,7 @@ export default {
     padding: 1vw 2vw;
     background-color: #FFEFCA;  
     color: #5E395A;
+    cursor: pointer;
 }
 #joinbtn {
     font-family: RecipekoreaOTF;
@@ -48,6 +49,7 @@ export default {
     padding: 1vw 2vw;
     background-color: #FFEFCA;
     color: #873511;
+    cursor: pointer;
 }
 #maincontainer {
   display: flex;
