@@ -1,19 +1,20 @@
 <template>
   <div id="maincontainer">
     <main id="mainbox">
+
       <div>
       <h1 id="title">회원가입</h1><br>
       <P id="must"><span>*</span>는 필수입력</P>
 
       <div id="first" class="input-group">
         <label for="userId"><span>*</span>ID (아이디)</label>
-        <input id="userId" name="userId"><br>
+        <input id="userId" v-model="userId" name="userId"><br>
         <p id="alertId" class="p">* 5~20자의 영문 소문자, 숫자로만 입력해주세요.</p>
       </div>
         <button id="checkbtn">ID (아이디) 중복확인</button>
 
       <div class="input-group">
-        <label for="userPw"><span>*</span>PW (비밀번호)</label><input id="userPw" name="userPw">
+        <label for="userPw"><span>*</span>PW (비밀번호)</label><input id="userPw" v-model="password" name="userPw">
         <p id="alertPw" class="p">*비밀번호는 8~10글자, 알파벳 소문자, 대문자, 숫자, 특수 기호를 포함해야 합니다.</p>
       </div>
 
@@ -22,55 +23,114 @@
       </div>
 
       <div class="input-group">
-        <label for="email"><span>*</span>Email (이메일)</label><input id="email" name="email">
+        <label for="email"><span>*</span>Email (이메일)</label><input id="email" v-model="email" name="email">
       </div>
 
       <div class="input-group">
-        <label for="nick"><span>*</span>닉네임 설정</label><input id="nick" name="nick">
+        <label for="nick"><span>*</span>닉네임 설정</label><input id="nick" name="nick" v-model="nick">
         <p id="alertNick" class="p">*2글자 이상,7글자 이하로 입력해 주세요.</p>
       </div>
 
       <div id="signbtnbox">
       <button id="signbtn" @click="signMember">sign up (회원가입)</button>
       </div>
+      
     </div>
+
     </main>
   </div>
    
 </template>
 <script>
+
+// const member={
+//   userId: 'ddd',
+//   password: 'ddd',
+//   email: 'ddd',
+//   nick: 'dd'
+// }
+
 export default {
   name:'joinVue'
+  ,data(){
+    return {
+      userId: ''
+      ,password: ''
+      ,email: ''
+      ,nick: ''
+    }
+  }
   ,methods:{
-    signMember() {
-      
+     signMember:function() {
       fetch('http://localhost:9090/spring/api/enrollMember',{
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userId: document.getElementsByName('userId')[0].value,
-          userPw: document.getElementsByName('userPw')[0].value,
-          email: document.getElementsByName('email')[0].value,
-          nick: document.getElementsByName('nick')[0].value
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+           userId: this.userId
+           ,password: this.password
+            ,email: this.email
+            ,nick: this.nick
+          //   userId: "admin11"
+          //  ,password: 1234
+          //  ,email: "admin@gmail.com"
+          //   ,nick: "string"
+         })
+      }
+        ).then(response => response.json())
+        .then((data) => {
+          console.log('Success:', data);
+          if(data.result === 'success') {
+            alert('회원가입이 완료되었습니다.');
+            // this.$router.push({name:'loginVue'});
+          } else {
+            alert('회원가입에 실패하였습니다.');
+          }
         })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      }); 
+        .catch((error) => {
+          console.error('Error:', error);
+        })
+      }     
+     }
+    }
+  
+
+
+//       fetch('http://localhost:8080/spring/api/enrollMember',{
+//         method: 'POST',
+//          headers: {
+//            'Content-Type': 'application/json'
+//          },
+//          body: JSON.stringify({
+//            "member":this.model
+//            ,"email":this.email
+//             ,"nick":this.nick
+//          }
+         
+//         )
+//       .then(response => response)
+//       .then((data) => {
+//         console.log('Success:', data);
+//         if(data.result === 'success') {
+//           alert('회원가입이 완료되었습니다.');
+//           this.$router.push({name:'loginVue'});
+//         } else {
+//           alert('회원가입에 실패하였습니다.');
+//         }
+//       })
+//       .catch((error) => {
+//         console.error('Error:', error);
+//       })
 
       
-       
+//       })
   
     
-  }
-}
-}
+  
+// },
+//   },
+
 
 </script>
 <style scoped>

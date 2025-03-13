@@ -2,14 +2,14 @@
   <div id="maincontainer">
     <form>
     <main id="mainbox">
-      <input id="inputId" type="text" name="userId" placeholder="ID"><br>
-      <input id="inputPw" type="password" name="userPw" placeholder="Password"><br>
+      <input id="inputId" type="text" name="userId" v-model="inputId" placeholder="ID"><br>
+      <input id="inputPw" type="password" name="userPw" v-model="inputPw"  placeholder="Password"><br>
       <div id="checkbox">
         <input id="inputcheck" type="checkbox" name="remember">
         <span id="remembertext">아이디 기억하기</span>
       </div><br>
       <div id="btns">
-        <button id="loginbtn" @click="loginAccess">로그인</button>
+        <button id="loginbtn" type="button" @click="loginAccess">로그인</button>
         <button id="resetbtn" type="reset" @click="goToMain">취소</button>
       </div>
       <div id="findbox">
@@ -21,11 +21,54 @@
   <router-view></router-view>
 </template>
 <script>
+
+
+
+
 export default {
   name:'loginVue',
-  methods: {
-    loginAccess() {
-      this.$router.push('/homeMenu'); //로그인 성공시 메인페이지로 이동
+  data(){
+    return {
+      inputId:''
+      ,inputPw:''
+    }
+  }
+  ,methods: {
+    loginAccess:function() {
+
+      fetch(
+        'http://localhost:9090/spring/api/loginMember'
+      ,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: this.inputId,
+          password: this.inputPw
+        })
+      })
+      .then(response => {
+        console.log('response'+response.status)
+        alert('response'+response.status)
+        alert('response'+response.ok)
+      if (!(response.ok)) {
+        if (response.status == '404') {
+          alert('회원을 찾을 수 없습니다.');
+          
+        } else {
+          alert('회원을 찾을 수 없습니다.');
+          
+        }
+      }else{
+        alert('로그인성공!');
+        this.goToMain();
+      }
+      
+      return response.json();
+    })
+
+ 
     },
     goToMain() {
       this.$router.push('/'); //메인페이지로 이동
