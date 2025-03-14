@@ -311,8 +311,13 @@ export default {
       header:{
         'Content-Type':'application/json',
       },
-      body:JSON.stringify({
-        
+      body:JSON.stringify({   // 일단 임시로 만들어 놓음
+          "goodno":0,
+          "orderavailable":1,
+          "typeexpdate":3,
+          "orderprice":1000,
+          "goodstype":"신선식품",
+          "goodname":"딸기"
       })
     })
     .then(response=>console.log(response))
