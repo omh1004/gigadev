@@ -2,14 +2,14 @@
   <div id="maincontainer">
     <form>
     <main id="mainbox">
-      <input id="inputId" type="text" name="userId" placeholder="ID"><br>
-      <input id="inputPw" type="password" name="userPw" placeholder="Password"><br>
+      <input id="inputId" type="text" name="userId" v-model="inputId" placeholder="ID"><br>
+      <input id="inputPw" type="password" name="userPw" v-model="inputPw"  placeholder="Password"><br>
       <div id="checkbox">
         <input id="inputcheck" type="checkbox" name="remember">
         <span id="remembertext">아이디 기억하기</span>
       </div><br>
       <div id="btns">
-        <button id="loginbtn" type="submit">로그인</button>
+        <button id="loginbtn" type="button" @click="loginAccess">로그인</button>
         <button id="resetbtn" type="reset" @click="goToMain">취소</button>
       </div>
       <div id="findbox">
@@ -21,10 +21,60 @@
   <router-view></router-view>
 </template>
 <script>
+
+
+
+
 export default {
   name:'loginVue',
-  methods: {
-    goToMain() {
+  data(){
+    return {
+      inputId:''
+      ,inputPw:''
+    }
+  }
+  ,methods: {
+    loginAccess:function() {
+
+      fetch(
+        'http://localhost:9090/spring/api/loginMember'
+      ,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: this.inputId,
+          password: this.inputPw
+        })
+      })
+      .then(response => response.json)
+      .then(data => {
+        console.log('response'+data.status)
+   
+        console.log('response'+data.ok)
+      if (!(data.ok)) {
+        if (data.status == '404') {
+          alert('회원을 찾을 수 없습니다.');
+          
+        } else {
+          alert('회원을 찾을 수 없습니다.');
+          
+        }
+      }else{
+        alert('로그인성공!');
+        this.goToHome();
+      }
+      
+      // return response.json();
+    })
+
+ 
+    }
+    ,goToHome(){
+      this.$router.push('/homeMenu');
+    }
+    ,goToMain() {
       this.$router.push('/'); //메인페이지로 이동
     },
     goToFind() {
@@ -63,7 +113,7 @@ export default {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url(@/assets/background/convenientbg2.png);
+  background-image: url(/background/convenientbg2.png);
   background-size: 100% 100%;
   min-height: 100vh;
 }

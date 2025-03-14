@@ -25,23 +25,23 @@
       <div class="menu-container">
         <div class="menu-button"  @click="linkOrdering">
           <span class="button-text">
-            <img src="@/assets/tutorial/button/orderingbutton.png">
+            <img src="/tutorial/button/orderingbutton.png">
           </span>
         </div>
         
         <div class="menu-button" @click="linkStorage">
           <span class="button-text">
-            <img src="@/assets/tutorial/button/storagebutton.png">
+            <img src="/tutorial/button/storagebutton.png">
           </span>
         </div>
         
         <div class="menu-button" @click="linkBank">
-          <span class="button-text"><img src="@/assets/tutorial/button/bankbutton.png"></span>
+          <span class="button-text"><img src="/tutorial/button/bankbutton.png"></span>
         </div>
       </div>
       
       <div class="open-button-container">
-        <button class="open-button" @click="$router.push('/maingame/1')"></button>  <!-- 실험용 이벤트 -->
+        <button class="open-button" @click="convOpen"></button>  <!-- 실험용 이벤트 -->
       </div>
     </div>
   </template>
@@ -69,6 +69,18 @@ import Topbar from '../common/topbar.vue';
       }
       ,linkBank(){
         this.$router.push('/bank')
+      },
+      convOpen(){
+        // fetch("",{
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({
+        //     // 근데 뭐 넣지?
+        //   })
+        // });
+        $router.push('/maingame/1');
       }
     },
     components:{ Topbar },
@@ -96,7 +108,7 @@ import Topbar from '../common/topbar.vue';
     align-items: center; 
 
 
-    background-image: url('@/assets/background/whitebg.png');
+    background-image: url('/background/whitebg.png');
     background-size: 100% 100%;
 
   }
@@ -135,7 +147,7 @@ import Topbar from '../common/topbar.vue';
     border: 0.25vw solid #8B4513;
     border-radius: 9999px;
     min-width: 90vw;
-    margin-top: 3vh;
+    margin-top: 4vh;
     height: 5vh;
   }
   
@@ -153,7 +165,7 @@ import Topbar from '../common/topbar.vue';
     border-radius: 9999px;
     gap:3.5vw;
     height: 3.3vh;
-    width: 13vw;
+    width: 14vw;  
   }
   
 .money-bag {
@@ -220,13 +232,13 @@ import Topbar from '../common/topbar.vue';
   .open-button-container {
     display: flex;
     justify-content: center;
-    /* background-image: url('@/assets/tutorial/button/openbutton.png'); */
+    /* background-image: url('/tutorial/button/openbutton.png'); */
   }
   
   .open-button {
     width: 14.5vw;
     height: 9vh;
-    background-image: url('@/assets/tutorial/button/openbutton.png');
+    background-image: url('/tutorial/button/openbutton.png');
     background-size: contain;
     background-repeat: no-repeat;
     

@@ -1,16 +1,16 @@
 <template>
   <div class="main-container">
     
-    <div @click="movePage">
-      <img class="skip-button" src="@/assets/tutorial/button/skip.png">
+    <div @click="quickStart">
+      <img class="skip-button" src="/tutorial/button/skip.png">
     </div>
 
     <div id="bankman">
-      <img src="@/assets/tutorial/people/bankmember.png">
+      <img src="/tutorial/people/bankmember.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
-      <div class="dialog-arrow">▼</div>
+      <div class="dialog-arrow"  @click="movePage">▼</div>
     </div>
 
   </div>
@@ -24,6 +24,9 @@ export default {
       inputText:''
     }
   },methods:{
+    quickStart(){
+      this.$router.push('/mainMenu')
+    },
     movePage(){
       this.$router.push('/intro3')
     }
@@ -55,8 +58,8 @@ export default {
    
 
 
-    font-family: RecipekoreaOTF;
-  font-size: 24px;
+    font-family: pretendard;
+    font-size: 40px;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -75,7 +78,7 @@ export default {
  
 
 
-  background-image: url('@/assets/tutorial/tutorialMain.png');
+  background-image: url('/tutorial/tutorialMain.png');
   background-size: 100% 100%;
 
 }

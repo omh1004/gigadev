@@ -13,17 +13,17 @@
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="@/assets//icons/money.png" style="width:3.5vh;height:3.5vh;">
+              <img src="//icons/money.png" style="width:3.5vh;height:3.5vh;">
               <div class="line"></div>
               <div class="money"><p>{{ money }}원</p></div>
           </div>
-          <img src="@/assets/icons/gameoption.png" style="width:3vh;height:3vh;" class="settings-icon">
+          <img src="/icons/gameoption.png" style="width:3vh;height:3vh;" class="settings-icon">
       </div>
     </div>
 
     <div class="main-content">
       <div class="back-button">
-        <img id="backbtn" src="@/assets/common/Vector.png" alt="back" />
+        <img id="backbtn" src="/common/Vector.png" alt="back" />
       </div>
 
       <div class="title-section">
@@ -359,7 +359,7 @@ export default {
   /* border: 2px solid #753422; */
   /* border-radius: 15px; */
   /* background-color: #ffffff; */
-  background-image:url('@/assets/background/whitebg.png');
+  background-image:url('/background/whitebg.png');
   background-size:100% 100%;
   font-family: Arial, sans-serif;
   overflow: hidden;
@@ -704,7 +704,7 @@ export default {
   height:5.5vh;
   background-color:rgba(0,0,0,0);
   border:0;
-  background-image:url("@/assets/element/increasestorage.png");
+  background-image:url("/element/increasestorage.png");
   background-size:100% 100%;
 }
 
@@ -731,7 +731,7 @@ export default {
   width: 15vw;
   height:7vh;
   margin-right:1.5vw;
-  background-image:url(@/assets/element/moneybar.png);
+  background-image:url(/element/moneybar.png);
   background-size: 100% 100%;
 }
 .line{

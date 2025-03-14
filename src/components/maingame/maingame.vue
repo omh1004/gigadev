@@ -9,7 +9,7 @@
             <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
                 <p style="font-size:2vh;">D-30</p>
                 <div style="display:flex;">
-                    <!-- <img src="@/assets/timer.png" width="10" height="52"> -- -->
+                    <!-- <img src="/timer.png" width="10" height="52"> -- -->
                     <div class="timebar-container">
                         <div class="timerbar">
                             <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}vw`"></div>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div style="display:flex;align-items:center;">
-                    <img src="@/assets/icons/person.png" style="width:2vw;height:3.5vh;">
+                    <img src="/icons/person.png" style="width:2vw;height:3.5vh;">
                     <p style="margin:0;font-size:2vh;">{{ customerCount }}/10</p>
                 </div>
                 <div style="display:flex;align-items:center;">
@@ -52,8 +52,8 @@ import Usermanual from '../common/usermanual.vue';
 import Settings from '../common/volumesettings.vue';
 import cartNquiz from './cartnquiz.vue';
 import Product from './product.vue';
-import ConvenientLove from '@/assets/bgm/[suno]ConvenientLove.mp3';
-import QuizmanOnConvenient from '@/assets/bgm/[suno]QuizmanOnConvenient.mp3';
+import ConvenientLove from '/bgm/[suno]ConvenientLove.mp3';
+import QuizmanOnConvenient from '/bgm/[suno]QuizmanOnConvenient.mp3';
 
 export default {
     data(){
@@ -68,10 +68,10 @@ export default {
             customerA:Math.floor(Math.random()*9),
             // 구매, 판매 시에는 product만 수정, 하루가 끝날 때 DB에 저장
             product:[
-                { id:"strawberry",name:"딸기",amount:10,src:"/src/assets/items/fresh/strawberry.png",sell:0,price:1000,type:'a', },
-                { id:"pineapple",name:"파인애플",amount:3,src:"/src/assets/items/fresh/pineapple.png",sell:0,price:1000,type:'b', },
-                { id:"strawberry_50",name:"딸기",amount:3,src:"/src/assets/items/fresh/strawberry50.png",sell:0,price:1000,type:'a', },
-                { id:"pineapple_50",name:"파인애플",amount:3,src:"/src/assets/items/fresh/pineapple50.png",sell:0,price:1000,type:'b', },
+                { id:"strawberry",name:"딸기",amount:10,src:"/items/fresh/strawberry.png",sell:0,price:1000,type:'a', },
+                { id:"pineapple",name:"파인애플",amount:3,src:"/items/fresh/pineapple.png",sell:0,price:1000,type:'b', },
+                { id:"strawberry_50",name:"딸기",amount:3,src:"/items/fresh/strawberry50.png",sell:0,price:1000,type:'a', },
+                { id:"pineapple_50",name:"파인애플",amount:3,src:"/items/fresh/pineapple50.png",sell:0,price:1000,type:'b', },
             ],
             // 판매 시 cart 초기화
             cart:[],
@@ -230,7 +230,7 @@ export default {
         height: 100vh;
         min-width:100vw;
         min-height:100vh;
-        background-image:url('@/assets/background/convenientbg.png');
+        background-image:url('/background/convenientbg.png');
 
         background-size: 100% 100%;
         background-position: center;
@@ -246,7 +246,7 @@ export default {
         height:8vh;
         padding:3.5vh 2vw;
         margin:auto;
-        background-image:url(@/assets/element/gametopbar.png);
+        background-image:url(/element/gametopbar.png);
         background-position:center;
         background-repeat:no-repeat;
         background-size: contain;
@@ -281,7 +281,7 @@ export default {
         width: 15vw;
         height:5vh;
         margin-right:1vw;
-        background-image:url(@/assets/element/moneybar.png);
+        background-image:url(/element/moneybar.png);
         background-size: 100% 100%;
     }
     .line{

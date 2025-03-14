@@ -10,8 +10,8 @@
                 </div>
             </div>
         </div>
-        <!-- <img class="relability_bar" src="@/assets/relability_bar.png" width="74px" height="410px"> -->
-        <img class="relability" src="@/assets/element/relability.png" style="width:4vw;height:6.5vh;">
+        <!-- <img class="relability_bar" src="/relability_bar.png" width="74px" height="410px"> -->
+        <img class="relability" src="/element/relability.png" style="width:4vw;height:6.5vh;">
         <p class="balloon">{{ dialog }}</p>
         <img class="customer" :src="src[customerA]" style="width:21vw;height:46vh;">   <!-- 이미지가 약 4:5 비율-->
     </div>
@@ -61,7 +61,7 @@ export default {
         width:28.5vw;
         height:22vh;
         min-height:22vh;
-        background-image:url("@/assets/images/speechballoon.png"); /* 약 21:10 비율 */
+        background-image:url("/images/speechballoon.png"); /* 약 21:10 비율 */
         background-size: 100% 100%;
         position:relative;
         /* top:160px; */

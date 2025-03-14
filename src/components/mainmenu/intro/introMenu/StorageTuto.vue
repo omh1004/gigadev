@@ -16,10 +16,10 @@
     <!-- Navigation -->
     <div class="navigation">
       <div class="back-button" @click="goBack">
-        <img class="back-button" src="@/assets/common/Vector.png" alt="back" />
+        <img class="back-button" src="/common/Vector.png" alt="back" />
       </div>
       <div class="title">창고</div>
-      <img src="@/assets/tutorial/button/skip.png" width="35vw">
+      <img src="/tutorial/button/skip.png" width="35vw">
     </div>
 
     <div>
@@ -280,7 +280,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('@/assets/background/whitebg.png');
+  background-image: url('/background/whitebg.png');
   background-size: 100% 100%;
 }
 

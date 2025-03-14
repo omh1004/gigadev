@@ -8,18 +8,18 @@
       <form>
         <div id="main1">  
           <h2><span>*</span>ID (아이디) 찾기</h2>
-          <input class="firstinput" type="text" name="userNick" placeholder="닉네임을 입력하세요.">
-          <input type="email" name="userEmail" placeholder="Email(이메일)을 입력하세요.">
-          <button class="findbtn" id="idfindbtn">아이디 찾기</button>
+          <input class="firstinput" type="text"  name="userNick" v-model="userNick" placeholder="닉네임을 입력하세요.">
+          <input type="email"  name="userEmail" v-model="email" placeholder="Email(이메일)을 입력하세요.">
+          <button class="findbtn" id="idfindbtn" @click="findId">아이디 찾기</button>
         </div>
      </form>
      <form>
       <div id="main2">
         <h2><span>*</span>PW (비밀번호) 찾기</h2>
-        <input calss="firstinput" type="text" name="userId" placeholder="Id(아이디)를 입력하세요.">
-        <input type="text" name="userNick" placeholder="닉네임을 입력하세요.">
-        <input type="email" name="userEmail" placeholder="Email(이메일)을 입력하세요.">
-        <button class="findbtn" id="pwfindbtn">비밀번호 찾기</button>
+        <input calss="firstinput" type="text" name="userId" v-model="userId" placeholder="Id(아이디)를 입력하세요.">
+        <input type="text" name="userNick" v-model="nick" placeholder="닉네임을 입력하세요.">
+        <input type="email" name="userEmail" v-model="userEmail" placeholder="Email(이메일)을 입력하세요.">
+        <button class="findbtn" id="pwfindbtn" @click="findPwd">비밀번호 찾기</button>
       </div>
      </form>
     </main>
@@ -28,9 +28,75 @@
 <script>
 export default {
   name: 'findVue',
-  methods: {
+  data(){
+    return{
+      userNick: '',
+      userEmail: '',
+      userId: '',
+      nick: '',
+      email: '',
+      
+    }
+  }
+  ,methods: {
     goToLogin() {
       this.$router.push('/login'); // 로그인 페이지로 이동
+    }
+    ,findId:function(){
+      fetch("http://localhost:9090/spring/api/findId",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },body: JSON.stringify({
+          nick: this.userNick,
+          email: this.email
+        })
+      })
+      .then(response => {
+        // debugger;
+      alert('1111111111111111111111');
+      console.log('response'+response.status);
+   
+        console.log('response'+response.ok);
+      // if (!(response.ok)) {
+      //   if (response.status == '404') {
+      //     alert('회원을 찾을 수 없습니다.');
+          
+      //   } else {
+      //     alert('회원을 찾을 수 없습니다.');
+          
+      //   }
+      // }else{
+      //   debugger;
+      //   console.log(response.json());
+        
+      // }
+      
+      response.json();
+    })
+    .then((data) => {
+      alert('1111111111111111111111');
+      console.log(data);
+    })
+    }
+    ,findPwd:function(){
+      fetch("http://localhost:9090/spring/api/findPwd",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },body: JSON.stringify({
+          userId: this.userId,
+          nick: this.nick,
+          email: this.email
+        })
+      }).then(res => res.json())
+      .then(res => {
+        if(res.result === 'success'){
+          alert('비밀번호는 '+res.userPwd+' 입니다.');
+        }else{
+          alert('일치하는 정보가 없습니다.');
+        }
+      })
     }
   }
 }

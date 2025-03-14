@@ -24,7 +24,7 @@
         <div class="day-summary">
           <div class="summary-header">
             <div class="ribbon-container">
-              <img src = "@/assets/element/Ribbon.png" alt="Ribbon" class=""ribbon-image>
+              <img src = "/element/Ribbon.png" alt="Ribbon" class=""ribbon-image>
               <span class = "ribbon-text">{{ selectedDay }}일차 매출 정산</span>
               </img>
               </div>
@@ -41,12 +41,11 @@
 
         <div class="income-sub">
         <p>*퀴즈 혜택</p>
-        <p>*FEVER DAY</p>
         </div>
 
         <div class="income-details">
         <span>폐기 수익 (20% 상품 판매 수익)</span>
-        <span class="income-amount">{{ (income * 0.2).toLocaleString() }}원</span>
+        <span>{{ (income * 0.2).toLocaleString() }}원</span>
         </div>
       </div>
 
@@ -62,7 +61,7 @@
     </div>
     <div class="summary-content">
       <p>운영비</p>
-      <span>-20,000원</span>
+      <span>-{{ (expense + 20000).toLocaleString() }}원</span>
     </div>
   </div>
 
@@ -136,9 +135,10 @@
           placeholder="금액 입력"
           min="100"  
           step="100" 
-          @input="validateLoanAmount"
+          @blur="correctLoanAmount"
         />
         <!-- @input="validateInput" -->
+        <!-- @input="validateLoanAmount" -->
         <span class="currency">원</span>
         <button class="info-btn" @mouseover="showHelp = true" @mouseleave="showHelp = false">?</button>
       </div>
@@ -262,6 +262,27 @@ export default {
 
     this.errorMessage = ""; // 에러 메시지 초기화
   },
+
+  correctLoanAmount() {
+    let amount = Number(this.loanAmount);
+
+    // 사용자가 입력을 완료한 후(blur 이벤트 발생) 100원 단위로 변환
+    if (amount % 100 !== 0) {
+      this.loanAmount = Math.round(amount / 100) * 100;
+    }
+
+    // 최소 100원 미만일 경우 100원으로 설정
+    if (this.loanAmount < 100) {
+      this.loanAmount = 100;
+    }
+
+    // 최대 대출 한도 초과 방지
+    if (this.loanAmount > this.loanLimit) {
+      this.loanAmount = this.loanLimit;
+    }
+
+    this.errorMessage = ""; // 에러 메시지 초기화
+  },
     
     applyLoan() {
       const amount = Number(this.loanAmount);
@@ -303,12 +324,17 @@ export default {
         this.selectedDay = day;
         this.income = 100000 + (day * 10000);
         this.expense = 20000 + (day * 5000);
-        this.total = this.income - this.expense;
+        
+        // ✅ 총 지출 = 발주 비용 + 운영비(20,000원)
+        let totalExpense = this.expense + 20000;
+        
+        // ✅ 총계 = 총 수입 - 총 지출
+        this.total = this.income - totalExpense;
+        
         this.activeTab = "daySummary";
       } else {
         alert("아직 완료되지 않은 날짜입니다!"); // ✅ 클릭 불가 알림
       }
-
     },
     closeDaySummary() {
       this.selectedDay = null;
@@ -328,7 +354,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("@/assets/background/bankbg.png");
+  background-image: url("/background/bankbg.png");
   background-size: 100% 100%;
   position: relative;
 }
@@ -337,7 +363,7 @@ export default {
   position: relative;
   width: 1025px;
   height: 525px;
-  background-image: url("@/assets/element/calendar.png");
+  background-image: url("/element/calendar.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -432,7 +458,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("@/assets/background/bankbg.png");
+  background-image: url("/background/bankbg.png");
   background-size: 100% 100%;
   position: relative;
 }
@@ -441,7 +467,7 @@ export default {
   position: relative;
   width: 1025px;
   height: 525px;
-  background-image: url("@/assets/element/calendar.png");
+  background-image: url("/element/calendar.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -612,7 +638,7 @@ border-left: 2px dashed #D5CCC4;
 /* ✅ 버튼의 기본 스타일 제거  ======= */
 /* ✅ 버튼의 기본 스타일 제거 */
 .loan-btn1 {
-  background: url("@/assets/element/loanbtn.png") no-repeat center;
+  background: url("/element/loanbtn.png") no-repeat center;
   background-size: contain;
   display: block;
   width: 186px;
@@ -646,7 +672,7 @@ button.loan-btn1 {
   display: block;
   width: 120px;
   height: 68px;
-  background: url("@/assets/element/loanbtn.png") no-repeat center;
+  background: url("/element/loanbtn.png") no-repeat center;
   background-size: contain;
   cursor: pointer;
 }
@@ -944,7 +970,7 @@ button.loan-btn1 {
 
 /* ✅ 나가기 버튼 */
 .exit-btn {
-  background: url("@/assets/element/Getout.png") no-repeat center;
+  background: url("/element/Getout.png") no-repeat center;
   background-size: contain;
   display: block;
   width: 250px; /* ✅ 크기 조정 */

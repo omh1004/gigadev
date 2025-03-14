@@ -16,11 +16,9 @@
     <!-- Navigation -->
     <div class="navigation">
       <div class="back-button" @click="goBack">
-        <img class="back-button" src="@/assets/common/Vector.png" alt="back" />
-        {{ disposeProfit }}
+        <img class="back-button" src="/common/Vector.png" alt="back" />
       </div>
       <div class="title">창고</div>
-      <img src="@/assets/tutorial/button/skip.png" width="35vw">
     </div>
 
     <div>
@@ -313,22 +311,27 @@ export default {
 <style scoped>
 .main-container {
   width: 100%;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  font-family: RecipekoreaOTF;
-  font-size: 24px;
-  background-color: #f5f5f5;
-  text-align: center;
-  max-width: 100%;
-  min-height: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-image: url('@/assets/background/whitebg.png');
-  background-size: 100% 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  
+    font-family: RecipekoreaOTF;
+    font-size: 24px;
+    background-color: #f5f5f5;
+  
+    text-align: center;
+    max-width: 100%;
+    min-height: 90%;
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+
+
+    background-image: url('/background/whitebg.png');
+    background-size: 100% 100%;
+
 }
 
 .header {
@@ -336,13 +339,14 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 0.6vw 1.7vw;
-    margin-bottom: -11vh;
+    margin-bottom: 0;
     border: 0.25vw solid #8B4513;
     border-radius: 9999px;
     min-width: 90vw;
-    margin-top: -2vh;
+    margin-top: 4vh;
     height: 5vh;
   }
+  
   .left-section {
     font-size: 1.5vw;
     font-weight: bold;
@@ -357,7 +361,7 @@ export default {
     border-radius: 9999px;
     gap:3.5vw;
     height: 3.3vh;
-    width: 13vw;
+    width: 14vw;  
   }
   
 .money-bag {
@@ -379,14 +383,15 @@ export default {
   .settings-icon {
     font-size: 2vw;
   }
+
 .navigation {
   width: 90%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
   margin-bottom: 0;
-  margin-top: 12vh; /* Adjusted to account for fixed header */
+  margin-top: 1vh; /* Adjusted to account for fixed header */
+  gap:41vw;
 }
 
 .back-button {
@@ -409,14 +414,6 @@ export default {
   margin:2vh 0;
   font-size: 1.5vw;
   font-weight: bold;
-}
-
-.skip-button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #5d2906;
-  cursor: pointer;
 }
 
 .double-arrow {

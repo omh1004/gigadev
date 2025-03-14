@@ -43,7 +43,7 @@
                 <div style="height:3vh;">
                     <div>
                         <div class="block-left"><h3>총계</h3></div>
-                        <div class="block-right"><h3>{{ profitAll + lossAll }}원</h3></div>
+                        <div class="block-right"><h3>{{ profitAll + lossAll - 20000 }}원</h3></div>
                     </div>
                 </div>
                 <div style="height:5.5vh;background-color:#4C1B0B;border-radius:20px;">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <button class="dayend" @click="saveAndGoMain">퇴근하기</button>
+            <button class="dayend" @click="convClose">퇴근하기</button>
         </div>
     </div>
 </template>
@@ -71,37 +71,23 @@ export default {
         }
     },
     methods:{
-        saveAndGoMain(){
-            // 수익 저장
-            fetch("데이터 저장 주소",{
+        convClose(){
+            // 게임정보, 수익, 창고 업데이트 하기
+            fetch("",{
                 method:"POST",
-                header:{
-                    "Content-Type":"application/json",
+                headers:{
+                    "Content-Type":"application/json"
                 },
-                body:JSON.stringify({ sleep:true }),
-            }).then(response=>console.log(response))
-            .then(data=>console.log(data));
-
-            // 창고 저장
-            fetch("데이터 저장 주소2",{
-                method:"POST",
-                header:{
-                    "Content-Type":"application/json",
-                },
-                body:JSON.stringify({ sleep:true }),
-            }).then(response=>console.log(response))
-            .then(data=>console.log(data));
-
-            // 게임정보 저장
-            fetch("데이터 저장 주소3",{
-                method:"POST",
-                header:{
-                    "Content-Type":"application/json",
-                },
-                body:JSON.stringify({ sleep:true }),
-            }).then(response=>console.log(response))
-            .then(data=>console.log(data));
-            // this.$router.push("/mainMenu");
+                body:JSON.stringify({
+                    cash:this.moneyhave,
+                    profit:this.profit,
+                    fever:this.fever,   // db:char, this:number 수정이 필요
+                    quiz:this.quiz, // db:char, this:number 수정이 필요
+                    dispose:this.dispose,
+                    lossAll:this.lossAll,
+                })
+            });
+            this.$router.push("/mainMenu");
         }
     },
     mounted(){
@@ -117,7 +103,7 @@ export default {
     .calculation-container{
         width:100vw;
         height:100vh;
-        background-image:url("@/assets/background/bankbg.png");
+        background-image:url("/background/bankbg.png");
         background-size:100% 100%;
         display:flex;
         justify-content:center;
@@ -136,7 +122,7 @@ export default {
     .dayend{
         width:23vw;
         height:9vh;
-        background-image:url("@/assets/element/emptydayendbtn.png");
+        background-image:url("/element/emptydayendbtn.png");
         background-size:100% 100%;
         background-color:rgba(0,0,0,0);
         border:0;
@@ -146,7 +132,7 @@ export default {
     .calculation-title{
         max-width:18vw;
         height:5vh;
-        background-image:url("@/assets/element/Ribbon.png");
+        background-image:url("/element/Ribbon.png");
         background-size:100% 100%;
     }
     .calculation-paper>div{

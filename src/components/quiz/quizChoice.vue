@@ -4,7 +4,7 @@
             <div class="number" :id="i"><p>{{ i }}</p></div>
             <p style="text-align:center;" :id="i">{{ quiz }}</p>
         </div>
-        <img class="counter" src="@/assets/element/quizcounter.png" @click="submit">
+        <img class="counter" src="/element/quizcounter.png" @click="submit">
     </div>
     <div v-show="timeleft==0 || noclick" style="width:100%;height:330px;position:relative;bottom:330px;"></div>
 </template>
