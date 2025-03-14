@@ -32,7 +32,7 @@
                     </div>
                     <div>
                         <div class="block-left"><p>발주 비용</p></div>
-                        <div class="block-right"><p>0원</p></div>
+                        <div class="block-right"><p>{{ orderingLoss }}원</p></div>
                     </div>
                     <div>
                         <div class="block-left"><p>운영비</p></div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <button class="dayend" @click="gomain">퇴근하기</button>
+            <button class="dayend" @click="saveAndGoMain">퇴근하기</button>
         </div>
     </div>
 </template>
@@ -71,14 +71,44 @@ export default {
         }
     },
     methods:{
-        gomain(){
-            this.$router.push("/mainMenu");
+        saveAndGoMain(){
+            // 수익 저장
+            fetch("데이터 저장 주소",{
+                method:"POST",
+                header:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({ sleep:true }),
+            }).then(response=>console.log(response))
+            .then(data=>console.log(data));
+
+            // 창고 저장
+            fetch("데이터 저장 주소2",{
+                method:"POST",
+                header:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({ sleep:true }),
+            }).then(response=>console.log(response))
+            .then(data=>console.log(data));
+
+            // 게임정보 저장
+            fetch("데이터 저장 주소3",{
+                method:"POST",
+                header:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({ sleep:true }),
+            }).then(response=>console.log(response))
+            .then(data=>console.log(data));
+            // this.$router.push("/mainMenu");
         }
     },
     mounted(){
         this.profit = history.state.profit;
         this.profitAll += this.profit;
-        this.lossAll -= 20000;
+        this.orderingLoss = 0;
+        this.lossAll += (this.orderingLoss - 20000);
         this.moneyhave = history.state.moneyhave;
     }
 }

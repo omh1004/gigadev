@@ -14,7 +14,7 @@
             </div>
         </div>
         <img class="relability" src="@/assets/element/relability.png" width="78px" height="70px">
-        <p class="balloon">{{ quizDialog }}</p>
+        <p class="balloon">{{ quizDialog }}{{ history.state.disposeProfit }}</p>
         <img class="manInBlack" src="@/assets/person/quizman.png" width="400px" height="500px">
     </div>
 </template>

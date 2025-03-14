@@ -17,6 +17,7 @@
     <div class="navigation">
       <div class="back-button" @click="goBack">
         <img class="back-button" src="@/assets/common/Vector.png" alt="back" />
+        {{ disposeProfit }}
       </div>
       <div class="title">창고</div>
       <img src="@/assets/tutorial/button/skip.png" width="35vw">
@@ -118,6 +119,7 @@ const model = {
   disproduct:'',
   disquantity:0,
   disfruit:{},
+  disposeProfit:0,
   fruits: [
   { id: 1, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 2000 },
     { id: 2, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
@@ -234,7 +236,12 @@ export default {
       this.selectedTab = tab;
     },
     goBack(){
-      this.$router.push('/mainmenu');
+      this.$router.push({
+        name:'mainmenu',
+        state:{
+          disposeProfit:this.disposeProfit,
+        }
+      });
     },
     placeOrder() {
       this.storage = true;
@@ -272,7 +279,7 @@ export default {
     disposeNow(){
       this.money += this.disfruit.price * this.disquantity;
       this.disfruit.quantity -= this.disquantity;
-      // 잔액 증가 로직 추가하기
+      this.disposeProfit += this.disfruit.price * this.disquantity;
       if(this.disfruit.quantity==0){
         const index = this.fruits.findIndex(f=>this.disfruit.id==f.id);
         console.log(index);
@@ -295,6 +302,9 @@ export default {
       console.log(history.state.popup);
       this.popup = history.state.popup;
       this.storage = history.state.popup;
+    }
+    if(history.state.disposeProfit!=null && history.state.disposeProfit>0){
+      this.disposeProfit = history.state.disposeProfit;
     }
   }
 };
