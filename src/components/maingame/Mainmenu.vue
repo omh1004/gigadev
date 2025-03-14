@@ -80,7 +80,7 @@ import Topbar from '../common/topbar.vue';
         //     // 근데 뭐 넣지?
         //   })
         // });
-        $router.push('/maingame/1');
+        this.$router.push('/maingame/1');
       }
     },
     components:{ Topbar },

@@ -43,7 +43,7 @@
                 <div style="height:3vh;">
                     <div>
                         <div class="block-left"><h3>총계</h3></div>
-                        <div class="block-right"><h3>{{ profitAll + lossAll - 20000 }}원</h3></div>
+                        <div class="block-right"><h3>{{ profitAll + lossAll }}원</h3></div>
                     </div>
                 </div>
                 <div style="height:5.5vh;background-color:#4C1B0B;border-radius:20px;">
@@ -63,9 +63,10 @@ export default {
         return{
             profitAll:0,
             profit:0,
-            quiz:0,
-            fever:0,
+            quiz:0,     // 1 : +30000, 2 : 1.05, 3 : 1.1, 4 : news(퀴즈 보너스 표시?)
+            fever:0,    // true, false로 바꾸기?
             dispose:0,
+            ordering:0,
             lossAll:0,
             moneyhave:0,
         }
@@ -73,20 +74,30 @@ export default {
     methods:{
         convClose(){
             // 게임정보, 수익, 창고 업데이트 하기
-            fetch("",{
+            fetch("http://localhost:8080/maingame/gameend",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
                 },
                 body:JSON.stringify({
-                    cash:this.moneyhave,
-                    profit:this.profit,
-                    fever:this.fever,   // db:char, this:number 수정이 필요
-                    quiz:this.quiz, // db:char, this:number 수정이 필요
-                    dispose:this.dispose,
-                    lossAll:this.lossAll,
+                    // 보내야 할 데이터
+                    // revenue db insert
+                    // 일차, 판매 수익, 퀴즈 보너스, 피버타임(구현시), 발주 비용, 잔고, 신뢰도(구현시)
+                    // storage db update
+                    // 창고 물품.
+                    "playday":this.day,
+                    "salesCount":this.profit,
+                    "quizYN":this.quiz, // db:char, this:number 수정이 필요
+                    // "feverYN":this.fever,   // db:char, this:number 수정이 필요
+                    "salePrice":this.dispose,
+                    "orderPriceAll":this.ordering,
+                    "cash":this.moneyhave,
+                    "cart":this.cart,
                 })
             });
+            // 다음으로 넘겨야 할 데이터 추가하기
+            // 잔고
+            // 신뢰도(구현시), 창고 물품
             this.$router.push("/mainMenu");
         }
     },

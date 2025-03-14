@@ -1,5 +1,8 @@
 <template>
     <div class="conv">
+        <!-- 값 확인용 -->
+         {{ profit }}
+         {{ globalLoss }}
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     :relability="relability" @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
@@ -29,6 +32,7 @@ export default {
             currentWant:{},
             relability:50,
             profit:0,
+            quiz:-1,
         }
     },
     methods:{
@@ -40,6 +44,7 @@ export default {
                 // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
                 setTimeout(() => {
                     this.quizDialog=rewardDialog[this.day].dialog;
+                    this.quiz=rewardDialog[this.day].reward;
                     if(rewardDialog[this.day].reward==0){
                         // 수익에 +30000원 추가. 내가 추가할 게 있나요?
                     }else if(rewardDialog[this.day].reward>=1 && rewardDialog[this.day].reward<=3){
@@ -144,6 +149,8 @@ export default {
                     }else{
                         loss += prod.price*(prodcount[i]-prodwant[i]);
                     }
+                    this.profit -= loss;
+                    this.globalLoss += loss;
                 }
             }
             let timeout = 0;
