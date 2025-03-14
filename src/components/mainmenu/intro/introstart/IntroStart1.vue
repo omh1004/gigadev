@@ -52,7 +52,6 @@ export default {
 
 
     font-family: pretendard;
-    font-size: 40px;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -83,18 +82,18 @@ export default {
 }
 
 .dialog-box {
-  
+  position: absolute;
   margin-top: 68.5vh;
   width: 70%;
   background-color: #F2F1EC;
-  border-radius: 24px;
+  border-radius: 2vw;
   padding: 1vw 1.5vw;
-  margin-bottom: 20px;
-  min-height: 150px;
+  margin-bottom: 5vh;
+  height: 20vh; 
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1vw 2vw rgba(0, 0, 0, 0.1);
 }
 
 .dialog-text {
@@ -107,7 +106,7 @@ export default {
 }
 
 .dialog-arrow {
-  
+  font-size: 1.6vw;
   bottom: 8px;
   right: 16px;
   color: #666;
