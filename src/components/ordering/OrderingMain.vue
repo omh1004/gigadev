@@ -179,7 +179,7 @@ export default {
           price: 3500,
         },
         {
-          id: 4,
+          id: 4,   
           category: '전자 제품',
           name: '파인애플',
           image: '/src/assets/tutorial/fruit/pineapple.png',
@@ -190,7 +190,7 @@ export default {
           id: 5,
           category: '신선 식품',
           name: '딸기2',
-          image: '/src/assets/tutorial/fruit/strawberry.png',
+          image: '/tutorial/fruit/strawberry.png',
           quantity: 0,
           price: 2000,
         },
@@ -427,7 +427,16 @@ export default {
           else if(c.category=='즉석 식품') expdate = 4;
           else if(c.category=='전자 제품') expdate = 999;
           else expdate = 0;
-          this.storageProduct.push({...c,ExpDate:expdate,saledgree:this.days,disposeYn:false,});
+          const buyProduct = {...c,ExpDate:expdate,saledgree:this.days,disposeYn:false,};
+          this.storageProduct.push(buyProduct);
+
+          // fetch("http://localhost:9090/buyProducts",{
+          //   method:'POST',
+          //   header:{
+          //     'Content-Type':'application/json',
+          //   },
+          //   body:JSON.stringify(buyProduct)
+          // })
         }
       });
 
@@ -483,7 +492,7 @@ export default {
     flex-direction: column;
     align-items: center; 
   
-  background-image:url('@/assets/background/whitebg.png');
+  background-image:url('/background/whitebg.png');
   background-size:100% 100%;
  
 }
@@ -872,7 +881,7 @@ export default {
   height:5.5vh;
   background-color:rgba(0,0,0,0);
   border:0;
-  background-image:url("@/assets/element/increasestorage.png");
+  background-image:url("/element/increasestorage.png");
   background-size:100% 100%;
 }
 
@@ -899,7 +908,7 @@ export default {
   width: 15vw;
   height:7vh;
   margin-right:1.5vw;
-  background-image:url(@/assets/element/moneybar.png);
+  background-image:url(/element/moneybar.png);
   background-size: 100% 100%;
 }
 .line{

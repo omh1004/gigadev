@@ -1,7 +1,7 @@
 <template>
   <div class="newsman">
     <h3>DAY-{{ day }} NEWS</h3>
-    <img src="@/assets/person/newsman.png">
+    <img src="/person/newsman.png">
   </div>
 </template>
 <script>

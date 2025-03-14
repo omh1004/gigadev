@@ -1,6 +1,6 @@
 <template>
   <div class="newsimage">
-    <img src="@/assets/images/stockinvestment.png">
+    <img src="/images/stockinvestment.png">
   </div>
 </template>
 <script>

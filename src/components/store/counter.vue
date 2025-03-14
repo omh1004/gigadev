@@ -9,7 +9,7 @@
             </div>
         </div>
         <div style="width:14vw">
-            <img class="counter_cal" src="@/assets/element/counter.png" @click="submit">
+            <img class="counter_cal" src="/element/counter.png" @click="submit">
         </div>
     </div>
     <div v-show="timeleft==0 || noclick" style="width:100vw;height:30.5vh;position:relative;bottom:30.5vh;"></div>

@@ -4,11 +4,11 @@
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="@/assets//icons/money.png" style="width:3.5vh;height:3.5vh;">
+              <img src="//icons/money.png" style="width:3.5vh;height:3.5vh;">
               <div class="line"></div>
               <div class="money"><p>{{ money }}원</p></div>
           </div>
-          <img src="@/assets/icons/gameoption.png" style="width:3vh;height:3vh;" class="settings-icon" @click="opensettings=!opensettings">
+          <img src="/icons/gameoption.png" style="width:3vh;height:3vh;" class="settings-icon" @click="opensettings=!opensettings">
       </div>
     </div>
 
@@ -25,18 +25,18 @@
     <div class="menu-container">
       <div class="menu-button"  @click="linkOrdering">
         <span class="button-text">
-          <img src="@/assets/tutorial/button/orderingbutton.png">
+          <img src="/tutorial/button/orderingbutton.png">
         </span>
       </div>
       
       <div class="menu-button" @click="linkStorage">
         <span class="button-text">
-          <img src="@/assets/tutorial/button/storagebutton.png">
+          <img src="/tutorial/button/storagebutton.png">
         </span>
       </div>
       
       <div class="menu-button" @click="linkBank">
-        <span class="button-text"><img src="@/assets/tutorial/button/bankbutton.png"></span>
+        <span class="button-text"><img src="/tutorial/button/bankbutton.png"></span>
       </div>
     </div>
     
@@ -90,7 +90,7 @@ export default {
   align-items: center; 
 
 
-  background-image: url('@/assets/background/whitebg.png');
+  background-image: url('/background/whitebg.png');
   background-size: 100% 100%;
 
 }
@@ -119,7 +119,7 @@ export default {
   width: 15vw;
   height:7vh;
   margin-right:1.5vw;
-  background-image:url(@/assets/element/moneybar.png);
+  background-image:url(/element/moneybar.png);
   background-size: 100% 100%;
 }
 .line{
@@ -252,13 +252,13 @@ font-size: 1.5vw;
 .open-button-container {
   display: flex;
   justify-content: center;
-  /* background-image: url('@/assets/tutorial/button/openbutton.png'); */
+  /* background-image: url('/tutorial/button/openbutton.png'); */
 }
 
 .open-button {
   width: 14.5vw;
   height: 9vh;
-  background-image: url('@/assets/tutorial/button/openbutton.png');
+  background-image: url('/tutorial/button/openbutton.png');
   background-size: contain;
   background-repeat: no-repeat;
   

@@ -1,6 +1,7 @@
 <template>
     <div class="main-container">
-      <div class="header">
+      <Topbar />
+      <!-- <div class="header">
         <div class="left-section">D-30</div>
         <div class="right-section">
           <div class="money-bag">
@@ -9,7 +10,7 @@
           </div>
           <div class="settings-icon">⚙️</div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="speech-bubble">
         <div class="speech-bubble-content">
@@ -24,18 +25,18 @@
       <div class="menu-container">
         <div class="menu-button"  @click="linkOrdering">
           <span class="button-text">
-            <img src="@/assets/tutorial/button/orderingbutton.png">
+            <img src="/tutorial/button/orderingbutton.png">
           </span>
         </div>
         
         <div class="menu-button" @click="linkStorage">
           <span class="button-text">
-            <img src="@/assets/tutorial/button/storagebutton.png">
+            <img src="/tutorial/button/storagebutton.png">
           </span>
         </div>
         
         <div class="menu-button" @click="linkBank">
-          <span class="button-text"><img src="@/assets/tutorial/button/bankbutton.png"></span>
+          <span class="button-text"><img src="/tutorial/button/bankbutton.png"></span>
         </div>
       </div>
       
@@ -46,6 +47,8 @@
   </template>
   
   <script>
+import Topbar from '../common/topbar.vue';
+
   export default {
     name: 'KoreanMenuInterface'
     ,methods:{
@@ -53,7 +56,16 @@
         this.$router.push('/orderingMain');
       }
       ,linkStorage(){
-        this.$router.push('/storageMain');
+        if(history.state.disposeProfit!=null){
+          this.$router.push({
+            name:'storageMain',
+            state:{
+              disposeProfit:history.state.disposeProfit,
+            }
+          });
+        }else{
+          this.$router.push('/storageMain');
+        }
       }
       ,linkBank(){
         this.$router.push('/bank')
@@ -70,13 +82,14 @@
         // });
         $router.push('/maingame/1');
       }
-    }
+    },
+    components:{ Topbar },
   }
   </script>
   
   <style scoped>
   .main-container {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     position: relative;
     overflow: hidden;
@@ -95,7 +108,7 @@
     align-items: center; 
 
 
-    background-image: url('@/assets/background/whitebg.png');
+    background-image: url('/background/whitebg.png');
     background-size: 100% 100%;
 
   }
@@ -219,13 +232,13 @@
   .open-button-container {
     display: flex;
     justify-content: center;
-    /* background-image: url('@/assets/tutorial/button/openbutton.png'); */
+    /* background-image: url('/tutorial/button/openbutton.png'); */
   }
   
   .open-button {
     width: 14.5vw;
     height: 9vh;
-    background-image: url('@/assets/tutorial/button/openbutton.png');
+    background-image: url('/tutorial/button/openbutton.png');
     background-size: contain;
     background-repeat: no-repeat;
     

@@ -5,33 +5,126 @@
       <h1 id="maintitle">Id / Password 찾기</h1>
     </div>
     <main id="mainbox">
-      <form>
+      
         <div id="main1">  
           <h2><span>*</span>ID (아이디) 찾기</h2>
-          <input class="firstinput" type="text" name="userNick" placeholder="닉네임을 입력하세요.">
-          <input type="email" name="userEmail" placeholder="Email(이메일)을 입력하세요.">
-          <button class="findbtn" id="idfindbtn">아이디 찾기</button>
+          <input class="firstinput" type="text"  name="userNick" v-model="userNick" placeholder="닉네임을 입력하세요.">
+          <input type="email"  name="userEmail" v-model="email" placeholder="Email(이메일)을 입력하세요.">
+          <button class="findbtn" id="idfindbtn" @click.prevent="findId">아이디 찾기</button>
         </div>
-     </form>
-     <form>
+     
+     
       <div id="main2">
         <h2><span>*</span>PW (비밀번호) 찾기</h2>
-        <input calss="firstinput" type="text" name="userId" placeholder="Id(아이디)를 입력하세요.">
-        <input type="text" name="userNick" placeholder="닉네임을 입력하세요.">
-        <input type="email" name="userEmail" placeholder="Email(이메일)을 입력하세요.">
-        <button class="findbtn" id="pwfindbtn">비밀번호 찾기</button>
+        <input class="firstinput" type="text" name="userId" v-model="userId" placeholder="Id(아이디)를 입력하세요.">
+        <input type="text" name="userNick" v-model="nick" placeholder="닉네임을 입력하세요.">
+        <input type="email" name="userEmail" v-model="userEmail" placeholder="Email(이메일)을 입력하세요.">
+        <button class="findbtn" id="pwfindbtn" @click.prevent="findPwd">비밀번호 찾기</button>
       </div>
-     </form>
+      <div v-show="popup" class="popup-overlay" @click="closePopup">
+      <div class="popup-content" @click.stop>
+        <div class="popup-header">
+          <p>알림</p>
+        </div>
+        <div class="popup-body">
+          <p>{{popupMessage}}</p>
+        </div>
+      </div>
+    </div>
     </main>
   </div>
 </template>
 <script>
 export default {
   name: 'findVue',
-  methods: {
+  data(){
+    return{
+      userNick: '',
+      userEmail: '',
+      userId: '',
+      nick: '',
+      email: '',
+      popup: false
+      
+    }
+  }
+  ,methods: {
     goToLogin() {
       this.$router.push('/login'); // 로그인 페이지로 이동
     }
+    ,findId:function(){
+      console.log('debbue');
+      fetch("http://localhost:9090/spring/api/findId",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },body: JSON.stringify({
+          nick: this.userNick,
+          email: this.email
+        })
+      })
+      .then(response => {
+        
+      console.log('response'+response.status);
+   
+        console.log('response'+response.ok);
+        
+      // if (!(response.ok)) {
+      //   if (response.status == '404') {
+      //     alert('회원을 찾을 수 없습니다.');
+          
+      //   } else {
+      //     alert('회원을 찾을 수 없습니다.');
+          
+      //   }
+      // }else{
+      //   debugger;
+      //   console.log(response.json());
+        
+      // }
+      
+      return response.json();
+    })
+    .then((data) => {
+      
+      console.log(data.userId);
+
+      this.popup = true;
+      this.popupMessage = '아이디는 '+data.userId+' 입니다.';
+
+    })
+    }
+    ,findPwd:function(){
+      fetch("http://localhost:9090/spring/api/findPwd",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },body: JSON.stringify({
+          userId: this.userId,
+          nick: this.nick,
+          email: this.userEmail
+        })
+      }).then(res => {
+        
+        if(res.ok){
+          return res.json();
+        }else{
+          alert('회원을 찾을 수 없습니다.');
+        }
+      }).then(data => {
+        console.log(data.password);
+
+      this.popup = true;
+      this.popupMessage = '비밀번호는 '+data.password+' 입니다.';
+      })
+    
+    },
+    closePopup() {
+      this.popup = false;
+      this.storage = false;
+      this.popupMessage = '';
+    },
+
   }
 }
 </script>
@@ -135,5 +228,44 @@ input::placeholder {
 }
 #pwfindbtn {
   margin-top: -0.5vh;
+}
+
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.popup-content {
+  background-color: #F2F1EC;
+  width: 400px;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.popup-header {
+  background-color: #6A396C;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.popup-header p {
+  margin: 0;
+}
+
+.popup-body {
+  padding: 20px;
+  text-align: center;
 }
 </style>

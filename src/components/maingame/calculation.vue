@@ -32,7 +32,7 @@
                     </div>
                     <div>
                         <div class="block-left"><p>발주 비용</p></div>
-                        <div class="block-right"><p>0원</p></div>
+                        <div class="block-right"><p>{{ orderingLoss }}원</p></div>
                     </div>
                     <div>
                         <div class="block-left"><p>운영비</p></div>
@@ -93,7 +93,8 @@ export default {
     mounted(){
         this.profit = history.state.profit;
         this.profitAll += this.profit;
-        this.lossAll -= 20000;
+        this.orderingLoss = 0;
+        this.lossAll += (this.orderingLoss - 20000);
         this.moneyhave = history.state.moneyhave;
     }
 }
@@ -102,7 +103,7 @@ export default {
     .calculation-container{
         width:100vw;
         height:100vh;
-        background-image:url("@/assets/background/bankbg.png");
+        background-image:url("/background/bankbg.png");
         background-size:100% 100%;
         display:flex;
         justify-content:center;
@@ -121,7 +122,7 @@ export default {
     .dayend{
         width:23vw;
         height:9vh;
-        background-image:url("@/assets/element/emptydayendbtn.png");
+        background-image:url("/element/emptydayendbtn.png");
         background-size:100% 100%;
         background-color:rgba(0,0,0,0);
         border:0;
@@ -131,7 +132,7 @@ export default {
     .calculation-title{
         max-width:18vw;
         height:5vh;
-        background-image:url("@/assets/element/Ribbon.png");
+        background-image:url("/element/Ribbon.png");
         background-size:100% 100%;
     }
     .calculation-paper>div{

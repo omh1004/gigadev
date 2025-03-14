@@ -2,11 +2,11 @@
   <div class="main-container">
     
     <div @click="quickStart">
-      <img class="skip-button" src="@/assets/tutorial/button/skip.png">
+      <img class="skip-button" src="/tutorial/button/skip.png">
     </div>
     
     <div id="bankmanbox">
-      <img id="bankman" src="@/assets/tutorial/people/bankmember.png">
+      <img id="bankman" src="/tutorial/people/bankmember.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
@@ -70,7 +70,11 @@ export default {
   justify-content: center; 
   align-items: center; 
 
-  background-image: url('@/assets/tutorial/tutorialMain.png');
+
+
+
+  
+  background-image: url('/tutorial/tutorialMain.png');
   background-size: 100% 100%;
 
 }

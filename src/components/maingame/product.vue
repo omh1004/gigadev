@@ -31,7 +31,7 @@
             <div v-if="modal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>판매하기</p>
-                    <img src="@/assets/icons/close.png" width="1.5vw;" @click="modal=false">
+                    <img src="/icons/close.png" width="1.5vw;" @click="modal=false">
                 </div>
                 <div>
                     <div class="modalcontent">
@@ -54,7 +54,7 @@
             <div v-else-if="countermodal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>회수하기</p>
-                    <img src="@/assets/icons/close.png" width="1.5vw;" @click="$emit('closemodal')">
+                    <img src="/icons/close.png" width="1.5vw;" @click="$emit('closemodal')">
                 </div>
                 <div>
                     <div class="modalcontent">

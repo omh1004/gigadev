@@ -16,7 +16,7 @@
     <!-- Navigation -->
     <div class="navigation">
       <div class="back-button" @click="goBack">
-        <img class="back-button" src="@/assets/common/Vector.png" alt="back" />
+        <img class="back-button" src="/common/Vector.png" alt="back" />
       </div>
       <div class="title">창고</div>
     </div>
@@ -117,6 +117,7 @@ const model = {
   disproduct:'',
   disquantity:0,
   disfruit:{},
+  disposeProfit:0,
   fruits: [
   { id: 1, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 2000 },
     { id: 2, name: '파인애플', image: 'src/assets/common/fruit/fineapple_s.png', quantity: 3, discount: '50%', category: '신선식품', price: 3000 },
@@ -233,7 +234,12 @@ export default {
       this.selectedTab = tab;
     },
     goBack(){
-      this.$router.push('/mainmenu');
+      this.$router.push({
+        name:'mainmenu',
+        state:{
+          disposeProfit:this.disposeProfit,
+        }
+      });
     },
     placeOrder() {
       this.storage = true;
@@ -271,7 +277,7 @@ export default {
     disposeNow(){
       this.money += this.disfruit.price * this.disquantity;
       this.disfruit.quantity -= this.disquantity;
-      // 잔액 증가 로직 추가하기
+      this.disposeProfit += this.disfruit.price * this.disquantity;
       if(this.disfruit.quantity==0){
         const index = this.fruits.findIndex(f=>this.disfruit.id==f.id);
         console.log(index);
@@ -295,6 +301,28 @@ export default {
       this.popup = history.state.popup;
       this.storage = history.state.popup;
     }
+    if(history.state.disposeProfit!=null && history.state.disposeProfit>0){
+      this.disposeProfit = history.state.disposeProfit;
+    }
+
+    // vscode 로컬에서 맞춘 페이지라 서버가 올라가면 수정해야 함!
+    fetch("http://localhost:8080/springcore/ordering/selectAllPrd",{
+      method:'POST',
+      header:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({   // 일단 임시로 만들어 놓음
+          "goodno":0,
+          "orderavailable":1,
+          "typeexpdate":3,
+          "orderprice":1000,
+          "goodstype":"신선식품",
+          "goodname":"딸기"
+      })
+    })
+    .then(response=>console.log(response))
+    .then(data=>console.log(data))
+    .catch(error=>console.error(error));
   }
 };
 </script>
@@ -320,7 +348,7 @@ export default {
     align-items: center; 
 
 
-    background-image: url('@/assets/background/whitebg.png');
+    background-image: url('/background/whitebg.png');
     background-size: 100% 100%;
 
 }
