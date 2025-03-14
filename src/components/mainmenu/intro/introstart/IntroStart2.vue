@@ -5,8 +5,8 @@
       <img class="skip-button" src="@/assets/tutorial/button/skip.png">
     </div>
 
-    <div id="bankman">
-      <img src="@/assets/tutorial/people/bankmember.png">
+    <div id="bankmanbox">
+      <img id="bankman" src="@/assets/tutorial/people/bankmember.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
@@ -55,11 +55,9 @@ export default {
     position: relative;
     overflow: hidden;
     
-   
 
 
     font-family: pretendard;
-    font-size: 40px;
   background-color: #f5f5f5;
   
   text-align: center;
@@ -67,26 +65,14 @@ export default {
   min-height: 90%;
 
 
-
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center; 
 
-
-
- 
-
-
   background-image: url('@/assets/tutorial/tutorialMain.png');
   background-size: 100% 100%;
 
-}
-#bankman{
-  position:relative;
-        
-        top:200px;
-        
 }
 
 .skip-button {
@@ -97,23 +83,23 @@ export default {
 }
 
 .dialog-box {
-  z-index: 1;
-  margin-top: -2.5vh;
+  position: absolute;
+  margin-top: 68.5vh;
   width: 70%;
   background-color: #F2F1EC;
+  border-radius: 2vw;
   padding: 1vw 1.5vw;
-  margin-bottom: 20px;
-  min-height: 150px;
+  margin-bottom: 5vh;
+  height: 20vh; 
   display: flex;
-  border-radius: 24px;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1vw 2vw rgba(0, 0, 0, 0.1);
 }
 
 .dialog-text {
   text-align: left;
-  font-size: 24px;
+  font-size: 1.8vw;
   margin: 0;
   flex-grow: 1;
   color: #333;
@@ -121,7 +107,7 @@ export default {
 }
 
 .dialog-arrow {
-  
+  font-size: 1.6vw;
   bottom: 8px;
   right: 16px;
   color: #666;
@@ -132,5 +118,14 @@ export default {
   bottom: 10px;
   color: #333;
   font-size: 18px;
+}
+#bankmanbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#bankman {
+  position: absolute;
+  width: calc(35%);
 }
 </style>
