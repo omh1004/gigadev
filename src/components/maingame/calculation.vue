@@ -32,7 +32,7 @@
                     </div>
                     <div>
                         <div class="block-left"><p>발주 비용</p></div>
-                        <div class="block-right"><p>0원</p></div>
+                        <div class="block-right"><p>{{ orderingLoss }}원</p></div>
                     </div>
                     <div>
                         <div class="block-left"><p>운영비</p></div>
@@ -93,7 +93,8 @@ export default {
     mounted(){
         this.profit = history.state.profit;
         this.profitAll += this.profit;
-        this.lossAll -= 20000;
+        this.orderingLoss = 0;
+        this.lossAll += (this.orderingLoss - 20000);
         this.moneyhave = history.state.moneyhave;
     }
 }

@@ -1,6 +1,7 @@
 <template>
     <div class="main-container">
-      <div class="header">
+      <Topbar />
+      <!-- <div class="header">
         <div class="left-section">D-30</div>
         <div class="right-section">
           <div class="money-bag">
@@ -9,7 +10,7 @@
           </div>
           <div class="settings-icon">⚙️</div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="speech-bubble">
         <div class="speech-bubble-content">
@@ -46,6 +47,8 @@
   </template>
   
   <script>
+import Topbar from '../common/topbar.vue';
+
   export default {
     name: 'KoreanMenuInterface'
     ,methods:{
@@ -53,7 +56,16 @@
         this.$router.push('/orderingMain');
       }
       ,linkStorage(){
-        this.$router.push('/storageMain');
+        if(history.state.disposeProfit!=null){
+          this.$router.push({
+            name:'storageMain',
+            state:{
+              disposeProfit:history.state.disposeProfit,
+            }
+          });
+        }else{
+          this.$router.push('/storageMain');
+        }
       }
       ,linkBank(){
         this.$router.push('/bank')
@@ -70,13 +82,14 @@
         // });
         $router.push('/maingame/1');
       }
-    }
+    },
+    components:{ Topbar },
   }
   </script>
   
   <style scoped>
   .main-container {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     position: relative;
     overflow: hidden;
