@@ -304,6 +304,20 @@ export default {
     if(history.state.disposeProfit!=null && history.state.disposeProfit>0){
       this.disposeProfit = history.state.disposeProfit;
     }
+
+    // vscode 로컬에서 맞춘 페이지라 서버가 올라가면 수정해야 함!
+    fetch("http://localhost:8080/springcore/ordering/selectAllPrd",{
+      method:'POST',
+      header:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        
+      })
+    })
+    .then(response=>console.log(response))
+    .then(data=>console.log(data))
+    .catch(error=>console.error(error));
   }
 };
 </script>

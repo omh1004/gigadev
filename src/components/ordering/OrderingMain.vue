@@ -427,7 +427,16 @@ export default {
           else if(c.category=='즉석 식품') expdate = 4;
           else if(c.category=='전자 제품') expdate = 999;
           else expdate = 0;
-          this.storageProduct.push({...c,ExpDate:expdate,saledgree:this.days,disposeYn:false,});
+          const buyProduct = {...c,ExpDate:expdate,saledgree:this.days,disposeYn:false,};
+          this.storageProduct.push(buyProduct);
+
+          // fetch("http://localhost:9090/buyProducts",{
+          //   method:'POST',
+          //   header:{
+          //     'Content-Type':'application/json',
+          //   },
+          //   body:JSON.stringify(buyProduct)
+          // })
         }
       });
 
