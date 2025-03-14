@@ -48,13 +48,14 @@ export default {
           password: this.inputPw
         })
       })
-      .then(response => response.json)
-      .then(data => {
-        console.log('response'+data.status)
-   
-        console.log('response'+data.ok)
-      if (!(data.ok)) {
-        if (data.status == '404') {
+      .then(response => 
+      {
+
+       console.log(response.status)
+       alert(response.status)
+
+      if (!(response.ok)) {
+        if (response.status == '404') {
           alert('회원을 찾을 수 없습니다.');
           
         } else {
