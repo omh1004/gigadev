@@ -110,7 +110,7 @@
             <div class="cart-title">장바구니</div>
             <div class="cart-items">
               <div v-for="(item, index) in cart" :key="index" class="cart-item">
-                <div class="cart-item-name">{{ item.name }} {{ item.quantity }}개</div>
+                <div class="cart-item-name">{{ item.goodsname }} {{ item.orderquantity }}개</div>
               </div>
             </div>
             <div class="cart-total">
@@ -134,7 +134,7 @@
           <p>알림</p>
         </div>
         <div class="popup-body">
-          <p v-if="!storage" v-for="(item, index) in cart" :key="index">{{ item.name }}+{{ item.quantity }}</p>
+          <p v-if="!storage" v-for="(item, index) in cart" :key="index">{{ item.goodsname }}+{{ item.orderquantity }}</p>
           <p v-if="popupMessage">{{ popupMessage }}</p>
           <button v-if="storage" class="storagebutton" @click="gotostorage">확장하러 가기</button>
         </div>
@@ -161,9 +161,10 @@ export default {
       products: [
        
       ],
-      cart: [
+      cart: []
        
-      ]
+       
+      
     }
   },
   computed: {
@@ -194,6 +195,7 @@ export default {
   },
   methods: {
     increaseQuantity(product) {
+
       product.orderquantity++;
       this.updateCart(product);
     },
@@ -204,29 +206,34 @@ export default {
       }
     },
     updateCart(product) {
-      const existingItem = this.cart.find(item => item.name === product.gooodsname);
       
-      if (product.quantity > 0) {
-        if (existingItem) {
-          existingItem.quantity = product.orderquantity;
-        } else {
-          // this.cart.push({
-          //   name: product.name,
-          //   quantity: product.quantity,
-          //   price: product.price
-          // });
-          this.cart.push({...product});
+      const existingItem = this.cart.find(item => item.goodsno === product.goodsno);
+      
+      
+        if (product.orderquantity > 0) {
+          if (existingItem) {
+            existingItem.orderquantity = product.orderquantity;
+          } else {
+            this.cart.push({
+              goodsno: product.goodsno,
+              name: product.goodsname,
+              quantity: product.orderquantity,
+              price: product.orderprice
+            });
+            this.cart.push({...product});
+          }
+        } else if (existingItem) {
+          const index = this.cart.indexOf(existingItem);
+          this.cart.splice(index, 1);
         }
-      } else if (existingItem) {
-        const index = this.cart.indexOf(existingItem);
-        this.cart.splice(index, 1);
-      }
-    },
+      },
+     
+    
     getTotalItems() {
-      return this.cart.reduce((total, item) => total + item.quantity, 0);
+      return this.cart.reduce((total, item) => total + item.orderquantity, 0);
     },
     getTotalPrice() {
-      return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+      return this.cart.reduce((total, item) => total + (item.orderprice * item.orderquantity), 0);
     },
     getTotalProductCount() {
       return this.products.reduce((total, product) => total + product.orderquantity, 0);
