@@ -197,20 +197,12 @@ export default {
   data() {
     return {
       activeTab: "loanHistory", // 기본 선택된 탭
-      totalLoan: 1410000, // 대출 합계 금액
+      totalLoan: 0, // 대출 합계 금액
       loanLimit: 1000000, // 대출 가능 한도
       loanAmount: "", // 대출 입력값
       errorMessage: "", // 오류 메시지
       MIN_LOAN_AMOUNT: 100, // ✅ 최소 대출 금액 설정 (100원)
-      loanRecords: [
-        { date: "2025.01.20", type: "중간 운영 대출금", amount: 100000 },
-        { date: "2025.01.15", type: "중간 운영 대출금", amount: 50000 },
-        { date: "2025.01.12", type: "중간 운영 대출금", amount: 20000 },
-        { date: "2025.01.10", type: "중간 운영 대출금", amount: 40000 },
-        { date: "2025.01.07", type: "중간 운영 대출금", amount: 40000 },
-        { date: "2025.01.05", type: "중간 운영 대출금", amount: 200000 },
-        { date: "2025.01.01", type: "초기 운영 대출금", amount: 1000000 },
-      ],
+      loanRecords: [],
 
       // ✅ 매출 정산 관련 데이터
       selectedDay: null, // ✅ 선택한 날짜 (DAY 버튼 클릭 시 저장)
@@ -221,7 +213,8 @@ export default {
       balance:0,
       // 물음표 호버 기능!!
       showHelp:false,
-
+      // userId: localStorage.getItem("userId") || "", // ✅ 로그인된 회원 ID 저장
+      userId:"asdfa",
       
     };
   },
@@ -241,7 +234,40 @@ export default {
         this.errorMessage = "";
       }
     },
+    applyLoan() {
+      const amount = Number(this.loanAmount);
+      
+      if (!amount || amount <= 0) {
+        this.errorMessage = "대출 금액을 입력하세요.";
+        return;
+      }
 
+      if (amount < 100) { // ✅ 최소 대출 금액 체크 추가
+        this.errorMessage = "대출 금액은 최소 100원 이상이어야 합니다.";
+        return;
+      }
+
+      if (amount > this.loanLimit) {
+        this.errorMessage = "대출 가능 금액을 초과했습니다.";
+        return;
+      }
+
+      // 대출 승인 처리
+      this.loanLimit -= amount;
+      this.totalLoan += amount;
+
+      // 대출 내역 추가
+      this.loanRecords.unshift({
+        date: new Date().toISOString().split("T")[0].replace(/-/g, "."),
+        type: "신규 대출",
+        amount: amount,
+      });
+
+      // 초기화
+      this.loanAmount = "";
+      this.errorMessage = "";
+      alert("대출 신청이 완료되었습니다.");
+    },
     validateLoanAmount() {
     let amount = Number(this.loanAmount);
 
@@ -283,42 +309,6 @@ export default {
 
     this.errorMessage = ""; // 에러 메시지 초기화
   },
-    
-    applyLoan() {
-      const amount = Number(this.loanAmount);
-      
-      if (!amount || amount <= 0) {
-        this.errorMessage = "대출 금액을 입력하세요.";
-        return;
-      }
-
-      if (amount < 100) { // ✅ 최소 대출 금액 체크 추가
-        this.errorMessage = "대출 금액은 최소 100원 이상이어야 합니다.";
-        return;
-      }
-
-      if (amount > this.loanLimit) {
-        this.errorMessage = "대출 가능 금액을 초과했습니다.";
-        return;
-      }
-
-      // 대출 승인 처리
-      this.loanLimit -= amount;
-      this.totalLoan += amount;
-
-      // 대출 내역 추가
-      this.loanRecords.unshift({
-        date: new Date().toISOString().split("T")[0].replace(/-/g, "."),
-        type: "신규 대출",
-        amount: amount,
-      });
-
-      // 초기화
-      this.loanAmount = "";
-      this.errorMessage = "";
-      alert("대출 신청이 완료되었습니다.");
-    },
-
     openDaySummary(day) {
       if (this.completedDays.includes(day)) {
         this.selectedDay = day;
@@ -339,10 +329,43 @@ export default {
     closeDaySummary() {
       this.selectedDay = null;
       this.activeTab = "salesSettlement";
+    },
+    async fetchLoanData() {
+      try {
+        if (!this.userId) {
+        console.error("로그인된 사용자 ID가 없습니다.");
+        return;
+      }
+
+    // ✅ userId를 API 요청에 포함
+    const response = await fetch(`http://localhost:9090/spring/bank/getLoans?userId=${this.userId}`);
+
+        if (!response.ok) {
+          throw new Error('대출 데이터를 가져오는 데 실패했습니다.');
+        }
+
+        const loans = await response.json(); // 응답을 JSON으로 변환 후 저장
+
+        this.loanRecords = loans.map(loan => ({
+          date: new Date(loan.loandate).toISOString().split("T")[0].replace(/-/g, "."),
+          type: "운영 대출금",  // ✅ 대출 타입 추가
+          amount: loan.loanMoney // ✅ 백엔드에서 받은 대출 금액
+        }));
+
+        // ✅ 대출 총합 계산해서 반영
+        this.totalLoan = this.loanRecords.reduce((sum, loan) => sum + loan.amount, 0);
+      } catch (error) {
+        console.error(error);
+        alert('서버에서 데이터를 가져오는 중 문제가 발생했습니다.');
+      }
     }
+  },
 
+  mounted() {
+    this.fetchLoanData(); // ✅ 페이지 로드 시 대출 내역 가져오기
+  },
+  
 
-  }
 };
 </script>
 
@@ -675,6 +698,7 @@ button.loan-btn1 {
   background: url("/element/loanbtn.png") no-repeat center;
   background-size: contain;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 
 
