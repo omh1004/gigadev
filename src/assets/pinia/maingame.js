@@ -15,7 +15,7 @@ export const productStore = defineStore('storage',{
     state:()=>({
         product:[
             // product 객체 예시
-            { orderingNo:14, goodsNo:8, playNo:19, goodType:"신선식품", goodsName:"연어", expDate:999, orderQuantity:10, salePrice:6000, saleDgree:1, disposalYN:'N' }
+            { orderingNo:5, goodsNo:8, playNo:1, goodType:"신선식품", goodsName:"연어", expDate:999, orderQuantity:10, salePrice:6000, saleDgree:1, disposalYN:'N' }
         ]
     })
 })
