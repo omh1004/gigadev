@@ -1,4 +1,5 @@
 <template>
+  <div class="blind"></div>
   <div class="main-container">
     <div class="topbar">
       <p class="left-section">D-30</p>
@@ -43,6 +44,24 @@
     <div class="open-button-container">
       <button class="open-button" @click="$router.push('/maingame/1')"></button>  <!-- 실험용 이벤트 -->
     </div>
+  </div>
+  <div class="tuto win1">
+    <p>이 화면은 게임 시작 전 준비 공간입니다.</p>
+    <p>편의점 운영 중에는 다시 방문할 수 없습니다.</p>
+    <p>신중하게 결정하고 오픈해주세요.</p>
+  </div>
+  <div class="tuto win2">
+    <p>은행을 눌러보세요.</p>
+  </div>
+  <div class="tuto win3">
+    <p>발주를 눌러보세요.</p>
+  </div>
+  <div class="tuto win4">
+    <p>발주한 물건을 확인해보세요.</p>
+  </div>
+  <div class="tuto win5">
+    <p>이제 OPEN 버튼을 눌러</p>
+    <p>편의점을 운영해봅시다!</p>
   </div>
 </template>
 
@@ -265,5 +284,39 @@ font-size: 1.5vw;
   border: none;
   border-radius: 1vw;
   cursor: pointer;
+}
+.blind{
+  position:absolute;
+  width:100vw;
+  height:100vh;
+  z-index:10;
+}
+.tuto{
+  position:absolute;
+  background-color:#FFEDDE;
+  font-size:2vh;
+}
+.tuto p{
+  margin:1vh 2vw;
+}
+.win1{
+  top:12vh;
+  left:33vw;
+}
+.win2{
+  top:18vh;
+  right:15vw;
+}
+.win3{
+  top:18vh;
+  left:15vw;
+}
+.win4{
+  top:18vh;
+  left:40vw;
+}
+.win5{
+  bottom:33vh;
+  right:28vw;
 }
 </style>
