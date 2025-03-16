@@ -20,7 +20,7 @@
       </div>
 
            <!-- ✅ 매출 정산 상세 화면 (DAY 버튼 클릭 시) -->
-      <div class="day-summary-container" v-if="activeTab === 'daySummary'">
+      <div class="day-summary-container" v-show="activeTab === 'daySummary'">
         <div class="day-summary">
           <div class="summary-header">
             <div class="ribbon-container">
@@ -32,16 +32,22 @@
 
               <!-- 수입 섹션 -->
       <div class="summary-box income-box">
-        <h3>수입</h3>
-       
+        <div class="summary-header income-header">
+          <h3>수입</h3>
+          <span class="summary-income-amount">{{ totalIncome.toLocaleString() }}원</span>
+        </div> 
+      
+        
+
         <div class="income-details">
         <span>판매 수익</span>
         <span class="income-amount">{{ income.toLocaleString() }}원</span>
         </div>
 
-        <div class="income-sub">
-        <p>*퀴즈 혜택</p>
-        </div>
+        <div class="income-details income-sub">
+  <span>*퀴즈 혜택</span>
+  <span>{{ (income * 0.05).toLocaleString() }}원</span>
+</div>
 
         <div class="income-details">
         <span>폐기 수익 (20% 상품 판매 수익)</span>
@@ -51,20 +57,22 @@
 
     <!-- 지출 섹션 -->
   <div class="summary-box expense-box">
+
     <div class="summary-header">
       <h3>지출</h3>
-      <span class="summary-expense-amount">{{ expense.toLocaleString() }}원</span>
+      <span class="summary-expense-amount">-{{ totalExpense.toLocaleString() }}원</span>
     </div>
+
     <div class="summary-content">
       <p>발주 비용</p>
       <span>-{{ expense.toLocaleString() }}원</span>
     </div>
     <div class="summary-content">
       <p>운영비</p>
-      <span>-{{ (expense + 20000).toLocaleString() }}원</span>
+      <span>-{{ (20000).toLocaleString() }}원</span> <!-- 운영비 고정 -->
     </div>
   </div>
-
+        
 
       <!-- ✅ 절취선 추가 -->
 <div class="dashed-line"></div>
@@ -205,7 +213,7 @@ export default {
       loanRecords: [],
 
       // ✅ 매출 정산 관련 데이터
-      selectedDay: null, // ✅ 선택한 날짜 (DAY 버튼 클릭 시 저장)
+      totalExpense: 0, // ✅ 지출 총액 추가
       income: 0, // ✅ 선택한 날짜의 수입
       expense: 0,  // ✅ 선택한 날짜의 지출
       total: 0, // ✅ 선택한 날짜의 총 매출 (income - expense)
@@ -215,13 +223,31 @@ export default {
       showHelp:false,
       // userId: localStorage.getItem("userId") || "", // ✅ 로그인된 회원 ID 저장
       userId:"asdfa",
+
+
+      selectedDay: 10, // ✅ 선택한 날짜 (DAY 버튼 클릭 시 저장) null
+      quizBonus: 0,
+      day : 10,
+      wasteIncome: 0,  // ✅ 폐기 수익
+      totalIncome: 0,  // ✅ 총 수입
+      totalExpense: 0,  // ✅ 총 지출
+
       
     };
   },
   computed: {
     formattedLimit() {
       return this.loanLimit.toLocaleString() + " 원";
-    }
+    },
+    
+  // adjustedLoanLimit() {
+  //   return this.loanLimit - 1000000; // 초기 대출금 제외
+  // }
+  totalIncome() {
+    let quizBonus = this.quizSuccess ? 30000 : 0;  // 퀴즈 혜택 반영
+    return this.income + this.quizBonus + this.wasteIncome;
+  },
+
   },
   methods: { 
     validateInput() {
@@ -234,40 +260,82 @@ export default {
         this.errorMessage = "";
       }
     },
-    applyLoan() {
-      const amount = Number(this.loanAmount);
-      
-      if (!amount || amount <= 0) {
-        this.errorMessage = "대출 금액을 입력하세요.";
-        return;
-      }
 
-      if (amount < 100) { // ✅ 최소 대출 금액 체크 추가
-        this.errorMessage = "대출 금액은 최소 100원 이상이어야 합니다.";
-        return;
-      }
 
-      if (amount > this.loanLimit) {
-        this.errorMessage = "대출 가능 금액을 초과했습니다.";
-        return;
-      }
+    async applyLoan() {
+  console.log("🟢 applyLoan() 함수 실행됨!");
 
-      // 대출 승인 처리
-      this.loanLimit -= amount;
-      this.totalLoan += amount;
+  const amount = Number(this.loanAmount);
 
-      // 대출 내역 추가
-      this.loanRecords.unshift({
-        date: new Date().toISOString().split("T")[0].replace(/-/g, "."),
-        type: "신규 대출",
-        amount: amount,
-      });
+  if (!amount || amount <= 0) {
+    this.errorMessage = "대출 금액을 입력하세요.";
+    return;
+  }
 
-      // 초기화
-      this.loanAmount = "";
-      this.errorMessage = "";
-      alert("대출 신청이 완료되었습니다.");
-    },
+  if (amount < 100) { 
+    this.errorMessage = "대출 금액은 최소 100원 이상이어야 합니다.";
+    return;
+  }
+
+  if (amount > this.loanLimit) {
+    this.errorMessage = "대출 가능 금액을 초과했습니다.";
+    return;
+  }
+
+  const loanData = {
+    loanMoney: amount,
+    userId: this.userId,
+  };
+
+  try {
+    console.log("🚀 Fetch 요청 시작!");
+    const response = await fetch("http://localhost:9090/spring/bank/applyLoan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loanData),
+    });
+
+    if (!response.ok) throw new Error("대출 신청 실패");
+
+    console.log("✅ 서버 응답 성공!");
+    alert("대출 신청이 완료되었습니다!");
+    
+     // ✅ 서버에서 최신 대출 정보를 다시 불러오기
+     await this.fetchLoanData();
+    
+    // ✅ 대출 한도 업데이트
+    // this.loanLimit -= amount;
+    
+    // ✅ 입력 필드 초기화
+    this.loanAmount = "";
+    this.errorMessage = "";
+  } catch (error) {
+    console.error(error);
+    alert("대출 신청 중 오류 발생");
+  }
+}
+,
+
+
+
+async fetchCompletedDays() {
+    try {
+        const response = await fetch(`http://localhost:9090/spring/bank/getPlayday?userId=${this.userId}`);
+        if (!response.ok) throw new Error("진행일자 정보를 가져오는 데 실패했습니다.");
+
+        const playday = await response.json();
+        
+        // ✅ 1부터 playday까지 배열 채우기
+        this.completedDays = Array.from({ length: playday }, (_, i) => i + 1);
+        
+    } catch (error) {
+        console.error("진행일자 로드 오류:", error);
+    }
+},
+
+
+
+
     validateLoanAmount() {
     let amount = Number(this.loanAmount);
 
@@ -289,6 +357,7 @@ export default {
     this.errorMessage = ""; // 에러 메시지 초기화
   },
 
+
   correctLoanAmount() {
     let amount = Number(this.loanAmount);
 
@@ -309,27 +378,116 @@ export default {
 
     this.errorMessage = ""; // 에러 메시지 초기화
   },
-    openDaySummary(day) {
-      if (this.completedDays.includes(day)) {
-        this.selectedDay = day;
-        this.income = 100000 + (day * 10000);
-        this.expense = 20000 + (day * 5000);
+
+
+    // openDaySummary(day) {
+    //   if (this.completedDays.includes(day)) {
+       
+    //     this.selectedDay = day;
+    //     this.income = 100000 + (day * 10000);
+    //     this.expense = 20000 + (day * 5000);
         
-        // ✅ 총 지출 = 발주 비용 + 운영비(20,000원)
-        let totalExpense = this.expense + 20000;
+    //     let fixedOperatingCost = 20000; // ✅ 운영비를 항상 20,000원으로 고정
+
+    //     // let totalExpense = this.expense + fixedOperatingCost; // ✅ 총 지출 = 발주 비용 + 운영비(고정)
         
-        // ✅ 총계 = 총 수입 - 총 지출
-        this.total = this.income - totalExpense;
+    //     // ✅ 총계 = 총 수입 - 총 지출
+    //     // this.total = this.income - totalExpense;
+    //     this.totalExpense = this.expense + fixedOperatingCost; // ✅ 🔥 총 지출 금액 업데이트
+    //     this.total = this.totalIncome - (this.expense + fixedOperatingCost); // ✅ 총계 올바르게 계산
         
-        this.activeTab = "daySummary";
-      } else {
-        alert("아직 완료되지 않은 날짜입니다!"); // ✅ 클릭 불가 알림
-      }
-    },
+
+
+    //     this.activeTab = "daySummary";
+    //   } else {
+    //     alert("아직 완료되지 않은 날짜입니다!"); // ✅ 클릭 불가 알림
+    //   }
+    // },
+
+
+//     async openDaySummary(day) {
+//   if (!this.completedDays.includes(day)) {
+//     alert("아직 완료되지 않은 날짜입니다!"); // ✅ 클릭 불가 알림
+//     return;
+//   }
+
+//   this.selectedDay = day;
+//   try {
+//     // ✅ API 호출
+//     console.log(`🟢 openDaySummary 실행됨! userId=${this.userId}, selectedDay=${day}`);
+//     const response = await fetch(`http://localhost:9090/spring/bank/getDailyRevenue?userId=${this.userId}&selectedDay=${day}`);
+    
+//     if (!response.ok) throw new Error("매출 데이터를 가져오지 못했습니다.");
+    
+//     const revenueData = await response.json();
+    
+//     // ✅ API 응답 데이터를 Vue 상태에 저장
+//     this.income = revenueData["판매수익"];
+//     this.quizBonus = revenueData["퀴즈혜택"];
+//     this.wasteIncome = revenueData["폐기수익"];
+//     this.totalIncome = revenueData["총수입"];
+//     this.expense = revenueData["발주비용"];
+//     this.totalExpense = revenueData["총지출"];
+//     this.total = revenueData["총계"];
+//     this.balance = revenueData["잔고"];
+
+//     // ✅ 화면 업데이트
+//     this.activeTab = "daySummary";
+    
+//   } catch (error) {
+//     console.error("매출 데이터 가져오기 오류:", error);
+//     alert("매출 데이터를 불러오는 중 오류 발생!");
+//   }
+// },
+
+
+async openDaySummary(day) {
+  if (!this.completedDays.includes(day)) {
+    alert("아직 완료되지 않은 날짜입니다!"); // ✅ 클릭 불가 알림
+    return;
+  }
+
+  this.selectedDay = day;
+  try {
+    // ✅ 로그 추가 (이게 보이는지 확인!)
+    console.log(`🟢 openDaySummary 실행됨! userId=${this.userId}, selectedDay=${day}`);
+
+    const response = await fetch(`http://localhost:9090/spring/bank/getDailyRevenue?userId=${this.userId}&selectedDay=${day}`);
+    
+    if (!response.ok) throw new Error("매출 데이터를 가져오지 못했습니다.");
+    
+    const revenueData = await response.json();
+    
+    // ✅ API 응답 데이터를 Vue 상태에 저장
+     // ✅ `null` 또는 `undefined`인 값은 0으로 처리
+    this.income = revenueData["판매수익"] ?? 0;
+    this.quizBonus = revenueData["퀴즈혜택"] ?? 0;
+    this.wasteIncome = revenueData["폐기수익"] ?? 0;
+    this.totalIncome = revenueData["총수입"] ?? 0;
+    this.expense = revenueData["발주비용"] ?? 0;
+    this.totalExpense = revenueData["총지출"] ?? 0;
+    this.total = revenueData["총계"] ?? 0;
+    this.balance = revenueData["잔고"] ?? 0;
+
+    // ✅ `activeTab` 변경 시 로그 추가!
+    this.activeTab = "daySummary";
+    console.log("🔵 activeTab 변경됨! 현재 상태:", this.activeTab);
+
+  } catch (error) {
+    console.error("매출 데이터 가져오기 오류:", error);
+    alert("매출 데이터를 불러오는 중 오류 발생!");
+  }
+},
+
+
+
+
     closeDaySummary() {
       this.selectedDay = null;
       this.activeTab = "salesSettlement";
     },
+
+
     async fetchLoanData() {
       try {
         if (!this.userId) {
@@ -354,6 +512,10 @@ export default {
 
         // ✅ 대출 총합 계산해서 반영
         this.totalLoan = this.loanRecords.reduce((sum, loan) => sum + loan.amount, 0);
+        
+        // ✅ 서버에서 최신 대출 한도를 가져와 반영
+        this.loanLimit = 2000000 - this.totalLoan;  // 기존 한도에서 총 대출 금액을 
+
       } catch (error) {
         console.error(error);
         alert('서버에서 데이터를 가져오는 중 문제가 발생했습니다.');
@@ -361,8 +523,12 @@ export default {
     }
   },
 
+
+
   mounted() {
     this.fetchLoanData(); // ✅ 페이지 로드 시 대출 내역 가져오기
+
+    this.fetchCompletedDays();  // ✅ 페이지 로드 시 진행일 가져오기
   },
   
 
@@ -930,7 +1096,7 @@ button.loan-btn1 {
 
 
 .day-summary {
-  width: 690px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
+  width: 705px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
   max-width: 90%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
   max-height: 600vh; /* ✅ 화면에 맞게 자동 조정 */
   /* height: auto; 높이는 자동 조정 */
@@ -1002,7 +1168,7 @@ button.loan-btn1 {
   border: none;
   cursor: pointer;
   position: absolute;
-  bottom:-5px; /* ✅ 아래쪽 정렬 */
+  bottom: 10px; /* ✅ 아래쪽 정렬 */
   left: 50%;
   transform: translateX(-50%);
 }
@@ -1065,16 +1231,17 @@ button.loan-btn1 {
 }
 
 /* 금액 정렬 */
-.income-amount {
-  color: #016Eff;  /* 파란색 */
+/* .income-amount {
   font-weight: bold;
-}
+} */
 
 /* 퀴즈 혜택 및 FEVER DAY */
 .income-sub {
   font-size: 16px;
   color: #666;
   margin-left: 10px;
+  margin-top: 17px;  /* 위쪽 여백 */
+  margin-bottom: 17px;  /* 아래쪽 여백 */
 }
 
 /* ✅ 지출 박스 스타일 */
@@ -1109,6 +1276,7 @@ button.loan-btn1 {
 .summary-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;  /* 🔥 수직 가운데 정렬 추가 */
   font-size: 16px;
   margin-bottom: -15px;
 }
@@ -1178,6 +1346,26 @@ button.loan-btn1 {
   font-size: 20px;
   font-weight: bold;
   color: white;
+}
+
+/* ✅ 수입 박스 헤더 정렬 */
+.income-header {
+  display: flex;
+  justify-content: space-between;  /* 좌우 정렬 */
+  align-items: center;  /* 수직 정렬 */
+  padding: 10px -10px;;
+}
+
+.income-header h3 {
+  margin-left: -3px; /* 왼쪽 여백 추가 */
+}
+
+/* ✅ 수입 금액 우측 정렬 */
+.summary-income-amount {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+  margin-right: -3px;
 }
 
 
