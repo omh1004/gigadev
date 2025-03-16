@@ -1,4 +1,5 @@
 <template>
+  <div class="blind" @click="nextPage"></div>
   <div class="main-container">
     <!-- Header -->
     <div class="header">
@@ -69,14 +70,20 @@
         </div>
         <div v-if="dispose" class="popup-body">
           <div style="display:flex;justify-content:space-around;align-items:center;">
-            <div v-html="disproduct"></div>
             <div>
-              <h4>{{ disfruit.name }}</h4>
-              <h4>가격</h4>
+              <div class="fruit-item">
+                <img :src="fruits[0].image" :alt="fruits[0].name" :id="fruits[0].id" class="fruit-image">
+                <div class="fruit-discount" v-if="fruits[0].discount">{{ fruits[0].discount }}</div>
+                <div class="fruit-quantity">x{{ fruits[0].quantity }}</div>
+              </div>
+            </div>
+            <div>
+              <h4>딸기</h4>
+              <h4>800원</h4>
             </div>
             <div class="quantity-control">
               <button class="decrease-button" @click="decreaseQuantity">−</button>
-              <span class="quantity-display">{{ disquantity }}</span>
+              <span class="quantity-display">1</span>
               <button class="increase-button" @click="increaseQuantity">+</button>
             </div>
           </div>
@@ -89,14 +96,43 @@
       </div>
     </div>
   </div>
+
+  <div v-show="tutoPage.pagenum==0" class="tuto win1">
+    <p>발주된 상품은 다음과 같이</p>
+    <p>창고에 표시 됩니다.</p>
+  </div>
+  <div v-show="tutoPage.pagenum==0" class="tuto win2">
+    <p>1. 유통기한 하루 전(D-1)</p>
+    <p>상품 가격이 50% 할인됩니다.</p>
+  </div>
+  <div v-show="tutoPage.pagenum==0" class="tuto win3">
+    <p>2. 유통기한 임박 상품은 모두 판매되지 않으면</p>
+    <p>다음 날 자동 폐기됩니다.</p>
+  </div>
+  <div v-show="tutoPage.pagenum==0" class="tuto win4">
+    <p>3. 자동 폐기를 대비해 상품을 20%로</p>
+    <p>조기 판매할 수 있습니다.</p>
+  </div>
+  <div v-show="tutoPage.pagenum==1" class="tuto win5">
+    <p>유통기한 임박 상품을 클릭하면</p>
+    <p>조기 판매할 수 있습니다.</p>
+  </div>
+  <div v-show="tutoPage.pagenum==2" class="tuto win6">
+    <p>창고가 부족할 경우</p>
+    <p>일정 금액을 지불하여 확장할 수 있습니다.</p>
+  </div>
 </template>
 
 <script>
+import { curTutoPage } from '@/assets/pinia/tutorial';
+
 const model = {
+  tutoPage:curTutoPage(),
   image: 'src/assets/common/fruit/strawberry.png',
   popup:false,
   popupTitle:'알림',
   storage:false,
+  dispose:false,
   disproduct:'',
   disquantity:0,
   disfruit:{},
@@ -253,8 +289,24 @@ export default {
         this.disquantity--;
       }
     },
+    nextPage(){
+      if(this.tutoPage.pagenum>=2 || this.tutoPage.pagenum<0){
+        this.tutoPage.tutopage='maingame';
+        this.tutoPage.pagenum=4;
+        this.$router.push('/tutorialMain');
+      }else if(this.tutoPage.pagenum==0){
+        this.popup=true;
+        this.dispose=true;
+        this.tutoPage.pagenum++;
+      }else if(this.tutoPage.pagenum==1){
+        this.dispose=false;
+        this.storage=true;
+        this.tutoPage.pagenum++;
+      }
+    },
   },
   mounted(){
+    this.tutoPage.pagenum=0;
     if(history.state.popup!=null){
       console.log(history.state.popup);
       this.popup = history.state.popup;
@@ -587,7 +639,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 10;
 }
 
 .popup-content {
@@ -659,6 +711,45 @@ export default {
   background-image:url("/src/assets/element/increasestorage.png");
   background-size:100% 100%;
 }
-
+.blind{
+  width:100vw;
+  height:100vh;
+  position:absolute;
+  z-index:15;
+}
+.tuto{
+  position:absolute;
+  background-color:#FFEDDE;
+  font-size:2vh;
+}
+.tuto p{
+  margin:1vh 2vw;
+}
+.win1{
+  top:22vh;
+  left:40vw;
+}
+.win2{
+  top:55vh;
+  left:10vw;
+}
+.win3{
+  top:65vh;
+  left:8vw;
+}
+.win4{
+  top:75vh;
+  left:15vw;
+}
+.win5{
+  top:35vh;
+  left:10vw;
+  z-index:15;
+}
+.win6{
+  top:33vh;
+  left:20vw;
+  z-index:15;
+}
 
 </style>
