@@ -72,7 +72,7 @@
       <span>-{{ (20000).toLocaleString() }}원</span> <!-- 운영비 고정 -->
     </div>
   </div>
-        
+
 
       <!-- ✅ 절취선 추가 -->
 <div class="dashed-line"></div>
@@ -289,7 +289,7 @@ export default {
 
   try {
     console.log("🚀 Fetch 요청 시작!");
-    const response = await fetch("http://localhost:9090/spring/bank/applyLoan", {
+    const response = await fetch("http://localhost:8080/spring/bank/applyLoan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loanData),
@@ -320,7 +320,7 @@ export default {
 
 async fetchCompletedDays() {
     try {
-        const response = await fetch(`http://localhost:9090/spring/bank/getPlayday?userId=${this.userId}`);
+        const response = await fetch(`http://localhost:8080/spring/bank/getPlayday?userId=${this.userId}`);
         if (!response.ok) throw new Error("진행일자 정보를 가져오는 데 실패했습니다.");
 
         const playday = await response.json();
@@ -452,7 +452,7 @@ async openDaySummary(day) {
     // ✅ 로그 추가 (이게 보이는지 확인!)
     console.log(`🟢 openDaySummary 실행됨! userId=${this.userId}, selectedDay=${day}`);
 
-    const response = await fetch(`http://localhost:9090/spring/bank/getDailyRevenue?userId=${this.userId}&selectedDay=${day}`);
+    const response = await fetch(`http://localhost:8080/spring/bank/getDailyRevenue?userId=${this.userId}&selectedDay=${day}`);
     
     if (!response.ok) throw new Error("매출 데이터를 가져오지 못했습니다.");
     
@@ -496,7 +496,7 @@ async openDaySummary(day) {
       }
 
     // ✅ userId를 API 요청에 포함
-    const response = await fetch(`http://localhost:9090/spring/bank/getLoans?userId=${this.userId}`);
+    const response = await fetch(`http://localhost:8080/spring/bank/getLoans?userId=${this.userId}`);
 
         if (!response.ok) {
           throw new Error('대출 데이터를 가져오는 데 실패했습니다.');
