@@ -4,7 +4,7 @@
 
     <img id="secondimg" src="/images/tycoonname.png" alt="타이쿤 이름 이미지">
     <div class="action-buttons">
-      <button class="load-button" >불러오기</button>
+      <button class="load-button" @click="loadGameData">불러오기</button>
       <button class="start-button" @click="startgame">게임시작</button>
     </div>
 
@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     formatCurrency(value) {
-      return value.toLocaleString() + '원'
+      if (value == null) return "0원";
+      return Number(value).toLocaleString() + '원';
     },
     getTopPlayerClass(index) {
       return index < 3 ? `top-${index + 1}` : ''
@@ -61,16 +62,44 @@ export default {
     }
   },mounted(){
 
+    fetch('http://localhost:8080/spring/userdata/getRankings')
+        .then(response => response.json())
+        .then(data => {
+            console.log("받아온 랭킹 데이터:", data); // 서버 응답 확인
+             // 필드명이 `totalRevenue`라면 매핑해줌
+            this.rankings = data.map(player => ({
+              nickname: player["nickname"] ?? "이름 없음",
+              profit: player["totalRevenue"] ? Number(player["totalRevenue"]) : 0
+
+        }));
+
+            console.log("업데이트된 rankings:", this.rankings); // Vue 상태 업데이트 확인
+        })
+        .catch(error => console.error("랭킹 데이터 불러오기 실패:", error));
     
-      fetch('http://localhost:3000/rankings')
+      // sk_랭킹 작업. 팀원과의 패키지 conflict를 막기 위해 userdata 패키지에서 진행했습니다. 
+
+    
+      // fetch('http://localhost:3000/rankings')
       
       // for(let i =0;i<innerText.length;i++){
       //   setTimeout(()=>{
       //     this.inputText+=innerText[i];
       //   },i*50)
       // }
-  }
+  },
+
+  loadGameData() {
+      fetch('http://localhost:8080/spring/userdata/getUserData?userId=user001')
+        .then(response => response.json())
+        .then(data => {
+          console.log("받아온 유저 데이터:", data);
+          this.userData = data;
+        })
+        .catch(error => console.error("유저 데이터 불러오기 실패:", error));
+    },
 }
+
 </script>
 
 <style scoped>
@@ -180,7 +209,8 @@ export default {
   font-family: RecipekoreaOTF;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 11.5px;
+  font-size: 20px;
 }
 
 </style>

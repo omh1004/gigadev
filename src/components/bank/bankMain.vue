@@ -267,20 +267,20 @@ export default {
 
   const amount = Number(this.loanAmount);
 
-  if (!amount || amount <= 0) {
-    this.errorMessage = "대출 금액을 입력하세요.";
-    return;
-  }
+  // if (!amount || amount <= 0) {
+  //   this.errorMessage = "대출 금액을 입력하세요.";
+  //   return;
+  // }
 
-  if (amount < 100) { 
-    this.errorMessage = "대출 금액은 최소 100원 이상이어야 합니다.";
-    return;
-  }
+  // if (amount < 100) { 
+  //   this.errorMessage = "대출 금액은 최소 100원 이상이어야 합니다.";
+  //   return;
+  // }
 
-  if (amount > this.loanLimit) {
-    this.errorMessage = "대출 가능 금액을 초과했습니다.";
-    return;
-  }
+  // if (amount > this.loanLimit) {
+  //   this.errorMessage = "대출 가능 금액을 초과했습니다.";
+  //   return;
+  // }
 
   const loanData = {
     loanMoney: amount,
