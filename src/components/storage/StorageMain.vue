@@ -238,9 +238,7 @@ expansionStorage() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        expansionSize: expansionSize,
-        expansionCost: expansionCost,
-        currentSize: this.storageSize
+        
       })
     })
     .then(response => {
