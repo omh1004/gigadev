@@ -94,9 +94,6 @@ export default {
       }
     }
   },
-  mounted(){
-    this.tutoPage.pagenum=0;
-  }
 }
 </script>
 
