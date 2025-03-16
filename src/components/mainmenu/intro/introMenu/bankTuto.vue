@@ -1,30 +1,32 @@
 <template>
-  <!-- Navigation -->
-  <div class="navigation">
-    <div class="back-button" @click="goBack">
-      <img class="back-button" src="/common/Vector.png" alt="back" />
-    </div>
-    <div class="title">창고</div>
-    <img src="/tutorial/button/skip.png" width="35vw">
-  </div>
+  <div class="blind" @click="nextPage"></div>
   <div class="bank-container">
     <!-- ✅ 달력 (항상 보이게 유지) -->
-    <div class="calandar">
-      <!-- ✅ 대출 내역 표시 (대출내역 버튼 클릭 시) -->
-      <div class="loan-history" v-if="activeTab === 'loanHistory'" style="top: 13%;">
-        <div class="loan-header" style="display: flex; justify-content: end;">
-          <span class="title" style="text-align: end;">대출 합계 : {{ totalLoan.toLocaleString() }}원</span>
+    <div>
+      <!-- Navigation -->
+      <div class="navigation">
+        <div class="back-button" @click="goBack">
+          <img class="back-button" src="/common/Vector.png" alt="back" />
         </div>
-        <hr>
-        <table class="loan-table">
-          <tbody>
-            <tr v-for="(loan, index) in loanRecords" :key="index">
-              <td>{{ loan.date }}</td>
-              <td>{{ loan.type }}</td>
-              <td class="amount">+{{ loan.amount.toLocaleString() }}원</td>
-            </tr>
-          </tbody>
-        </table>
+        <img src="/tutorial/button/skip.png" width="35vw">
+      </div>
+      <div class="calandar">
+        <!-- ✅ 대출 내역 표시 (대출내역 버튼 클릭 시) -->
+        <div class="loan-history" v-if="activeTab === 'loanHistory'" style="top: 13%;">
+          <div class="loan-header" style="display: flex; justify-content: end;">
+            <span class="title" style="text-align: end;">대출 합계 : {{ totalLoan.toLocaleString() }}원</span>
+          </div>
+          <hr>
+          <table class="loan-table">
+            <tbody>
+              <tr v-for="(loan, index) in loanRecords" :key="index">
+                <td>{{ loan.date }}</td>
+                <td>{{ loan.type }}</td>
+                <td class="amount">+{{ loan.amount.toLocaleString() }}원</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -53,12 +55,28 @@
       </button>
     </div>
   </div>
+  <div v-show="tutoPage.pagenum==0" class="tuto win1">
+    <p>대출금 내역은 스크롤을</p>
+    <p>내려서 확인 가능합니다.</p>
+  </div>
+  <div v-show="tutoPage.pagenum==1" class="tuto win2">
+    <p>추가 대출 한도는 1,000,000원입니다.</p>
+    <p>횟수 제한없이 한도내에서 대출 가능합니다.</p>
+    <p>100원 단위로 대출이 가능합니다.</p>
+  </div>
+  <div v-show="tutoPage.pagenum==2" class="tuto win3">
+    <p>매출 정산내역은</p>
+    <p>여기서 확인할 수 있습니다.</p>
+  </div>
 </template>
 
 <script>
+import { curTutoPage } from '@/assets/pinia/tutorial';
+
 export default {
 data() {
   return {
+    tutoPage:curTutoPage(),
     activeTab: "loanHistory", // 기본 선택된 탭
     totalLoan: 1410000, // 대출 합계 금액
     loanRecords: [
@@ -73,9 +91,22 @@ data() {
   };
 },
 methods:{
-  goBack(){
-    this.$router.push('/tutorialStart');
+  nextPage(){
+    if(this.tutoPage.pagenum>=2 || this.tutoPage.pagenum<0){
+      this.tutoPage.tutopage='ordering';
+      this.tutoPage.pagenum=2;
+      this.$router.push('/tutorialMain');
+    }else if(this.tutoPage.pagenum==0){
+      this.tutoPage.pagenum++;
+      this.activeTab='loan';
+    }else if(this.tutoPage.pagenum==1){
+      this.tutoPage.pagenum++;
+      this.activeTab='salesSettlement';
+    }
   },
+},
+mounted(){
+  this.tutoPage.pagenum=0;
 }
 };
 </script>
@@ -109,6 +140,22 @@ align-items: center;
 justify-content: center;
 overflow: hidden; /* ✅ 내용이 달력 밖으로 나가지 않도록 설정 */
 
+}
+
+.navigation {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  margin-bottom: 0;
+}
+
+.back-button {
+  color: #5d2906;
+  cursor: pointer;
+  width: 2vw;
+  height: 2vw;
 }
 
 /* ✅ 대출 내역 스타일 */
@@ -217,5 +264,31 @@ top: 10%;
 height: 80%;
 width: 4px;
 border-left: 2px dashed #D5CCC4;
+}
+.blind{
+  width:100vw;
+  height:100vh;
+  position:absolute;
+  z-index:20;
+}
+.tuto{
+  position:absolute;
+  background-color:#FFEDDE;
+  font-size:2vh;
+}
+.tuto p{
+  margin:1vh 2vw;
+}
+.win1{
+  top:37vh;
+  left:17vw;
+}
+.win2{
+  top:50vh;
+  left:12vw;
+}
+.win3{
+  top:37vh;
+  left:12vw;
 }
 </style>

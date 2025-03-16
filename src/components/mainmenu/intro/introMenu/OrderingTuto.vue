@@ -102,7 +102,7 @@
               총 {{ getTotalPrice().toLocaleString() }}원
               </div>
           </div>
-          <button class="order-button" :style="{'z-index':tutoPage*15}" @click="placeOrder"></button>
+          <button class="order-button" :style="{'z-index':-(tutoPage*(tutoPage-2))*25}" @click="placeOrder"></button>
         </div>
       </div>
 
@@ -136,12 +136,27 @@
     <p>남은 창고 개수만큼 발주가 가능합니다.</p>
   </div>
   <div v-show="tutoPage==1" class="tuto win4"><p>발주하기 버튼을 눌러 완료하세요.</p></div>
+  <div v-show="tutoPage==2" class="tuto win5">
+    <p>발주가 완료 되면</p>
+    <p>완료 알림이 뜹니다.</p>
+  </div>
+  <div v-show="tutoPage==3" class="tuto win6">
+    <p>창고가 가득 찼을 시</p>
+    <p>발주하기 버튼을 누르면 알림이 뜹니다.</p>
+  </div>
+  <div v-show="tutoPage==3" class="tuto win7">
+    <p>창고 확장하러 가기 버튼을 눌러</p>
+    <p>확장을 하고 오세요.</p>
+  </div>
 </template>
 
 <script>
+import { curTutoPage } from '@/assets/pinia/tutorial';
+
 export default {
   data() {
     return {
+      tutopage:curTutoPage(),
       popupMessage: '',
       cartList: [],
       itemPrice: 0,
@@ -334,6 +349,8 @@ export default {
       this.money -= totalPrice;
       this.popupMessage = '발주완료';
       this.popup = true;
+
+      this.tutoPage++;
     },
     closePopup() {
       this.popup = false;
@@ -341,7 +358,17 @@ export default {
       this.popupMessage = '';
     },
     nextTutoPage(){
-      this.tutoPage++;
+      if(this.tutoPage==1){}
+      else if(this.tutoPage==2){
+        this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
+        this.storage = true;
+        this.tutoPage++;
+      }else if(this.tutoPage==3){
+        this.tutopage.tutopage='storage';
+        this.tutopage.pagenum=3;
+        this.$router.push('/tutorialMain');
+      }
+      else { this.tutoPage++; }
     }
   },
 }
@@ -353,7 +380,7 @@ export default {
   width:100vw;
   height:100vh;
   position:absolute;
-  z-index:10;
+  z-index:20;
 }
 .app-container {
   width: 100vw;
@@ -675,7 +702,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 5;
 }
 
 .popup-content {
@@ -778,5 +805,20 @@ export default {
 .win4{
   top:77vh;
   left:65vw;
+}
+.win5{
+  top:57vh;
+  right:30vw;
+  z-index:15;
+}
+.win6{
+  top:33vh;
+  left:20vw;
+  z-index:15;
+}
+.win7{
+  top:57vh;
+  right:23vw;
+  z-index:15;
 }
 </style>
