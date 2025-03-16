@@ -1,11 +1,11 @@
 <template>
-  <div class="blind"></div>
+  <div class="blind" @click="nextPage"></div>
   <div class="main-container">
     <div class="topbar">
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="//icons/money.png" style="width:3.5vh;height:3.5vh;">
+              <img src="/icons/money.png" style="width:3.5vh;height:3.5vh;">
               <div class="line"></div>
               <div class="money"><p>{{ money }}원</p></div>
           </div>
@@ -24,52 +24,55 @@
   
     
     <div class="menu-container">
-      <div class="menu-button"  @click="linkOrdering">
+      <div class="menu-button" :class="{'tutoClick':this.tutoPage.tutopage=='ordering'}" @click="linkOrdering">
         <span class="button-text">
           <img src="/tutorial/button/orderingbutton.png">
         </span>
       </div>
       
-      <div class="menu-button" @click="linkStorage">
+      <div class="menu-button" :class="{'tutoClick':this.tutoPage.tutopage=='storage'}" @click="linkStorage">
         <span class="button-text">
           <img src="/tutorial/button/storagebutton.png">
         </span>
       </div>
       
-      <div class="menu-button" @click="linkBank">
+      <div class="menu-button" :class="{'tutoClick':this.tutoPage.tutopage=='bank'}" @click="linkBank">
         <span class="button-text"><img src="/tutorial/button/bankbutton.png"></span>
       </div>
     </div>
     
     <div class="open-button-container">
-      <button class="open-button" @click="$router.push('/maingame/1')"></button>  <!-- 실험용 이벤트 -->
+      <button class="open-button" :class="{'tutoClick':this.tutoPage.tutopage=='maingame'}" @click="$router.push('/maingame/1')"></button>  <!-- 실험용 이벤트 -->
     </div>
   </div>
-  <div class="tuto win1">
+  <div v-show="tutoPage.pagenum==0" class="tuto win1">
     <p>이 화면은 게임 시작 전 준비 공간입니다.</p>
     <p>편의점 운영 중에는 다시 방문할 수 없습니다.</p>
     <p>신중하게 결정하고 오픈해주세요.</p>
   </div>
-  <div class="tuto win2">
+  <div v-show="tutoPage.pagenum==1" class="tuto win2">
     <p>은행을 눌러보세요.</p>
   </div>
-  <div class="tuto win3">
+  <div v-show="tutoPage.pagenum==2" class="tuto win3">
     <p>발주를 눌러보세요.</p>
   </div>
-  <div class="tuto win4">
+  <div v-show="tutoPage.pagenum==3" class="tuto win4">
     <p>발주한 물건을 확인해보세요.</p>
   </div>
-  <div class="tuto win5">
+  <div v-show="tutoPage.pagenum==4" class="tuto win5">
     <p>이제 OPEN 버튼을 눌러</p>
     <p>편의점을 운영해봅시다!</p>
   </div>
 </template>
 
 <script>
+import { curTutoPage } from '@/assets/pinia/tutorial';  // @/assets 뺴기!!!!!
+
 export default {
   name: 'KoreanMenuInterface',
   data(){
     return{
+      tutoPage:curTutoPage(),
       storageSize:50,
       money: 500000,
     }
@@ -83,7 +86,16 @@ export default {
     }
     ,linkBank(){
       this.$router.push('/linkBankTutorial')
+    },
+    nextPage(){
+      if(this.tutoPage.tutopage=='main'){
+        this.tutoPage.tutopage='bank';
+        this.tutoPage.pagenum++;
+      }
     }
+  },
+  mounted(){
+    this.tutoPage.pagenum=0;
   }
 }
 </script>
@@ -284,6 +296,10 @@ font-size: 1.5vw;
   border: none;
   border-radius: 1vw;
   cursor: pointer;
+}
+.tutoClick{
+  position:relative;
+  z-index:20;
 }
 .blind{
   position:absolute;

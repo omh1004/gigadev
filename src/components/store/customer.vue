@@ -24,15 +24,15 @@ export default {
     data(){
         return{
             src:[
-                "/src/assets/person/customer1.png",
-                "/src/assets/person/customer2.png",
-                "/src/assets/person/customer3.png",
-                "/src/assets/person/customer4.png",
-                "/src/assets/person/customer5.png",
-                "/src/assets/person/customer6.png",
-                "/src/assets/person/customer7.png",
-                "/src/assets/person/customer8.png",
-                "/src/assets/person/customer9.png",
+                "/person/customer1.png",
+                "/person/customer2.png",
+                "/person/customer3.png",
+                "/person/customer4.png",
+                "/person/customer5.png",
+                "/person/customer6.png",
+                "/person/customer7.png",
+                "/person/customer8.png",
+                "/person/customer9.png",
             ],
         }
     }

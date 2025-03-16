@@ -15,16 +15,16 @@
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
-            <div class="product" :id="`prod${p.id}`" v-for="p in getproduct.product" v-show="p.amount>0" @click="sellprod($event)">
+            <div class="product" :id="`prod${p.orderingNo}`" v-for="p in getproduct.product" v-show="p.amount>0" @click="sellprod($event)">
                 <div class="amount">
-                    <p v-if="p.id.includes('50')" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
+                    <p v-if="p.expDate==1" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
                     <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
-                    <p style="display:inline-block;width:3vw;height:2vh;text-align:right;font-size:2vh;">{{ p.amount }}</p>
+                    <p style="display:inline-block;width:3vw;height:2vh;text-align:right;font-size:2vh;">{{ p.orderQuantity }}</p>
                 </div>
                 <!-- draggable로 드래그 가능, dragstart 이벤트가 필요. -->
-                <img :src="`${p.src}`" alt="상품" style="width:8vh;height:8vh;" :name="p.name">
-                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.name }}</p>
-                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.price }}원</p>
+                <img :src="`${p.image}`" alt="상품" style="width:8vh;height:8vh;" :name="p.name">
+                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.goodsName }}</p>
+                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.salePrice }}원</p>
             </div>
         </div>
         <div v-show="modal || countermodal || timeleft==0 || noclick || quizblind" class="blind">
@@ -78,7 +78,7 @@
     </div>
 </template>
 <script>
-import { productStore } from '@/assets/pinia/maingame'; // @/assets 빼기!!!
+import { productStore } from '@/assets/pinia/maingame';
 
 export default {
     data(){

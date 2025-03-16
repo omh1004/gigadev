@@ -1,4 +1,12 @@
 <template>
+  <!-- Navigation -->
+  <div class="navigation">
+    <div class="back-button" @click="goBack">
+      <img class="back-button" src="/common/Vector.png" alt="back" />
+    </div>
+    <div class="title">창고</div>
+    <img src="/tutorial/button/skip.png" width="35vw">
+  </div>
   <div class="bank-container">
     <!-- ✅ 달력 (항상 보이게 유지) -->
     <div class="calandar">
@@ -64,6 +72,11 @@ data() {
     ],
   };
 },
+methods:{
+  goBack(){
+    this.$router.push('/tutorialStart');
+  },
+}
 };
 </script>
 
