@@ -89,24 +89,14 @@ export default {
       // }
   },
 
-      loadGameData() {
-      fetch('http://localhost:8080/spring/userdata/getRankings')
+  loadGameData() {
+      fetch('http://localhost:8080/spring/userdata/getUserData?userId=user001')
         .then(response => response.json())
         .then(data => {
-          console.log("받아온 랭킹 데이터:", data); // 서버 응답 확인
-          
-          this.rankings = data.map(player => ({
-            nickname: player["nickname"] ?? "이름 없음",
-            profit: player["totalRevenue"] ? Number(player["totalRevenue"]) : 0
-          }));
-
-          console.log("업데이트된 rankings:", this.rankings);
-          alert("게임 데이터를 불러왔습니다!"); // 성공 알림 추가
+          console.log("받아온 유저 데이터:", data);
+          this.userData = data;
         })
-        .catch(error => {
-          console.error("랭킹 데이터 불러오기 실패:", error);
-          alert("데이터 불러오기 실패! 다시 시도해주세요.");
-        });
+        .catch(error => console.error("유저 데이터 불러오기 실패:", error));
     },
 }
 
