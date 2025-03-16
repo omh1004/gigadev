@@ -54,7 +54,7 @@ export default {
     }
     ,findId:function(){
       console.log('debbue');
-      fetch("http://localhost:9090/spring/api/findId",{
+      fetch("http://localhost:8080/spring/api/findId",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export default {
     })
     }
     ,findPwd:function(){
-      fetch("http://localhost:9090/spring/api/findPwd",{
+      fetch("http://localhost:8080/spring/api/findPwd",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",

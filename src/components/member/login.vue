@@ -37,7 +37,7 @@ export default {
     loginAccess:function() {
 
       fetch(
-        'http://localhost:9090/spring/api/loginMember'
+        'http://localhost:8080/spring/api/loginMember'
       ,{
         method: 'POST',
         headers: {
