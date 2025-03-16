@@ -62,7 +62,7 @@ export default {
   }
   ,methods:{
      signMember:function() {
-      fetch('http://localhost:9090/spring/api/enrollMember',{
+      fetch('http://localhost:8080/spring/api/enrollMember',{
         method: 'POST',
          headers: {
            'Content-Type': 'application/json'

@@ -174,7 +174,7 @@ export default {
   },
   mounted(){
     
-    fetch('http://localhost:9090/spring/ordering/selectAllPrd',{
+    fetch('http://localhost:8080/spring/ordering/selectAllPrd',{
       method:'GET'
     })
     .then(response=>response.json())
