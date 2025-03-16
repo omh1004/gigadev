@@ -119,9 +119,7 @@ const model = {
   disfruit:{},
   disposeProfit:0,
   fruits: [
-  { id: 1, name: '딸기', image: '/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 2000 },
-  
-  tutoPage={},
+  { id: 1, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 2000 },
     // Add more items as needed
   ],
   itemsPerRow: 5,
@@ -237,7 +235,7 @@ export default {
     if(history.state.disposeProfit!=null && history.state.disposeProfit>0){
       this.disposeProfit = history.state.disposeProfit;
     }
-    this.tutoPage=curTutoPage();
+
     
     fetch("http://localhost:8080/springcore/ordering/selectAllPrd",{
       method:'POST',
