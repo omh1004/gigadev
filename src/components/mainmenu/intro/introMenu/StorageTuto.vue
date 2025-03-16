@@ -224,7 +224,7 @@ export default {
       this.selectedTab = tab;
     },
     goBack(){
-      this.$router.push('/mainmenu');
+      this.$router.push('/tutorialStart');
     },
     placeOrder() {
       this.storage = true;

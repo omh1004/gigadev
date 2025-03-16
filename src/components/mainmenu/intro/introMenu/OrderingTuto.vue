@@ -13,7 +13,7 @@
       <p class="left-section">D-30</p>
       <div style="display:flex;align-items:center;">
           <div class="moneybar">
-              <img src="//icons/money.png" style="width:3.5vh;height:3.5vh;">
+              <img src="/icons/money.png" style="width:3.5vh;height:3.5vh;">
               <div class="line"></div>
               <div class="money"><p>{{ money }}원</p></div>
           </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="main-content">
-      <div class="back-button">
+      <div class="back-button" @click="goback">
         <img id="backbtn" src="/common/Vector.png" alt="back" />
       </div>
 
@@ -302,6 +302,9 @@ export default {
     }
   },
   methods: {
+    goBack(){
+      this.$router.push('/tutorialStart');
+    },
     getTotalItems() {
       return this.cart.reduce((total, item) => total + item.quantity, 0);
     },

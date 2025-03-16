@@ -60,7 +60,7 @@
     </div>
 </template>
 <script>
-import { revenueStore, productStore } from '@/assets/pinia/maingame';     // @/assets 빼기!
+import { revenueStore, productStore } from '@/assets/pinia/maingame';     // @/assets 빼기! 라고 썼는데 pinia는 왜 되지?
 
 export default {
     data(){
