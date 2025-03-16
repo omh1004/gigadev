@@ -15,7 +15,7 @@
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
-            <div class="product" :id="`prod${p.id}`" v-for="p in getproduct" v-show="p.amount>0" @click="sellprod($event)">
+            <div class="product" :id="`prod${p.id}`" v-for="p in getproduct.product" v-show="p.amount>0" @click="sellprod($event)">
                 <div class="amount">
                     <p v-if="p.id.includes('50')" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
                     <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
@@ -78,10 +78,12 @@
     </div>
 </template>
 <script>
+import { productStore } from '@/assets/pinia/maingame'; // @/assets 빼기!!!
+
 export default {
     data(){
         return{
-            getproduct:[],
+            getproduct:productStore(),
             modal:false,
             target:{},
             categ:'전체',
@@ -128,7 +130,7 @@ export default {
         },
     },
     mounted(){
-        this.getproduct=this.product;
+        console.log(this.getproduct);
     },
     props:['product','countermodal','countertarget','timeleft','noclick','quizblind'],
 }

@@ -23,7 +23,7 @@
                 </div>
                 <div style="display:flex;align-items:center;">
                     <div class="moneybar">
-                        <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">
+                        <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">  <!-- @/assets 빼기!!!!! -->
                         <div class="line"></div>
                         <div class="money"><p style="font-size:2vh;">{{ moneyhave }}원</p></div>
                     </div>
@@ -40,9 +40,9 @@
         </div>
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"
-                        :noclick="noclick" :moneyhave="moneyhave" @quizTime="quizTime" @customer="customer" @revertprod="revertprod"
-                        @rollback="rollback" @notclick="notclick" @bgmstop="bgmstop"  @bgmchange="bgmchange"/>
-            <Product :product="product" :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
+                        :noclick="noclick" :moneyhave="moneyhave" :product="product" @quizTime="quizTime" @customer="customer"
+                        @revertprod="revertprod" @rollback="rollback" @notclick="notclick" @bgmstop="bgmstop"  @bgmchange="bgmchange"/>
+            <Product :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
                         :noclick="noclick" :quizblind="quizblind" @moveprod="moveprod" @closemodal="closemodal"/>
         </div>
     </div>
