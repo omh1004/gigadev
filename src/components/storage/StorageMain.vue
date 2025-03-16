@@ -225,14 +225,55 @@ export default {
       this.realdispose = false;
       this.popup = false;
     },
-    expansionStorage(){
-      if(this.storageSize < 150){
-        this.money -= 30000 + ((this.storageSize-50)/20) * 10000;
-        this.storageSize += 20;
-        this.storage = false;
-        this.popup = false;
+  // expansionStorage 메소드 수정
+expansionStorage() {
+  if (this.storageSize < 150) {
+    const expansionSize = 20;
+    const expansionCost = 30000 + ((this.storageSize - 50) / 20) * 10000;
+    
+    // 서버에 창고 확장 요청
+    fetch("http://localhost:8080/spring/storage/expandStorage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        expansionSize: expansionSize,
+        expansionCost: expansionCost,
+        currentSize: this.storageSize
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("서버 응답 오류: " + response.status);
       }
-    }
+      return response.json();
+    })
+    .then(data => {
+      console.log("창고 확장 성공:", data);
+      
+      // DB 업데이트 후 프론트엔드 상태 업데이트
+      this.money -= expansionCost;
+      this.storageSize += expansionSize;
+      
+      // 팝업 닫기
+      this.storage = false;
+      this.popup = false;
+      
+      // 성공 메시지 (필요시)
+      this.popupTitle = '알림';
+      this.popupMessage = '창고 확장이 완료되었습니다.';
+    })
+    .catch(error => {
+      console.error('창고 확장 중 오류 발생:', error);
+      
+      // 오류 메시지 표시
+      this.popupTitle = '오류';
+      this.popupMessage = '창고 확장 중 오류가 발생했습니다. 다시 시도해주세요.';
+      this.popup = true;
+    });
+  }
+}
   },
   mounted() {
     if(history.state.popup != null) {
