@@ -237,23 +237,21 @@ export default {
     }
 
     
-    fetch("http://localhost:8080/springcore/ordering/selectAllPrd",{
-      method:'POST',
-      header:{
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify({   // 일단 임시로 만들어 놓음
-          "goodno":0,
-          "orderavailable":1,
-          "typeexpdate":3,
-          "orderprice":1000,
-          "goodstype":"신선식품",
-          "goodname":"딸기"
-      })
-    })
-    .then(response=>console.log(response))
-    .then(data=>console.log(data))
-    .catch(error=>console.error(error));
+    fetch("http://localhost:8080/spring/storage/findStorageAll")
+    .then(response=>response.json())
+    .then(data=>
+      {
+        console.log(data)
+        this.fruits=data;
+        console.log(this.fruits);
+      }  
+
+    )
+    .catch(error => {
+      console.error('상품 데이터 가져오기 오류:', error);
+      this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
+      this.popup = true;
+    });
   }
 };
 </script>
