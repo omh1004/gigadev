@@ -1,8 +1,5 @@
 <template>
     <div class="conv">
-        <!-- 값 확인용 -->
-         {{ profit }}
-         {{ globalLoss }}
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
                     :relability="relability" @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
@@ -14,7 +11,8 @@
 <script>
 import QuizChoice from '../quiz/quizChoice.vue';
 import QuizMain from '../quiz/quizMain.vue';
-import { quiz, quizAnswer, quizComment, rewardDialog } from '@/assets/data/prodNquiz.js';
+import { quiz, quizAnswer, quizComment, rewardDialog } from '@/assets/data/prodNquiz.js';   // 배포할 때 @/assets 빼기!!!!!!
+import { revenueStore } from '@/assets/pinia/maingame';     // 배포할 때 @/assets 빼기!!!!!!!!!!!!!!
 
 export default {
     data(){
@@ -31,8 +29,8 @@ export default {
             ],  // 일단 두개만
             currentWant:{},
             relability:50,
-            profit:0,
             quiz:-1,
+            revenue:revenueStore(),
         }
     },
     methods:{
@@ -68,6 +66,7 @@ export default {
                         state:{
                             profit:this.profit,
                             moneyhave:this.moneyhave,
+                            product:this.product
                         }
                     }); // 나중에 결과화면 이동으로 바꾸기
                 }else{
@@ -122,10 +121,10 @@ export default {
                 const prod = this.cart.find(c=>c.id==key[i]);
 
                 if(prod_50!=null){
-                    this.profit += prod_50.amount*prod_50.price;
+                    this.revenue.salesMount += prod_50.amount*prod_50.price;
                 }
                 if(prod!=null){
-                    this.profit += prod.amount * prod.price;
+                    this.revenue.salesMount += prod.amount * prod.price;
                 }
                 
                 if(prodcount[i]==0 && nothing){
@@ -149,9 +148,9 @@ export default {
                     }else{
                         loss += prod.price*(prodcount[i]-prodwant[i]);
                     }
-                    this.profit -= loss;
-                    this.globalLoss += loss;
+                    this.revenue.salesMount -= loss;
                 }
+                console.log(this.revenue.salesMount);
             }
             let timeout = 0;
             if(nothing){
@@ -195,6 +194,7 @@ export default {
                         state:{
                             profit:this.profit,
                             moneyhave:this.moneyhave,
+                            product:this.product
                         }
                     }); // 나중에 결과화면 이동으로 바꾸기
                 }else{
@@ -223,6 +223,7 @@ export default {
                                 state:{
                                     profit:this.profit,
                                     moneyhave:this.moneyhave,
+                                    product:this.product
                                 }
                             }); // 나중에 결과화면 이동으로 바꾸기
                         }else{
@@ -253,6 +254,7 @@ export default {
                                     state:{
                                         profit:this.profit,
                                         moneyhave:this.moneyhave,
+                                        product:this.product
                                     }
                                 }); // 나중에 결과화면 이동으로 바꾸기
                             }else{
@@ -267,12 +269,18 @@ export default {
         revertprod(modal,target){
             console.log("2!");
             this.$emit('revertprod',modal,target);
+        },
+        product:{
+            handler(curval,orival){
+                console.log(this.product);
+            },
+            deep:true,
         }
     },
     components:{
         QuizMain,QuizChoice,
     },
-    props:['quizNum','interval','timeleft','customerA','cart','noclick','moneyhave']
+    props:['quizNum','interval','timeleft','customerA','cart','noclick','moneyhave','product']
 }
 </script>
 <style scoped>
