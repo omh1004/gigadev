@@ -71,12 +71,12 @@
                       
                       <div class="quantity-control">
                         <button class="decrease-button" @click="decreaseQuantity(product)">−</button>
-                        <span class="quantity-display">{{ product.orderquantity }}</span>
+                        <span class="quantity-display">{{ product.ordercount || 0 }}</span>
                         <button class="increase-button" @click="increaseQuantity(product)">+</button>
                       </div>
                       <div class="price-display">{{ product.orderprice.toLocaleString() }}원</div>
-                      <!-- 창고 보유 수량 표시 (별도로 관리) -->
-                      <div class="stock-display">{{ getStock(product.goodsno) }}</div>
+                      <!-- 창고 보유 수량 표시 -->
+                      <div class="stock-display">{{ product.orderquantity || 0 }}</div>
                     </div>
                     <div v-else-if="selectedCategory=='즉석식품'" class="comingsoon">
                       <h1>5일차 오픈 예정</h1>
@@ -96,7 +96,7 @@
             <div class="cart-title">장바구니</div>
             <div class="cart-items">
               <div v-for="(item, index) in cart" :key="index" class="cart-item">
-                <div class="cart-item-name">{{ item.goodsname }} {{ item.orderquantity }}개</div>
+                <div class="cart-item-name">{{ item.goodsname }} {{ item.ordercount }}개</div>
               </div>
             </div>
             <div class="cart-total">
@@ -145,9 +145,7 @@ export default {
       storage: false,
       days: 5,
       products: [],
-      cart: [],
-      // 재고 정보를 저장할 객체 추가
-      stockData: {}
+      cart: []
     }
   },
   computed: {
@@ -156,41 +154,17 @@ export default {
     }
   },
   mounted() {
-    // 상품 데이터와 재고 데이터를 동시에 가져오기
-    Promise.all([
-      // 상품 데이터 가져오기
-      fetch('http://localhost:8080/spring/ordering/selectAllPrd', {
-        method: 'GET'
-      }).then(response => response.json()),
+    // 상품 데이터 가져오기
+    fetch('http://localhost:8080/spring/ordering/selectAllPrd', {
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+      // 상품 데이터를 저장 (DB에서 가져온 원래 orderquantity 값 유지)
+      this.products = data;
       
-      // 재고 데이터 가져오기
-      fetch('http://localhost:8080/spring/storage/getStock', {
-        method: 'GET'
-      }).then(response => response.json()).catch(() => {
-        // 재고 API 오류 시 빈 배열 반환
-        console.warn('재고 데이터를 가져오는데 실패했습니다. 임시 데이터를 사용합니다.');
-        return [];
-      })
-    ])
-    .then(([productData, stockData]) => {
-      // 모든 상품의 발주 수량(orderquantity)을, 초기값 0으로 설정
-      this.products = productData.map(product => ({
-        ...product,
-        orderquantity: 0  // 각 상품의 발주 수량을 0으로 초기화
-      }));
-      
-      // 재고 데이터 처리
-      if (stockData && stockData.length > 0) {
-        // 서버에서 받아온 재고 데이터가 있으면 사용
-        stockData.forEach(item => {
-          this.stockData[item.goodsno] = item.quantity || 0;
-        });
-        console.log('서버에서 받아온 재고 데이터:', this.stockData);
-      } else {
-        // 재고 데이터가 없으면 임시 데이터 초기화
-        this.initializeStockData();
-        console.log('임시 재고 데이터 생성:', this.stockData);
-      }
+      // 서버에서 가져온 데이터 로깅
+      console.log('서버에서 가져온 상품 데이터:', this.products);
       
       for(let i = 0; i < this.products.length; i++) {
         console.log(this.products[i].goodsno);
@@ -203,21 +177,21 @@ export default {
       }
     })
     .catch(error => {
-      console.error('데이터 가져오기 오류:', error);
-      this.popupMessage = '데이터를 가져오는 중 오류가 발생했습니다.';
+      console.error('상품 데이터 가져오기 오류:', error);
+      this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
       this.popup = true;
-      
-      // 오류 발생 시 임시 데이터 초기화
-      this.initializeStockData();
     });
   },
   methods: {
     // 임시 재고 데이터 초기화 (실제로는 DB에서 가져와야 함)
     initializeStockData() {
-      // 예시: 모든 상품에 임의의 재고 수량 할당
+      // 예시: 모든 상품에 임의의 재고 수량 할당 (1-5 사이의 값)
+      this.stockData = {}; // 객체 초기화
       this.products.forEach(product => {
-        this.stockData[product.goodsno] = Math.floor(Math.random() * 10); // 임시 예시 데이터
+        // 정수 값으로 명확하게 저장 (0-5 사이의 값)
+        this.stockData[product.goodsno] = Math.floor(Math.random() * 6); 
       });
+      console.log('초기화된 재고 데이터:', this.stockData);
     },
     
     // 재고 데이터 가져오기 (실제 서버 API에 맞게 수정 필요)
@@ -243,18 +217,28 @@ export default {
     
     // 상품 재고 가져오기
     getStock(goodsno) {
-      // 재고 데이터에서 해당 상품의 재고 반환
-      return this.stockData[goodsno] || 0;
+      // 재고 데이터에서 해당 상품의 재고 반환 (숫자로 확실하게 변환)
+      const stock = this.stockData[goodsno];
+      return (typeof stock === 'number' && !isNaN(stock)) ? stock : 0;
     },
     
     increaseQuantity(product) {
-      product.orderquantity++;
+      // ordercount 필드가 없으면 초기화
+      if (product.ordercount === undefined) {
+        product.ordercount = 0;
+      }
+      product.ordercount++;
       this.updateCart(product);
     },
     
     decreaseQuantity(product) {
-      if (product.orderquantity > 0) {
-        product.orderquantity--;
+      // ordercount 필드가 없으면 초기화
+      if (product.ordercount === undefined) {
+        product.ordercount = 0;
+      }
+      
+      if (product.ordercount > 0) {
+        product.ordercount--;
         this.updateCart(product);
       }
     },
@@ -262,8 +246,8 @@ export default {
     updateCart(product) {
       const existingItem = this.cart.find(item => item.goodsno === product.goodsno);
       if (existingItem) {
-        if (product.orderquantity > 0) {
-          existingItem.orderquantity = product.orderquantity;
+        if (product.ordercount > 0) {
+          existingItem.ordercount = product.ordercount;
         } else {
           // 수량이 0이면 장바구니에서 제거
           const index = this.cart.findIndex(item => item.goodsno === product.goodsno);
@@ -271,12 +255,12 @@ export default {
             this.cart.splice(index, 1);
           }
         }
-      } else if (product.orderquantity > 0) {
+      } else if (product.ordercount > 0) {
         // 새 상품을 장바구니에 추가할 때 마지막에 추가
         this.cart.push({
           goodsno: product.goodsno,
           goodsname: product.goodsname,
-          orderquantity: product.orderquantity,
+          ordercount: product.ordercount,
           orderprice: product.orderprice
         });
       }
@@ -286,7 +270,7 @@ export default {
     getTotalItems() {
       if (this.cart.length === 0) return 0;
       return this.cart.reduce((total, item) => {
-        return total + (item.orderquantity || 0);
+        return total + (item.ordercount || 0);
       }, 0);
     },
 
@@ -294,14 +278,13 @@ export default {
     getTotalPrice() {
       if (this.cart.length === 0) return 0;
       return this.cart.reduce((total, item) => {
-        return total + ((item.orderprice || 0) * (item.orderquantity || 0));
+        return total + ((item.orderprice || 0) * (item.ordercount || 0));
       }, 0);
     },
     
-    // 창고에 있는 총 상품 개수 계산
+    // 총 창고 상품 개수 계산
     getTotalProductCount() {
-      // 창고에 있는 모든 재고의 총합을 계산
-      return Object.values(this.stockData).reduce((total, quantity) => total + quantity, 0);
+      return this.products.reduce((total, product) => total + (product.orderquantity || 0), 0);
     },
     
     // 발주 처리
@@ -309,7 +292,7 @@ export default {
       const totalPrice = this.getTotalPrice();
       
       // 현재 창고에 있는 재고의 총량 계산
-      const currentStockTotal = Object.values(this.stockData).reduce((sum, qty) => sum + qty, 0);
+      const currentStockTotal = this.getTotalProductCount();
       
       // 장바구니 총 수량 계산
       const cartTotal = this.getTotalItems();
@@ -343,10 +326,8 @@ export default {
           orderingno: null,
           goodsno: item.goodsno,
           playno: 1, // 플레이어 번호 (적절한 값으로 대체하세요)
-          expdate: item.expdate || 
-                 (item.goodstype === '신선식품' ? 3 : 
-                  item.goodstype === '즉석식품' ? 4 : 999),
-          orderquantity: item.orderquantity,
+          expdate: this.getExpDate(item),
+          orderquantity: item.ordercount,
           saleprice: item.orderprice, // 판매 가격으로 발주 가격을 사용
           saledgree: this.days || 0,  // 현재 게임 일수
           disposalyn: 'N'  // 초기값은 폐기되지 않음
@@ -385,15 +366,7 @@ export default {
         
         // 상품 발주 수량 초기화
         this.products.forEach(product => {
-          product.orderquantity = 0;
-        });
-        
-        // 재고 데이터 업데이트 (실제로는 서버 데이터와 동기화 필요)
-        this.cart.forEach(item => {
-          if (!this.stockData[item.goodsno]) {
-            this.stockData[item.goodsno] = 0;
-          }
-          this.stockData[item.goodsno] += item.orderquantity;
+          product.ordercount = 0;
         });
 
         // 페이지 새로고침 - 서버에서 최신 데이터 가져오기
@@ -404,6 +377,22 @@ export default {
         this.popupMessage = '주문 중 오류가 발생했습니다: ' + error.message;
         this.popup = true;
       });
+    },
+    
+    // 상품 유형에 따른 유통기한 반환
+    getExpDate(item) {
+      // 이미 expdate가 있으면 그 값을 사용
+      if (item.expdate) return item.expdate;
+      
+      // 상품 찾기
+      const product = this.products.find(p => p.goodsno === item.goodsno);
+      
+      if (!product) return 999; // 상품을 찾지 못한 경우 기본값
+      
+      // 상품 타입에 따라 유통기한 설정
+      if (product.goodstype === '신선식품') return 3;
+      if (product.goodstype === '즉석식품') return 4;
+      return 999; // 기본값 (전자제품 등)
     },
     
     closePopup() {
