@@ -22,7 +22,7 @@
     </div>
 
     <div>
-      <h5 class="storageCount">창고 개수 : 50/{{ storageSize }}</h5>
+      <h5 class="storageCount">창고 개수 : {{ totalQuantity }}/{{ storageSize }}</h5>
     </div>
 
     <!-- Tab Menu -->
@@ -39,9 +39,8 @@
       <div class="fruit-container" :style="containerStyle">
         <div class="fruit-row" v-for="(row, rowIndex) in filteredFruitRows" :key="rowIndex">
           <div class="fruit-item" v-for="(fruit, fruitIndex) in row" :key="fruitIndex">
-            <img :src="fruit.image" :alt="fruit.name" :id="fruit.id" class="fruit-image" @click="disposePopup($event)">
-            <div class="fruit-discount" v-if="fruit.discount">{{ fruit.discount }}</div>
-            <div class="fruit-quantity">x{{ fruit.quantity }}</div>
+            <img :src="fruit.image" :alt="fruit.goodsname" :id="fruit.goodsno" class="fruit-image" @click="disposePopup($event)">
+            <div class="fruit-quantity">x{{ fruit.orderquantity }}</div>
           </div>
         </div>
       </div>
@@ -60,6 +59,7 @@
       <div class="popup-content" @click.stop>
         <div class="popup-header">
           <p>{{ popupTitle }}</p>
+          <span class="close-button" @click="closePopup">×</span>
         </div>
 
         <div v-if="storage && storageSize<150" class="popup-body">
@@ -78,8 +78,8 @@
           <div style="display:flex;justify-content:space-around;align-items:center;">
             <div v-html="disproduct"></div>
             <div>
-              <h4>{{ disfruit.name }}</h4>
-              <h4>{{ disfruit.price }}</h4>
+              <h4>{{ disfruit.goodsname }}</h4>
+              <h4>{{ 2000 }}원</h4>
             </div>
             <div class="quantity-control">
               <button class="decrease-button" @click="decreaseQuantity">−</button>
@@ -135,6 +135,10 @@ export default {
     return model;
   },
   computed: {
+    totalQuantity() {
+      // 모든 상품의 orderquantity 합계 계산
+      return this.fruits.reduce((total, fruit) => total + fruit.orderquantity, 0);
+    },
     fruitRows() {
       const rows = [];
       for (let i = 0; i < this.fruits.length; i += this.itemsPerRow) {
@@ -143,7 +147,8 @@ export default {
       return rows;
     },
     filteredFruitRows() {
-      const filteredFruits = this.fruits.filter(fruit => fruit.category === this.selectedTab);
+      // 선택된 탭과 goodstype이 일치하는 항목만 필터링
+      const filteredFruits = this.fruits.filter(fruit => fruit.goodstype === this.selectedTab);
       const rows = [];
       for (let i = 0; i < filteredFruits.length; i += this.itemsPerRow) {
         rows.push(filteredFruits.slice(i, i + this.itemsPerRow));
@@ -186,13 +191,13 @@ export default {
     disposePopup(e){
       this.disquantity = 0;
       this.disproduct = e.target.parentElement.innerHTML;
-      this.disfruit = this.fruits.find(f=>f.id==e.target.id);
+      this.disfruit = this.fruits.find(f => f.goodsno == e.target.id);
       console.log(this.disfruit);
       this.popup = true;
       this.dispose = true;
     },
     increaseQuantity() {
-      if(this.disfruit.quantity>this.disquantity){
+      if(this.disfruit.orderquantity > this.disquantity){
         this.disquantity++;
       }
     },
@@ -206,52 +211,53 @@ export default {
       this.realdispose = true;
     },
     disposeNow(){
-      this.money += this.disfruit.price * this.disquantity;
-      this.disfruit.quantity -= this.disquantity;
-      this.disposeProfit += this.disfruit.price * this.disquantity;
-      if(this.disfruit.quantity==0){
-        const index = this.fruits.findIndex(f=>this.disfruit.id==f.id);
+      // goodsprice가 없을 경우 기본 가격 설정
+      const price = 2000; // 기본 가격 설정
+      this.money += price * this.disquantity;
+      this.disfruit.orderquantity -= this.disquantity;
+      this.disposeProfit += price * this.disquantity;
+      
+      if(this.disfruit.orderquantity == 0){
+        const index = this.fruits.findIndex(f => this.disfruit.goodsno == f.goodsno);
         console.log(index);
-        this.fruits.splice(index,1);
+        this.fruits.splice(index, 1);
       }
       this.realdispose = false;
       this.popup = false;
     },
     expansionStorage(){
-      if(this.storageSize<150){
-        this.money -= 30000+((this.storageSize-50)/20)*10000;
+      if(this.storageSize < 150){
+        this.money -= 30000 + ((this.storageSize-50)/20) * 10000;
         this.storageSize += 20;
         this.storage = false;
         this.popup = false;
       }
     }
   },
-  mounted(){
-    if(history.state.popup!=null){
+  mounted() {
+    if(history.state.popup != null) {
       console.log(history.state.popup);
       this.popup = history.state.popup;
       this.storage = history.state.popup;
     }
-    if(history.state.disposeProfit!=null && history.state.disposeProfit>0){
+    
+    if(history.state.disposeProfit != null && history.state.disposeProfit > 0) {
       this.disposeProfit = history.state.disposeProfit;
     }
-
-    
+      
     fetch("http://localhost:8080/spring/storage/findStorageAll")
-    .then(response=>response.json())
-    .then(data=>
-      {
-        console.log(data)
-        this.fruits=data;
-        console.log(this.fruits);
-      }  
-
-    )
-    .catch(error => {
-      console.error('상품 데이터 가져오기 오류:', error);
-      this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
-      this.popup = true;
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log("서버에서 받은 데이터:", data);
+        // 서버에서 받은 데이터를 그대로 fruits에 저장
+        this.fruits = data;
+        console.log("적용된 데이터:", this.fruits);
+      })
+      .catch(error => {
+        console.error('상품 데이터 가져오기 오류:', error);
+        this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
+        this.popup = true;
+      });
   }
 };
 </script>
@@ -514,8 +520,9 @@ export default {
 
 .fruit-row {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin-bottom: 15px;
+  padding-left: 10px;
 }
 
 .fruit-item {
@@ -523,8 +530,8 @@ export default {
   flex-direction: column;
   align-items: center;
   position: relative;
-  width: 160px; /* Reverted width */
-  margin: 5px; /* Reverted margin */
+  width: 160px; /* 너비 설정 */
+  margin: 5px 15px 5px 0; /* 오른쪽 여백 추가, 왼쪽으로는 여백 제거 */
 }
 
 .fruit-image {
@@ -600,10 +607,25 @@ export default {
   text-align: center;
   color: white;
   font-weight: bold;
+  position: relative;
 }
 
 .popup-header p {
   margin: 0;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+.close-button:hover {
+  color: #f0f0f0;
 }
 
 .popup-body {
