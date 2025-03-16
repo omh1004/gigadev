@@ -1,15 +1,18 @@
 <template>
-  <div class="app-container">
+
+    <div class="main-container">
+    <!-- Header -->
     <div class="header">
       <div class="left-section">D-30</div>
       <div class="right-section">
         <div class="money-bag">
           <span class="bag-icon">💰</span>
-          <span class="amount">{{ money.toLocaleString() }}원</span>
+          <span class="amount">{{ money }}원</span>
         </div>
-      <div class="settings-icon">⚙️</div>
-     </div>
-    </div> 
+        <span class="settings-icon">⚙️</span>
+        
+      </div>
+    </div>
 
     <div class="main-content">
       <div class="back-button" @click="backToMain">
@@ -418,7 +421,7 @@ export default {
 </script>
 
 <style scoped>
-.app-container {
+.main-container {
   width: 100%;
     height: 100vh;
     position: relative;
@@ -436,10 +439,11 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center; 
-  
-  background-image:url('/background/whitebg.png');
-  background-size:100% 100%;
- 
+
+
+    background-image: url('/background/whitebg.png');
+    background-size: 100% 100%;
+
 }
 
 .header {
@@ -492,16 +496,15 @@ export default {
     font-size: 2vw;
   }
 
-.money-display {
-  background-color: #5e2813;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 20px;
+.navigation {
+  width: 90%;
   display: flex;
   align-items: center;
-  gap: 5px;
+  padding: 8px 16px;
+  margin-bottom: 0;
+  margin-top: 1vh; /* Adjusted to account for fixed header */
+  gap:41vw;
 }
-
 .main-content {
   padding: 15px;
   position: relative;
