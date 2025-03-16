@@ -210,7 +210,7 @@ export default {
     .modalwin{
         width:34vw;
         height:34vh;
-        background-image:url("/src/assets/element/prodmodal.png");
+        background-image:url("/element/prodmodal.png");
         background-size:100% 100%;
         border-radius:3vh;
         overflow:hidden;
@@ -235,7 +235,7 @@ export default {
         align-items:center;
     }
     .okbutton{
-        background-image:url('/src/assets/element/ok.png');
+        background-image:url('/element/ok.png');
         width:9.5vw;
         height:5.5vh;
         background-color:rgba(0,0,0,0);
