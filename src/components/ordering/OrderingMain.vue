@@ -109,15 +109,15 @@
           <div class="cart-section">
             <div class="cart-title">장바구니</div>
             <div class="cart-items">
-              <div v-for="(item, index) in cart" :key="index" class="cart-item">
-                <div class="cart-item-name">{{ item.goodsname }} {{ item.orderquantity }}개</div>
-              </div>
-            </div>
+  <div v-for="(item, index) in cart" :key="index" class="cart-item">
+    <div class="cart-item-name">{{ item.goodsname }} {{ item.orderquantity }}개</div>
+  </div>
+</div>
             <div class="cart-total">
-              총 {{ getTotalItems() }}개
-              <br>
-              총 {{ getTotalPrice().toLocaleString() }}원
-              </div>
+  총 {{ getTotalItems() }}개
+  <br>
+  총 {{ getTotalPrice().toLocaleString() }}원
+</div>
           </div>
           <button class="order-button" @click="placeOrder"></button>
         </div>
@@ -195,7 +195,6 @@ export default {
   },
   methods: {
     increaseQuantity(product) {
-
       product.orderquantity++;
       this.updateCart(product);
     },
@@ -206,113 +205,139 @@ export default {
       }
     },
     updateCart(product) {
-      
-      const existingItem = this.cart.find(item => item.goodsno === product.goodsno);
-      
-      
-        if (product.orderquantity > 0) {
-          if (existingItem) {
-            existingItem.orderquantity = product.orderquantity;
-          } else {
-            this.cart.push({
-              goodsno: product.goodsno,
-              name: product.goodsname,
-              quantity: product.orderquantity,
-              price: product.orderprice
-            });
-            this.cart.push({...product});
-          }
-        } else if (existingItem) {
-          const index = this.cart.indexOf(existingItem);
-          this.cart.splice(index, 1);
-        }
-      },
-     
-    
-    getTotalItems() {
-      return this.cart.reduce((total, item) => total + item.orderquantity, 0);
-    },
-    getTotalPrice() {
-      return this.cart.reduce((total, item) => total + (item.orderprice * item.orderquantity), 0);
-    },
+  const existingItem = this.cart.find(item => item.goodsno === product.goodsno);
+  if (existingItem) {
+    if (product.orderquantity > 0) {
+      existingItem.orderquantity = product.orderquantity;
+    } else {
+      // 수량이 0이면 장바구니에서 제거
+      const index = this.cart.findIndex(item => item.goodsno === product.goodsno);
+      if (index !== -1) {
+        this.cart.splice(index, 1);
+      }
+    }
+  } else if (product.orderquantity > 0) {
+    // 새 상품을 장바구니에 추가할 때 마지막에 추가
+    this.cart.push({
+      goodsno: product.goodsno,
+      goodsname: product.goodsname,
+      orderquantity: product.orderquantity,
+      orderprice: product.orderprice
+    });
+  }
+},
+// getTotalItems 메서드 수정
+getTotalItems() {
+  if (this.cart.length === 0) return 0;
+  return this.cart.reduce((total, item) => {
+    return total + (item.orderquantity || 0);
+  }, 0);
+},
+
+// getTotalPrice 메서드 수정
+getTotalPrice() {
+  if (this.cart.length === 0) return 0;
+  return this.cart.reduce((total, item) => {
+    return total + ((item.orderprice || 0) * (item.orderquantity || 0));
+  }, 0);
+},
     getTotalProductCount() {
+
       return this.products.reduce((total, product) => total + product.orderquantity, 0);
     },
-    getTotalProductCount(){
-      return this.products.reduce((total, product) => total + product.orderquantity, 0);
-    },
+    // getTotalProductCount(){
+    //   return this.products.reduce((total, product) => total + product.orderquantity, 0);
+    // },
     placeOrder() {
-      const totalPrice = this.getTotalPrice();
-      const productamount = this.products.reduce((amount, product) => amount + product.orderquantity, 0);
-      
-      // 창고 안 상품 개수 데이터(변수)가 필요
-      // 임시로 여기에 storageCount 변수를 추가
-      let cartquan = 0;
-      this.cart.forEach(c=>{
-        cartquan += c.quantity;
-      })
+  const totalPrice = this.getTotalPrice();
+  const productamount = this.products.reduce((amount, product) => amount + product.orderquantity, 0);
+  
+  // 장바구니 총 수량 계산
+  let cartquan = 0;
+  this.cart.forEach(c => {
+    cartquan += c.orderquantity;
+  });
 
-      if (totalPrice > this.money) {
-        this.popupMessage = '잔액이 부족합니다.';
-        this.popup = true;
-        return;
-      }
-      
-      if (this.cart.length === 0) {
-        this.popupMessage = '주문할 상품을 선택해주세요.';
-        this.popup = true;
-        return;
-      }
+  // 잔액 체크
+  if (totalPrice > this.money) {
+    this.popupMessage = '잔액이 부족합니다.';
+    this.popup = true;
+    return;
+  }
+  
+  // 장바구니 체크
+  if (this.cart.length === 0) {
+    this.popupMessage = '주문할 상품을 선택해주세요.';
+    this.popup = true;
+    return;
+  }
 
-      if( productamount+cartquan>50 ){
-        this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
-        this.storage = true;
-        this.popup = true;
-        return;
-      }
-      
-      this.cart.forEach(c=>{
-        const existProduct = this.products.find(p=>{
-          if(c.category=='신선식품'){
-            if(p.id==c.id && p.ExpDate==3){
-              return p;
-            }
-          }else if(c.category=='즉석식품'){
-            if(p.id==c.id && p.ExpDate==4){
-              return p;
-            }
-          }else if(c.category=='전자제품'){
-            if(p.id==c.id){
-              return p;
-            }
-          }
-        });
-
-        if(existProduct!=null){
-          existProduct.orderquantity += c.quantity;
-        }else{
-          let expdate = 0;
-          if(c.category=='신선식품') expdate = existProduct.expdate;
-          else if(c.category=='즉석식품') expdate = 4;
-          else if(c.category=='전자제품') expdate = 999;
-          else expdate = 0;
-          const buyProduct = {...c,ExpDate:expdate,saledgree:this.days,disposeYn:false,};
-          this.products.push(buyProduct);
-
-          // fetch("http://localhost:9090/buyProducts",{
-          //   method:'POST',
-          //   header:{
-          //     'Content-Type':'application/json',
-          //   },
-          //   body:JSON.stringify(buyProduct)
-          // })
-        }
-      });
-
-      this.money -= totalPrice;
-      this.popupMessage = '발주완료';
-      this.popup = true;
+  // 창고 용량 체크
+  if (productamount + cartquan > 50) {
+    this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
+    this.storage = true;
+    this.popup = true;
+    return;
+  }
+  
+  // Storage 클래스에 맞는 데이터 구조로 변환
+  const orderItems = this.cart.map(item => {
+    return {
+      // orderingno는 자동 생성될 것으로 가정하여 null 또는 생략
+      orderingno: null,
+      goodsno: item.goodsno,
+      playno: 1, // 플레이어 번호 (적절한 값으로 대체하세요)
+      expdate: item.expdate || 
+               (item.goodstype === '신선식품' ? 3 : 
+                item.goodstype === '즉석식품' ? 4 : 999),
+      orderquantity: item.orderquantity,
+      saleprice: item.orderprice, // 판매 가격으로 발주 가격을 사용
+      saledgree: this.days || 0,  // 현재 게임 일수
+      disposalyn: 'N'  // 초기값은 폐기되지 않음
+    };
+  });
+  
+  console.log("서버로 전송할 데이터:", JSON.stringify(orderItems));
+  
+  // fetch API를 사용하여 서버에 데이터 전송
+  fetch('http://localhost:9090/spring/ordering/insertOrdering', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify(orderItems)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('서버 응답이 올바르지 않습니다.');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('주문 성공:', data);
+    
+    // 주문 성공 후 로직 실행
+    // 잔액 차감
+    this.money -= totalPrice;
+    
+    // 팝업 메시지 표시
+    this.popupMessage = '발주완료';
+    this.popup = true;
+    
+    // 장바구니 비우기
+    this.cart = [];
+    
+    // 상품 수량 초기화
+    this.products.forEach(product => {
+      product.orderquantity = 0;
+    });
+  })
+  .catch(error => {
+    console.error('주문 오류:', error);
+    this.popupMessage = '주문 중 오류가 발생했습니다: ' + error.message;
+    this.popup = true;
+  });
+},
     closePopup() {
       this.popup = false;
       this.storage = false;
