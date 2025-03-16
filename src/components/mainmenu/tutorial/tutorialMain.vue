@@ -42,7 +42,7 @@
     </div>
     
     <div class="open-button-container">
-      <button class="open-button" :class="{'tutoClick':this.tutoPage.tutopage=='maingame'}" @click="$router.push('/maingame/1')"></button>  <!-- 실험용 이벤트 -->
+      <button class="open-button" :class="{'tutoClick':this.tutoPage.tutopage=='maingame'}" @click="this.tutoPage.pagenum=0;$router.push('/linkGameTutorial');"></button>  <!-- 실험용 이벤트 -->
     </div>
   </div>
   <div v-show="tutoPage.pagenum==0" class="tuto win1">
@@ -296,7 +296,7 @@ font-size: 1.5vw;
 }
 .tutoClick{
   position:relative;
-  z-index:20;
+  z-index:10;
 }
 .blind{
   position:absolute;
@@ -330,6 +330,7 @@ font-size: 1.5vw;
 }
 .win5{
   bottom:33vh;
-  right:28vw;
+  right:22vw;
+  z-index:15;
 }
 </style>

@@ -269,7 +269,7 @@ border-left: 2px dashed #D5CCC4;
   width:100vw;
   height:100vh;
   position:absolute;
-  z-index:10;
+  z-index:20;
 }
 .tuto{
   position:absolute;

@@ -9,9 +9,13 @@ import IntroStart1 from '@/components/mainmenu/intro/introstart/IntroStart1.vue'
 import IntroStart2 from '@/components/mainmenu/intro/introstart/IntroStart2.vue'
 import IntroStart3 from '@/components/mainmenu/intro/introstart/IntroStart3.vue'
 import IntroStart4 from '@/components/mainmenu/intro/introstart/IntroStart4.vue'
+import TutorialStart from '@/components/mainmenu/tutorial/tutorialStart.vue'
+import TutorialMain from '@/components/mainmenu/tutorial/tutorialMain.vue'
+import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
 import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue'
 import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
-import BankTuto from '@/components/mainmenu/intro/introMenu/bankTuto.vue'
+import GameTuto from '@/components/mainmenu/intro/introMenu/gameTuto.vue'
+
 
 import news from '@/components/maingame/news/news.vue'
 import maingameComponent from '@/components/maingame/maingame.vue'
@@ -30,8 +34,8 @@ import quizComponent from '@/components/quiz/quizMain.vue'
 import Settings from '@/components/common/volumesettings.vue' // 개발용으로 추가가
 
 import { createRouter, createWebHistory } from 'vue-router'
-import TutorialStart from '@/components/mainmenu/tutorial/tutorialStart.vue'
-import TutorialMain from '@/components/mainmenu/tutorial/tutorialMain.vue'
+import CalculationTuto from '@/components/mainmenu/intro/introMenu/calculationTuto.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -119,10 +123,20 @@ const router = createRouter({
       ,name:'linkStorageTutorial'
       ,component:StorageTuto
     }
-       ,{
+    ,{
       path:'/linkBankTutorial'
       ,name:'linkBankTutorial'
       ,component:BankTuto
+    },
+    {
+      path:'/linkGameTutorial',
+      name:'linkGameTutorial',
+      component:GameTuto
+    },
+    {
+      path:'/linkCalculationTutorial',
+      name:'linkCalculationTutorial',
+      component:CalculationTuto
     }
     ,{
       path:'/introStart'

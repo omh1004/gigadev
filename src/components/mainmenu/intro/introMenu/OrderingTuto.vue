@@ -102,7 +102,7 @@
               총 {{ getTotalPrice().toLocaleString() }}원
               </div>
           </div>
-          <button class="order-button" :style="{'z-index':-(tutoPage*(tutoPage-2))*15}" @click="placeOrder"></button>
+          <button class="order-button" :style="{'z-index':-(tutoPage*(tutoPage-2))*25}" @click="placeOrder"></button>
         </div>
       </div>
 
@@ -380,7 +380,7 @@ export default {
   width:100vw;
   height:100vh;
   position:absolute;
-  z-index:10;
+  z-index:20;
 }
 .app-container {
   width: 100vw;
