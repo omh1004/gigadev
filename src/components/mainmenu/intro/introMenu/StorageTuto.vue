@@ -127,7 +127,7 @@
 import { curTutoPage } from '@/assets/pinia/tutorial';
 
 const model = {
-  tutoPage:curTutoPage(),
+  tutoPage:{},
   image: 'src/assets/common/fruit/strawberry.png',
   popup:false,
   popupTitle:'알림',
@@ -306,10 +306,12 @@ export default {
     },
   },
   mounted(){
+    this.tutoPage=curTutoPage();
     this.tutoPage.pagenum=0;
     if(history.state.popup!=null){
       console.log(history.state.popup);
       this.popup = history.state.popup;
+      
     }
   }
 };
