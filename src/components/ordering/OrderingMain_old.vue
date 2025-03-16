@@ -11,6 +11,18 @@
      </div>
     </div> 
 
+    <!--<div class="topbar">
+      <p class="left-section">D-30</p>
+      <div style="display:flex;align-items:center;">
+          <div class="moneybar">
+              <img src="/icons/money.png" width="35vw" height="35vw">
+              <div class="line"></div>
+              <div class="money"><p>{{ money.toLocaleString() }}원</p></div>
+          </div>
+          <img src="/icons/gameoption.png" width="30vw" height="30vw" class="settings-icon" @click="opensettings=!opensettings">
+      </div>
+    </div>-->
+
     <div class="main-content">
       <div class="back-button" @click="backToMain">
         <img id="backbtn" src="/common/Vector.png" alt="back" />
@@ -67,6 +79,7 @@
                       
                       <div class="product-image-container">
                         <img class="product-image" :src="product.image" :alt="product.goodsname">
+                        <!-- <div class="product-name">{{ product.goodsname }}</div> -->
                       </div>
                       
                       <div class="quantity-control">
@@ -75,7 +88,8 @@
                         <button class="increase-button" @click="increaseQuantity(product)">+</button>
                       </div>
                       <div class="price-display">{{ product.orderprice.toLocaleString() }}원</div>
-                      <!-- 창고 보유 수량 표시 (별도로 관리) -->
+                       <div class="stock-display">{{ product.orderquantity }}</div> 
+                      <!-- 창고 더미데이터 추가, 창고 데이터에서 가져오는 것으로 수정중 -->
                       <div class="stock-display">{{ getStock(product.goodsno) }}</div>
                     </div>
                     <div v-else-if="selectedCategory=='즉석식품'" class="comingsoon">
@@ -89,21 +103,21 @@
               </div>
             </div>
           </div>
-          <div class="total-products-fake">창고 총 상품 개수: {{ getTotalProductCount() }}/50</div>
+          <div class="total-products-fake">총 상품 개수: {{ getTotalProductCount() }}/50</div>
         </div>
         <div style="text-align:center;">
           <div class="cart-section">
             <div class="cart-title">장바구니</div>
             <div class="cart-items">
-              <div v-for="(item, index) in cart" :key="index" class="cart-item">
-                <div class="cart-item-name">{{ item.goodsname }} {{ item.orderquantity }}개</div>
-              </div>
-            </div>
+  <div v-for="(item, index) in cart" :key="index" class="cart-item">
+    <div class="cart-item-name">{{ item.goodsname }} {{ item.orderquantity }}개</div>
+  </div>
+</div>
             <div class="cart-total">
-              총 {{ getTotalItems() }}개
-              <br>
-              총 {{ getTotalPrice().toLocaleString() }}원
-            </div>
+  총 {{ getTotalItems() }}개
+  <br>
+  총 {{ getTotalPrice().toLocaleString() }}원
+</div>
           </div>
           <button class="order-button" @click="placeOrder"></button>
         </div>
@@ -141,13 +155,16 @@ export default {
       popup: false,
       money: 500000,
       selectedCategory: '신선식품',
-      storageCount: 0,
-      storage: false,
-      days: 5,
-      products: [],
-      cart: [],
-      // 재고 정보를 저장할 객체 추가
-      stockData: {}
+      storageCount:0,
+      storage:false,
+      days:5,
+      products: [
+       
+      ],
+      cart: []
+       
+       
+      
     }
   },
   computed: {
@@ -155,44 +172,15 @@ export default {
       return this.products.filter(product => product.goodstype === this.selectedCategory);
     }
   },
-  mounted() {
-    // 상품 데이터와 재고 데이터를 동시에 가져오기
-    Promise.all([
-      // 상품 데이터 가져오기
-      fetch('http://localhost:8080/spring/ordering/selectAllPrd', {
-        method: 'GET'
-      }).then(response => response.json()),
-      
-      // 재고 데이터 가져오기
-      fetch('http://localhost:8080/spring/storage/getStock', {
-        method: 'GET'
-      }).then(response => response.json()).catch(() => {
-        // 재고 API 오류 시 빈 배열 반환
-        console.warn('재고 데이터를 가져오는데 실패했습니다. 임시 데이터를 사용합니다.');
-        return [];
-      })
-    ])
-    .then(([productData, stockData]) => {
-      // 모든 상품의 발주 수량(orderquantity)을, 초기값 0으로 설정
-      this.products = productData.map(product => ({
-        ...product,
-        orderquantity: 0  // 각 상품의 발주 수량을 0으로 초기화
-      }));
-      
-      // 재고 데이터 처리
-      if (stockData && stockData.length > 0) {
-        // 서버에서 받아온 재고 데이터가 있으면 사용
-        stockData.forEach(item => {
-          this.stockData[item.goodsno] = item.quantity || 0;
-        });
-        console.log('서버에서 받아온 재고 데이터:', this.stockData);
-      } else {
-        // 재고 데이터가 없으면 임시 데이터 초기화
-        this.initializeStockData();
-        console.log('임시 재고 데이터 생성:', this.stockData);
-      }
-      
-      for(let i = 0; i < this.products.length; i++) {
+  mounted(){
+    
+    fetch('http://localhost:8080/spring/ordering/selectAllPrd',{
+      method:'GET'
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      this.products = data;
+      for(let i=0;i<this.products.length;i++){
         console.log(this.products[i].goodsno);
         console.log(this.products[i].orderprice);
         console.log(this.products[i].image);
@@ -200,232 +188,184 @@ export default {
         console.log(this.products[i].expdate);
         console.log(this.products[i].goodsname);
         console.log(this.products[i].goodstype);
+
       }
     })
-    .catch(error => {
-      console.error('데이터 가져오기 오류:', error);
-      this.popupMessage = '데이터를 가져오는 중 오류가 발생했습니다.';
-      this.popup = true;
-      
-      // 오류 발생 시 임시 데이터 초기화
-      this.initializeStockData();
-    });
+
   },
   methods: {
-    // 임시 재고 데이터 초기화 (실제로는 DB에서 가져와야 함)
-    initializeStockData() {
-      // 예시: 모든 상품에 임의의 재고 수량 할당
-      this.products.forEach(product => {
-        this.stockData[product.goodsno] = Math.floor(Math.random() * 10); // 임시 예시 데이터
-      });
-    },
-    
-    // 재고 데이터 가져오기 (실제 서버 API에 맞게 수정 필요)
-    fetchStockData() {
-      // 예시: 서버에서 재고 데이터 가져오기
-      // 실제 API 엔드포인트로 교체 필요
-      fetch('http://localhost:8080/spring/storage/getStock', {
-        method: 'GET'
-      })
-      .then(response => response.json())
-      .then(data => {
-        // 재고 데이터를 상품 번호를 키로 하는 객체로 변환
-        data.forEach(item => {
-          this.stockData[item.goodsno] = item.quantity || 0;
-        });
-      })
-      .catch(error => {
-        console.error('재고 데이터 가져오기 오류:', error);
-        // 오류 발생 시 임시 데이터 사용
-        this.initializeStockData();
-      });
-    },
-    
-    // 상품 재고 가져오기
-    getStock(goodsno) {
-      // 재고 데이터에서 해당 상품의 재고 반환
-      return this.stockData[goodsno] || 0;
-    },
-    
     increaseQuantity(product) {
       product.orderquantity++;
       this.updateCart(product);
     },
-    
     decreaseQuantity(product) {
       if (product.orderquantity > 0) {
         product.orderquantity--;
         this.updateCart(product);
       }
     },
-    
     updateCart(product) {
-      const existingItem = this.cart.find(item => item.goodsno === product.goodsno);
-      if (existingItem) {
-        if (product.orderquantity > 0) {
-          existingItem.orderquantity = product.orderquantity;
-        } else {
-          // 수량이 0이면 장바구니에서 제거
-          const index = this.cart.findIndex(item => item.goodsno === product.goodsno);
-          if (index !== -1) {
-            this.cart.splice(index, 1);
-          }
-        }
-      } else if (product.orderquantity > 0) {
-        // 새 상품을 장바구니에 추가할 때 마지막에 추가
-        this.cart.push({
-          goodsno: product.goodsno,
-          goodsname: product.goodsname,
-          orderquantity: product.orderquantity,
-          orderprice: product.orderprice
-        });
+  const existingItem = this.cart.find(item => item.goodsno === product.goodsno);
+  if (existingItem) {
+    if (product.orderquantity > 0) {
+      existingItem.orderquantity = product.orderquantity;
+    } else {
+      // 수량이 0이면 장바구니에서 제거
+      const index = this.cart.findIndex(item => item.goodsno === product.goodsno);
+      if (index !== -1) {
+        this.cart.splice(index, 1);
       }
-    },
-    
-    // 장바구니의 총 아이템 수 계산
-    getTotalItems() {
-      if (this.cart.length === 0) return 0;
-      return this.cart.reduce((total, item) => {
-        return total + (item.orderquantity || 0);
-      }, 0);
-    },
+    }
+  } else if (product.orderquantity > 0) {
+    // 새 상품을 장바구니에 추가할 때 마지막에 추가
+    this.cart.push({
+      goodsno: product.goodsno,
+      goodsname: product.goodsname,
+      orderquantity: product.orderquantity,
+      orderprice: product.orderprice
+    });
+  }
+},
+// getTotalItems 메서드 수정
+getTotalItems() {
+  if (this.cart.length === 0) return 0;
+  return this.cart.reduce((total, item) => {
+    return total + (item.orderquantity || 0);
+  }, 0);
+},
 
-    // 장바구니의 총 가격 계산
-    getTotalPrice() {
-      if (this.cart.length === 0) return 0;
-      return this.cart.reduce((total, item) => {
-        return total + ((item.orderprice || 0) * (item.orderquantity || 0));
-      }, 0);
-    },
-    
-    // 창고에 있는 총 상품 개수 계산
+// getTotalPrice 메서드 수정
+getTotalPrice() {
+  if (this.cart.length === 0) return 0;
+  return this.cart.reduce((total, item) => {
+    return total + ((item.orderprice || 0) * (item.orderquantity || 0));
+  }, 0);
+},
     getTotalProductCount() {
-      // 창고에 있는 모든 재고의 총합을 계산
-      return Object.values(this.stockData).reduce((total, quantity) => total + quantity, 0);
+
+      return this.products.reduce((total, product) => total + product.orderquantity, 0);
     },
-    
-    // 발주 처리
+    // getTotalProductCount(){
+    //   return this.products.reduce((total, product) => total + product.orderquantity, 0);
+    // },
     placeOrder() {
-      const totalPrice = this.getTotalPrice();
-      
-      // 현재 창고에 있는 재고의 총량 계산
-      const currentStockTotal = Object.values(this.stockData).reduce((sum, qty) => sum + qty, 0);
-      
-      // 장바구니 총 수량 계산
-      const cartTotal = this.getTotalItems();
+  const totalPrice = this.getTotalPrice();
+  const productamount = this.products.reduce((amount, product) => amount + product.orderquantity, 0);
+  
+  // 장바구니 총 수량 계산
+  let cartquan = 0;
+  this.cart.forEach(c => {
+    cartquan += c.orderquantity;
+  });
 
-      // 잔액 체크
-      if (totalPrice > this.money) {
-        this.popupMessage = '잔액이 부족합니다.';
-        this.popup = true;
-        return;
-      }
-      
-      // 장바구니 체크
-      if (this.cart.length === 0) {
-        this.popupMessage = '주문할 상품을 선택해주세요.';
-        this.popup = true;
-        return;
-      }
+  // 잔액 체크
+  if (totalPrice > this.money) {
+    this.popupMessage = '잔액이 부족합니다.';
+    this.popup = true;
+    return;
+  }
+  
+  // 장바구니 체크
+  if (this.cart.length === 0) {
+    this.popupMessage = '주문할 상품을 선택해주세요.';
+    this.popup = true;
+    return;
+  }
 
-      // 창고 용량 체크 (현재 재고 + 발주 수량이 50을 초과하는지)
-      if (currentStockTotal + cartTotal > 50) {
-        this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
-        this.storage = true;
-        this.popup = true;
-        return;
-      }
-      
-      // Storage 클래스에 맞는 데이터 구조로 변환
-      const orderItems = this.cart.map(item => {
-        return {
-          // orderingno는 자동 생성될 것으로 가정하여 null 또는 생략
-          orderingno: null,
-          goodsno: item.goodsno,
-          playno: 1, // 플레이어 번호 (적절한 값으로 대체하세요)
-          expdate: item.expdate || 
-                 (item.goodstype === '신선식품' ? 3 : 
-                  item.goodstype === '즉석식품' ? 4 : 999),
-          orderquantity: item.orderquantity,
-          saleprice: item.orderprice, // 판매 가격으로 발주 가격을 사용
-          saledgree: this.days || 0,  // 현재 게임 일수
-          disposalyn: 'N'  // 초기값은 폐기되지 않음
-        };
-      });
-      
-      console.log("서버로 전송할 데이터:", JSON.stringify(orderItems));
-      
-      // fetch API를 사용하여 서버에 데이터 전송
-      fetch('http://localhost:8080/spring/ordering/insertOrdering', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderItems)
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('서버 응답이 올바르지 않습니다.');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('주문 성공:', data);
-        
-        // 주문 성공 후 로직 실행
-        // 잔액 차감
-        this.money -= totalPrice;
-        
-        // 팝업 메시지 표시
-        this.popupMessage = '발주완료';
-        this.popup = true;
-        
-        // 장바구니 비우기
-        this.cart = [];
-        
-        // 상품 발주 수량 초기화
-        this.products.forEach(product => {
-          product.orderquantity = 0;
-        });
-        
-        // 재고 데이터 업데이트 (실제로는 서버 데이터와 동기화 필요)
-        this.cart.forEach(item => {
-          if (!this.stockData[item.goodsno]) {
-            this.stockData[item.goodsno] = 0;
-          }
-          this.stockData[item.goodsno] += item.orderquantity;
-        });
-
-        // 페이지 새로고침 - 서버에서 최신 데이터 가져오기
-        location.reload();
-      })
-      .catch(error => {
-        console.error('주문 오류:', error);
-        this.popupMessage = '주문 중 오류가 발생했습니다: ' + error.message;
-        this.popup = true;
-      });
+  // 창고 용량 체크
+  if (productamount + cartquan > 50) {
+    this.popupMessage = '창고가 가득 찼습니다 창고를 정리하거나 확장해주세요';
+    this.storage = true;
+    this.popup = true;
+    return;
+  }
+  
+  // Storage 클래스에 맞는 데이터 구조로 변환
+  const orderItems = this.cart.map(item => {
+    return {
+      // orderingno는 자동 생성될 것으로 가정하여 null 또는 생략
+      orderingno: null,
+      goodsno: item.goodsno,
+      playno: 1, // 플레이어 번호 (적절한 값으로 대체하세요)
+      expdate: item.expdate || 
+               (item.goodstype === '신선식품' ? 3 : 
+                item.goodstype === '즉석식품' ? 4 : 999),
+      orderquantity: item.orderquantity,
+      saleprice: item.orderprice, // 판매 가격으로 발주 가격을 사용
+      saledgree: this.days || 0,  // 현재 게임 일수
+      disposalyn: 'N'  // 초기값은 폐기되지 않음
+    };
+  });
+  
+  console.log("서버로 전송할 데이터:", JSON.stringify(orderItems));
+  
+  // fetch API를 사용하여 서버에 데이터 전송
+  fetch('http://localhost:8080/spring/ordering/insertOrdering', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify(orderItems)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('서버 응답이 올바르지 않습니다.');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('주문 성공:', data);
     
+    // 주문 성공 후 로직 실행
+    // 잔액 차감
+    this.money -= totalPrice;
+    
+    // 팝업 메시지 표시
+    this.popupMessage = '발주완료';
+    this.popup = true;
+    
+    // 장바구니 비우기
+    this.cart = [];
+    
+    // 상품 수량 초기화
+    this.products.forEach(product => {
+      product.orderquantity = 0;
+    });
+
+    location.reload();
+  })
+  .catch(error => {
+    console.error('주문 오류:', error);
+    this.popupMessage = '주문 중 오류가 발생했습니다: ' + error.message;
+    this.popup = true;
+  });
+},
     closePopup() {
       this.popup = false;
       this.storage = false;
       this.popupMessage = '';
     },
 
-    gotostorage() {
+    gotostorage(){
       this.$router.push({
-        name: "storageMain",
-        state: {
-          popup: true,
+        name:"storageMain",
+        state:{
+          popup:true,
         }
       });
     },
-    
-    backToMain() {
+    backToMain(){
       this.$router.push("/mainMenu");
+      // this.$router.back();
+    },
+    getStock(id){
+      let stock = 0;
+      this.products.filter(p=>p.id==id).forEach(p=>stock+=p.quantity);
+      return stock;
     }
   },
 }
+
 </script>
 
 <style scoped>

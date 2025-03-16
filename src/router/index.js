@@ -21,7 +21,7 @@ import Counter from '@/components/store/counter.vue'
 import Customer from '@/components/store/customer.vue'
 import Calculation from '@/components/maingame/calculation.vue'
 
-import OrderingMain from '@/components/ordering/OrderingMain.vue'
+import OrderingMain from '@/components/ordering/OrderingMain.vue_old'
 import StorageMain from '@/components/storage/StorageMain.vue'
 
 import bankComponent from '@/components/bank/bankMain.vue'
