@@ -105,7 +105,16 @@ export default {
             // 다음으로 넘겨야 할 데이터 추가하기
             // 잔고
             // 신뢰도(구현시), 창고 물품
-            this.$router.push("/mainMenu");
+            if(this.revenue.salesDay>=30){
+                // this.$router.push("/endsummary"); // 엔딩 직전 화면으로 이동시키기
+                // this.$router.push("/finalcalculation")   // 엔딩 직전 화면 이후 최종 정산. /ending vue에서 사용하기
+                // this.$router.push("/normal")     // 최종 정산 화면에서 엔딩 보기를 누르면 분기에 따라 4가지의 엔딩 출력
+                // this.$router.push("/poor")       // 그냥 일단 화면이 있다고 치고 만들까?
+                // this.$router.push("/rich")
+                // this.$router.push("/superrich")
+            }else{
+                this.$router.push("/mainMenu");
+            }
         }
     },
     mounted(){
