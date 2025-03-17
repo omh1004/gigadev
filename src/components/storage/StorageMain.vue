@@ -305,6 +305,11 @@ expansionStorage() {
         this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
         this.popup = true;
       });
+
+    // 그냥 돈만 가져와야지
+    fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
+    .then(response=>response.text())
+    .then(data=>this.revenue.cash = data)
   }
 };
 </script>

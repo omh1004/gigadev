@@ -13,12 +13,12 @@
                         <div class="block-right"><p>{{ revenue.salesMount }}원</p></div>
                     </div>
                     <div>
-                        <div v-show="quiz>0" class="block-left"><p style="position:relative;left:2vw;">*퀴즈 혜택</p></div>
-                        <div v-show="quiz>0" class="block-right"><p>X 1%</p></div>
+                        <div v-show="revenue.qeezeYN='Y'" class="block-left"><p style="position:relative;left:2vw;">*퀴즈 혜택</p></div>
+                        <div v-show="revenue.qeezeYN='Y'" class="block-right"><p>X 1%</p></div>
                     </div>
                     <div>
-                        <div v-show="fever>0" class="block-left"><p style="position:relative;left:2vw;">*FEVER DAY</p></div>
-                        <div v-show="fever>0" class="block-right"><p>X 1</p></div>
+                        <div v-show="revenue.feverYN='Y'" class="block-left"><p style="position:relative;left:2vw;">*FEVER DAY</p></div>
+                        <div v-show="revenue.feverYN='Y'" class="block-right"><p>X 1</p></div>
                     </div>
                     <div>
                         <div class="block-left"><p>폐기 수익(20% 상품 판매 수익)</p></div>

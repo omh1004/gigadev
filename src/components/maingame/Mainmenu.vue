@@ -44,10 +44,15 @@
 
 <script>
 import Topbar from '../common/topbar.vue';
+import { revenueStore } from '@/assets/pinia/maingame';
 
 export default {
   name: 'KoreanMenuInterface'
-  ,methods:{
+  ,data(){
+    return{
+      revenue:revenueStore(),
+    }
+  },methods:{
     linkOrdering(){
       this.$router.push('/orderingMain');
     }
@@ -81,9 +86,11 @@ export default {
   },
   components:{ Topbar },
   mounted(){
-    // 일단 머리가 안 돌아가니까 이렇게만 쓸게
-    // 최근의 revenue 데이터 가져오기
-    // 없으면 기본값 넣어
+    const gameNo = sessionStorage.getItem("gameNo");
+    // 그냥 돈만 가져와야지
+    fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
+    .then(response=>response.text())
+    .then(data=>this.revenue.cash = data)
   }
 }
 </script>

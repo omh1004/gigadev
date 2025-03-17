@@ -248,8 +248,10 @@ export default {
                     },7000);
                 }else{
                     this.dialog='손님이 화났습니다! ';
-                    this.dialog+='신뢰도 -5';
-                    this.relability-=5;
+                    if(relability<100){
+                        this.dialog+='신뢰도 -5';
+                        this.relability-=5;
+                    }
                     if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
                             this.meetQuizMan=true;
