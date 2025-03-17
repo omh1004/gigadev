@@ -161,7 +161,6 @@ export default {
         .then(response=>response.json())
         .then(data=>{
             this.getproduct.product=data
-
             this.getproduct.product.forEach(p=>{
                 if(p.orderQuantity>0 && (p.disposalYN=='N' || p.dispoaYN=='n')){
                     const findProd = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate>1));
