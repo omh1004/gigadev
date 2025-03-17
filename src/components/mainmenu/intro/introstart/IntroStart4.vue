@@ -23,10 +23,10 @@ export default {
     }
   },methods:{
     moveStart(){
-      this.$router.push('/tutorialStart')
+      this.$router.push('/mainMenu')
     },
     movePage(){
-      this.$router.push('/tutorialStart')
+      this.$router.push('/mainMenu')
     }
   }
   ,mounted(){
