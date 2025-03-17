@@ -52,7 +52,7 @@ export default {
       {
 
        console.log(response.status)
-       alert(response.status)
+       
 
       if (!(response.ok)) {
         if (response.status == '404') {
@@ -63,7 +63,7 @@ export default {
           
         }
       }else{
-        alert('로그인성공!');
+        
         this.goToHome();
       }
       

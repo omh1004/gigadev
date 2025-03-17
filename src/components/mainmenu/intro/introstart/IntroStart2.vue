@@ -5,8 +5,8 @@
       <img class="skip-button" src="/tutorial/button/skip.png">
     </div>
 
-    <div id="bankman">
-      <img src="@/assets/tutorial/people/bankmember.png">
+    <div id="bankmanbox">
+      <img id="bankman" src="/tutorial/people/bankmember.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
