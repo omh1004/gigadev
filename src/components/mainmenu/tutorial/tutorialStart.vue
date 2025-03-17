@@ -1,6 +1,6 @@
 <template>
   <div class="store-layout" @click="linkMainMenu">
-    <div @click="movePage">
+    <div @click.stop="movePage">
       <img class="skip-button" src="/tutorial/button/skip.png">
     </div>
 
@@ -36,6 +36,9 @@ export default {
         }else if(this.inputText==this.text){
           return this.$router.push('/tutorialMain');
         }
+      },
+      movePage() {
+        this.$router.push('/')
       }
   },
   mounted(){

@@ -117,7 +117,7 @@ export default {
             this.$router.push("/mainMenu");
         },
         nextPage(){
-            
+            this.$router.push('/')
         },
     },
 }
