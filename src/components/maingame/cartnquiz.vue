@@ -28,7 +28,7 @@ export default {
                 {'딸기':1,'파인애플':2},
             ],  // 일단 두개만
             currentWant:{},
-            relability:90,
+            relability:5,
             quiz:-1,
             revenue:revenueStore(),
             product:productStore(),
@@ -142,18 +142,21 @@ export default {
                     perfect = false;
                     over += prodcount[i]-prodwant[i];
                     if(prod_50!=null){
-                        if(prod_50.amount>=(prodcount[i]-prodwant[i])){
-                            loss += prod_50.price*(prodcount[i]-prodwant[i]);
-                        }else if(prod_50.amount<(prodcount[i]-prodwant[i])){
-                            loss += prod_50.price*prod_50.amount + prod*(prodcount[i]-prodwant[i]-prod_50.amount);
+                        if(prod_50.orderQuantity>=(prodcount[i]-prodwant[i])){
+                            loss += prod_50.salePrice*(prodcount[i]-prodwant[i]);
+                        }else if(prod_50.orderQuantity<(prodcount[i]-prodwant[i])){
+                            loss += prod_50.salePrice*prod_50.orderQuantity + prod*(prodcount[i]-prodwant[i]-prod_50.orderQuantity);
                         }
                     }else{
-                        loss += prod.price*(prodcount[i]-prodwant[i]);
+                        loss += prod.salePrice*(prodcount[i]-prodwant[i]);
                     }
                     this.revenue.salesMount -= loss;
                 }
                 console.log(this.revenue.salesMount);
+
+                this.product.decreaseQuantity(prod,prod_50);
             }
+
             let timeout = 0;
             if(nothing){
                 this.dialog='손님이 화났습니다! ';
@@ -199,7 +202,10 @@ export default {
             }
             setTimeout(()=>{
                 this.$emit('notclick',false);
-                if((this.customerCount+1)==this.quizMan){
+                if(this.relability==0){
+                    this.$emit('bgmstop');
+                    this.$router.push('/poorending1');
+                }else if((this.customerCount+1)==this.quizMan){
                     this.$emit('bgmchange','quiz');
                     this.$router.push('/maingame/quiz');
                 }else if(this.customerCount>=10){
@@ -248,11 +254,14 @@ export default {
                     },7000);
                 }else{
                     this.dialog='손님이 화났습니다! ';
-                    if(relability<100){
+                    if(this.relability<100){
                         this.dialog+='신뢰도 -5';
                         this.relability-=5;
                     }
-                    if((this.customerCount+1)==this.quizMan){
+                    if(this.relability==0){
+                        this.$emit('bgmstop');
+                        this.$router.push('/poorending1');
+                    }else if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
                             this.meetQuizMan=true;
                             this.$emit('rollback');

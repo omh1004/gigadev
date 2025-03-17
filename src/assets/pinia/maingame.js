@@ -16,7 +16,18 @@ export const revenueStore = defineStore('maingame',{
         playNo:0,
         state:0,    // 이건 봐도 봐도 모르겠다
         userId:'',
-    })
+    }),
+    actions:{
+        saveState(){
+            localStorage.setItem('maingame',JSON.stringify(this.$state));
+        },
+        loadState(){
+            const saveState = localStorage.getItem('maingame');
+            if(saveState){
+                this.$patch(JSON.parse(saveState));
+            }
+        }
+    }
 })
 
 export const productStore = defineStore('storage',{
@@ -26,5 +37,46 @@ export const productStore = defineStore('storage',{
             // { orderingNo:5, goodsNo:8, playNo:1, goodType:"신선식품", goodsName:"연어", image:'/items/fresh/salmon.png', expDate:999, orderQuantity:10, salePrice:6000, saleDgree:1, disposalYN:'N' }
         ],
         cart:[],
-    })
+    }),
+    actions:{
+        decreaseQuantity(p,p50){
+            console.log("product", this.product);
+            console.log("ppp", p50, p);
+            if(p50!=null){
+                while(p50.orderQuantity>0){
+                    const prod = this.product.find(pro=>pro.goodsName==p50.goodsName && pro.expDate==1);
+                    console.log("abc",prod);
+                    if(prod.orderQuantity>=p50.orderQuantity){
+                        prod.orderQuantity -= p50.orderQuantity;
+                        p50.orderQuantity=0;
+                    }else{
+                        p50.orderQuantity -= prod.orderQuantity;
+                        prod.orderQuantity=0;
+                    }
+                }
+            }else if(p!=null){
+                while(p.orderQuantity>0){
+                    const prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate>=2);
+                    console.log("efg",prod);
+                    if(prod.orderQuantity>=p.orderQuantity){
+                        prod.orderQuantity -= p.orderQuantity;
+                        p.orderQuantity=0;
+                    }else{
+                        p.orderQuantity -= prod.orderQuantity;
+                        prod.orderQuantity=0;
+                    }
+                }
+            }
+            
+        },
+        saveState(){
+            localStorage.setItem('product',JSON.stringify(this.$state));
+        },
+        loadState(){
+            const saveState = localStorage.getItem('product');
+            if(saveState){
+                this.$patch(JSON.parse(saveState));
+            }
+        }
+    }
 })

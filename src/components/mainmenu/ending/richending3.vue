@@ -15,8 +15,13 @@ export default {
       inputText: ''
     };
   },
+  methods:{
+    movePage(){
+      this.$router.push('/homeMenu')
+    }
+  },
   mounted() {
-    let innerText = '이게 사람 사는 거지~~~ 잘 나가는 편의점 사장은 바로 "나"';
+    let innerText = '성공은 어쩌면 멀리 있지 않는 것 같아\n 익숙한 거리에서 나는 누구보다 빛나고 있어!! 이제 다음 목표를 향해 가보자!!!';
 
     for (let i = 0; i < innerText.length; i++) {
       setTimeout(() => {
@@ -52,7 +57,7 @@ export default {
   position: absolute;
   left: 10%;
   bottom: 12%;
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-weight: bold;
 }
 .dialog-arrow{

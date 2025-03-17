@@ -17,11 +17,11 @@ export default {
   },
   methods:{
     movePage(){
-      this.$router.push('/poorending2')
+      this.$router.push('/poorending3')
     }
   },
   mounted() {
-    let innerText = '난.. 모든 걸 다 잃었어.. 거리로 나온지 벌써 10년이 지났지\n 한때는 나도 잘 될 줄 알았어 아니, 잘 될 수밖에 없다고 믿었지';
+    let innerText = '근데... 아니더라 대출은 끝내 갚지도 못했어\n 빚은 눈덩이처럼 불어나더니 어느새 나를 삼켜버렸고 결국 남은 건 아무것도 없었어';
 
     for (let i = 0; i < innerText.length; i++) {
       setTimeout(() => {
