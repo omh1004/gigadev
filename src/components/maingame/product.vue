@@ -1,13 +1,13 @@
 <template>
     <div class="conv">
         <div class="categorybutton">
-            <p @click="getcategory($event,'all')">전체</p>
+            <p @click="getcategory($event,'전체체')">전체</p>
             <div></div>
-            <p @click="getcategory($event,'a')">신선식품</p>
+            <p @click="getcategory($event,'신선식품')">신선식품</p>
             <div></div>
-            <p @click="getcategory($event,'b')">즉석식품</p>
+            <p @click="getcategory($event,'즉석식품')">즉석식품</p>
             <div></div>
-            <p @click="getcategory($event,'c')">전자제품</p>
+            <p @click="getcategory($event,'전자제품')">전자제품</p>
         </div>
         <div class="category">
             <p style="text-align:center;font-size:2vh;">{{ categ }} {{ product.length }} / 50</p>
@@ -15,7 +15,7 @@
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
-            <div class="product" :id="`prod${p.orderingNo}`" v-for="p in getproduct.product" v-show="p.orderQuantity>0" @click="sellprod($event)">
+            <div class="product" :id="`prod${p.goodsNo}${p.expDate==1?'_50':''}`" v-for="p in product" v-show="p.orderQuantity>0" @click="sellprod($event)">
                 <div class="amount">
                     <p v-if="p.expDate==1" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
                     <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
@@ -115,18 +115,42 @@ export default {
         getcategory(e,category){
             this.product=[];
             this.categ = e.target.innerText;
-            if(category!='all'){
+            if(category!='전체'){
                 this.getproduct.product.forEach(p=>{
-                    if(p.goodType==this.categ && p.orderQuantity>0){
-                        console.log(p.goodType);
-                        console.log(this.categ);
-                        this.product.push(p);
+                    if(p.orderQuantity>0 && (p.disposalYN=='N' || p.dispoaYN=='n') && p.goodType==category){
+                        const findProd = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate>1));
+                        const findProd2 = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate==1));
+                        if(findProd!=null){
+                            findProd.orderQuantity+=p.orderQuantity;
+                        }else if(findProd2!=null){
+                            findProd2.orderQuantity+=p.orderQuantity;
+                        }else{
+                            this.product.push(
+                                {
+                                    goodsNo:p.goodsNo, goodType:p.goodType, goodsName:p.goodsName, image:p.image,
+                                    expDate:p.expDate, orderQuantity:p.orderQuantity, salePrice:p.salePrice
+                                }
+                            );
+                        }
                     }
                 })
             }else{
                 this.getproduct.product.forEach(p=>{
-                    if(p.orderQuantity>0){
-                        this.product.push(p);
+                    if(p.orderQuantity>0 && (p.disposalYN=='N' || p.dispoaYN=='n')){
+                        const findProd = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate>1));
+                        const findProd2 = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate==1));
+                        if(findProd!=null){
+                            findProd.orderQuantity+=p.orderQuantity;
+                        }else if(findProd2!=null){
+                            findProd2.orderQuantity+=p.orderQuantity;
+                        }else{
+                            this.product.push(
+                                {
+                                    goodsNo:p.goodsNo, goodType:p.goodType, goodsName:p.goodsName, image:p.image,
+                                    expDate:p.expDate, orderQuantity:p.orderQuantity, salePrice:p.salePrice
+                                }
+                            );
+                        }
                     }
                 })
             }
@@ -135,15 +159,31 @@ export default {
     mounted(){
         fetch("http://localhost:8080/spring/maingame/gamestart?gameNo=1")
         .then(response=>response.json())
-        .then(data=>this.getproduct.product=data)
+        .then(data=>{
+            this.getproduct.product=data
+
+            this.getproduct.product.forEach(p=>{
+                if(p.orderQuantity>0 && (p.disposalYN=='N' || p.dispoaYN=='n')){
+                    const findProd = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate>1));
+                    const findProd2 = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate==1));
+                    if(findProd!=null){
+                        findProd.orderQuantity+=p.orderQuantity;
+                    }else if(findProd2!=null){
+                        findProd2.orderQuantity+=p.orderQuantity;
+                    }else{
+                        this.product.push(
+                            {
+                                goodsNo:p.goodsNo, goodType:p.goodType, goodsName:p.goodsName, image:p.image,
+                                expDate:p.expDate, orderQuantity:p.orderQuantity, salePrice:p.salePrice
+                            }
+                        );
+                    }
+                }
+            });
+        })
         .catch(e=>console.error(e));
 
-        this.getproduct.product.forEach(p=>{
-            if(p.orderQuantity>0){
-                this.product.push(p);
-            }
-        });
-        console.log(this.product);
+        console.log("aa", this.product);
     },
     props:['countermodal','countertarget','timeleft','noclick','quizblind'],
 }

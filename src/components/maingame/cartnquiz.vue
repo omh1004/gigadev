@@ -28,7 +28,7 @@ export default {
                 {'strawberry':1,'pineapple':2},
             ],  // 일단 두개만
             currentWant:{},
-            relability:50,
+            relability:90,
             quiz:-1,
             revenue:revenueStore(),
         }
