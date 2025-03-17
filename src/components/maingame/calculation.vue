@@ -13,12 +13,12 @@
                         <div class="block-right"><p>{{ revenue.salesMount }}원</p></div>
                     </div>
                     <div>
-                        <div v-show="revenue.qeezeYN='Y'" class="block-left"><p style="position:relative;left:2vw;">*퀴즈 혜택</p></div>
-                        <div v-show="revenue.qeezeYN='Y'" class="block-right"><p>X 1%</p></div>
+                        <div v-show="revenue.qeezeYN=='Y'" class="block-left"><p style="position:relative;left:2vw;">*퀴즈 혜택</p></div>
+                        <div v-show="revenue.qeezeYN=='Y'" class="block-right"><p>+30000</p></div>
                     </div>
                     <div>
-                        <div v-show="revenue.feverYN='Y'" class="block-left"><p style="position:relative;left:2vw;">*FEVER DAY</p></div>
-                        <div v-show="revenue.feverYN='Y'" class="block-right"><p>X 1</p></div>
+                        <div v-show="revenue.feverYN=='Y'" class="block-left"><p style="position:relative;left:2vw;">*FEVER DAY</p></div>
+                        <div v-show="revenue.feverYN=='Y'" class="block-right"><p>X 1.2</p></div>
                     </div>
                     <div>
                         <div class="block-left"><p>폐기 수익(20% 상품 판매 수익)</p></div>
@@ -84,6 +84,7 @@ export default {
                     // storage db update
                     // 창고 물품.
                     revenue:{
+                        'playNo':sessionStorage.getItem('gameNo'),
                         'salesDay':this.revenue.salesDay,
                         'salesMount':this.revenue.salesMount,
                         'qeezeYN':this.revenue.qeezeYN, // db:char, this:number 수정이 필요
@@ -105,6 +106,10 @@ export default {
             this.$router.push("/mainMenu");
         }
     },
+    mounted(){
+        this.revenue.loadState();
+        this.product.loadState();
+    }
 }
 </script>
 <style scoped>

@@ -25,7 +25,7 @@
                     <div class="moneybar">
                         <img src="/icons/money.png" style="width:2.5vw;height:4.5vh;">  <!-- @/assets 빼기!!!!! -->
                         <div class="line"></div>
-                        <div class="money"><p style="font-size:2vh;">{{ moneyhave }}원</p></div>
+                        <div class="money"><p style="font-size:2vh;">{{ revenue.cash }}원</p></div>
                     </div>
                     <img src="/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
                 </div>
@@ -54,7 +54,7 @@ import cartNquiz from './cartnquiz.vue';
 import Product from './product.vue';
 import ConvenientLove from '/bgm/[suno]ConvenientLove.mp3';
 import QuizmanOnConvenient from '/bgm/[suno]QuizmanOnConvenient.mp3';
-import { productStore } from '@/assets/pinia/maingame';
+import { productStore, revenueStore } from '@/assets/pinia/maingame';
 
 export default {
     data(){
@@ -69,6 +69,7 @@ export default {
             customerA:Math.floor(Math.random()*9),
             // 구매, 판매 시에는 product만 수정, 하루가 끝날 때 DB에 저장
             piniaProduct:productStore(),
+            revenue:revenueStore(),
             // product -> product / cart -> cart를 막기 위한 값. 'prod','cart'
             dragtarget:'',
             countermodal:false,
@@ -94,7 +95,7 @@ export default {
             },3000);
         },
         customer(){
-            this.cart=[];
+            this.piniaProduct.cart=[];
             this.timebar=30;
             this.timeleft=30;   // 빠른 진행 : 3초 설정
             this.customerA=Math.floor(Math.random()*9)
@@ -172,6 +173,12 @@ export default {
         this.bgm.play();
         this.bgm.loop=true;
         this.quizbgm.loop=true;
+
+        const gameNo = sessionStorage.getItem("gameNo");
+        // 그냥 돈만 가져와야지
+        fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
+        .then(response=>response.text())
+        .then(data=>this.revenue.cash = data)
     },
     watch:{
         '$route.params.customerCount':{
@@ -191,6 +198,10 @@ export default {
     },
     components:{
         cartNquiz,Product,Settings,Usermanual
+    },
+    beforeUnmount(){
+        this.piniaProduct.saveState();
+        this.revenue.saveState();
     }
 }
 </script>
