@@ -15,8 +15,13 @@ export default {
       inputText: ''
     };
   },
+  methods:{
+    movePage(){
+      this.$router.push('/superrichending3')
+    }
+  },
   mounted() {
-    let innerText = '나는 더 이상 편의점 사장이 아니야\n내 편의점은 전국에 수백 개가 넘고 사람들은 내 이름을 브랜드라고 불러';
+    let innerText = '내 노력과 열정이 전국을 넘어 세계로 퍼졌고 하루 매출이 남들의 연봉을 뛰어넘은 지도 오래야\n 이제 나는 트렌드를 만들고 세상의 흐름은 내 손 끝에서 시작돼';
 
     for (let i = 0; i < innerText.length; i++) {
       setTimeout(() => {
@@ -52,7 +57,7 @@ export default {
   position: absolute;
   left: 10%;
   bottom: 11%;
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-weight: bold;
 }
 .dialog-arrow{

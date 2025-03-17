@@ -9,14 +9,19 @@
 
 <script>
 export default {
-  name: 'ending2',
+  name: 'poorending',
   data() {
     return {
       inputText: ''
     };
   },
+  methods:{
+    movePage(){
+      this.$router.push('/homeMenu')
+    }
+  },
   mounted() {
-    let innerText = '그럭저럭.. 잘 살아 남은 것 같아\n 대출은 겨우 다 갚았고 매출은 딱 밥 벌어 먹을 만큼 나와';
+    let innerText = '사람들도 다 떠나고 집도 없어지고... 아니다 아무것도 없다는 말도 이제는 사치일지 몰라\n 그러니 너라도 열심히 금융 공부를 하길 바래..!';
 
     for (let i = 0; i < innerText.length; i++) {
       setTimeout(() => {
@@ -30,6 +35,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
   .main-container {
     width: 100%;
@@ -45,14 +51,14 @@ export default {
 
     display: flex;
 
-    background-image: url('@/assets/common/ending2.png');
+    background-image: url('@/assets/common/ending1.png');
     background-size: 100% 100%;
 }
 .dialog-text {
   position: absolute;
   left: 10%;
   bottom: 11%;
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-weight: bold;
 }
 .dialog-arrow{

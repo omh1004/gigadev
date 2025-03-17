@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'poorending',
+  name: 'ending2',
   data() {
     return {
       inputText: ''
@@ -17,11 +17,11 @@ export default {
   },
   methods:{
     movePage(){
-      this.$router.push('/poorending2')
+      this.$router.push('/nomalending3')
     }
   },
   mounted() {
-    let innerText = '난.. 모든 걸 다 잃었어.. 거리로 나온지 벌써 10년이 지났지\n 한때는 나도 잘 될 줄 알았어 아니, 잘 될 수밖에 없다고 믿었지';
+    let innerText = '매일 아침 문 열고 밤에 닫고.. 반복되는 하루\n 잘도 아니고 못도 아닌.. 그냥 그런 사장으로 살고있어';
 
     for (let i = 0; i < innerText.length; i++) {
       setTimeout(() => {
@@ -35,7 +35,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
   .main-container {
     width: 100%;
@@ -51,7 +50,7 @@ export default {
 
     display: flex;
 
-    background-image: url('@/assets/common/ending1.png');
+    background-image: url('@/assets/common/ending2.png');
     background-size: 100% 100%;
 }
 .dialog-text {
