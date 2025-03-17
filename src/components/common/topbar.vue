@@ -19,7 +19,7 @@
             <div class="moneybar">
                 <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">
                 <div class="line"></div>
-                <div class="money"><p style="font-size:2vh;">{{ moneyhave }}원</p></div>
+                <div class="money"><p style="font-size:2vh;">{{ revenue.cash }}원</p></div>
             </div>
             <img src="@/assets/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
         </div>
@@ -34,12 +34,15 @@
 </div>
 </template>
 <script>
+import { revenueStore } from '@/assets/pinia/maingame';
+
 export default {
   data(){
     return{
       gamestart:false,
       moneyhave:500000,
       opensettings:false,
+      revenue:revenueStore(),
     }
   }
 }

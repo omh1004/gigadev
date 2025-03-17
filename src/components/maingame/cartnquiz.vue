@@ -12,7 +12,7 @@
 import QuizChoice from '../quiz/quizChoice.vue';
 import QuizMain from '../quiz/quizMain.vue';
 import { quiz, quizAnswer, quizComment, rewardDialog } from '@/assets/data/prodNquiz.js';   // 배포할 때 @/assets 빼기!!!!!!
-import { revenueStore } from '@/assets/pinia/maingame';     // 배포할 때 @/assets 빼기!!!!!!!!!!!!!!
+import { revenueStore, productStore } from '@/assets/pinia/maingame';     // 배포할 때 @/assets 빼기!!!!!!!!!!!!!!
 
 export default {
     data(){
@@ -24,13 +24,14 @@ export default {
             meetQuizMan:false,
             customerCount:1,
             customerWant:[
-                {'strawberry':2,'pineapple':1},
-                {'strawberry':1,'pineapple':2},
+                {'딸기':2,'파인애플':1},
+                {'딸기':1,'파인애플':2},
             ],  // 일단 두개만
             currentWant:{},
             relability:90,
             quiz:-1,
             revenue:revenueStore(),
+            product:productStore(),
         }
     },
     methods:{
@@ -102,9 +103,9 @@ export default {
             for(let i=0;i<key.length;i++){
                 console.log(i,key[i]);
                 prodcount.push(0);
-                this.cart.forEach(c=>{
-                    if(c.id.includes(key[i])){
-                        prodcount[i]+=c.amount;
+                this.product.cart.forEach(c=>{
+                    if(c.goodsName.includes(key[i])){
+                        prodcount[i]+=c.orderQuantity;
                     }
                 });
             }
@@ -118,14 +119,14 @@ export default {
                 console.log('prod',prodcount[i]);
                 console.log('want',prodwant[i]);
 
-                const prod_50 = this.cart.find(c=>c.id==(key[i]+'_50'));
-                const prod = this.cart.find(c=>c.id==key[i]);
+                const prod_50 = this.product.cart.find(c=>c.goodsName==key[i] && c.expDate==1);
+                const prod = this.product.cart.find(c=>c.goodsName==key[i]);
 
                 if(prod_50!=null){
-                    this.revenue.salesMount += prod_50.amount*prod_50.price;
+                    this.revenue.salesMount += prod_50.orderQuantity*prod_50.salePrice;
                 }
                 if(prod!=null){
-                    this.revenue.salesMount += prod.amount * prod.price;
+                    this.revenue.salesMount += prod.orderQuantity * prod.salePrice;
                 }
                 
                 if(prodcount[i]==0 && nothing){

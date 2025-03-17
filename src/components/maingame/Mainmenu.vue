@@ -80,6 +80,11 @@ export default {
     }
   },
   components:{ Topbar },
+  mounted(){
+    // 일단 머리가 안 돌아가니까 이렇게만 쓸게
+    // 최근의 revenue 데이터 가져오기
+    // 없으면 기본값 넣어
+  }
 }
 </script>
 

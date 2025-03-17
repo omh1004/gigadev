@@ -24,6 +24,7 @@ export const productStore = defineStore('storage',{
         product:[
             // product 객체 예시
             // { orderingNo:5, goodsNo:8, playNo:1, goodType:"신선식품", goodsName:"연어", image:'/items/fresh/salmon.png', expDate:999, orderQuantity:10, salePrice:6000, saleDgree:1, disposalYN:'N' }
-        ]
+        ],
+        cart:[],
     })
 })

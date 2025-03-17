@@ -43,7 +43,7 @@
                         :noclick="noclick" :moneyhave="moneyhave" :product="product" @quizTime="quizTime" @customer="customer"
                         @revertprod="revertprod" @rollback="rollback" @notclick="notclick" @bgmstop="bgmstop"  @bgmchange="bgmchange"/>
             <Product :countermodal="countermodal" :countertarget="countertarget" :timeleft="timeleft"
-                        :noclick="noclick" :quizblind="quizblind" @moveprod="moveprod" @closemodal="closemodal"/>
+                        :noclick="noclick" :quizblind="quizblind" @closemodal="closemodal"/>
         </div>
     </div>
 </template>
@@ -54,6 +54,7 @@ import cartNquiz from './cartnquiz.vue';
 import Product from './product.vue';
 import ConvenientLove from '/bgm/[suno]ConvenientLove.mp3';
 import QuizmanOnConvenient from '/bgm/[suno]QuizmanOnConvenient.mp3';
+import { productStore } from '@/assets/pinia/maingame';
 
 export default {
     data(){
@@ -67,14 +68,7 @@ export default {
             customerCount:1,
             customerA:Math.floor(Math.random()*9),
             // 구매, 판매 시에는 product만 수정, 하루가 끝날 때 DB에 저장
-            product:[
-                { id:"strawberry",name:"딸기",amount:10,src:"/items/fresh/strawberry.png",sell:0,price:1000,type:'a', },
-                { id:"pineapple",name:"파인애플",amount:3,src:"/items/fresh/pineapple.png",sell:0,price:1000,type:'b', },
-                { id:"strawberry_50",name:"딸기",amount:3,src:"/items/fresh/strawberry50.png",sell:0,price:1000,type:'a', },
-                { id:"pineapple_50",name:"파인애플",amount:3,src:"/items/fresh/pineapple50.png",sell:0,price:1000,type:'b', },
-            ],
-            // 판매 시 cart 초기화
-            cart:[],
+            piniaProduct:productStore(),
             // product -> product / cart -> cart를 막기 위한 값. 'prod','cart'
             dragtarget:'',
             countermodal:false,
@@ -120,32 +114,6 @@ export default {
                 this.timeleft = 30-Math.floor((quizend-quizstart)/1000);       // 빠른 진행 : 3초 설정
             },50)
         },
-        moveprod(container,prodid){
-            const prod = this.product.find(p=>p.id==prodid);
-            const cartprod = this.cart.find(c=>c.id==prodid);
-            if(container=='prod'){
-                if(prod.sell>0){
-                    if(cartprod==null){
-                        this.cart.push({...prod,amount:prod.sell,sell:0});
-                    }else{
-                        cartprod.amount+=prod.sell;
-                    }
-                    prod.amount-=prod.sell;
-                    prod.sell=0;
-                }
-            }else if(container=='cart'){
-                if(cartprod.sell>0){
-                    if(prod==null){
-                        this.product.push({...cartprod,amount:cartprod.sell,sell:0});
-                    }else{
-                        prod.amount+=cartprod.sell;
-                    }
-                    cartprod.amount-=cartprod.sell;
-                    cartprod.sell=0;
-                }
-                this.countermodal=false;
-            }
-        },
         revertprod(modal,target){
             console.log("3!");
             this.countermodal=modal;
@@ -157,6 +125,8 @@ export default {
             this.countermodal=false;
         },
         rollback(){
+            this.piniaProduct
+
             this.cart.forEach(c=>{
                 const prod = this.product.find(p=>p.id==c.id);
                 console.log("이전 : " + prod.amount);

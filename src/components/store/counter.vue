@@ -2,10 +2,10 @@
     <div class="counter" style="display:flex;padding-top:1.5vw;min-width:90vw;">
         <div id="cartzone" style="width:38vw;display:flex;overflow-x:auto;">
             <!-- 카트의 상품 나열 -->
-            <div v-for="c in cart" v-show="c.amount>0" @click="revertprod($event)">
-                <div style="display:flex;justify-content:flex-end;align-items:center;"><p style="color:white;background-color:black;border-radius:1vh;min-width:1vw;min-height:2vh;font-size:2vh;">{{ c.amount }}</p></div>
-                <img class="cart" :src="`${c.src}`" alt="상품" style="width:10vh;height:10vh;" :id="`cart${c.id}`" :name="c.name"><br>
-                <p style="width:4vw;height:2vh;margin-top:1.5vh;font-size:2vh;">{{ c.name }}</p>
+            <div v-for="c in cart.cart" v-show="c.orderQuantity>0" @click="revertprod($event)">
+                <div style="display:flex;justify-content:flex-end;align-items:center;"><p style="color:white;background-color:black;border-radius:1vh;min-width:1vw;min-height:2vh;font-size:2vh;">{{ c.orderQuantity }}</p></div>
+                <img class="cart" :src="`${c.image}`" alt="상품" style="width:10vh;height:10vh;" :id="`cart${c.goodsNo}${c.expDate==1?'_50':''}`" :name="c.goodsName"><br>
+                <p style="width:4vw;height:2vh;margin-top:1.5vh;font-size:2vh;">{{ c.goodsName }}</p>
             </div>
         </div>
         <div style="width:14vw">
@@ -15,7 +15,14 @@
     <div v-show="timeleft==0 || noclick" style="width:100vw;height:30.5vh;position:relative;bottom:30.5vh;"></div>
 </template>
 <script>
+import { productStore } from '@/assets/pinia/maingame';
+
 export default {
+    data(){
+        return{
+            cart:productStore(),
+        }
+    },
     methods:{
         revertprod(e){
             let prod;
@@ -26,7 +33,8 @@ export default {
             }
 
             if(prod!=null){
-                const target=this.cart.find(c=>("cart"+c.id)==prod.id);
+                const target={...this.cart.cart.find(c=>("cart"+c.goodsNo+(c.expDate==1?'_50':''))==(prod.id)),sell:0};
+                target.sell=target.orderQuantity;
                 console.log("1!");
                 this.$emit('revertprod',true,target);
             }
@@ -36,7 +44,7 @@ export default {
             this.$emit('submit');
         }
     },
-    props:['cart','interval','timeleft','noclick']
+    props:['interval','timeleft','noclick']
 }
 </script>
 <style scoped>

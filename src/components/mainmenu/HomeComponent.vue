@@ -93,25 +93,31 @@ export default {
     ,startgame(){
       this.revenue.salesDay=1;         // N일차
       this.revenue.cash=500000;
+      this.revenue.loan=1000000;
+      this.revenue.storagelevel=1;
+      this.revenue.state=0;
       console.log(this.revenue);
+      console.log(JSON.parse(sessionStorage.getItem('loginUser')).userId);
       fetch("http://localhost:8080/spring/maingame/newgame",{
         method:'POST',
         headers:{
           'Content-Type':'application/json'
         },
         body:JSON.stringify({
-          'playNo':this.revenue.playNo,
+          'playNo':0,
           'memberNo':0,
-          'userId':this.revenue.userId,
+          'userId':JSON.parse(sessionStorage.getItem('loginUser')).userId,
           'cash':this.revenue.cash,
           'loan':this.revenue.loan,
           'playDay':this.revenue.salesDay,
           'storageLevel':this.revenue.storagelevel,
           'state':this.revenue.state,
         })
-      }).then(response=>console.log(response))
-        .catch(e=>console.error(e))
-        return this.$router.push('/introstart');
+      }).then(response=>response.text())
+      .then(data=>sessionStorage.setItem("gameNo",data))
+      .catch(e=>console.error(e))
+      
+      return this.$router.push('/introstart');
     }
   },
 
