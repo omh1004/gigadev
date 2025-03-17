@@ -21,7 +21,7 @@
   <router-view></router-view>
 </template>
 <script>
-
+import { revenueStore } from '@/assets/pinia/maingame';
 
 
 
@@ -30,7 +30,8 @@ export default {
   data(){
     return {
       inputId:''
-      ,inputPw:''
+      ,inputPw:'',
+      revenue:revenueStore(),
     }
   }
   ,methods: {
