@@ -128,20 +128,14 @@ export default {
     },
     body: JSON.stringify({ userId: this.userId })
   })
-  .then(response => {
-
-    console.log(response.status);
-    if (response.status == 200) {
-      this.idChecked = true;
-      this.isDuplicate = true;
-      this.idCheckMessage = '사용 가능한 아이디입니다.';
-      
-    }else{
-      this.idChecked = true;
-      this.isDuplicate = false;
-      this.idCheckMessage = '이미 존재하는 아이디입니다.';
-    }
-   
+  .then(response => response.json())  // JSON이 아닌 text로 응답 처리
+  .then(data => {
+    this.idChecked = true;
+    // "true"면 중복, "false"면 사용 가능
+    this.isDuplicate = data.duplicate;
+    this.idCheckMessage = this.isDuplicate 
+      ? '이미 사용 중인 아이디입니다.' 
+      : '사용 가능한 아이디입니다.';
   })
   .catch(error => {
     console.error('Error:', error);

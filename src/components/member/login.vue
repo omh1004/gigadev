@@ -13,7 +13,7 @@
         <button id="resetbtn" type="reset" @click="goToMain">취소</button>
       </div>
       <div id="findbox">
-        <button id="findbtn" type="submit" @click="goToFind">Id / Password 찾기</button>
+        <button id="findbtn" type="button" @click="goToFind">Id / Password 찾기</button>
       </div>
     </main>
   </form>

@@ -16,6 +16,11 @@ import OrderingTuto from '@/components/mainmenu/intro/introMenu/OrderingTuto.vue
 import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
 import GameTuto from '@/components/mainmenu/intro/introMenu/gameTuto.vue'
 
+import PoorEnding1 from '@/components/mainmenu/ending/poorending1.vue'
+import Ending2 from '@/components/mainmenu/ending/ending2.vue'
+import Ending3 from '@/components/mainmenu/ending/ending3.vue'
+import Ending4 from '@/components/mainmenu/ending/ending4.vue'
+
 
 import news from '@/components/maingame/news/news.vue'
 import maingameComponent from '@/components/maingame/maingame.vue'
@@ -157,6 +162,26 @@ const router = createRouter({
       path:'/intro4'
       ,name:'introStart4'
       ,component:IntroStart4
+    },
+    {
+      path:'/poorending1'
+      ,name:'poorending1'
+      ,component:PoorEnding1
+    },
+    {
+      path:'/ending2'
+      ,name:'ending2'
+      ,component:Ending2
+    },
+    {
+      path:'/ending3'
+      ,name:'ending3'
+      ,component:Ending3
+    },
+    {
+      path:'/ending4'
+      ,name:'ending4'
+      ,component:Ending4
     },
     {
       path:'/tutorialStart',
