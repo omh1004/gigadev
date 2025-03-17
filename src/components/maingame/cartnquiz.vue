@@ -28,7 +28,7 @@ export default {
                 {'딸기':1,'파인애플':2},
             ],  // 일단 두개만
             currentWant:{},
-            relability:5,
+            relability:50,
             quiz:-1,
             revenue:revenueStore(),
             product:productStore(),
