@@ -78,7 +78,7 @@ export default {
         {
           console.log(response.status);
           
-          debugger;
+          
           if (!(response.ok)) {
               if (response.status == '404') {
                 alert('회원을 찾을 수 없습니다.');
