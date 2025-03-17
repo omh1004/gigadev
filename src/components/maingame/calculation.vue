@@ -6,7 +6,7 @@
                 <div style="display:flex;flex-direction:column;justify-content:space-around;height:22vh;background-color:rgba(140,64,41,0.1);border-radius:20px;">
                     <div>
                         <div class="block-left"><h3>수익</h3></div>
-                        <div class="block-right"><h3>{{ revenue.salesMount+revenue.disposePrice }}원</h3></div>
+                        <div class="block-right"><h3>{{ a+revenue.disposePrice }}원</h3></div>
                     </div>
                     <div>
                         <div class="block-left"><p>판매 수익</p></div>
@@ -43,7 +43,7 @@
                 <div style="height:3vh;">
                     <div>
                         <div class="block-left"><h3>총계</h3></div>
-                        <div class="block-right"><h3>{{ revenue.salesMount+revenue.disposePrice+revenue.orderPrice-20000 }}원</h3></div>
+                        <div class="block-right"><h3>{{ a+revenue.disposePrice+revenue.orderPrice-20000 }}원</h3></div>
                     </div>
                 </div>
                 <div style="height:5.5vh;background-color:#4C1B0B;border-radius:20px;">
@@ -69,6 +69,7 @@ export default {
             revenue:revenueStore(),
             product:productStore(),
             reward:'',
+            a:0,
         }
     },
     methods:{
@@ -120,18 +121,24 @@ export default {
     mounted(){
         this.revenue.loadState();
         this.product.loadState();
+
+        this.a = this.revenue.salesMount;
+        console.log(this.a);
         this.reward = quizReward[rewardDialog[this.revenue.salesDay-1].reward]
         if(this.revenue.qeezeYN='Y'){
             if(this.reward==30000){
-                this.revenue.cash+=this.reward;
+                this.a+=this.reward;
             }else if(this.reward==1.05 || this.reward==1.1 || this.reward==2){
-                this.revenue.cash*=this.reward;
+                this.a*=this.reward;
             }
         }
         if(this.revenue.feverYN='Y'){
-            this.revenue.cash*1.2;
+            this.a*1.2;
         }
-        this.revenue.cash+=this.revenue.disposePrice+revenue.orderPrice-20000;
+        this.revenue.cash=this.revenue.cash*1+this.a+this.revenue.disposePrice+this.revenue.orderPrice-20000;
+
+        this.revenue.saveState();
+        this.product.saveState();
     }
 }
 </script>
