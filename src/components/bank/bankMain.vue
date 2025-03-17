@@ -222,7 +222,8 @@ export default {
       // 물음표 호버 기능!!
       showHelp:false,
       // userId: localStorage.getItem("userId") || "", // ✅ 로그인된 회원 ID 저장
-      userId:"asdfa",
+      // userId:"asdfa",
+      userId: sessionStorage.getItem("loginUser") ? JSON.parse(sessionStorage.getItem("loginUser")).userId : "", // ✅ 로그인된 유저의 userId 가져오기
 
 
       selectedDay: 10, // ✅ 선택한 날짜 (DAY 버튼 클릭 시 저장) null
@@ -235,6 +236,17 @@ export default {
       
     };
   },
+
+  // sk__userId가 바뀔 때마다 대출 내역과 진행일을 다시 불러오자~!@
+  watch: {
+    userId(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.fetchLoanData();
+        this.fetchCompletedDays();
+      }
+    }
+  },
+
   computed: {
     formattedLimit() {
       return this.loanLimit.toLocaleString() + " 원";
@@ -266,6 +278,13 @@ export default {
   console.log("🟢 applyLoan() 함수 실행됨!");
 
   const amount = Number(this.loanAmount);
+  const userData = sessionStorage.getItem("loginUser");
+  const userId = userData ? JSON.parse(userData).userId : "";
+
+  if (!userId) {
+    alert("로그인이 필요합니다!");
+    return;
+  }
 
   // if (!amount || amount <= 0) {
   //   this.errorMessage = "대출 금액을 입력하세요.";
@@ -284,7 +303,8 @@ export default {
 
   const loanData = {
     loanMoney: amount,
-    userId: this.userId,
+    // userId: this.userId,
+    userId:userId,
   };
 
   try {
@@ -319,8 +339,18 @@ export default {
 
 
 async fetchCompletedDays() {
+
+    const userData = sessionStorage.getItem("loginUser");
+    const userId = userData ? JSON.parse(userData).userId : "";
+
+    if (!userId) {
+        console.error("로그인 정보가 없습니다.");
+        return;
+    }
+
+
     try {
-        const response = await fetch(`http://localhost:8080/spring/bank/getPlayday?userId=${this.userId}`);
+        const response = await fetch(`http://localhost:8080/spring/bank/getPlayday?userId=${userId}`);
         if (!response.ok) throw new Error("진행일자 정보를 가져오는 데 실패했습니다.");
 
         const playday = await response.json();
@@ -448,11 +478,21 @@ async openDaySummary(day) {
   }
 
   this.selectedDay = day;
+
+  const userData = sessionStorage.getItem("loginUser");
+  const userId = userData ? JSON.parse(userData).userId : ""
+
+  if (!userId) {
+    alert("로그인이 필요합니다!");
+    return;
+  }
+
+
   try {
     // ✅ 로그 추가 (이게 보이는지 확인!)
-    console.log(`🟢 openDaySummary 실행됨! userId=${this.userId}, selectedDay=${day}`);
+    console.log(`🟢 openDaySummary 실행됨! userId=${userId}, selectedDay=${day}`);
 
-    const response = await fetch(`http://localhost:8080/spring/bank/getDailyRevenue?userId=${this.userId}&selectedDay=${day}`);
+    const response = await fetch(`http://localhost:8080/spring/bank/getDailyRevenue?userId=${userId}&selectedDay=${day}`);
     
     if (!response.ok) throw new Error("매출 데이터를 가져오지 못했습니다.");
     
@@ -489,14 +529,19 @@ async openDaySummary(day) {
 
 
     async fetchLoanData() {
-      try {
-        if (!this.userId) {
-        console.error("로그인된 사용자 ID가 없습니다.");
-        return;
+
+      const userData = sessionStorage.getItem("loginUser");
+      const userId = userData ? JSON.parse(userData).userId : "";
+
+      if (!userId) {
+          console.error("로그인된 사용자 ID가 없습니다.");
+          return;
       }
 
-    // ✅ userId를 API 요청에 포함
-    const response = await fetch(`http://localhost:8080/spring/bank/getLoans?userId=${this.userId}`);
+      try {
+
+        // ✅ userId를 API 요청에 포함
+        const response = await fetch(`http://localhost:8080/spring/bank/getLoans?userId=${userId}`);
 
         if (!response.ok) {
           throw new Error('대출 데이터를 가져오는 데 실패했습니다.');
@@ -526,8 +571,10 @@ async openDaySummary(day) {
 
 
   mounted() {
-    this.fetchLoanData(); // ✅ 페이지 로드 시 대출 내역 가져오기
+    const userData = sessionStorage.getItem("loginUser");
+    this.userId = userData ? JSON.parse(userData).userId : "";
 
+    this.fetchLoanData(); // ✅ 페이지 로드 시 대출 내역 가져오기
     this.fetchCompletedDays();  // ✅ 페이지 로드 시 진행일 가져오기
   },
   
