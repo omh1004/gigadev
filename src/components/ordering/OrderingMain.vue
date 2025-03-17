@@ -369,11 +369,13 @@ export default {
         // 잔액 차감
         // this.money -= totalPrice;
         this.revenue.cash -= totalPrice;
-        this.revenue.orderPrice += totalPrice;
+        this.revenue.orderPrice -= totalPrice;
 
         fetch("http://localhost:8080/spring/maingame/expense?price="+(-totalPrice)+
               "&gameNo="+sessionStorage.getItem("gameNo"))
         .then(response=>console.log(response))
+        
+        this.revenue.saveState();
         
         // 팝업 메시지 표시
         this.popupMessage = '발주완료';

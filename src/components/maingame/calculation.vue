@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <div v-show="revenue.qeezeYN=='Y'" class="block-left"><p style="position:relative;left:2vw;">*퀴즈 혜택</p></div>
-                        <div v-show="revenue.qeezeYN=='Y'" class="block-right"><p>+30000</p></div>
+                        <div v-show="revenue.qeezeYN=='Y'" class="block-right"><p>{{ reward }}</p></div>
                     </div>
                     <div>
                         <div v-show="revenue.feverYN=='Y'" class="block-left"><p style="position:relative;left:2vw;">*FEVER DAY</p></div>
@@ -43,7 +43,7 @@
                 <div style="height:3vh;">
                     <div>
                         <div class="block-left"><h3>총계</h3></div>
-                        <div class="block-right"><h3>{{ revenue.salesMount+revenue.disposePrice-revenue.orderPrice-20000 }}원</h3></div>
+                        <div class="block-right"><h3>{{ revenue.salesMount+revenue.disposePrice+revenue.orderPrice-20000 }}원</h3></div>
                     </div>
                 </div>
                 <div style="height:5.5vh;background-color:#4C1B0B;border-radius:20px;">
@@ -61,12 +61,14 @@
 </template>
 <script>
 import { revenueStore, productStore } from '@/assets/pinia/maingame';     // @/assets 빼기! 라고 썼는데 pinia는 왜 되지?
+import { quizReward, rewardDialog } from '@/assets/data/prodNquiz';
 
 export default {
     data(){
         return{
             revenue:revenueStore(),
             product:productStore(),
+            reward:'',
         }
     },
     methods:{
@@ -109,6 +111,18 @@ export default {
     mounted(){
         this.revenue.loadState();
         this.product.loadState();
+        this.reward = quizReward[rewardDialog[this.revenue.salesDay-1].reward]
+        if(this.revenue.qeezeYN='Y'){
+            if(this.reward==30000){
+                this.revenue.cash+=this.reward;
+            }else if(this.reward==1.05 || this.reward==1.1 || this.reward==2){
+                this.revenue.cash*=this.reward;
+            }
+        }
+        if(this.revenue.feverYN='Y'){
+            this.revenue.cash*1.2;
+        }
+        this.revenue.cash+=this.revenue.disposePrice+revenue.orderPrice-20000;
     }
 }
 </script>

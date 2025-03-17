@@ -216,11 +216,14 @@ export default {
       this.revenue.cash += price * this.disquantity;
       this.disfruit.orderquantity -= this.disquantity;
       this.disposeProfit += price * this.disquantity;
+      this.revenue.disposePrice += price * this.disquantity;
 
       fetch("http://localhost:8080/spring/maingame/expense?price="+(price*this.disquantity)+
             "&gameNo="+sessionStorage.getItem("gameNo"))
       .then(response=>console.log(response))
       
+      this.revenue.saveState();
+
       if(this.disfruit.orderquantity == 0){
         const index = this.fruits.findIndex(f => this.disfruit.goodsno == f.goodsno);
         console.log(index);
