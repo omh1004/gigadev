@@ -9,6 +9,13 @@ export const revenueStore = defineStore('maingame',{
         disposePrice:0,        // 폐기수익
         orderPrice:0,    // 발주 비용, 양수로 저장할 것.
         cash:500000,             // 잔고
+
+        // playday = salesday, cash = cash
+        storagelevel:1,
+        loan:1000000,
+        playNo:0,
+        state:0,    // 이건 봐도 봐도 모르겠다
+        userId:'',
     })
 })
 

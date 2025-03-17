@@ -28,7 +28,7 @@ export default {
                 {'strawberry':1,'pineapple':2},
             ],  // 일단 두개만
             currentWant:{},
-            relability:50,
+            relability:90,
             quiz:-1,
             revenue:revenueStore(),
         }
@@ -156,14 +156,14 @@ export default {
             let timeout = 0;
             if(nothing){
                 this.dialog='손님이 화났습니다! ';
-                this.dialog+='신뢰도 -5';
                 if(this.relability<100){
+                    this.dialog+='신뢰도 -5';
                     this.relability-=5;
                 }
             }else if(perfect){
                 this.dialog='손님이 만족했습니다 ';
-                this.dialog+='신뢰도 +5';
                 if(this.relability<100){
+                    this.dialog+='신뢰도 +5';
                     this.relability+=5;
                 }
                 if(this.relability>=100){
@@ -173,8 +173,8 @@ export default {
                 if(over>0 && under>0){
                     timeout = 3500;
                     this.dialog=under + '개 덜 판매했습니다. ';
-                    this.dialog+='신뢰도 -2';
                     if(this.relability<100){
+                        this.dialog+='신뢰도 -2';
                         this.relability-=2;
                     }
                     setTimeout(()=>{
@@ -183,15 +183,15 @@ export default {
                     },3500)
                 }else if(under>0){
                     this.dialog=under + '개 덜 판매했습니다. ';
-                    this.dialog+='신뢰도 -2';
                     if(this.relability<100){
+                        this.dialog+='신뢰도 -2';
                         this.relability-=2;
                     }
                 }else if(over>0){
                     this.dialog=over + '개 더 판매했습니다. ';
                     this.dialog+='-' + loss + '원 ';
-                    this.dialog+='신뢰도 -2';
                     if(this.relability<100){
+                        this.dialog+='신뢰도 -2';
                         this.relability-=2;
                     }
                 }
