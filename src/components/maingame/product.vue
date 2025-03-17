@@ -10,12 +10,12 @@
             <p @click="getcategory($event,'c')">전자제품</p>
         </div>
         <div class="category">
-            <p style="text-align:center;font-size:2vh;">{{ categ }} {{ getproduct.length }} / 50</p>
+            <p style="text-align:center;font-size:2vh;">{{ categ }} {{ product.length }} / 50</p>
         </div>
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
-            <div class="product" :id="`prod${p.orderingNo}`" v-for="p in getproduct.product" v-show="p.amount>0" @click="sellprod($event)">
+            <div class="product" :id="`prod${p.orderingNo}`" v-for="p in product" v-show="p.orderQuantity>0" @click="sellprod($event)">
                 <div class="amount">
                     <p v-if="p.expDate==1" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
                     <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
@@ -84,6 +84,7 @@ export default {
     data(){
         return{
             getproduct:productStore(),
+            product:[],
             modal:false,
             target:{},
             categ:'전체',
@@ -112,27 +113,34 @@ export default {
             }
         },
         getcategory(e,category){
-            this.getproduct=[];
+            this.product=[];
             this.categ = e.target.innerText;
             if(category!='all'){
-                this.product.forEach(p=>{
-                    if(p.type==category && p.amount>0){
-                        this.getproduct.push(p);
+                this.getproduct.product.forEach(p=>{
+                    if(p.goodType==this.categ && p.orderQuantity>0){
+                        console.log(p.goodType);
+                        console.log(this.categ);
+                        this.product.push(p);
                     }
-                });
+                })
             }else{
-                this.product.forEach(p=>{
-                    if(p.amount>0){
-                        this.getproduct.push(p);
+                this.getproduct.product.forEach(p=>{
+                    if(p.orderQuantity>0){
+                        this.product.push(p);
                     }
                 })
             }
         },
     },
     mounted(){
-        console.log(this.getproduct);
+        this.getproduct.product.forEach(p=>{
+            if(p.orderQuantity>0){
+                this.product.push(p);
+            }
+        });
+        console.log(this.product);
     },
-    props:['product','countermodal','countertarget','timeleft','noclick','quizblind'],
+    props:['countermodal','countertarget','timeleft','noclick','quizblind'],
 }
 </script>
 <style scoped>
@@ -202,8 +210,8 @@ export default {
         align-items:center;
         position:relative;
         width:42.5vw;
-        height:74vh;
-        bottom:74vh;
+        height:84vh;
+        bottom:84vh;
         background-color:rgba(256,256,256,0.5);
         z-index:0;
     }

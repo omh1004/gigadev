@@ -46,10 +46,26 @@ export default {
         // { nickname: '소잉냥', profit: 970000 },
         // { nickname: '보리', profit: 970000 },
         // { nickname: '지냥', profit: 970000 }
-      ]
+      ],
+      userData:{}
     }
   },
   methods: {
+
+    loadGameData() {
+      console.log("로드 함수 실행됨"); // 이게 실행되는지 확인!
+
+      // userId는 차후 세션에 id 받아서 진행할 예정입니다!!!!!!!!!!!!!!!!
+      
+      fetch('http://localhost:8080/spring/userdata/getUserData?userId=asdfa')
+        .then(response => response.json())
+        .then(data => {
+          console.log("받아온 유저 데이터:", data);
+          this.userData = data;
+        })
+        .catch(error => console.error("유저 데이터 불러오기 실패:", error));
+    },
+
     formatCurrency(value) {
       if (value == null) return "0원";
       return Number(value).toLocaleString() + '원';
@@ -60,7 +76,10 @@ export default {
     ,startgame(){
       return this.$router.push('/introstart')
     }
-  },mounted(){
+  },
+
+
+  mounted(){
 
     fetch('http://localhost:8080/spring/userdata/getRankings')
         .then(response => response.json())
@@ -88,16 +107,7 @@ export default {
       //   },i*50)
       // }
   },
-
-  loadGameData() {
-      fetch('http://localhost:8080/spring/userdata/getUserData?userId=user001')
-        .then(response => response.json())
-        .then(data => {
-          console.log("받아온 유저 데이터:", data);
-          this.userData = data;
-        })
-        .catch(error => console.error("유저 데이터 불러오기 실패:", error));
-    },
+  
 }
 
 </script>

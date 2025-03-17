@@ -72,7 +72,7 @@ export default {
     methods:{
         convClose(){
             // 게임정보, 수익, 창고 업데이트 하기
-            fetch('http://localhost:8080/convintycoon/maingame/gameend',{
+            fetch('http://localhost:8080/spring/maingame/gameend',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -87,7 +87,7 @@ export default {
                         'salesDay':this.revenue.salesDay,
                         'salesMount':this.revenue.salesMount,
                         'qeezeYN':this.revenue.qeezeYN, // db:char, this:number 수정이 필요
-                        // "feverYN":this.fever,   // db:char, this:number 수정이 필요
+                        "feverYN":this.revenue.feverYN,   // db:char, this:number 수정이 필요
                         'disposePrice':this.revenue.disposePrice,
                         'orderPrice':this.revenue.orderPrice,
                         'dayendcash':this.revenue.cash,
