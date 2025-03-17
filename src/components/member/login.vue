@@ -36,8 +36,6 @@ export default {
   }
   ,methods: {
     loginAccess: function() {
-
-      debugger;
   fetch('http://localhost:8080/spring/api/loginMember', {
     method: 'POST',
     headers: {
@@ -65,8 +63,8 @@ export default {
   })
   .then(data => {
 
-    debugger;
     if (data) {
+      this.revenue.userId=data.userId;
       // 세션 스토리지에 로그인 정보 저장
       sessionStorage.setItem('loginUser', JSON.stringify(data));
       sessionStorage.setItem('isLoggedIn', 'true');
