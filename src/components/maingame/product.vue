@@ -15,7 +15,7 @@
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
             <!-- 가지고 있는 상품 나열 -->
-            <div class="product" :id="`prod${p.orderingNo}`" v-for="p in product" v-show="p.orderQuantity>0" @click="sellprod($event)">
+            <div class="product" :id="`prod${p.orderingNo}`" v-for="p in getproduct.product" v-show="p.orderQuantity>0" @click="sellprod($event)">
                 <div class="amount">
                     <p v-if="p.expDate==1" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
                     <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
@@ -133,6 +133,11 @@ export default {
         },
     },
     mounted(){
+        fetch("http://localhost:8080/spring/maingame/gamestart?gameNo=1")
+        .then(response=>response.json())
+        .then(data=>this.getproduct.product=data)
+        .catch(e=>console.error(e));
+
         this.getproduct.product.forEach(p=>{
             if(p.orderQuantity>0){
                 this.product.push(p);

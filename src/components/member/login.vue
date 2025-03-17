@@ -21,7 +21,7 @@
   <router-view></router-view>
 </template>
 <script>
-
+import { revenueStore } from '@/assets/pinia/maingame';
 
 
 
@@ -30,7 +30,8 @@ export default {
   data(){
     return {
       inputId:''
-      ,inputPw:''
+      ,inputPw:'',
+      revenue:revenueStore(),
     }
   }
   ,methods: {
@@ -62,12 +63,11 @@ export default {
           alert('회원을 찾을 수 없습니다.');
           
         }
-      }else{
-        
-        this.goToHome();
       }
-      
-      // return response.json();
+      return response.json();
+    }).then(data=>{
+      this.revenue.userId=data.userId;
+      this.goToHome();
     })
     
 

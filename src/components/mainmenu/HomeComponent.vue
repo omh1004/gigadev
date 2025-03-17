@@ -18,7 +18,7 @@
         <span></span>
         <span></span>
       </div>
-       <div class="ranking-list">
+      <div class="ranking-list">
         <div 
           v-for="(player, index) in rankings" 
           :key="index" 
@@ -35,10 +35,27 @@
 </template>
 
 <script>
+import { revenueStore } from '@/assets/pinia/maingame';   // 나중에 사용해야지
+
+
+// const modal={
+//   'playNo':this.revenue.playNo,
+//   'memberNo':0,
+//   'userId':this.revenue.userId,
+//   'cash':this.revenue.cash,
+//   'loan':this.revenue.loan,
+//   'playDay':this.revenue.salesDay,
+//   'storageLevel':this.revenue.storagelevel,
+//   'state':this.revenue.state,
+// };
+
+
+
 export default {
   name: 'ConvenienceStoreTycoon',
   data() {
     return {
+      revenue:revenueStore(),
       rankings: [
         // { nickname: '도토리뚜껑', profit: 1000000 },
         // { nickname: '멋지당', profit: 980000 },
@@ -74,7 +91,27 @@ export default {
       return index < 3 ? `top-${index + 1}` : ''
     }
     ,startgame(){
-      return this.$router.push('/introstart')
+      this.revenue.salesDay=1;         // N일차
+      this.revenue.cash=500000;
+      console.log(this.revenue);
+      fetch("http://localhost:8080/spring/maingame/newgame",{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          'playNo':this.revenue.playNo,
+          'memberNo':0,
+          'userId':this.revenue.userId,
+          'cash':this.revenue.cash,
+          'loan':this.revenue.loan,
+          'playDay':this.revenue.salesDay,
+          'storageLevel':this.revenue.storagelevel,
+          'state':this.revenue.state,
+        })
+      }).then(response=>console.log(response))
+        .catch(e=>console.error(e))
+        return this.$router.push('/introstart');
     }
   },
 
