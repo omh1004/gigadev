@@ -72,84 +72,34 @@ export default {
            ,password: this.password
             ,email: this.email
             ,nick: this.nick
-          //   userId: "admin11"
-          //  ,password: 1234
-          //  ,email: "admin@gmail.com"
-          //   ,nick: "string"
          })
-      }
-        ) .then(response => 
-      {
-
-        console.log(response.status)
-       
-
-      if (!(response.ok)) {
-        if (response.status == '404') {
-          alert('회원을 찾을 수 없습니다.');
+      })
+      .then(response => 
+        {
+          console.log(response.status);
           
-        } else {
-          alert('회원을 찾을 수 없습니다.');
+          debugger;
+          if (!(response.ok)) {
+              if (response.status == '404') {
+                alert('회원을 찾을 수 없습니다.');
           
-        }
-      }else{
-        alert('회원가입이 완료되었습니다.');
-        this.goToMain();
+              } else {
+                alert('회원을 찾을 수 없습니다.');
+                
+              }
+          }else{
+            alert('회원가입이 완료되었습니다.');
+            this.goToMain();
+          }})
+          .catch((error) => {console.error('Error:', error);})
       }
-      
-      // return response.json();
-    })
-
-// return response.json();
-
-        .catch((error) => {
-          console.error('Error:', error);
-        })
-      }  
+    
       ,goToMain() {
       this.$router.push('/'); //메인페이지로 이동
-    },
-
-      
-
-     }
+    }
     }
     
-
-//       fetch('http://localhost:8080/spring/api/enrollMember',{
-//         method: 'POST',
-//          headers: {
-//            'Content-Type': 'application/json'
-//          },
-//          body: JSON.stringify({
-//            "member":this.model
-//            ,"email":this.email
-//             ,"nick":this.nick
-//          }
-         
-//         )
-//       .then(response => response)
-//       .then((data) => {
-//         console.log('Success:', data);
-//         if(data.result === 'success') {
-//           alert('회원가입이 완료되었습니다.');
-//           this.$router.push({name:'loginVue'});
-//         } else {
-//           alert('회원가입에 실패하였습니다.');
-//         }
-//       })
-//       .catch((error) => {
-//         console.error('Error:', error);
-//       })
-
-      
-//       })
-  
-    
-  
-// },
-//   },
-
+  }
 
 </script>
 <style scoped>
