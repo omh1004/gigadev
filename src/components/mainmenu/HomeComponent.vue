@@ -73,8 +73,10 @@ export default {
       console.log("로드 함수 실행됨"); // 이게 실행되는지 확인!
 
       // userId는 차후 세션에 id 받아서 진행할 예정입니다!!!!!!!!!!!!!!!!
-      
-      fetch('http://localhost:8080/spring/userdata/getUserData?userId=asdfa')
+      const loginUser = sessionStorage.getItem('loginUser');
+      const userData = JSON.parse(loginUser);
+
+      fetch('http://localhost:8080/spring/userdata/getUserData?userId='+userData.userId)
         .then(response => response.json())
         .then(data => {
           console.log("받아온 유저 데이터:", data);
