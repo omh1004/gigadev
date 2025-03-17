@@ -128,11 +128,11 @@ export default {
     },
     body: JSON.stringify({ userId: this.userId })
   })
-  .then(response => response.text())  // JSON이 아닌 text로 응답 처리
+  .then(response => response.json())  // JSON이 아닌 text로 응답 처리
   .then(data => {
     this.idChecked = true;
     // "true"면 중복, "false"면 사용 가능
-    this.isDuplicate = data === "true";
+    this.isDuplicate = data.duplicate;
     this.idCheckMessage = this.isDuplicate 
       ? '이미 사용 중인 아이디입니다.' 
       : '사용 가능한 아이디입니다.';
