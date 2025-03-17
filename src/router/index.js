@@ -17,9 +17,17 @@ import StorageTuto from '@/components/mainmenu/intro/introMenu/StorageTuto.vue'
 import GameTuto from '@/components/mainmenu/intro/introMenu/gameTuto.vue'
 
 import PoorEnding1 from '@/components/mainmenu/ending/poorending1.vue'
-import Ending2 from '@/components/mainmenu/ending/ending2.vue'
-import Ending3 from '@/components/mainmenu/ending/ending3.vue'
-import Ending4 from '@/components/mainmenu/ending/ending4.vue'
+import PoorEnding2 from '@/components/mainmenu/ending/poorending2.vue'
+import PoorEnding3 from '@/components/mainmenu/ending/poorending3.vue'
+import NomalEnding1 from '@/components/mainmenu/ending/nomalending1.vue'
+import NomalEnding2 from '@/components/mainmenu/ending/nomalending2.vue'
+import NomalEnding3 from '@/components/mainmenu/ending/nomalending3.vue'
+import RichEnding1 from '@/components/mainmenu/ending/richending1.vue'
+import RichEnding2 from '@/components/mainmenu/ending/richending2.vue'
+import RichEnding3 from '@/components/mainmenu/ending/richending3.vue'
+import SuperRichEnding1 from '@/components/mainmenu/ending/superrichending1.vue'
+import SuperRichEnding2 from '@/components/mainmenu/ending/superrichending2.vue'
+import SuperRichEnding3 from '@/components/mainmenu/ending/superrichending3.vue'
 
 
 import news from '@/components/maingame/news/news.vue'
@@ -169,19 +177,59 @@ const router = createRouter({
       ,component:PoorEnding1
     },
     {
-      path:'/ending2'
-      ,name:'ending2'
-      ,component:Ending2
+      path:'/poorending2'
+      ,name:'poorending2'
+      ,component:PoorEnding2
     },
     {
-      path:'/ending3'
-      ,name:'ending3'
-      ,component:Ending3
+      path:'/poorending3'
+      ,name:'poorending3'
+      ,component:PoorEnding3
     },
     {
-      path:'/ending4'
-      ,name:'ending4'
-      ,component:Ending4
+      path:'/nomalending1'
+      ,name:'nomalending1'
+      ,component:NomalEnding1
+    },
+    {
+      path:'/nomalending2'
+      ,name:'nomalending2'
+      ,component:NomalEnding2
+    },
+    {
+      path:'/nomalending3'
+      ,name:'nomalending3'
+      ,component:NomalEnding3
+    },
+    {
+      path:'/richending1'
+      ,name:'richending1'
+      ,component:RichEnding1
+    },
+    {
+      path:'/richending2'
+      ,name:'richending2'
+      ,component:RichEnding2
+    },
+    {
+      path:'/richending3'
+      ,name:'richending3'
+      ,component:RichEnding3
+    },
+    {
+      path:'/superrichending1'
+      ,name:'superrichending1'
+      ,component:SuperRichEnding1
+    },
+    {
+      path:'/superrichending2'
+      ,name:'superrichending2'
+      ,component:SuperRichEnding2
+    },
+    {
+      path:'/superrichending3'
+      ,name:'superrichending3'
+      ,component:SuperRichEnding3
     },
     {
       path:'/tutorialStart',
