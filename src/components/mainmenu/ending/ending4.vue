@@ -1,5 +1,5 @@
 <template>
-  <div class="maincontainer">
+  <div class="main-container">
     <div class="dialog-box">
       <div class="dialog-text" v-html="inputText"></div>
       <div class="dialog-arrow" @click="movePage">▼</div>
@@ -31,5 +31,34 @@ export default {
 };
 </script>
 <style scoped>
+  .main-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    font-family: pretendard;
+    background-color: #f5f5f5;
   
+    max-width: 100%;
+    min-height: 90%;
+
+    display: flex;
+
+    background-image: url('@/assets/common/ending4.png');
+    background-size: 100% 100%;
+}
+.dialog-text {
+  position: absolute;
+  left: 10%;
+  bottom: 11%;
+  font-size: 2.5vw;
+  font-weight: bold;
+}
+.dialog-arrow{
+  position: absolute;
+  bottom: 13%;
+  right: 5%;
+  font-size: 1.4vw;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="maincontainer">
+  <div class="main-container">
     <div class="dialog-box">
       <div class="dialog-text" v-html="inputText"></div>
       <div class="dialog-arrow" @click="movePage">▼</div>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'ending1',
+  name: 'poorending',
   data() {
     return {
       inputText: ''
@@ -41,18 +41,25 @@ export default {
     font-family: pretendard;
     background-color: #f5f5f5;
   
-    text-align: center;
     max-width: 100%;
     min-height: 90%;
 
-
     display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
 
-    background-image: url('/common/ending1.png');
+    background-image: url('@/assets/common/ending1.png');
     background-size: 100% 100%;
-
+}
+.dialog-text {
+  position: absolute;
+  left: 10%;
+  bottom: 11%;
+  font-size: 2.5vw;
+  font-weight: bold;
+}
+.dialog-arrow{
+  position: absolute;
+  bottom: 13%;
+  right: 5%;
+  font-size: 1.4vw;
 }
 </style>
