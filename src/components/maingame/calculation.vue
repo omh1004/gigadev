@@ -95,8 +95,10 @@ export default {
                     product:this.product.product
                 })
             }).then(response=>console.log(response))
-            .then(data=>console.log(data))
-            .catch(e=>console.log(e));
+            .then(data=>{
+                console.log(data);
+                
+            }).catch(e=>console.log(e));
             // 다음으로 넘겨야 할 데이터 추가하기
             // 잔고
             // 신뢰도(구현시), 창고 물품

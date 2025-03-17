@@ -7,7 +7,7 @@
       <div class="right-section">
         <div class="money-bag">
           <span class="bag-icon">💰</span>
-          <span class="amount">{{ money }}원</span>
+          <span class="amount">{{ revenue.cash }}원</span>
         </div>
         <span class="settings-icon">⚙️</span>
         
@@ -132,6 +132,8 @@
 </template>
 
 <script>
+import { revenueStore } from '@/assets/pinia/maingame';
+
 export default {
   data() {
     return {
@@ -145,7 +147,8 @@ export default {
       storage: false,
       days: 5,
       products: [],
-      cart: []
+      cart: [],
+      revenue:revenueStore(),
     }
   },
   computed: {
@@ -154,35 +157,39 @@ export default {
     }
   },
   mounted() {
-    // 상품 데이터 가져오기
-    fetch('http://localhost:8080/spring/ordering/selectAllPrd', {
-      method: 'GET'
-    })
-    .then(response => response.json())
-    .then(data => {
-      // 상품 데이터를 저장 (DB에서 가져온 원래 orderquantity 값 유지)
-      this.products = data;
-      
-      // 서버에서 가져온 데이터 로깅
-      console.log('서버에서 가져온 상품 데이터:', this.products);
-      
-      for(let i = 0; i < this.products.length; i++) {
-        console.log(this.products[i].goodsno);
-        console.log(this.products[i].orderprice);
-        console.log(this.products[i].image);
-        console.log(this.products[i].orderquantity);
-        console.log(this.products[i].expdate);
-        console.log(this.products[i].goodsname);
-        console.log(this.products[i].goodstype);
-      }
-    })
-    .catch(error => {
-      console.error('상품 데이터 가져오기 오류:', error);
-      this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
-      this.popup = true;
-    });
+    this.getProductData();
   },
   methods: {
+    getProductData(){
+      const gameNo = sessionStorage.getItem("gameNo");
+      // 상품 데이터 가져오기
+      fetch('http://localhost:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
+        method: 'GET'
+      })
+      .then(response => response.json())
+      .then(data => {
+        // 상품 데이터를 저장 (DB에서 가져온 원래 orderquantity 값 유지)
+        this.products = data;
+        
+        // 서버에서 가져온 데이터 로깅
+        console.log('서버에서 가져온 상품 데이터:', this.products);
+        
+        for(let i = 0; i < this.products.length; i++) {
+          console.log(this.products[i].goodsno);
+          console.log(this.products[i].orderprice);
+          console.log(this.products[i].image);
+          console.log(this.products[i].orderquantity);
+          console.log(this.products[i].expdate);
+          console.log(this.products[i].goodsname);
+          console.log(this.products[i].goodstype);
+        }
+      })
+      .catch(error => {
+        console.error('상품 데이터 가져오기 오류:', error);
+        this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
+        this.popup = true;
+      });
+    },
     // 임시 재고 데이터 초기화 (실제로는 DB에서 가져와야 함)
     initializeStockData() {
       // 예시: 모든 상품에 임의의 재고 수량 할당 (1-5 사이의 값)
@@ -298,7 +305,7 @@ export default {
       const cartTotal = this.getTotalItems();
 
       // 잔액 체크
-      if (totalPrice > this.money) {
+      if (totalPrice > this.revenue.cash) {
         this.popupMessage = '잔액이 부족합니다.';
         this.popup = true;
         return;
@@ -318,14 +325,14 @@ export default {
         this.popup = true;
         return;
       }
-      
+
       // Storage 클래스에 맞는 데이터 구조로 변환
       const orderItems = this.cart.map(item => {
         return {
           // orderingno는 자동 생성될 것으로 가정하여 null 또는 생략
           orderingno: null,
           goodsno: item.goodsno,
-          playno: 1, // 플레이어 번호 (적절한 값으로 대체하세요)
+          playno: sessionStorage.getItem("gameNo"), // 게임 번호  // 플레이어 번호?
           expdate: this.getExpDate(item),
           orderquantity: item.ordercount,
           saleprice: item.orderprice, // 판매 가격으로 발주 가격을 사용
@@ -355,7 +362,13 @@ export default {
         
         // 주문 성공 후 로직 실행
         // 잔액 차감
-        this.money -= totalPrice;
+        // this.money -= totalPrice;
+        this.revenue.cash -= totalPrice;
+        this.revenue.orderPrice += totalPrice;
+
+        fetch("http://localhost:8080/spring/maingame/expense?price="+(-totalPrice)+
+              "&gameNo="+sessionStorage.getItem("gameNo"))
+        .then(response=>console.log(response))
         
         // 팝업 메시지 표시
         this.popupMessage = '발주완료';
@@ -370,7 +383,8 @@ export default {
         });
 
         // 페이지 새로고침 - 서버에서 최신 데이터 가져오기
-        location.reload();
+        // location.reload();
+        this.getProductData();
       })
       .catch(error => {
         console.error('주문 오류:', error);

@@ -1,7 +1,7 @@
 <template>
     <div class="conv">
         <div class="categorybutton">
-            <p @click="getcategory($event,'전체체')">전체</p>
+            <p @click="getcategory($event,'전체')">전체</p>
             <div></div>
             <p @click="getcategory($event,'신선식품')">신선식품</p>
             <div></div>
@@ -10,7 +10,7 @@
             <p @click="getcategory($event,'전자제품')">전자제품</p>
         </div>
         <div class="category">
-            <p style="text-align:center;font-size:2vh;">{{ categ }} {{ product.length }} / 50</p>
+            <p style="text-align:center;font-size:2vh;">{{ categ }} {{ productAmount }} / 50</p>
         </div>
         <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
         <div id="prodzone" class="product-container" >
@@ -35,15 +35,15 @@
                 </div>
                 <div>
                     <div class="modalcontent">
-                        <img :src="target.src">
+                        <img :src="target.image">
                         <div style="text-align:center;">
-                            <p>{{ target.name }}</p>
-                            <p>{{ target.price }}원</p>
+                            <p>{{ target.goodsName }}</p>
+                            <p>{{ target.salePrice }}원</p>
                         </div>
                         <div style="display:flex;justify-content:space-between;width:8vw">
                             <p @click="target.sell>0?target.sell--:''">-</p>
                             <p>{{ target.sell }}</p>
-                            <p @click="target.sell<target.amount?target.sell++:''">+</p>
+                            <p @click="target.sell<target.orderQuantity?target.sell++:''">+</p>
                         </div>
                     </div>
                     <div style="display:flex;justify-content:flex-end;padding-right:1vw;">
@@ -58,15 +58,15 @@
                 </div>
                 <div>
                     <div class="modalcontent">
-                        <img :src="countertarget.src">
+                        <img :src="countertarget.image">
                         <div style="text-align:center;">
-                            <p>{{ countertarget.name }}</p>
-                            <p>{{ countertarget.price }}원</p>
+                            <p>{{ countertarget.goodsName }}</p>
+                            <p>{{ countertarget.salePrice }}원</p>
                         </div>
                         <div style="display:flex;justify-content:space-between;width:8vw;">
                             <p @click="countertarget.sell>0?countertarget.sell--:''">-</p>
                             <p>{{ countertarget.sell }}</p>
-                            <p @click="countertarget.sell<countertarget.amount?countertarget.sell++:''">+</p>
+                            <p @click="countertarget.sell<countertarget.orderQuantity?countertarget.sell++:''">+</p>
                         </div>
                     </div>
                     <div style="display:flex;justify-content:flex-end;padding-right:2vh;">
@@ -85,6 +85,7 @@ export default {
         return{
             getproduct:productStore(),
             product:[],
+            productAmount:0,
             modal:false,
             target:{},
             categ:'전체',
@@ -98,22 +99,39 @@ export default {
             }else if(e.target.parentElement.className=='product'){
                 prod=e.target.parentElement;
             }
+            console.log(prod);
             
             if(prod!=null){
                 this.modal=true;
-                this.target=this.product.find(p=>("prod"+p.id)==prod.id);
+                this.target={...this.product.find(p=>("prod"+p.goodsNo+(p.expDate==1?'_50':''))==(prod.id)),sell:0};
+                console.log(this.target);
             }
         },
         moveprod(){
+            const prod = this.product.find(p=>p.goodsNo==this.target.goodsNo && p.expDate==this.target.expDate);
+            const cartprod = this.getproduct.cart.find(c=>c.goodsNo==this.target.goodsNo && c.expDate==this.target.expDate);
             if(this.modal){
-                this.$emit('moveprod','prod',this.target.id);
+                if(this.target.sell>0){
+                    if(cartprod==null){
+                        this.getproduct.cart.push({...this.target,orderQuantity:this.target.sell,sell:0});
+                        prod.orderQuantity-=this.target.sell;
+                    }else{
+                        prod.orderQuantity-=(this.target.sell-cartprod.orderQuantity);
+                        cartprod.orderQuantity=this.target.sell;
+                    }
+                }
+                // this.$emit('moveprod','prod',this.target.id);
                 this.modal=false;
             }else if(this.countermodal){
-                this.$emit('moveprod','cart',this.countertarget.id);
+                prod.orderQuantity-=(this.countertarget.sell-this.countertarget.orderQuantity);
+                cartprod.orderQuantity=this.countertarget.sell;
+                this.$emit('closemodal');
+                // this.$emit('moveprod','cart',this.countertarget.id);
             }
         },
         getcategory(e,category){
             this.product=[];
+            this.productAmount=0;
             this.categ = e.target.innerText;
             if(category!='전체'){
                 this.getproduct.product.forEach(p=>{
@@ -132,6 +150,7 @@ export default {
                                 }
                             );
                         }
+                        this.productAmount+=p.orderQuantity;
                     }
                 })
             }else{
@@ -151,13 +170,15 @@ export default {
                                 }
                             );
                         }
+                        this.productAmount+=p.orderQuantity;
                     }
                 })
             }
         },
     },
     mounted(){
-        fetch("http://localhost:8080/spring/maingame/gamestart?gameNo=1")
+        const gameNo = sessionStorage.getItem("gameNo");
+        fetch("http://localhost:8080/spring/maingame/gamestart?gameNo="+gameNo)
         .then(response=>response.json())
         .then(data=>{
             this.getproduct.product=data
@@ -177,6 +198,7 @@ export default {
                             }
                         );
                     }
+                    this.productAmount+=p.orderQuantity;
                 }
             });
         })

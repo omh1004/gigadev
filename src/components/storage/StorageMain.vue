@@ -6,7 +6,7 @@
       <div class="right-section">
         <div class="money-bag">
           <span class="bag-icon">💰</span>
-          <span class="amount">{{ money }}원</span>
+          <span class="amount">{{ revenue.cash }}원</span>
         </div>
         <span class="settings-icon">⚙️</span>
         
@@ -105,6 +105,8 @@
 </template>
 
 <script>
+import { revenueStore } from '@/assets/pinia/maingame';
+
 const model = {
   image: 'src/assets/common/fruit/strawberry.png',
   popup:false,
@@ -118,15 +120,13 @@ const model = {
   disquantity:0,
   disfruit:{},
   disposeProfit:0,
-  fruits: [
-  { id: 1, name: '딸기', image: 'src/assets/common/fruit/strawberry.png', quantity: 1, discount: '50%', category: '신선식품', price: 2000 },
-    // Add more items as needed
-  ],
+  fruits: [],
   itemsPerRow: 5,
   maxVisibleRows: 3,
   rowHeight: 150, // Reverted row height to original
   selectedTab: '신선식품'
-  ,  popupMessage: ''
+  ,  popupMessage: '',
+  revenue:{},
 };
 
 export default {
@@ -213,9 +213,13 @@ export default {
     disposeNow(){
       // goodsprice가 없을 경우 기본 가격 설정
       const price = 2000; // 기본 가격 설정
-      this.money += price * this.disquantity;
+      this.revenue.cash += price * this.disquantity;
       this.disfruit.orderquantity -= this.disquantity;
       this.disposeProfit += price * this.disquantity;
+
+      fetch("http://localhost:8080/spring/maingame/expense?price="+(price*this.disquantity)+
+            "&gameNo="+sessionStorage.getItem("gameNo"))
+      .then(response=>console.log(response))
       
       if(this.disfruit.orderquantity == 0){
         const index = this.fruits.findIndex(f => this.disfruit.goodsno == f.goodsno);
@@ -284,7 +288,11 @@ expansionStorage() {
       this.disposeProfit = history.state.disposeProfit;
     }
       
-    fetch("http://localhost:8080/spring/storage/findStorageAll")
+    this.revenue=revenueStore();
+
+    const gameNo = sessionStorage.getItem("gameNo");
+
+    fetch("http://localhost:8080/spring/storage/findStorageAll?gameNo="+gameNo)
       .then(response => response.json())
       .then(data => {
         console.log("서버에서 받은 데이터:", data);
