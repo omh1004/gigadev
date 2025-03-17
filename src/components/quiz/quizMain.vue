@@ -13,7 +13,6 @@
                 </div>
             </div>
         </div>
-        <img class="relability" src="/element/relability.png" width="78px" height="70px">
         <p class="balloon">{{ quizDialog }}</p>
         <img class="manInBlack" src="/person/quizman.png" width="400px" height="500px">
     </div>
@@ -101,7 +100,8 @@ div {
 }
 
 .figure_bar {
-    border-width: 3px 0;
+    border-width: 0;
+    border-top-width: 0.3vh;
     border-style: solid;
     border-color: #6F3533;
 }

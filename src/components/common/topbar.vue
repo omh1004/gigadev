@@ -1,26 +1,35 @@
 <template>
-  <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
-    <p style="font-size:2vh;">D-30</p>
-    <div v-if="gamestart" style="display:flex;">
-        <!-- <img src="@/assets/timer.png" width="10" height="52"> -- -->
-        <div class="timebar-container">
-            <div class="timerbar">
-                <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}vw`"></div>
+<div style="height:10vh;overflow:visible;text-align:right;">
+    <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
+        <p style="font-size:2vh;">D-30</p>
+        <div v-if="gamestart" style="display:flex;">
+            <!-- <img src="@/assets/timer.png" width="10" height="52"> -- -->
+            <div class="timebar-container">
+                <div class="timerbar">
+                    <div v-show="timebar>0" class="timeleft" :style="`width:${timebar}vw`"></div>
+                </div>
+                <p class="time">{{ timeleft }}초</p>
             </div>
-            <p class="time">{{ timeleft }}초</p>
+        </div>
+        <div v-if="gamestart" style="display:flex;align-items:center;">
+            <img src="@/assets/icons/person.png" style="width:2vw;height:3.5vh;">
+            <p style="margin:0;font-size:2vh;">{{ customerCount }}/10</p>
+        </div>
+        <div style="display:flex;align-items:center;">
+            <div class="moneybar">
+                <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">
+                <div class="line"></div>
+                <div class="money"><p style="font-size:2vh;">{{ moneyhave }}원</p></div>
+            </div>
+            <img src="@/assets/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
         </div>
     </div>
-    <div v-if="gamestart" style="display:flex;align-items:center;">
-        <img src="@/assets/icons/person.png" style="width:2vw;height:3.5vh;">
-        <p style="margin:0;font-size:2vh;">{{ customerCount }}/10</p>
-    </div>
-    <div style="display:flex;align-items:center;">
-        <div class="moneybar">
-            <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">
-            <div class="line"></div>
-            <div class="money"><p style="font-size:2vh;">{{ moneyhave }}원</p></div>
+    <div v-show="opensettings" class="settings">
+        <div class="settingslist">
+            <p @click="soundsetting=true;">사운드</p>
+            <p @click="manualon=true;">초보자메뉴얼</p>
+            <p style="background-color:#56174F;color:#FFFFFF;">저장하기</p>
         </div>
-        <img src="@/assets/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
     </div>
 </div>
 </template>
@@ -30,6 +39,7 @@ export default {
     return{
       gamestart:false,
       moneyhave:500000,
+      opensettings:false,
     }
   }
 }
@@ -93,4 +103,34 @@ export default {
   .money p{
       color:#FFFFFF;
   }
+    .settings{
+        display:inline-block;
+        width:19vw;
+        height:28vh;
+        position:relative;
+        background-color:#F5F5F5;
+        border:0.5vh solid #6F3533;
+        border-radius:2vh;
+        z-index:3;
+    }
+    .settingslist{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-around;
+        align-items:center;
+        width:19vw;
+        height:28vh;
+        text-align:center;
+    }
+    .settingslist p{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:10vw;
+        height:6vh;
+        margin:0;
+        background-color:#F5F5F5;
+        border:0.5vh solid #56174F;
+        border-radius:2vh;
+    }
 </style>

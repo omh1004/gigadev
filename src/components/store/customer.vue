@@ -10,8 +10,6 @@
                 </div>
             </div>
         </div>
-        <!-- <img class="relability_bar" src="/relability_bar.png" width="74px" height="410px"> -->
-        <img class="relability" src="/element/relability.png" style="width:4vw;height:6.5vh;">
         <p class="balloon">{{ dialog }}</p>
         <img class="customer" :src="src[customerA]" style="width:21vw;height:46vh;">   <!-- 이미지가 약 4:5 비율-->
     </div>
@@ -110,7 +108,8 @@ export default {
         text-align:center;
     }
     .figure_bar{
-        border-width:0.3vh 0;
+        border-width:0;
+        border-top-width:0.3vh;
         border-style:solid;
         border-color:#6F3533;
     }

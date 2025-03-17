@@ -173,8 +173,6 @@
     </div>
 </template>
 <script scoped>
-import Usermanual from '@/components/common/usermanual.vue';
-import Settings from '@/components/common/volumesettings.vue';
 import ConvenientLove from '/bgm/[suno]ConvenientLove.mp3';
 import QuizmanOnConvenient from '/bgm/[suno]QuizmanOnConvenient.mp3';
 import { curTutoPage } from '@/assets/pinia/tutorial';

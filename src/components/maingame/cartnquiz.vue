@@ -39,17 +39,18 @@ export default {
             this.$emit('notclick',true);
             if(quizAnswer[this.quizNum]==ans){
                 this.quizDialog='정답입니다.';
+                this.revenue.qeezeYN='Y';
                 // 사용자가 클릭하면 넘어갈지 일정 시간 뒤 넘어갈지 결정하기 일단 후자로
                 setTimeout(() => {
                     this.quizDialog=rewardDialog[this.day].dialog;
-                    this.quiz=rewardDialog[this.day].reward;
-                    if(rewardDialog[this.day].reward==0){
-                        // 수익에 +30000원 추가. 내가 추가할 게 있나요?
-                    }else if(rewardDialog[this.day].reward>=1 && rewardDialog[this.day].reward<=3){
-                        // 영업 종료 후 총 수익에서 n% 증가, 정산서에 표시. 내가 추가할 게 있나요?
-                    }else if(rewardDialog[this.day].reward==4){
-                        // 뉴스 내용 전달. 내가 추가할 게 있나요?
-                    }
+                    // this.quiz=rewardDialog[this.day].reward;
+                    // if(rewardDialog[this.day].reward==0){
+                    //     // 수익에 +30000원 추가. 내가 추가할 게 있나요?
+                    // }else if(rewardDialog[this.day].reward>=1 && rewardDialog[this.day].reward<=3){
+                    //     // 영업 종료 후 총 수익에서 n% 증가, 정산서에 표시. 내가 추가할 게 있나요?
+                    // }else if(rewardDialog[this.day].reward==4){
+                    //     // 뉴스 내용 전달. 내가 추가할 게 있나요?
+                    // }
                 }, 3500);
             }else{
                 this.quizDialog='오답입니다.';
@@ -156,17 +157,26 @@ export default {
             if(nothing){
                 this.dialog='손님이 화났습니다! ';
                 this.dialog+='신뢰도 -5';
-                this.relability-=5;
+                if(this.relability<100){
+                    this.relability-=5;
+                }
             }else if(perfect){
                 this.dialog='손님이 만족했습니다 ';
                 this.dialog+='신뢰도 +5';
-                this.relability+=5;
+                if(this.relability<100){
+                    this.relability+=5;
+                }
+                if(this.relability>=100){
+                    this.revenue.feverYN='Y';
+                }
             }else{
                 if(over>0 && under>0){
                     timeout = 3500;
                     this.dialog=under + '개 덜 판매했습니다. ';
                     this.dialog+='신뢰도 -2';
-                    this.relability-=2;
+                    if(this.relability<100){
+                        this.relability-=2;
+                    }
                     setTimeout(()=>{
                         this.dialog=over + '개 더 판매했습니다. ';
                         this.dialog+='-' + loss + '원 ';
@@ -174,12 +184,16 @@ export default {
                 }else if(under>0){
                     this.dialog=under + '개 덜 판매했습니다. ';
                     this.dialog+='신뢰도 -2';
-                    this.relability-=2;
+                    if(this.relability<100){
+                        this.relability-=2;
+                    }
                 }else if(over>0){
                     this.dialog=over + '개 더 판매했습니다. ';
                     this.dialog+='-' + loss + '원 ';
                     this.dialog+='신뢰도 -2';
-                    this.relability-=2;
+                    if(this.relability<100){
+                        this.relability-=2;
+                    }
                 }
             }
             setTimeout(()=>{
