@@ -62,30 +62,14 @@ export default {
           nick: this.userNick,
           email: this.email
         })
-      })
-      .then(response => {
+      }).then(res => {
         
-      console.log('response'+response.status);
-   
-        console.log('response'+response.ok);
-        
-      // if (!(response.ok)) {
-      //   if (response.status == '404') {
-      //     alert('회원을 찾을 수 없습니다.');
-          
-      //   } else {
-      //     alert('회원을 찾을 수 없습니다.');
-          
-      //   }
-      // }else{
-      //   debugger;
-      //   console.log(response.json());
-        
-      // }
-      
-      return response.json();
-    })
-    .then((data) => {
+        if(res.ok){
+          return res.json();
+        }else{
+          alert('회원을 찾을 수 없습니다.');
+        }
+      }).then((data) => {
       
       console.log(data.userId);
 
