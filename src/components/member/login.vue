@@ -35,45 +35,52 @@ export default {
     }
   }
   ,methods: {
-    loginAccess:function() {
-
-      fetch(
-        'http://localhost:8080/spring/api/loginMember'
-      ,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userId: this.inputId,
-          password: this.inputPw
-        })
-      })
-      .then(response => 
-      {
-
-       console.log(response.status)
-       
-
-      if (!(response.ok)) {
-        if (response.status == '404') {
-          alert('회원을 찾을 수 없습니다.');
-          
-        } else {
-          alert('회원을 찾을 수 없습니다.');
-          
-        }
-      }
-      return response.json();
-    }).then(data=>{
-      this.revenue.userId=data.userId;
-      this.goToHome();
-    })
+    loginAccess: function() {
+  fetch('http://localhost:8080/spring/api/loginMember', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     
+    body: JSON.stringify({
+      userId: this.inputId,
+      password: this.inputPw
+    })
+  })
+  .then(response => {
+    console.log(response.status);
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        alert('회원을 찾을 수 없습니다.');
+      } else {
+        alert('회원을 찾을 수 없습니다.');
+      }
+      return null;
+    } else {
+      return response.json(); // 응답 데이터 파싱
+    }
+  })
+  .then(data => {
+
+    if (data) {
+      this.revenue.userId=data.userId;
+      // 세션 스토리지에 로그인 정보 저장
+      sessionStorage.setItem('loginUser', JSON.stringify(data));
+      sessionStorage.setItem('isLoggedIn', 'true');
+      console.log('로그인 성공:', data);
+      this.goToHome();
+    }
+  })
+  .catch(error => {
+    console.error('로그인 요청 실패:', error);
+    alert('로그인 처리 중 오류가 발생했습니다.');
+  });
+} 
 
 
  
-    }
+    
     ,goToHome(){
       this.$router.push('/homeMenu');
     }
