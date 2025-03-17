@@ -25,7 +25,7 @@
                     <div class="moneybar">
                         <img src="/icons/money.png" style="width:2.5vw;height:4.5vh;">  <!-- @/assets 빼기!!!!! -->
                         <div class="line"></div>
-                        <div class="money"><p style="font-size:2vh;">{{ revenue.cash }}원</p></div>
+                        <div class="money"><p style="font-size:2vh;">{{ revenue.cash+revenue.salesMount }}원</p></div>
                     </div>
                     <img src="/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
                 </div>
