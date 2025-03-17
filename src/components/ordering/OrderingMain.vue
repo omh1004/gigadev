@@ -63,10 +63,9 @@
               <div style="width:80%;height:55vh;">
                 <div class="product-items-container">
                   
-                   <div class="product-items">
+                  <div class="product-items">
                     <div v-if="selectedCategory=='신선식품' || selectedCategory=='즉석식품' && days>=5 || selectedCategory=='전자제품' && days>=15 "
-                          v-for="product in filteredProducts" :key="product.goodsno" class="product-row">
-                     
+                      v-for="product in filteredProducts" :key="product.goodsno" class="product-row">
                       
                       <div class="product-image-container">
                         <img class="product-image" :src="product.image" :alt="product.goodsname">
@@ -129,9 +128,7 @@
         </div>
       </div>
     </div>
-   </div> 
-   
-   
+  </div> 
 </template>
 
 <script>
