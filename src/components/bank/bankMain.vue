@@ -217,7 +217,7 @@ export default {
       income: 0, // ✅ 선택한 날짜의 수입
       expense: 0,  // ✅ 선택한 날짜의 지출
       total: 0, // ✅ 선택한 날짜의 총 매출 (income - expense)
-      completedDays: [1,2,3,4], // ✅ 완료된 날짜 (예제: DAY1만 활성화)
+      completedDays: [], // ✅ 완료된 날짜 (예제: DAY1만 활성화)
       balance:0,
       // 물음표 호버 기능!!
       showHelp:false,
@@ -515,7 +515,7 @@ async openDaySummary(day) {
 
   } catch (error) {
     console.error("매출 데이터 가져오기 오류:", error);
-    alert("매출 데이터를 불러오는 중 오류 발생!");
+    alert("1일차가 종료된 시점부터 조회 가능합니다.");
   }
 },
 
