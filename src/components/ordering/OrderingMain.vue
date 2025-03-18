@@ -91,7 +91,7 @@
               </div>
             </div>
           </div>
-          <div class="total-products-fake">창고 총 상품 개수: {{ getTotalProductCount() }}/50</div>
+          <div class="total-products-fake">창고 총 상품 개수: {{ getTotalProductCount() }}/{{ this.storageLevel }}</div>
         </div>
         <div style="text-align:center;">
           <div class="cart-section">
@@ -149,6 +149,7 @@ export default {
       products: [],
       cart: [],
       revenue:revenueStore(),
+      storageLevel: 1,
     }
   },
   computed: {
@@ -175,7 +176,25 @@ export default {
       .then(data => {
         // 상품 데이터를 저장 (DB에서 가져온 원래 orderquantity 값 유지)
         this.products = data;
-        
+
+          console.log(data[0]);
+
+          if(data[0].storagelevel==1 || data[0].storagelevel==null){
+            this.storageLevel = 50;
+          }else if(data[0].storagelevel==2){
+            this.storageLevel = 70;
+          }else if(data[0].storagelevel==3){
+            this.storageLevel = 90;
+          }else if(data[0].storagelevel==4){
+            this.storageLevel = 110;
+          }else if(data[0].storagelevel==5){
+            this.storageLevel = 130;
+          }else{
+            this.storageLevel = 150;
+          }
+        // 재고 데이터 초기화
+        this.initializeStockData();
+        //this.storageLevel  =
         // 서버에서 가져온 데이터 로깅
         console.log('서버에서 가져온 상품 데이터:', this.products);
         
@@ -439,13 +458,34 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'RecipeKoreaOTF_38';
+  src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-size:38px;
+}
+@font-face {
+  font-family: 'RecipeKoreaOTF_34';
+  src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
+  font-size:38px;
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'Pretendard_24';
+  src: url('/fonts/Pretendard-Black.woff') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-size:24px;
+}
+
 .main-container {
   width: 100%;
     height: 100vh;
     position: relative;
     overflow: hidden;
   
-    font-family: RecipekoreaOTF;
+    font-family: 'RecipeKoreaOTF_38';
     font-size: 24px;
     background-color: #f5f5f5;
   
@@ -552,8 +592,7 @@ export default {
 }
 
 .delivery-title {
-  font-size: 2vw;
-  font-weight: bold;
+  font-family: 'RecipeKoreaOTF_38';
   margin: 0;
   display: inline-block;
   position: relative;
@@ -739,6 +778,7 @@ export default {
 }
 
 .cart-title {
+  font-family: 'RecipeKoreaOTF_34';
   font-weight: bold;
   text-align: center;
   font-size: 18px;
@@ -799,6 +839,7 @@ export default {
 }
 
 .total-products-fake{
+  font-family: 'Pretendard_24';
   text-align:right;
   padding-right:0.5vw;
   padding-top:1vh;

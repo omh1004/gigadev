@@ -31,6 +31,8 @@ import SuperRichEnding1 from '@/components/mainmenu/ending/superrichending1.vue'
 import SuperRichEnding2 from '@/components/mainmenu/ending/superrichending2.vue'
 import SuperRichEnding3 from '@/components/mainmenu/ending/superrichending3.vue'
 
+import RealNews1 from '@/components/mainmenu/realnews/realnews1.vue'
+
 
 import news from '@/components/maingame/news/news.vue'
 import maingameComponent from '@/components/maingame/maingame.vue'
@@ -90,6 +92,11 @@ const router = createRouter({
       path:'/news',
       name:'news',
       component:news
+    },
+    {
+      path:'/realnews1',
+      name:'realnews1',
+      component:RealNews1
     },
     {
       path: '/maingame',
