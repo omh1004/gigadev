@@ -9,29 +9,35 @@
             <div></div>
             <p @click="getcategory($event,'전자제품')">전자제품</p>
         </div>
-        <div class="category">
-            <p style="text-align:center;font-size:2vh;">{{ categ }} {{ productAmount }} / 50</p>
-        </div>
-        <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
-        <div id="prodzone" class="product-container" >
-            <!-- 가지고 있는 상품 나열 -->
-            <div class="product" :id="`prod${p.goodsNo}${p.expDate==1?'_50':''}`" v-for="p in product" v-show="p.orderQuantity>0" @click="sellprod($event)">
-                <div class="amount">
-                    <p v-if="p.expDate==1" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
-                    <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
-                    <p style="display:inline-block;width:3vw;height:2vh;text-align:right;font-size:2vh;">{{ p.orderQuantity }}</p>
-                </div>
-                <!-- draggable로 드래그 가능, dragstart 이벤트가 필요. -->
-                <img :src="`${p.image}`" alt="상품" style="width:8vh;height:8vh;" :name="p.name">
-                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.goodsName }}</p>
-                <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.salePrice }}원</p>
+        <div v-if="categ=='전체' || categ=='신선식품' || (categ=='즉석식품' && revenue.salesDay>=5) || (categ=='전자제품' && revenue.salesDay>=15)">
+            <div class="category">
+                <p style="text-align:center;font-size:2vh;">{{ categ }} {{ productAmount }} / 50</p>
             </div>
+            <!-- dragover, drop 이벤트가 있어야 drag & drop 가능 -->
+            <div id="prodzone" class="product-container" >
+                <!-- 가지고 있는 상품 나열 -->
+                <div class="product" :id="`prod${p.goodsNo}${p.expDate==1?'_50':''}`" v-for="p in product" v-show="p.orderQuantity>0" @click="sellprod($event)">
+                    <div class="amount">
+                        <p v-if="p.expDate==1" style="display:inline-block;width:3vw;height:2vh;text-align:left;font-size:2vh;">D-1</p>
+                        <p v-else style="display:inline-block;width:3vw;height:2vh;text-align:right;"></p>
+                        <p style="display:inline-block;width:3vw;height:2vh;text-align:right;font-size:2vh;">{{ p.orderQuantity }}</p>
+                    </div>
+                    <!-- draggable로 드래그 가능, dragstart 이벤트가 필요. -->
+                    <img :src="`${p.image}`" alt="상품" style="width:8vh;height:8vh;" :name="p.name">
+                    <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.goodsName }}</p>
+                    <p style="margin-top:1vh;font-size:1.8vh;height:1.8vh;">{{ p.salePrice }}원</p>
+                </div>
+            </div>
+        </div>
+        <div v-else class="product-container2">
+            <h1 v-if="categ=='즉석식품'">5일차에 오픈 예정!</h1>
+            <h1 v-else-if="categ=='전자제품'">15일차에 오픈 예정!</h1>
         </div>
         <div v-show="modal || countermodal || timeleft==0 || noclick || quizblind" class="blind">
             <div v-if="modal && timeleft!=0 && !noclick" class="modalwin">
                 <div class="modaltop">
                     <p>판매하기</p>
-                    <img src="/icons/close.png" width="1.5vw;" @click="modal=false">
+                    <img src="/icons/close.png" style="width:1.5vw;" @click="modal=false">
                 </div>
                 <div>
                     <div class="modalcontent">
@@ -78,11 +84,12 @@
     </div>
 </template>
 <script>
-import { productStore } from '@/assets/pinia/maingame';
+import { productStore, revenueStore } from '@/assets/pinia/maingame';
 
 export default {
     data(){
         return{
+            revenue:revenueStore(),
             getproduct:productStore(),
             product:[],
             productAmount:0,
@@ -110,14 +117,18 @@ export default {
         moveprod(){
             const prod = this.product.find(p=>p.goodsNo==this.target.goodsNo && p.expDate==this.target.expDate);
             const cartprod = this.getproduct.cart.find(c=>c.goodsNo==this.target.goodsNo && c.expDate==this.target.expDate);
+            console.log("cartprod",cartprod);
             if(this.modal){
                 if(this.target.sell>0){
                     if(cartprod==null){
+                        console.log("target이 뭐지",this.target);
                         this.getproduct.cart.push({...this.target,orderQuantity:this.target.sell,sell:0});
                         prod.orderQuantity-=this.target.sell;
+                        console.log("cartprodnull", this.getproduct.cart);
                     }else{
                         prod.orderQuantity-=(this.target.sell-cartprod.orderQuantity);
                         cartprod.orderQuantity=this.target.sell;
+                        console.log("cartprod",this.getproduct.cart);
                     }
                 }
                 // this.$emit('moveprod','prod',this.target.id);
@@ -125,6 +136,7 @@ export default {
             }else if(this.countermodal){
                 prod.orderQuantity-=(this.countertarget.sell-this.countertarget.orderQuantity);
                 cartprod.orderQuantity=this.countertarget.sell;
+                console.log("counterprod",this.getproduct.cart);
                 this.$emit('closemodal');
                 // this.$emit('moveprod','cart',this.countertarget.id);
             }
@@ -134,25 +146,27 @@ export default {
             this.productAmount=0;
             this.categ = e.target.innerText;
             if(category!='전체'){
-                this.getproduct.product.forEach(p=>{
-                    if(p.orderQuantity>0 && (p.disposalYN=='N' || p.dispoaYN=='n') && p.goodType==category){
-                        const findProd = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate>1));
-                        const findProd2 = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate==1));
-                        if(findProd!=null){
-                            findProd.orderQuantity+=p.orderQuantity;
-                        }else if(findProd2!=null){
-                            findProd2.orderQuantity+=p.orderQuantity;
-                        }else{
-                            this.product.push(
-                                {
-                                    goodsNo:p.goodsNo, goodType:p.goodType, goodsName:p.goodsName, image:p.image,
-                                    expDate:p.expDate, orderQuantity:p.orderQuantity, salePrice:p.salePrice
-                                }
-                            );
+                if((category=='신선식품' || category=='즉석식품' && this.revenue.salesDay>=5) || (category=='전자제품' && this.revenue.salesDay>=15)){
+                    this.getproduct.product.forEach(p=>{
+                        if(p.orderQuantity>0 && (p.disposalYN=='N' || p.dispoaYN=='n') && p.goodType==category){
+                            const findProd = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate>1));
+                            const findProd2 = this.product.find(prod=>(p.goodsNo==prod.goodsNo && prod.expDate==1));
+                            if(findProd!=null){
+                                findProd.orderQuantity+=p.orderQuantity;
+                            }else if(findProd2!=null){
+                                findProd2.orderQuantity+=p.orderQuantity;
+                            }else{
+                                this.product.push(
+                                    {
+                                        goodsNo:p.goodsNo, goodType:p.goodType, goodsName:p.goodsName, image:p.image,
+                                        expDate:p.expDate, orderQuantity:p.orderQuantity, salePrice:p.salePrice
+                                    }
+                                );
+                            }
+                            this.productAmount+=p.orderQuantity;
                         }
-                        this.productAmount+=p.orderQuantity;
-                    }
-                })
+                    })
+                }
             }else{
                 this.getproduct.product.forEach(p=>{
                     if(p.orderQuantity>0 && (p.disposalYN=='N' || p.dispoaYN=='n')){
@@ -178,6 +192,7 @@ export default {
     },
     mounted(){
         console.log("product mounted");
+        console.log(this.getproduct.cart);
         const gameNo = sessionStorage.getItem("gameNo");
         fetch("http://localhost:8080/spring/maingame/gamestart?gameNo="+gameNo)
         .then(response=>response.json())
@@ -255,6 +270,16 @@ export default {
         overflow-y:auto;
         flex-wrap:wrap;
         background-color:#4C1B0B;
+        scrollbar-color:#FFEFCA #4C1B0B;    /* 브라우저에 따라 적용 안됨 🤔 */
+    }
+    .product-container2{
+        width:42.5vw;
+        height:70.5vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:#4C1B0B;
+        color:white;
         scrollbar-color:#FFEFCA #4C1B0B;    /* 브라우저에 따라 적용 안됨 🤔 */
     }
     .product{
