@@ -467,7 +467,7 @@ export default {
     position: relative;
     overflow: hidden;
   
-    font-family: RecipekoreaOTF;
+    font-family: RecipeKoreaOTF_38;
     font-size: 24px;
     background-color: #f5f5f5;
   
