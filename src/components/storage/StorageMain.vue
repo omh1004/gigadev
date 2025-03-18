@@ -9,10 +9,10 @@
           <span class="amount">{{ revenue.cash }}원</span>
         </div>
         <span class="settings-icon">⚙️</span>
-        
+
       </div>
     </div>
-    
+
     <!-- Navigation -->
     <div class="navigation">
       <div class="back-button" @click="goBack">
@@ -39,13 +39,14 @@
       <div class="fruit-container" :style="containerStyle">
         <div class="fruit-row" v-for="(row, rowIndex) in filteredFruitRows" :key="rowIndex">
           <div class="fruit-item" v-for="(fruit, fruitIndex) in row" :key="fruitIndex">
-            <img :src="fruit.image" :alt="fruit.goodsname" :id="fruit.goodsno" class="fruit-image" @click="disposePopup($event)">
+            <img :src="fruit.image" :alt="fruit.goodsname" :id="fruit.goodsno" class="fruit-image"
+              @click="disposePopup($event)">
             <div class="fruit-quantity">x{{ fruit.orderquantity }}</div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Confirm Button -->
     <div class="button-container">
       <button class="confirm-button" @click="placeOrder">
@@ -62,14 +63,14 @@
           <span class="close-button" @click="closePopup">×</span>
         </div>
 
-        <div v-if="storage && storageSize<150" class="popup-body">
-          <p>{{ storageSize }} >> {{ storageSize+20 }}</p>
+        <div v-if="storage && storageSize < 150" class="popup-body">
+          <p>{{ storageSize }} >> {{ storageSize + 20 }}</p>
           <p>필요금액</p>
-          <p>{{ 30000+((storageSize-50)/20)*10000 }}</p>
+          <p>{{ 30000 + ((storageSize - 50) / 20) * 10000 }}</p>
           <button class="expansionButton" @click="expansionStorage">확장하기</button>
         </div>
 
-        <div v-if="storage && storageSize>=150" class="popup-body oneExplan">
+        <div v-if="storage && storageSize >= 150" class="popup-body oneExplan">
           <p>창고 상한에 도달하였습니다.</p>
           <div style="text-align:right;"><button class="expansionButton" @click="closePopup">확인</button></div>
         </div>
@@ -89,8 +90,10 @@
           </div>
           <div style="display:flex;justify-content:space-around;align-items:center;">
             <div></div>
-            <div><h5 style="color:#FF5353;">물품의 20% 가격으로 판매</h5></div>
-            <div><button class="disposeButton" :disabled="disquantity==0" @click="disposeAction">폐기하기</button></div>
+            <div>
+              <h5 style="color:#FF5353;">물품의 20% 가격으로 판매</h5>
+            </div>
+            <div><button class="disposeButton" :disabled="disquantity == 0" @click="disposeAction">폐기하기</button></div>
           </div>
         </div>
 
@@ -108,25 +111,24 @@
 import { revenueStore } from '@/assets/pinia/maingame';
 
 const model = {
-  image: 'src/assets/common/fruit/strawberry.png',
-  popup:false,
-  popupTitle:'알림',
-  money:500000,
-  storageSize:50,
-  storage:false,
-  dispose:false,
-  realdispose:false,
-  disproduct:'',
-  disquantity:0,
-  disfruit:{},
-  disposeProfit:0,
+  popup: false,
+  popupTitle: '알림',
+  money: 500000,
+  storageSize: 50,
+  storage: false,
+  dispose: false,
+  realdispose: false,
+  disproduct: '',
+  disquantity: 0,
+  disfruit: {},
+  disposeProfit: 0,
   fruits: [],
   itemsPerRow: 5,
   maxVisibleRows: 3,
   rowHeight: 150, // Reverted row height to original
   selectedTab: '신선식품'
-  ,  popupMessage: '',
-  revenue:{},
+  , popupMessage: '',
+  revenue: {},
 };
 
 export default {
@@ -169,11 +171,11 @@ export default {
     selectTab(tab) {
       this.selectedTab = tab;
     },
-    goBack(){
+    goBack() {
       this.$router.push({
-        name:'mainmenu',
-        state:{
-          disposeProfit:this.disposeProfit,
+        name: 'mainmenu',
+        state: {
+          disposeProfit: this.disposeProfit,
         }
       });
     },
@@ -182,13 +184,13 @@ export default {
       this.popupMessage = '50 >> 70 필요금액 30,000';
       this.popup = true;
     },
-    closePopup(){
+    closePopup() {
       this.storage = false;
       this.dispose = false;
       this.realdispose = false;
       this.popup = false;
     },
-    disposePopup(e){
+    disposePopup(e) {
       this.disquantity = 0;
       this.disproduct = e.target.parentElement.innerHTML;
       this.disfruit = this.fruits.find(f => f.goodsno == e.target.id);
@@ -197,7 +199,7 @@ export default {
       this.dispose = true;
     },
     increaseQuantity() {
-      if(this.disfruit.orderquantity > this.disquantity){
+      if (this.disfruit.orderquantity > this.disquantity) {
         this.disquantity++;
       }
     },
@@ -206,11 +208,11 @@ export default {
         this.disquantity--;
       }
     },
-    disposeAction(){
+    disposeAction() {
       this.dispose = false;
       this.realdispose = true;
     },
-    disposeNow(){
+    disposeNow() {
       // goodsprice가 없을 경우 기본 가격 설정
       const price = 2000; // 기본 가격 설정
       this.revenue.cash += price * this.disquantity;
@@ -218,13 +220,13 @@ export default {
       this.disposeProfit += price * this.disquantity;
       this.revenue.disposePrice += price * this.disquantity;
 
-      fetch("http://localhost:8080/spring/maingame/expense?price="+(price*this.disquantity)+
-            "&gameNo="+sessionStorage.getItem("gameNo"))
-      .then(response=>console.log(response))
-      
+      fetch("http://localhost:8080/spring/maingame/expense?price=" + (price * this.disquantity) +
+        "&gameNo=" + sessionStorage.getItem("gameNo"))
+        .then(response => console.log(response))
+
       this.revenue.saveState();
 
-      if(this.disfruit.orderquantity == 0){
+      if (this.disfruit.orderquantity == 0) {
         const index = this.fruits.findIndex(f => this.disfruit.goodsno == f.goodsno);
         console.log(index);
         this.fruits.splice(index, 1);
@@ -232,70 +234,70 @@ export default {
       this.realdispose = false;
       this.popup = false;
     },
-  // expansionStorage 메소드 수정
-expansionStorage() {
-  if (this.storageSize < 150) {
-    const expansionSize = 20;
-    const expansionCost = 30000 + ((this.storageSize - 50) / 20) * 10000;
-    
-    // 서버에 창고 확장 요청
-    fetch("http://localhost:8080/spring/storage/expandStorage", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        
-      })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("서버 응답 오류: " + response.status);
+    // expansionStorage 메소드 수정
+    expansionStorage() {
+      if (this.storageSize < 150) {
+        const expansionSize = 20;
+        const expansionCost = 30000 + ((this.storageSize - 50) / 20) * 10000;
+
+        // 서버에 창고 확장 요청
+        fetch("http://localhost:8080/spring/storage/expandStorage", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("서버 응답 오류: " + response.status);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log("창고 확장 성공:", data);
+
+            // DB 업데이트 후 프론트엔드 상태 업데이트
+            this.money -= expansionCost;
+            this.storageSize += expansionSize;
+
+            // 팝업 닫기
+            this.storage = false;
+            this.popup = false;
+
+            // 성공 메시지 (필요시)
+            this.popupTitle = '알림';
+            this.popupMessage = '창고 확장이 완료되었습니다.';
+          })
+          .catch(error => {
+            console.error('창고 확장 중 오류 발생:', error);
+
+            // 오류 메시지 표시
+            this.popupTitle = '오류';
+            this.popupMessage = '창고 확장 중 오류가 발생했습니다. 다시 시도해주세요.';
+            this.popup = true;
+          });
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log("창고 확장 성공:", data);
-      
-      // DB 업데이트 후 프론트엔드 상태 업데이트
-      this.money -= expansionCost;
-      this.storageSize += expansionSize;
-      
-      // 팝업 닫기
-      this.storage = false;
-      this.popup = false;
-      
-      // 성공 메시지 (필요시)
-      this.popupTitle = '알림';
-      this.popupMessage = '창고 확장이 완료되었습니다.';
-    })
-    .catch(error => {
-      console.error('창고 확장 중 오류 발생:', error);
-      
-      // 오류 메시지 표시
-      this.popupTitle = '오류';
-      this.popupMessage = '창고 확장 중 오류가 발생했습니다. 다시 시도해주세요.';
-      this.popup = true;
-    });
-  }
-}
+    }
   },
   mounted() {
-    if(history.state.popup != null) {
+    if (history.state.popup != null) {
       console.log(history.state.popup);
       this.popup = history.state.popup;
       this.storage = history.state.popup;
     }
-    
-    if(history.state.disposeProfit != null && history.state.disposeProfit > 0) {
+
+    if (history.state.disposeProfit != null && history.state.disposeProfit > 0) {
       this.disposeProfit = history.state.disposeProfit;
     }
-      
-    this.revenue=revenueStore();
+
+    this.revenue = revenueStore();
 
     const gameNo = sessionStorage.getItem("gameNo");
 
-    fetch("http://localhost:8080/spring/storage/findStorageAll?gameNo="+gameNo)
+    fetch("http://localhost:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
       .then(response => response.json())
       .then(data => {
         console.log("서버에서 받은 데이터:", data);
@@ -310,9 +312,9 @@ expansionStorage() {
       });
 
     // 그냥 돈만 가져와야지
-    fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
-    .then(response=>response.text())
-    .then(data=>this.revenue.cash = data)
+    fetch("http://localhost:8080/spring/maingame/moneydata?gameNo=" + gameNo)
+      .then(response => response.text())
+      .then(data => this.revenue.cash = data)
   }
 };
 </script>
@@ -320,78 +322,79 @@ expansionStorage() {
 <style scoped>
 .main-container {
   width: 100%;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-  
-    font-family: RecipekoreaOTF;
-    font-size: 24px;
-    background-color: #f5f5f5;
-  
-    text-align: center;
-    max-width: 100%;
-    min-height: 90%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  font-family: RecipekoreaOTF;
+  font-size: 24px;
+  background-color: #f5f5f5;
+
+  text-align: center;
+  max-width: 100%;
+  min-height: 90%;
 
 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
 
-    background-image: url('/background/whitebg.png');
-    background-size: 100% 100%;
+  background-image: url('/background/whitebg.png');
+  background-size: 100% 100%;
 
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6vw 1.7vw;
-    margin-bottom: 0;
-    border: 0.25vw solid #8B4513;
-    border-radius: 9999px;
-    min-width: 90vw;
-    margin-top: 4vh;
-    height: 5vh;
-  }
-  
-  .left-section {
-    font-size: 1.5vw;
-    font-weight: bold;
-    text-align: left;
-  }
-    .money-bag {
-    display: flex;
-    align-items: center;
-    background-color: #5D2906;
-    color: white;
-    padding: 0.6vw 1.4vw;
-    border-radius: 9999px;
-    gap:3.5vw;
-    height: 3.3vh;
-    width: 14vw;  
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6vw 1.7vw;
+  margin-bottom: 0;
+  border: 0.25vw solid #8B4513;
+  border-radius: 9999px;
+  min-width: 90vw;
+  margin-top: 4vh;
+  height: 5vh;
+}
+
+.left-section {
+  font-size: 1.5vw;
+  font-weight: bold;
+  text-align: left;
+}
+
+.money-bag {
+  display: flex;
+  align-items: center;
+  background-color: #5D2906;
+  color: white;
+  padding: 0.6vw 1.4vw;
+  border-radius: 9999px;
+  gap: 3.5vw;
+  height: 3.3vh;
+  width: 14vw;
+}
+
 .money-bag {
   font-size: 1.5vw;
 }
 
-  .right-section {
-    display: flex;
-    align-items: center;
-    gap: 1vw;
-    text-align: right;
-    margin-left: auto;
-  }
-  
-  .bag-icon {
-    margin-right: 0.3vw;
-  }
-  
-  .settings-icon {
-    font-size: 2vw;
-  }
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  text-align: right;
+  margin-left: auto;
+}
+
+.bag-icon {
+  margin-right: 0.3vw;
+}
+
+.settings-icon {
+  font-size: 2vw;
+}
 
 .navigation {
   width: 90%;
@@ -399,8 +402,9 @@ expansionStorage() {
   align-items: center;
   padding: 8px 16px;
   margin-bottom: 0;
-  margin-top: 1vh; /* Adjusted to account for fixed header */
-  gap:41vw;
+  margin-top: 1vh;
+  /* Adjusted to account for fixed header */
+  gap: 41vw;
 }
 
 .back-button {
@@ -416,11 +420,11 @@ expansionStorage() {
   text-align: center;
 }
 
-.storageCount{
-  width:50vw;
-  height:3vh;
-  text-align:right;
-  margin:2vh 0;
+.storageCount {
+  width: 50vw;
+  height: 3vh;
+  text-align: right;
+  margin: 2vh 0;
   font-size: 1.5vw;
   font-weight: bold;
 }
@@ -569,7 +573,7 @@ expansionStorage() {
   width: 100%;
   overflow-y: auto;
   max-height: 400px;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
 
 }
 
@@ -585,13 +589,17 @@ expansionStorage() {
   flex-direction: column;
   align-items: center;
   position: relative;
-  width: 160px; /* 너비 설정 */
-  margin: 5px 15px 5px 0; /* 오른쪽 여백 추가, 왼쪽으로는 여백 제거 */
+  width: 160px;
+  /* 너비 설정 */
+  margin: 5px 15px 5px 0;
+  /* 오른쪽 여백 추가, 왼쪽으로는 여백 제거 */
 }
 
 .fruit-image {
-  width: 100%; /* Reverted width */
-  height: 100%; /* Reverted height */
+  width: 100%;
+  /* Reverted width */
+  height: 100%;
+  /* Reverted height */
 }
 
 .fruit-discount {
@@ -630,8 +638,8 @@ expansionStorage() {
   border: 2px solid #f0f0f0;
 }
 
-.fruit-container::-webkit-scrollbar-track-piece{
-  background-color:#f5f5dc;
+.fruit-container::-webkit-scrollbar-track-piece {
+  background-color: #f5f5dc;
 }
 
 
@@ -684,10 +692,11 @@ expansionStorage() {
 }
 
 .popup-body {
-  height:332px;
+  height: 332px;
   padding: 20px;
   text-align: center;
 }
+
 .storageCount {
   width: 50vw;
   height: 3vh;
@@ -703,7 +712,8 @@ expansionStorage() {
   gap: 10px;
 }
 
-.decrease-button, .increase-button {
+.decrease-button,
+.increase-button {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -720,29 +730,27 @@ expansionStorage() {
   text-align: center;
 }
 
-.disposeButton{
-  width:181px;
-  height:59px;
-  background-color:rgba(0, 0, 0, 0);
-  border:0;
-  background-image:url("/src/assets/element/increasestorage.png");
-  background-size:100% 100%;
+.disposeButton {
+  width: 181px;
+  height: 59px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  background-image: url("/src/assets/element/increasestorage.png");
+  background-size: 100% 100%;
 }
 
-.oneExplan{
-  display:flex;
-  flex-direction:column;
-  justify-content:space-around;
+.oneExplan {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.expansionButton{
-  width:9.5vw;
-  height:6vh;
-  background-color:rgba(0, 0, 0, 0);
-  border:0;
-  background-image:url("/src/assets/element/increasestorage.png");
-  background-size:100% 100%;
+.expansionButton {
+  width: 9.5vw;
+  height: 6vh;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  background-image: url("/src/assets/element/increasestorage.png");
+  background-size: 100% 100%;
 }
-
-
 </style>
