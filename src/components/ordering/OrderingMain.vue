@@ -439,6 +439,28 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'RecipeKoreaOTF_38';
+  src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-size:38px;
+}
+@font-face {
+  font-family: 'RecipeKoreaOTF_34';
+  src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-size:38px;
+}
+@font-face {
+  font-family: 'Pretendard_24';
+  src: url('/fonts/Pretendard-Black.woff') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-size:24px;
+}
+
 .main-container {
   width: 100%;
     height: 100vh;
@@ -552,8 +574,7 @@ export default {
 }
 
 .delivery-title {
-  font-size: 2vw;
-  font-weight: bold;
+  font-family: 'RecipeKoreaOTF_38';
   margin: 0;
   display: inline-block;
   position: relative;
