@@ -449,9 +449,8 @@ export default {
 @font-face {
   font-family: 'RecipeKoreaOTF_34';
   src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
   font-size:38px;
+  font-weight: bold;
 }
 @font-face {
   font-family: 'Pretendard_24';
@@ -467,7 +466,7 @@ export default {
     position: relative;
     overflow: hidden;
   
-    font-family: RecipeKoreaOTF_38;
+    font-family: 'RecipeKoreaOTF_38';
     font-size: 24px;
     background-color: #f5f5f5;
   
@@ -760,6 +759,7 @@ export default {
 }
 
 .cart-title {
+  font-family: 'RecipeKoreaOTF_34';
   font-weight: bold;
   text-align: center;
   font-size: 18px;
@@ -820,6 +820,7 @@ export default {
 }
 
 .total-products-fake{
+  font-family: 'Pretendard_24';
   text-align:right;
   padding-right:0.5vw;
   padding-top:1vh;
