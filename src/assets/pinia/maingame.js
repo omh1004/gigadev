@@ -26,7 +26,7 @@ export const revenueStore = defineStore('maingame',{
             if(saveState){
                 this.$patch(JSON.parse(saveState));
             }
-        }
+        },
     }
 })
 
@@ -44,26 +44,30 @@ export const productStore = defineStore('storage',{
             console.log("ppp", p50, p);
             if(p50!=null){
                 while(p50.orderQuantity>0){
-                    const prod = this.product.find(pro=>pro.goodsName==p50.goodsName && pro.expDate==1);
+                    const prod = this.product.find(pro=>pro.goodsName==p50.goodsName && pro.expDate==1 && pro.orderQuantity>0);
                     console.log("abc",prod);
                     if(prod.orderQuantity>=p50.orderQuantity){
                         prod.orderQuantity -= p50.orderQuantity;
                         p50.orderQuantity=0;
+                        console.log("prod quantity 줄임?", prod.orderQuantity);
                     }else{
                         p50.orderQuantity -= prod.orderQuantity;
                         prod.orderQuantity=0;
+                        console.log("prod quantity 텅텅 빔?", prod.orderQuantity)
                     }
                 }
             }else if(p!=null){
                 while(p.orderQuantity>0){
-                    const prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate>=2);
+                    const prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate>=2 && pro.orderQuantity>0);
                     console.log("efg",prod);
                     if(prod.orderQuantity>=p.orderQuantity){
                         prod.orderQuantity -= p.orderQuantity;
                         p.orderQuantity=0;
+                        console.log("prod quantity 줄임?", prod.orderQuantity);
                     }else{
                         p.orderQuantity -= prod.orderQuantity;
                         prod.orderQuantity=0;
+                        console.log("prod quantity 텅텅 빔?", prod.orderQuantity)
                     }
                 }
             }

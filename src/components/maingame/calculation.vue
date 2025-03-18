@@ -133,7 +133,7 @@ export default {
             }
         }
         if(this.revenue.feverYN='Y'){
-            this.a*1.2;
+            this.a = this.a*1.2;
         }
         this.revenue.cash=this.revenue.cash*1+this.a+this.revenue.disposePrice+this.revenue.orderPrice-20000;
 
