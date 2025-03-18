@@ -157,7 +157,7 @@ export default {
     }
   },
   mounted() {
-    this.getProductData();
+    this.getProductData(); 
     const gameNo = sessionStorage.getItem("gameNo");
     // 그냥 돈만 가져와야지
     fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
