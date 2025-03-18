@@ -51,7 +51,7 @@ export default {
 
     display: flex;
 
-    background-image: url('@/assets/common/ending1.png');
+    background-image: url('/common/ending1.png');
     background-size: 100% 100%;
 }
 .dialog-text {

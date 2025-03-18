@@ -217,7 +217,7 @@ export default {
       income: 0, // ✅ 선택한 날짜의 수입
       expense: 0,  // ✅ 선택한 날짜의 지출
       total: 0, // ✅ 선택한 날짜의 총 매출 (income - expense)
-      completedDays: [1,2,3,4], // ✅ 완료된 날짜 (예제: DAY1만 활성화)
+      completedDays: [], // ✅ 완료된 날짜 (예제: DAY1만 활성화)
       balance:0,
       // 물음표 호버 기능!!
       showHelp:false,
