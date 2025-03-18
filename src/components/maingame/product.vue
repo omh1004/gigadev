@@ -177,6 +177,7 @@ export default {
         },
     },
     mounted(){
+        console.log("product mounted");
         const gameNo = sessionStorage.getItem("gameNo");
         fetch("http://localhost:8080/spring/maingame/gamestart?gameNo="+gameNo)
         .then(response=>response.json())

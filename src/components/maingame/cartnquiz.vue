@@ -259,19 +259,21 @@ export default {
                         this.relability-=5;
                     }
                     if(this.relability==0){
-                        this.$emit('bgmstop');
-                        this.$router.push('/poorending1');
+                        setTimeout(()=>{
+                            this.$emit('bgmstop');
+                            this.$router.push('/poorending1');
+                        },3500);
                     }else if((this.customerCount+1)==this.quizMan){
                         setTimeout(()=>{
                             this.meetQuizMan=true;
-                            this.$emit('rollback');
+                            // this.$emit('rollback');
                             this.$emit('notclick',false);
                             this.$emit('bgmchange','quiz');
                             this.$router.push('/maingame/quiz');
                         },3500);
                     }else{
                         setTimeout(()=>{
-                            this.$emit('rollback');
+                            // this.$emit('rollback');
                             this.$emit('notclick',false);
                             if(this.customerCount>=10){
                                 this.$emit('bgmstop');

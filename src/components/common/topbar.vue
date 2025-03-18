@@ -1,7 +1,7 @@
 <template>
 <div style="height:10vh;overflow:visible;text-align:right;">
     <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
-        <p style="font-size:2vh;">D-30</p>
+        <p style="font-size:2vh;">D-{{ 30-revenue.salesDay+1 }}</p>
         <div v-if="gamestart" style="display:flex;">
             <!-- <img src="@/assets/timer.png" width="10" height="52"> -- -->
             <div class="timebar-container">
@@ -19,7 +19,7 @@
             <div class="moneybar">
                 <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">
                 <div class="line"></div>
-                <div class="money"><p style="font-size:2vh;">{{ revenue.cash }}원</p></div>
+                <div class="money"><p style="font-size:2vh;">{{ (revenue.cash*1).toLocaleString() }}원</p></div>
             </div>
             <img src="@/assets/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
         </div>

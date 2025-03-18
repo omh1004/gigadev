@@ -86,11 +86,15 @@ export default {
   },
   components:{ Topbar },
   mounted(){
+    console.log("mainmenu mounted");
     const gameNo = sessionStorage.getItem("gameNo");
     // 그냥 돈만 가져와야지
     fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
     .then(response=>response.text())
     .then(data=>this.revenue.cash = data)
+
+    this.revenue.qeezeYN='N';
+    this.revenue.feverYN='N';
   }
 }
 </script>
