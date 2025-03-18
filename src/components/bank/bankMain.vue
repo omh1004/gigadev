@@ -515,7 +515,7 @@ async openDaySummary(day) {
 
   } catch (error) {
     console.error("매출 데이터 가져오기 오류:", error);
-    alert("매출 데이터를 불러오는 중 오류 발생!");
+    alert("1일차가 종료된 시점부터 조회 가능합니다.");
   }
 },
 
