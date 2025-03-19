@@ -7,7 +7,7 @@
     <div class="maingame">
         <div style="height:10vh;overflow:visible;text-align:right;">
             <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
-                <p style="font-size:2vh;">D-30</p>
+                <p style="font-size:2vh;">D-{{ 30-revenue.salesDay+1 }}</p>
                 <div style="display:flex;">
                     <!-- <img src="/timer.png" width="10" height="52"> -- -->
                     <div class="timebar-container">
@@ -30,6 +30,7 @@
                     <img src="/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
                 </div>
             </div>
+            <!-- 윤상님 바꿔줘요! -->
             <div v-show="opensettings" class="settings">
                 <div class="settingslist">
                     <p @click="soundsetting=true;">사운드</p>
@@ -37,6 +38,7 @@
                     <p style="background-color:#56174F;color:#FFFFFF;">저장하기</p>
                 </div>
             </div>
+            <!-- 윤상님 바꿔줘요! 여기까지 -->
         </div>
         <div class="product-container">
             <cartNquiz :customerA="customerA" :quizNum="quizNum" :interval="interval" :timeleft="timeleft" :cart="cart"

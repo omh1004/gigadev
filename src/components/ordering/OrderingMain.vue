@@ -3,7 +3,7 @@
     <div class="main-container">
     <!-- Header -->
     <div class="header">
-      <div class="left-section">D-{{ this.playday }}</div>
+      <div class="left-section">D-{{ (30*1)-((this.revenue.salesDay-1)*1) }}</div>
       <div class="right-section">
         <div class="money-bag">
           <span class="bag-icon">💰</span>

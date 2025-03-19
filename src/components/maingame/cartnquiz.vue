@@ -323,6 +323,12 @@ export default {
             }
         }
     },
+    mounted(){
+        if(this.revenue.reliability==100){
+            this.revenue.reliability=50;
+        }
+        this.reliability = this.revenue.reliability;
+    },
     components:{
         QuizMain,QuizChoice,
     },

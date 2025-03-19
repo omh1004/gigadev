@@ -1,3 +1,4 @@
+<!-- 윤상님 이 페이지 스타일 바꿔줘요 -->
 <template>
   <div v-show="manualon" class="usermanual" :style="`background-image:url('${manual[page]}');background-size:100% 100%;`">
     <div class="smallbutton">

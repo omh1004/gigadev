@@ -2,7 +2,7 @@
   <div class="main-container">
     <!-- Header -->
     <div class="header">
-      <div class="left-section">D-30</div>
+      <div class="left-section">D-{{ 30-revenue.salesDay+1 }}</div>
       <div class="right-section">
         <div class="money-bag">
           <span class="bag-icon">💰</span>
