@@ -225,6 +225,7 @@ label {
   font-size: 1vw;
 }
 #alertId {
+  font-family: prebold;
   color:red;
   padding-top: 0;
   text-box-trim: trim-start;
@@ -232,6 +233,7 @@ label {
   margin-left: 23vw;
 }
 #alertPw {
+  font-family: prebold;
   margin-top: -0.3vh;
   margin-left: 23vw;
 }
@@ -258,6 +260,7 @@ label {
   border-radius: 0.4vw;
 }
 #checkbtn {
+  font-family: rk;
   color:#ffffff;
   background-color: #6F3533;
   border: 0.25vw solid #6F3533;
@@ -310,6 +313,7 @@ label {
   border-radius: 0.25vw;
 }
 #alertNick {
+  font-family: prebold;
   text-box-trim:trim-start;
   margin-top: 1vh;
   color: red;
@@ -320,6 +324,7 @@ label {
   justify-content: center;
 }
 #signbtn {
+  font-family: rk;
   margin-top: 4vh;
   padding: 0.6vw 2vw;
   border:0.25vw solid #56174F;
