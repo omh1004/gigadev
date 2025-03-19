@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import Topbar from '../common/topbar.vue';
 import { revenueStore } from '@/assets/pinia/maingame';
 import Topbar from '../common/topbar.vue';
 
