@@ -62,7 +62,7 @@ export default {
             quizblind:false,
             timebar:30,
             quiztime:false,
-            quizNum:Math.floor(Math.random()*10),
+            quizNum:Math.floor(Math.random()*18),
             timeleft:3,
             interval:'',
             customerCount:1,
@@ -197,11 +197,7 @@ export default {
     },
     components:{
         cartNquiz,Product,Settings,Usermanual
-    },
-    beforeUnmount(){
-        this.piniaProduct.saveState();
-        this.revenue.saveState();
-    }
+    },  
 }
 </script>
 <style scoped>

@@ -71,10 +71,11 @@ export const productStore = defineStore('storage',{
                     }
                 }
             }
-            
+            this.saveState();
         },
         saveState(){
             localStorage.setItem('product',JSON.stringify(this.$state));
+            console.log(localStorage.getItem('product'));
         },
         loadState(){
             const saveState = localStorage.getItem('product');

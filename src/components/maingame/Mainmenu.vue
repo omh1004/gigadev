@@ -88,6 +88,7 @@ export default {
   mounted(){
     console.log("mainmenu mounted");
     const gameNo = sessionStorage.getItem("gameNo");
+    this.revenue.loadState();
     // 그냥 돈만 가져와야지
     fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
     .then(response=>response.text())
