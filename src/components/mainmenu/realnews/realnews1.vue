@@ -1,5 +1,8 @@
 <template>
   <div class="main-container">
+    <div class="date-box">
+      <div class="date-text">day를 확인하는 문구입니다.</div>
+    </div>
     <div class="dialog-box">
       <div class="dialog-text" v-html="inputText"></div>
     </div>
@@ -177,5 +180,16 @@ export default {
   height: 10%;
   background-color: #F9F8F2;
   cursor: pointer;
+}
+.date-box {
+  position: absolute;
+  top:10%;
+  left: 4%;
+  height: 10%;
+  width: 30%;
+  font-size: 2.7vw;
+  font-weight: bold;
+  background-color: #FFEFCA;
+  color:#6F3533;
 }
 </style>
