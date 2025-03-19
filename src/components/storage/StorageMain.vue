@@ -254,7 +254,8 @@ export default {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-              
+            storagelevel: this.storagelevel,
+
           })
         })
           .then(response => {
@@ -307,6 +308,8 @@ export default {
 
     const gameNo = sessionStorage.getItem("gameNo");
 
+
+
     fetch("http://localhost:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
       .then(response => response.json())
       .then(data => {
@@ -328,6 +331,15 @@ export default {
     fetch("http://localhost:8080/spring/maingame/moneydata?gameNo=" + gameNo)
       .then(response => response.text())
       .then(data => this.revenue.cash = data)
+
+    // 그냥 돈만 가져와야지
+    fetch("http://localhost:8080/spring/storage/gameInfo?gameNo=" + gameNo)
+      .then(response => response.json())
+      .then(data => {
+        this.storageSize = data.storagelevel;
+        this.storagelevel = data.storagecount;   })
+
+
   },
   components:{ Topbar }
 };
