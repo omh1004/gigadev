@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <button class="dayend" @click="gameEnd?this.$router.push('/homeMenu'):this.$router.push('/mainMenu')">퇴근하기</button>
+            <button class="dayend" @click="convClose">퇴근하기</button>
         </div>
     </div>
 </template>
@@ -74,7 +74,7 @@ export default {
         }
     },
     methods:{
-        convClose(){
+        convEnd(){
             // 게임정보, 수익, 창고 업데이트 하기
             fetch('http://localhost:8080/spring/maingame/gameend',{
                 method:'POST',
@@ -107,6 +107,8 @@ export default {
             // 다음으로 넘겨야 할 데이터 추가하기
             // 잔고
             // 신뢰도(구현시), 창고 물품
+        },
+        convClose(){
             if(this.revenue.salesDay>=30){
                 // this.$router.push("/endsummary"); // 엔딩 직전 화면으로 이동시키기
                 // this.$router.push("/finalcalculation")   // 엔딩 직전 화면 이후 최종 정산. /ending vue에서 사용하기
@@ -123,6 +125,11 @@ export default {
                 this.revenue.orderPrice=0;
                 this.revenue.saveState();
                 // this.product.saveState();
+            }
+            if(this.gameEnd){
+                this.$router.push('/homeMenu');
+            }else{
+                this.$router.push('/mainMenu');
             }
         }
     },
@@ -146,7 +153,7 @@ export default {
         }
         this.revenue.cash=this.revenue.cash*1+this.calcul+this.revenue.disposePrice+this.revenue.orderPrice-20000;
 
-        this.convClose();
+        this.convEnd();
         this.revenue.saveState();
 
         if(history.state.gameEnd!=null){
