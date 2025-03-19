@@ -6,7 +6,7 @@
                 <div style="display:flex;flex-direction:column;justify-content:space-around;height:22vh;background-color:rgba(140,64,41,0.1);border-radius:20px;">
                     <div>
                         <div class="block-left"><h3>수익</h3></div>
-                        <div class="block-right"><h3>{{ a+revenue.disposePrice }}원</h3></div>
+                        <div class="block-right"><h3>{{ calcul+revenue.disposePrice }}원</h3></div>
                     </div>
                     <div>
                         <div class="block-left"><p>판매 수익</p></div>
@@ -43,7 +43,7 @@
                 <div style="height:3vh;">
                     <div>
                         <div class="block-left"><h3>총계</h3></div>
-                        <div class="block-right"><h3>{{ a+revenue.disposePrice+revenue.orderPrice-20000 }}원</h3></div>
+                        <div class="block-right"><h3>{{ calcul+revenue.disposePrice+revenue.orderPrice-20000 }}원</h3></div>
                     </div>
                 </div>
                 <div style="height:5.5vh;background-color:#4C1B0B;border-radius:20px;">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <button class="dayend" @click="convClose">퇴근하기</button>
+            <button class="dayend" @click="gameEnd?this.$router.push('/homeMenu'):this.$router.push('/mainMenu')">퇴근하기</button>
         </div>
     </div>
 </template>
@@ -69,7 +69,8 @@ export default {
             revenue:revenueStore(),
             product:productStore(),
             reward:'',
-            a:0,
+            calcul:0,
+            gameEnd:false,
         }
     },
     methods:{
@@ -122,7 +123,6 @@ export default {
                 this.revenue.orderPrice=0;
                 this.revenue.saveState();
                 // this.product.saveState();
-                this.$router.push("/mainMenu");
             }
         }
     },
@@ -131,22 +131,28 @@ export default {
         this.product.loadState();
 
         console.log(this)
-        this.a = this.revenue.salesMount;
-        console.log(this.a);
+        this.calcul = this.revenue.salesMount;
+        console.log(this.calcul);
         this.reward = quizReward[rewardDialog[this.revenue.salesDay-1].reward]
         if(this.revenue.qeezeYN=='Y'){
             if(this.reward==30000){
-                this.a+=this.reward;
+                this.calcul+=this.reward;
             }else if(this.reward==1.05 || this.reward==1.1 || this.reward==2){
-                this.a*=this.reward;
+                this.calcul*=this.reward;
             }
         }
         if(this.revenue.feverYN=='Y'){
-            this.a = this.a*1.2;
+            this.calcul = this.calcul*1.2;
         }
-        this.revenue.cash=this.revenue.cash*1+this.a+this.revenue.disposePrice+this.revenue.orderPrice-20000;
+        this.revenue.cash=this.revenue.cash*1+this.calcul+this.revenue.disposePrice+this.revenue.orderPrice-20000;
 
+        this.convClose();
         this.revenue.saveState();
+
+        if(history.state.gameEnd!=null){
+            this.gameEnd = history.state.gameEnd;
+            history.replaceState(null, document.title, window.location.href);
+        }
     }
 }
 </script>
