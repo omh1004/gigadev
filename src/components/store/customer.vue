@@ -1,12 +1,12 @@
 <template>
     <div style="display:flex;">
-        <div class="relability_bar">
+        <div class="reliability_bar">
             <div class="bar_inside">
-                <p v-show="relability==100" class="fever">FEVER<br>TIME</p>
-                <p v-show="relability<=90" class="figure">{{ relability }}</p>
-                <div class="figure_bar" :class="{'lowrela':relability<=40,'rela':relability>40 && relability<100,'maxrela':relability==100}"
-                        :style="`min-height:${0.37*relability}vh`">
-                    <p v-show="relability>90 && relability<100" class="figure" style="margin-top:3px;">{{ relability }}</p>
+                <p v-show="reliability==100" class="fever">FEVER<br>TIME</p>
+                <p v-show="reliability<=90" class="figure">{{ reliability }}</p>
+                <div class="figure_bar" :class="{'lowrela':reliability<=40,'rela':reliability>40 && reliability<100,'maxrela':reliability==100}"
+                        :style="`min-height:${0.37*reliability}vh`">
+                    <p v-show="reliability>90 && reliability<100" class="figure" style="margin-top:3px;">{{ reliability }}</p>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@ export default {
 
 
     },
-    props:['quizNum','dialog','customerA','relability'],
+    props:['quizNum','dialog','customerA','reliability'],
     emit:['answer'],
 }
 </script>
@@ -76,7 +76,7 @@ export default {
         top:8vh;
         z-index:-1;
     }
-    .relability_bar{
+    .reliability_bar{
         position:relative;
         top:6.5vh;
         left:0.5vw;
@@ -97,7 +97,7 @@ export default {
         background-color:#F9F8F2;
         overflow:hidden;
     }
-    .relability{
+    .reliability{
         position:relative;
         top:40.5vh;
         right:3vw;

@@ -1,3 +1,4 @@
+<!-- 윤상님 이 페이지 스타일 바꿔줘요 -->
 <template>
     <div v-show="soundsetting" class="settings-container"> <!-- v-show=soundsetting으로 바꾸기 -->
         <div class="settings-modal">

@@ -88,6 +88,7 @@ export default {
   mounted(){
     console.log("mainmenu mounted");
     const gameNo = sessionStorage.getItem("gameNo");
+    this.revenue.loadState();
     // 그냥 돈만 가져와야지
     fetch("http://localhost:8080/spring/maingame/moneydata?gameNo="+gameNo)
     .then(response=>response.text())
@@ -100,6 +101,10 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
 .main-container {
   width: 100vw;
   height: 100vh;
@@ -220,10 +225,11 @@ font-size: 1.5vw;
 }
 
 .menu-container {
+  font-family: rk;
   width: 80%;
   display: flex;
   justify-content: space-between;
-  margin-top: 14vh;
+  margin-top: 25vh;
   margin-bottom: 20vh;
 }
 
@@ -231,10 +237,11 @@ font-size: 1.5vw;
 /* 커스텀 버튼 스타일 */
 .custom-button {
   width: 20vw;
-  height: 15vh;
-  border-radius: 30px;
-  background-color: #FFF5E1; /* 기본 배경색: 연한 베이지 */
-  border: 6px solid #713528; /* 테두리 색상: 갈색 */
+  height: 12vh;
+  border-radius: 2vw;
+  box-shadow: 0 0.5vw 1px #713528;
+  background-color: #FFEFCA; /* 기본 배경색: 연한 베이지 */
+  border: 0.25vw solid #713528; /* 테두리 색상: 갈색 */
   color: #333; /* 기본 텍스트 색상: 검은색 */
   display: flex;
   align-items: center;
@@ -254,11 +261,11 @@ font-size: 1.5vw;
 .button-text {
   font-size: 2.5vw;
   font-weight: bold;
-  font-family: RecipekoreaOTF, sans-serif;
 }
 /* 여기까지 버튼 스타일 변경 */
 
 .open-button-container {
+  margin-top: 4vh;
   display: flex;
   justify-content: center;
   /* background-image: url('/tutorial/button/openbutton.png'); */

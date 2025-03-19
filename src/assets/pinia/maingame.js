@@ -16,6 +16,7 @@ export const revenueStore = defineStore('maingame',{
         playNo:0,
         state:0,    // 이건 봐도 봐도 모르겠다
         userId:'',
+        reliability:50,  // 게임 저장할 때 쓰긴 해야 할 듯
     }),
     actions:{
         saveState(){
@@ -58,7 +59,20 @@ export const productStore = defineStore('storage',{
                 }
             }else if(p!=null){
                 while(p.orderQuantity>0){
-                    const prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate>=2 && pro.orderQuantity>0);
+                    let prod;
+                    let expDate;
+                    switch(p.goodsType){
+                        case '신선식품': expDate=3; break;
+                        case '즉석식품': expDate=4; break;
+                        case '전자제품': break;
+                        default: expDate=0; break;
+                    }
+
+                    let i = 2;
+                    while(prod==null && i<=expDate){
+                        prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate==expDate && pro.orderQuantity>0)
+                    }
+                    
                     console.log("efg",prod);
                     if(prod.orderQuantity>=p.orderQuantity){
                         prod.orderQuantity -= p.orderQuantity;
@@ -71,10 +85,11 @@ export const productStore = defineStore('storage',{
                     }
                 }
             }
-            
+            this.saveState();
         },
         saveState(){
             localStorage.setItem('product',JSON.stringify(this.$state));
+            console.log(localStorage.getItem('product'));
         },
         loadState(){
             const saveState = localStorage.getItem('product');

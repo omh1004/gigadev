@@ -114,6 +114,14 @@ export default {
                 // this.$router.push("/rich")
                 // this.$router.push("/superrich")
             }else{
+                this.revenue.salesDay++;
+                this.revenue.salesMount=0;
+                this.revenue.qeezeYN='N';
+                this.revenue.feverYN='N';
+                this.revenue.disposePrice=0;
+                this.revenue.orderPrice=0;
+                this.revenue.saveState();
+                // this.product.saveState();
                 this.$router.push("/mainMenu");
             }
         }
@@ -122,23 +130,23 @@ export default {
         this.revenue.loadState();
         this.product.loadState();
 
+        console.log(this)
         this.a = this.revenue.salesMount;
         console.log(this.a);
         this.reward = quizReward[rewardDialog[this.revenue.salesDay-1].reward]
-        if(this.revenue.qeezeYN='Y'){
+        if(this.revenue.qeezeYN=='Y'){
             if(this.reward==30000){
                 this.a+=this.reward;
             }else if(this.reward==1.05 || this.reward==1.1 || this.reward==2){
                 this.a*=this.reward;
             }
         }
-        if(this.revenue.feverYN='Y'){
+        if(this.revenue.feverYN=='Y'){
             this.a = this.a*1.2;
         }
         this.revenue.cash=this.revenue.cash*1+this.a+this.revenue.disposePrice+this.revenue.orderPrice-20000;
 
         this.revenue.saveState();
-        this.product.saveState();
     }
 }
 </script>

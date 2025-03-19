@@ -1,18 +1,7 @@
 <template>
 
     <div class="main-container">
-    <!-- Header -->
-    <!-- <div class="header">
-      <div class="left-section">D-{{ this.playday }}</div>
-      <div class="right-section">
-        <div class="money-bag">
-          <span class="bag-icon">💰</span>
-          <span class="amount">{{ (revenue.cash*1).toLocaleString() }}원</span>
-        </div>
-        <span class="settings-icon">⚙️</span>
-        
-      </div>
-    </div> -->
+
     <Topbar />
 
     <div class="main-content">

@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="date-box">
-      <div class="date-text">day를 확인하는 문구입니다.</div>
+      <div class="date-text">DAY-{{ gameDay }} NEWS</div>
     </div>
     <div class="dialog-box">
       <div class="dialog-text" v-html="inputText"></div>
@@ -25,6 +25,7 @@ export default {
       dialex: [],
       newsdialnum: 0,
       dialpoint: 0,
+      gameDay: null,
     };
   },
   async mounted() {
@@ -33,6 +34,8 @@ export default {
       const response = await fetch(`http://localhost:8080/spring/maingame/news?userId=${this.userId}`);
       if (!response.ok) throw new Error("뉴스 데이터를 불러오는데 실패했습니다.");
       const data = await response.json();
+
+      this.gameDay=data;
 
       // ✅ 게임 회차에 맞는 텍스트 배열을 설정
       this.setNewsText(data);

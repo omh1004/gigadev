@@ -3,13 +3,13 @@
         <!-- 일단 프론트엔드만 만들어놓는 중
         <p class="balloon">{{ quizDialog }}</p>
         <img class="manInBlack" src="/man_in_black.png" width="400px" height="500px"> -->
-        <div class="relability_bar">
+        <div class="reliability_bar">
             <div class="bar_inside">
-                <p v-show="relability==100" class="fever">FEVER<br>TIME</p>
-                <p v-show="relability<=90" class="figure">{{ relability }}</p>
-                <div class="figure_bar" :class="{'lowrela':relability<=40,'rela':relability>40 && relability<100,'maxrela':relability==100}"
-                        :style="`min-height:${4*relability}px`">
-                    <p v-show="relability>90 && relability<100" class="figure" style="margin-top:3px;">{{ relability }}</p>
+                <p v-show="reliability==100" class="fever">FEVER<br>TIME</p>
+                <p v-show="reliability<=90" class="figure">{{ reliability }}</p>
+                <div class="figure_bar" :class="{'lowrela':reliability<=40,'rela':reliability>40 && reliability<100,'maxrela':reliability==100}"
+                        :style="`min-height:${4*reliability}px`">
+                    <p v-show="reliability>90 && reliability<100" class="figure" style="margin-top:3px;">{{ reliability }}</p>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@ export default {
     mounted() {
         this.$emit('quizTime');
     },
-    props: ['quizNum', 'quizDialog', 'relability'],
+    props: ['quizNum', 'quizDialog', 'reliability'],
     emit: ['answer'],
 }
 </script>
@@ -64,7 +64,7 @@ div {
     background-repeat: no-repeat;
 }
 
-.relability_bar {
+.reliability_bar {
     position: relative;
     top: 70px;
     left: 15px;
@@ -87,7 +87,7 @@ div {
     overflow: hidden;
 }
 
-.relability {
+.reliability {
     position: relative;
     top: 440px;
     right: 61px;
