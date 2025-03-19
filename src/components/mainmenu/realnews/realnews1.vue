@@ -137,6 +137,10 @@ export default {
 
 
 <style scoped>
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
   .main-container {
     width: 100%;
     height: 100vh;
@@ -163,6 +167,7 @@ export default {
   width: 80%;
 }
 .dialog-text {
+  font-family: prebold;
   position: absolute;
   left: 8%;
   bottom: 13%;
