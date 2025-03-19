@@ -254,6 +254,7 @@ export default {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
+            storagelevel: this.storagelevel,
 
           })
         })
@@ -300,9 +301,14 @@ export default {
       this.disposeProfit = history.state.disposeProfit;
     }
 
+    // 발주(창고부족) -> 창고로 넘어온 뒤 다시 자동으로 뜨지 않게 하기(실험실)
+    history.replaceState(null, document.title, window.location.href);
+
     this.revenue = revenueStore();
 
     const gameNo = sessionStorage.getItem("gameNo");
+
+
 
     fetch("http://localhost:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
       .then(response => response.json())
@@ -310,9 +316,9 @@ export default {
         console.log("서버에서 받은 데이터:", data);
         // 서버에서 받은 데이터를 그대로 fruits에 저장
         this.fruits = data;
-        this.playday = this.playday - (data[0].playday-1);
-        this.storageSize = data[0].storagelevel;
-        this.amount = data[0].amount;
+        // this.playday = this.playday - (data[0].playday-1);
+        // this.storageSize = data[0].storagelevel;
+        // this.amount = data[0].amount;
         console.log("적용된 데이터:", this.fruits);
       })
       .catch(error => {
@@ -325,19 +331,36 @@ export default {
     fetch("http://localhost:8080/spring/maingame/moneydata?gameNo=" + gameNo)
       .then(response => response.text())
       .then(data => this.revenue.cash = data)
+
+    // 그냥 돈만 가져와야지
+    fetch("http://localhost:8080/spring/storage/gameInfo?gameNo=" + gameNo)
+      .then(response => response.json())
+      .then(data => {
+        this.storageSize = data.storagelevel;
+        this.storagelevel = data.storagecount;   })
+
+
   },
   components:{ Topbar }
 };
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
 .main-container {
   width: 100%;
   height: 100vh;
   position: relative;
   overflow: hidden;
 
-  font-family: RecipekoreaOTF;
+
   font-size: 24px;
   background-color: #f5f5f5;
 
@@ -408,12 +431,13 @@ export default {
 }
 
 .navigation {
+  font-family: rk;
   width: 90%;
   display: flex;
   align-items: center;
   padding: 8px 16px;
   margin-bottom: 0;
-  margin-top: 1vh;
+  margin-top: 4vh;
   /* Adjusted to account for fixed header */
   gap: 41vw;
 }
@@ -426,12 +450,14 @@ export default {
 }
 
 .title {
+  font-family: rk;
   font-size: 2vw;
   font-weight: bold;
   text-align: center;
 }
 
 .storageCount {
+  font-family: rk;
   width: 50vw;
   height: 3vh;
   text-align: right;
@@ -441,10 +467,12 @@ export default {
 }
 
 .double-arrow {
+  font-family: rk;
   font-size: 16px;
 }
 
 .inventory-status-bar {
+  font-family: rk;
   display: flex;
   justify-content: space-between;
   padding: 0 16px;
@@ -452,19 +480,22 @@ export default {
 }
 
 .info-text {
+  font-family: rk;
   font-size: 14px;
 }
 
 .capacity-text {
+  font-family: rk;
   font-size: 14px;
   font-weight: bold;
 }
 
 .tab-container {
+  font-family: rk;
   width: 50vw;
   height: 50vh;
-  border: 4px solid #6F3533;
-  border-radius: 16px;
+  border: 0.4vw solid #6F3533;
+  border-radius: 2vw;
   overflow: hidden;
   margin-bottom: 20px;
   background-color: #EAE5DE;
@@ -477,9 +508,11 @@ export default {
 }
 
 .tab-item {
+  height: 5vh;
   flex: 1;
   text-align: center;
-  padding: 12px;
+  line-height: 5vh;
+  padding: 1vw;
   font-weight: bold;
   cursor: pointer;
 }
@@ -560,6 +593,8 @@ export default {
 }
 
 .confirm-button {
+  font-family: prebold;
+  color: #6F3533;
   background-color: #fff3d4;
   border: 0.25vw solid #8b4513;
   border-radius: 16px;

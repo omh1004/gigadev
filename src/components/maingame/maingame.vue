@@ -2,9 +2,10 @@
     <div v-show="quiztime" class="quiztime">
         <img src="/element/quiztime.png">
     </div>
-    <Settings :soundsetting="soundsetting" @closesound="closesound" @changebgmvol="changebgmvol" @changeeffectvol="changeeffectvol"/>
-    <Usermanual :manualon="manualon" @manualoff="manualoff"/>
     <div class="maingame">
+        <Settings :soundsetting="soundsetting" @closesound="closesound" @changebgmvol="changebgmvol" @changeeffectvol="changeeffectvol"/>
+        <Usermanual :manualon="manualon" @manualoff="manualoff"/>
+        <Savegame :savegame="savegame" @closeSaveModal="closeSaveModal"/>
         <div style="height:10vh;overflow:visible;text-align:right;">
             <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
                 <p style="font-size:2vh;">D-{{ 30-revenue.salesDay+1 }}</p>
@@ -35,7 +36,7 @@
                 <div class="settingslist">
                     <p @click="soundsetting=true;">사운드</p>
                     <p @click="manualon=true;">초보자메뉴얼</p>
-                    <p style="background-color:#56174F;color:#FFFFFF;">저장하기</p>
+                    <p style="background-color:#56174F;color:#FFFFFF;" @click="savegame=true;">저장하기</p>
                 </div>
             </div>
             <!-- 윤상님 바꿔줘요! 여기까지 -->
@@ -50,6 +51,7 @@
     </div>
 </template>
 <script scoped>
+import Savegame from '../common/savegame.vue';
 import Usermanual from '../common/usermanual.vue';
 import Settings from '../common/volumesettings.vue';
 import cartNquiz from './cartnquiz.vue';
@@ -83,6 +85,7 @@ export default {
             soundsetting:false,
             moneyhave:500000,
             manualon:false,
+            savegame:false,
         }
     },
     methods:{
@@ -167,6 +170,9 @@ export default {
         },
         manualoff(){
             this.manualon=false;
+        },
+        closeSaveModal(){
+            this.savegame=false;
         }
     },
     mounted(){
@@ -198,7 +204,7 @@ export default {
         }
     },
     components:{
-        cartNquiz,Product,Settings,Usermanual
+        cartNquiz,Product,Settings,Usermanual,Savegame
     },  
 }
 </script>

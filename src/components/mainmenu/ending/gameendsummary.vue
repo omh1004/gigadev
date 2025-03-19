@@ -6,7 +6,7 @@
         </div>
     
         <div id="bankmanbox">
-            <img id="bankman" src="/tutorial/people/bankmember.png">
+            <img id="bankman" src="/person/introwoman.png">
         </div>
         <div class="dialog-box">
             <div class="dialog-text">{{ inputText }}</div>
@@ -60,6 +60,10 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'prelight';
+  src: url('/fonts/Pretendard-Light.woff') format('woff');
+}
     .main-container {
         width: 100%;
         height: 100vh;
@@ -109,6 +113,7 @@ export default {
     }
 
     .dialog-text {
+        font-family: prelight;
         text-align: left;
         font-size: 1.8vw;
         margin: 0;
@@ -138,5 +143,7 @@ export default {
     #bankman {
         position: absolute;
         width: calc(35%);
+        width: 17vw;
+        height: 55%;
     }
 </style>
