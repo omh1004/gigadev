@@ -3,7 +3,7 @@
     <div class="main-container">
     <!-- Header -->
     <div class="header">
-      <div class="left-section">D-30</div>
+      <div class="left-section">D-{{ this.playday }}</div>
       <div class="right-section">
         <div class="money-bag">
           <span class="bag-icon">💰</span>
@@ -64,7 +64,7 @@
                 <div class="product-items-container">
                   
                   <div class="product-items">
-                    <div v-if="selectedCategory=='신선식품' || selectedCategory=='즉석식품' && days>=5 || selectedCategory=='전자제품' && days>=15 "
+                    <div v-if="selectedCategory=='신선식품' || selectedCategory=='즉석식품' && this.days>=5 || selectedCategory=='전자제품' && this.days>=15 "
                       v-for="product in filteredProducts" :key="product.goodsno" class="product-row">
                       
                       <div class="product-image-container">
@@ -91,7 +91,7 @@
               </div>
             </div>
           </div>
-          <div class="total-products-fake">창고 총 상품 개수: {{ getTotalProductCount() }}/{{ this.storageLevel }}</div>
+          <div class="total-products-fake">창고 총 상품 개수: {{ getTotalProductCount() }}/{{ this.storagelevel }}</div>
         </div>
         <div style="text-align:center;">
           <div class="cart-section">
@@ -122,8 +122,12 @@
           <p>알림</p>
         </div>
         <div class="popup-body">
-          <p v-if="!storage" v-for="(item, index) in cart" :key="index">{{ item.goodsname }}+{{ item.orderquantity }}</p>
-          <p v-if="popupMessage">{{ popupMessage }}</p>
+          <p v-if="popupMessage" class="popup-message">{{ popupMessage }}</p>
+          <div v-if="popupMessage === '발주완료'" class="ordered-items">
+            <p v-for="(item, index) in orderCompleteItems" :key="index" class="ordered-item">
+              {{ item.goodsname }} +{{ item.ordercount }}개
+            </p>
+          </div>
           <button v-if="storage" class="storagebutton" @click="gotostorage">확장하러 가기</button>
         </div>
       </div>
@@ -136,22 +140,24 @@ import { revenueStore } from '@/assets/pinia/maingame';
 
 export default {
   data() {
-    return {
-      popupMessage: '',
-      cartList: [],
-      itemPrice: 0,
-      popup: false,
-      money: 500000,
-      selectedCategory: '신선식품',
-      storageCount: 0,
-      storage: false,
-      days: 5,
-      products: [],
-      cart: [],
-      revenue:revenueStore(),
-      storageLevel: 1,
-    }
-  },
+  return {
+    popupMessage: '',
+    cartList: [],
+    itemPrice: 0,
+    popup: false,
+    money: 500000,
+    selectedCategory: '신선식품',
+    storageCount: 0,
+    storage: false,
+    products: [],
+    cart: [],
+    revenue: revenueStore(),
+    playday: 30,
+    storagelevel: 50,
+    days: 1,
+    orderCompleteItems: [] // 발주 완료 아이템 목록 추가
+  }
+},
   computed: {
     filteredProducts() {
       return this.products.filter(product => product.goodstype === this.selectedCategory);
@@ -179,19 +185,10 @@ export default {
 
           console.log(data[0]);
 
-          if(data[0].storagelevel==1 || data[0].storagelevel==null){
-            this.storageLevel = 50;
-          }else if(data[0].storagelevel==2){
-            this.storageLevel = 70;
-          }else if(data[0].storagelevel==3){
-            this.storageLevel = 90;
-          }else if(data[0].storagelevel==4){
-            this.storageLevel = 110;
-          }else if(data[0].storagelevel==5){
-            this.storageLevel = 130;
-          }else{
-            this.storageLevel = 150;
-          }
+          this.playday = this.playday - (data[0].playday-1); 
+          this.storagelevel = data[0].storagelevel;
+          this.days = data[0].playday;
+         
         // 재고 데이터 초기화
         this.initializeStockData();
         //this.storageLevel  =
@@ -382,41 +379,37 @@ export default {
         return response.json();
       })
       .then(data => {
-        console.log('주문 성공:', data);
-        
-        // 주문 성공 후 로직 실행
-        // 잔액 차감
-        // this.money -= totalPrice;
-        this.revenue.cash -= totalPrice;
-        this.revenue.orderPrice -= totalPrice;
+  console.log('주문 성공:', data);
+  
+  // 발주 완료 아이템 목록 저장 (장바구니 복사)
+  this.orderCompleteItems = JSON.parse(JSON.stringify(this.cart));
+  
+  // 주문 성공 후 로직 실행
+  // 잔액 차감
+  this.revenue.cash -= totalPrice;
+  this.revenue.orderPrice -= totalPrice;
 
-        fetch("http://localhost:8080/spring/maingame/expense?price="+(-totalPrice)+
-              "&gameNo="+sessionStorage.getItem("gameNo"))
-        .then(response=>console.log(response))
-        
-        this.revenue.saveState();
-        
-        // 팝업 메시지 표시
-        this.popupMessage = '발주완료';
-        this.popup = true;
-        
-        // 장바구니 비우기
-        this.cart = [];
-        
-        // 상품 발주 수량 초기화
-        this.products.forEach(product => {
-          product.ordercount = 0;
-        });
+  fetch("http://localhost:8080/spring/maingame/expense?price="+(-totalPrice)+
+        "&gameNo="+sessionStorage.getItem("gameNo"))
+  .then(response=>console.log(response));
+  
+  this.revenue.saveState();
+  
+  // 팝업 메시지 표시
+  this.popupMessage = '발주완료';
+  this.popup = true;
+  
+  // 장바구니 비우기
+  this.cart = [];
+  
+  // 상품 발주 수량 초기화
+  this.products.forEach(product => {
+    product.ordercount = 0;
+  });
 
-        // 페이지 새로고침 - 서버에서 최신 데이터 가져오기
-        // location.reload();
-        this.getProductData();
-      })
-      .catch(error => {
-        console.error('주문 오류:', error);
-        this.popupMessage = '주문 중 오류가 발생했습니다: ' + error.message;
-        this.popup = true;
-      });
+  // 페이지 새로고침 - 서버에서 최신 데이터 가져오기
+  this.getProductData();
+})
     },
     
     // 상품 유형에 따른 유통기한 반환
@@ -461,14 +454,14 @@ export default {
 @font-face {
   font-family: 'RecipeKoreaOTF_38';
   src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
   font-size:38px;
 }
 @font-face {
   font-family: 'RecipeKoreaOTF_34';
   src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
-  font-size:38px;
+  font-size:34px;
   font-weight: bold;
 }
 @font-face {
@@ -760,6 +753,42 @@ export default {
   cursor: pointer;
 }
 
+.product-items {
+  overflow-y: scroll;
+  max-height: 55vh;
+  pointer-events: auto; /* 마우스 이벤트 활성화 */
+}
+
+/* 스크롤바 스타일 */
+.product-items::-webkit-scrollbar {
+  width: 10px;
+}
+
+.product-items::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.product-items::-webkit-scrollbar-thumb {
+  background: #5e2813;
+  border-radius: 5px;
+  cursor: grab; /* 드래그 가능한 커서 표시 */
+}
+
+.product-items::-webkit-scrollbar-thumb:hover {
+  background: #4a2010;
+}
+
+.product-items::-webkit-scrollbar-thumb:active {
+  cursor: grabbing; /* 드래그 중 커서 변경 */
+}
+
+/* Firefox용 스크롤바 스타일 */
+.product-items {
+  scrollbar-width: thin;
+  scrollbar-color: #5e2813 #f5f5f5;
+}
+
 .quantity-display {
   width: 30px;
   text-align: center;
@@ -784,22 +813,30 @@ export default {
   font-size: 18px;
   margin: 15px;
 }
-
 .cart-items {
+  font-family: 'Pretendard_24';
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items:flex-start;
-  margin-left:0.5vw;
-}
-
-.cart-itme-name{
-  text-align:left;
+  align-items: flex-start;
+  margin-left: 0.5vw;
+  overflow-y: auto;
+  max-height: 35vh;
+  width: 100%;
+  justify-content: flex-start; /* 항목들을 위에서부터 차례대로 배치 */
 }
 
 .cart-item {
   margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  display: block; /* 블록 요소로 만들어 확실히 개행되도록 */
+}
+
+.cart-item-name {
+  text-align: left;
+  display: block;
+  width: 100%;
 }
 
 .cart-total {
@@ -877,10 +914,41 @@ export default {
 .popup-header p {
   margin: 0;
 }
-
 .popup-body {
   padding: 20px;
   text-align: center;
+  font-family: 'Pretendard_24';
+}
+
+.popup-body p {
+  margin: 5px 0;
+  font-family: 'Pretendard_24';
+}
+
+.popup-message {
+  font-family: 'Pretendard_24';
+  margin-bottom: 0; /* 메시지 아래 마진 제거 */
+}
+
+.ordered-items {
+  margin-top: 0; /* 물품 목록 위 마진 제거 */
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: center;
+  padding: 0 15px;
+  font-family: 'Pretendard_24';
+}
+
+.ordered-item {
+  padding: 5px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-family: 'Pretendard_24';
+  margin: 0;
+  text-align: center;
+}
+
+.ordered-item:first-child {
+  padding-top: 0; /* 첫 번째 아이템의 상단 패딩 제거 */
 }
 
 .storagebutton{
@@ -936,4 +1004,26 @@ export default {
   height: 3vh;
   margin-top: 0;
 }
+.ordered-items {
+  margin-top: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: left;
+  padding: 0 15px;
+}
+
+.ordered-item {
+  padding: 5px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-family: 'Pretendard_24';
+  margin: 0;
+}
+
+.ordered-item:last-child {
+  border-bottom: none;
+}
+
+
+
+
 </style>
