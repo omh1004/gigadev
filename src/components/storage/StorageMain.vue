@@ -111,7 +111,7 @@
 
 <script>
 import Topbar from '../common/topbar.vue';
-import { revenueStore } from '/pinia/maingame';
+import { revenueStore } from '@/assets/pinia/maingame';
 
 const model = {
   popup: false,
