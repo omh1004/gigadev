@@ -138,6 +138,7 @@ export default {
           'playDay':this.revenue.salesDay,
           'storageLevel':this.revenue.storagelevel,
           'state':this.revenue.state,
+          'reliability':this.revenue.reliability,
         })
       }).then(response=>response.text())
       .then(data=>sessionStorage.setItem("gameNo",data))
