@@ -73,8 +73,6 @@ import { revenueStore } from '@/assets/pinia/maingame';   // 나중에 사용해
 //   'state':this.revenue.state,
 // };
 
-
-
 export default {
   name: 'ConvenienceStoreTycoon',
   data() {
@@ -180,7 +178,6 @@ export default {
   },
   
 }
-
 </script>
 
 <style scoped>
@@ -215,11 +212,12 @@ export default {
 }
 
 .action-buttons {
-  margin-top: 5vh;  
+  margin-top: 21vh;  
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 30px; 
+
 }
 
 .load-button, 
@@ -293,6 +291,15 @@ export default {
   /* 🔥 스크롤바 추가 */
   max-height: 300px; /* 🔹 적절한 높이 설정 (6개 정도 표시) */
   overflow-y: auto; /* 🔹 수직 스크롤 활성화 */
+}
+
+.ranking-list::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+
+.ranking-list::-webkit-scrollbar-thumb {
+  background-color: #56174F; /* 스크롤바 색상 */
+  border-radius: 0.5vh; /* 모서리 둥글게 */
 }
 
 .ranking-item {

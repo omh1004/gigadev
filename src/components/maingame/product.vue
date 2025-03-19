@@ -124,13 +124,13 @@ export default {
                     if(cartprod==null){
                         console.log("target이 뭐지",this.target);
                         this.getproduct.cart.push({...this.target,orderQuantity:this.target.sell,sell:0});
-                        prod.orderQuantity-=this.target.sell;
                         console.log("cartprodnull", this.getproduct.cart);
                     }else{
-                        prod.orderQuantity-=this.target.sell;
                         cartprod.orderQuantity+=this.target.sell;
                         console.log("cartprod",this.getproduct.cart);
                     }
+                    prod.orderQuantity-=this.target.sell;
+                    this.productAmount-=this.target.sell;
                 }
                 // this.$emit('moveprod','prod',this.target.id);
                 this.modal=false;
@@ -141,6 +141,7 @@ export default {
                 console.log("cartprod",cartprod);
                 prod.orderQuantity-=(this.countertarget.sell-this.countertarget.orderQuantity);
                 cartprod.orderQuantity=this.countertarget.sell;
+                this.productAmount-=(this.countertarget.sell-this.countertarget.orderQuantity);
                 console.log("counterprod",this.getproduct.cart);
                 this.$emit('closemodal');
                 // this.$emit('moveprod','cart',this.countertarget.id);

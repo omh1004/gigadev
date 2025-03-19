@@ -301,6 +301,9 @@ export default {
       this.disposeProfit = history.state.disposeProfit;
     }
 
+    // 발주(창고부족) -> 창고로 넘어온 뒤 다시 자동으로 뜨지 않게 하기(실험실)
+    history.replaceState(null, document.title, window.location.href);
+
     this.revenue = revenueStore();
 
     const gameNo = sessionStorage.getItem("gameNo");

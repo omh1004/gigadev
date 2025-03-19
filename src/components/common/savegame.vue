@@ -1,13 +1,20 @@
 <!-- 윤상님 이 페이지 스타일 바꿔줘요 -->
 <template>
-  <div v-show="manualon" class="usermanual" :style="`background-image:url('${manual[page]}');background-size:100% 100%;`">
-    <div class="smallbutton">
-      <button class="backbtn" @click.prevent="back"/>
-    </div>
-    <div class="smallbutton right">
-      <button class="closebtn" @click.prevent="close"/>
-      <button class="nextbtn" @click.prevent="next"/>
-    </div>
+  <div v-show="savegame" class="savegame">
+    <div class="popup-content" @click.stop>
+        <div class="popup-header">
+          <p>알림</p>
+          <span class="close-button" @click="$emit('closeSaveModal');">×</span>
+        </div>
+        <div class="popup-body">
+          <p>저장하시겠습니까?</p>
+          <p>운영이 자동 종료됩니다.</p>
+          <div class="savebutton">
+            <button class="expansionButton" @click="saveAndQuit">네</button>
+            <button class="expansionButton" @click="$emit('closeSaveModal');">아니요</button>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 <script>
@@ -38,44 +45,76 @@ export default {
     close(){
       this.page=0;
       this.$emit('manualoff');
+    },
+    saveAndQuit(){
+      this.$router.push({
+        name:'calculation',
+        state:{
+          gameEnd:true
+        }
+      });
     }
   },
-  props:['manualon'],
+  props:['manualon','savegame'],
 }
 </script>
 <style scoped>
-  .usermanual{
-    display:flex;
+  .savegame{
     width:100vw;
     height:100vh;
-    overflow:hidden;
-  }
-  .smallbutton{
+    position:absolute;
     display:flex;
+    justify-content:center;
     align-items:center;
-    width:50vw;
-    height:100vh;
+    z-index:15;
+    background-color:rgba(0,0,0,0.5);
   }
-  .right{
-    justify-content:flex-end;
+  .popup-content {
+    background-color: #F2F1EC;
+    width: 789px;
+    height: 392px;
+    border-radius: 30px;
+    overflow: hidden;
   }
-  .smallbutton>button{
-    width:3vw;
-    height:5.5vh;
-    background-color:rgba(0,0,0,0);
-    border:0;
+  .popup-header {
+    background-color: #6A396C;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    position: relative;
   }
-  .closebtn{
-    position:relative;
-    bottom:43vh;
-    right:0.2vw;
+  .popup-header p {
+    margin: 0;
   }
-  .nextbtn{
-    position:relative;
-    right:2vw;
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
   }
-  .backbtn{
-    position:relative;
-    left:3.3vw;
+  .popup-body {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    height: 332px;
+    padding: 20px;
+    text-align: center;
+  }
+  .savebutton{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+  }
+  .expansionButton {
+    width: 180px;
+    height: 65px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    background-image: url("/src/assets/element/increasestorage.png");
+    background-size: 100% 100%;
   }
 </style>
