@@ -212,11 +212,12 @@ export default {
 }
 
 .action-buttons {
-  margin-top: 20vh;  
+  margin-top: 21vh;  
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 30px; 
+
 }
 
 .load-button, 
