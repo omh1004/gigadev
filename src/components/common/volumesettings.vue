@@ -57,7 +57,6 @@ export default {
         align-items:center;
         z-index:15;
         background-color:rgba(0,0,0,0.5);
-
     }
     .settings-modal{
         width:20vw;
