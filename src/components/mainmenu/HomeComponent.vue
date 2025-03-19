@@ -215,7 +215,7 @@ export default {
 }
 
 .action-buttons {
-  margin-top: 5vh;  
+  margin-top: 7vh;  
   display: flex;
   justify-content: center;
   gap: 20px;
