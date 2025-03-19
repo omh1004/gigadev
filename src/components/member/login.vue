@@ -97,7 +97,16 @@ export default {
 * {
   box-sizing: border-box;
 }
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
 #inputId {
+  font-family: prebold;
   width: 29.4vw;
   height: 8vh;
   border: 0.3vw solid #5E395A;
@@ -105,16 +114,19 @@ export default {
   padding: 1vw 1vw;
   margin-top:6vh;
   margin-bottom: 3vh;
-  font-size: 1.3vw;
+  font-size: 1.5vw;
+  font-weight: bold;
 }
 #inputPw {
+  font-family: prebold;
   width: 29.4vw;
   height: 8vh;
   border: 0.3vw solid #5E395A;
   border-radius: 1.2vw;
   padding: 1vw 1vw;
   margin-bottom: 2vh;
-  font-size: 1.3vw;
+  font-size: 1.5vw;
+  font-weight: bold;
 }
 
 #maincontainer {
@@ -138,6 +150,7 @@ export default {
   margin-top: -10vh;
 }
 #loginbtn {
+  font-family: rk;
   width: 12vw;
   height: 7.6vh;
   border: 0.3vw solid #6F3533;
@@ -145,26 +158,28 @@ export default {
   background-color: #6F3533;
   color:#FFFFFF;
   padding: 1vw 2vw;
-  font-weight: 900;
   font-size: 1.4vw;
   margin-right: 1.7vw;
   cursor: pointer;
 }
 #resetbtn {
+  font-family: rk;
   width: 12vw;
   height: 7.6vh;
-  border: 0.3vw solid #6F3533;
+  border: 0.4vw solid #6F3533;
   color: #6F3533;
   padding: 1vw 2vw;
   border-radius: 1.1vw;
   background-color: #FFEFCA;
   font-size: 1.5vw;
-  font-weight: 900; 
   margin-left: 1.7vw;
   cursor: pointer;
 }
-
+#remembertext {
+  margin-bottom: -0.4vw;
+}
 #checkbox {
+  font-family: rk;
   display: flex;
   align-items: center;
   justify-content: flex-start; 
@@ -172,21 +187,39 @@ export default {
   margin-left: 9vw; 
   width: 100%; 
   font-size: 1.3vw;
-  font-weight: 600;
   height: 2vh;
   accent-color: #6F3533;
   cursor: pointer; 
 }
-#inputcheck {
-  width: 2.2vw;
-  height: 2.2vh;
 
+#inputcheck {
+  width: 1.9vw;
+  height: 3vh;
+  border: 4px solid #6F3533; /* 테두리 두께 & 색상 변경 */
+  appearance: none; /* 브라우저 기본 스타일 제거 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none; /* 클릭 시 기본 포커스 제거 */
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+#inputcheck:checked {
+  background-color: #FFFFFF; /* 체크되었을 때 배경색 */
+}
+#inputcheck:checked::before {
+  content: "✔";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: black;
 }
 #btns {
   margin-top: 4vh;
 }
 #findbtn {
   all:unset;
+  font-family: rk;
   margin-top:5vh;
   font-weight: bold;
   font-size: 1vw;
