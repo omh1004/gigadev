@@ -479,8 +479,8 @@ export default {
   font-family: rk;
   width: 50vw;
   height: 50vh;
-  border: 4px solid #6F3533;
-  border-radius: 16px;
+  border: 0.4vw solid #6F3533;
+  border-radius: 2vw;
   overflow: hidden;
   margin-bottom: 20px;
   background-color: #EAE5DE;
@@ -493,9 +493,11 @@ export default {
 }
 
 .tab-item {
+  height: 5vh;
   flex: 1;
   text-align: center;
-  padding: 12px;
+  line-height: 5vh;
+  padding: 1vw;
   font-weight: bold;
   cursor: pointer;
 }
