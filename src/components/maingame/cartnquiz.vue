@@ -316,6 +316,11 @@ export default {
                 console.log(this.product);
             },
             deep:true,
+        },
+        reliability:{
+            handler(curVal,oriVal){
+                this.revenue.reliability=curVal;
+            }
         }
     },
     components:{
