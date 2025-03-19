@@ -14,6 +14,7 @@
       </div>
     </div> -->
 
+
     <!-- Navigation -->
     <div class="navigation">
       <div class="back-button" @click="goBack">
@@ -111,6 +112,7 @@
 <script>
 import Topbar from '../common/topbar.vue';
 import { revenueStore } from '@/assets/pinia/maingame';
+import Topbar from '../common/topbar.vue';
 
 const model = {
   popup: false,
@@ -131,10 +133,14 @@ const model = {
   selectedTab: '신선식품'
   , popupMessage: '',
   revenue: {},
+  amount:0
+  ,playday:30
+  ,storagelevel:0
 };
 
 export default {
   name: 'KoreanInventoryInterface',
+  components:{ Topbar },
   data() {
     return model;
   },
@@ -183,7 +189,7 @@ export default {
     },
     placeOrder() {
       this.storage = true;
-      this.popupMessage = '50 >> 70 필요금액 30,000';
+      this.popupMessage = ""+this.storageSize +">>"+ this.storageSize+ "필요금액:"+30000 + ((this.storageSize - 50) / 20) * 10000;;
       this.popup = true;
     },
     closePopup() {
@@ -305,6 +311,9 @@ export default {
         console.log("서버에서 받은 데이터:", data);
         // 서버에서 받은 데이터를 그대로 fruits에 저장
         this.fruits = data;
+        this.playday = this.playday - (data[0].playday-1);
+        this.storageSize = data[0].storagelevel;
+        this.amount = data[0].amount;
         console.log("적용된 데이터:", this.fruits);
       })
       .catch(error => {
@@ -755,5 +764,42 @@ export default {
   border: 0;
   background-image: url("/src/assets/element/increasestorage.png");
   background-size: 100% 100%;
+}
+
+/* Webkit 브라우저용 스크롤바 스타일링 */
+.fruit-container::-webkit-scrollbar {
+  width: 12px; /* 스크롤바 너비 증가 */
+}
+
+.fruit-container::-webkit-scrollbar-track {
+  background: #f5f5dc; /* 트랙 배경색 변경 */
+  border-radius: 10px;
+}
+
+.fruit-container::-webkit-scrollbar-thumb {
+  background-color: #8B4513; /* 테디베어 갈색으로 변경 */
+  border-radius: 10px;
+  border: 2px solid #f5f5dc;
+  cursor: grab; /* 드래그 가능 커서 표시 */
+}
+
+.fruit-container::-webkit-scrollbar-thumb:hover {
+  background-color: #A0522D; /* 호버 시 약간 밝은 갈색 */
+}
+
+.fruit-container::-webkit-scrollbar-thumb:active {
+  background-color: #5D2906; /* 클릭 시 더 어두운 갈색 */
+  cursor: grabbing; /* 드래그 중 커서 변경 */
+}
+
+/* Firefox를 위한 스크롤바 스타일링 */
+.fruit-container {
+  scrollbar-width: thin;
+  scrollbar-color: #8B4513 #f5f5dc;
+}
+
+/* 스크롤바 영역 배경색 제거 */
+.fruit-container::-webkit-scrollbar-track-piece {
+  background-color: transparent;
 }
 </style>
