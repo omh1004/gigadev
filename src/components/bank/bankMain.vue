@@ -1296,18 +1296,18 @@ button.loan-btn1 {
 .day-summary {
   width: 705px; /* ✅ 너비를 고정 (너무 넓지 않도록) */
   max-width: 90%; /* ✅ 화면이 작을 때는 최대 90%까지만 차지 */
-  max-height: 600vh; /* ✅ 화면에 맞게 자동 조정 */
+  max-height: 470px; /* ✅ 화면에 맞게 자동 조정 */
   /* height: auto; 높이는 자동 조정 */
   background: #F9F8F2;
   border-radius: 20px;
-  padding: 30px;
+  padding: 27px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
   overflow: auto;
   display: flex;
   flex-direction: column; /* ✅ 내부 요소를 세로 정렬 */
   align-items: center; /* ✅ 가로 가운데 정렬 */
-  margin-top: -70px; /* 창 전체를 위로 30px 이동 */
+  margin-top: -5px; /* 창 전체를 위로 30px 이동 */
 }
 
 
@@ -1366,7 +1366,7 @@ button.loan-btn1 {
   border: none;
   cursor: pointer;
   position: absolute;
-  bottom: 10px; /* ✅ 아래쪽 정렬 */
+  bottom: 5px; /* ✅ 아래쪽 정렬 */
   left: 50%;
   transform: translateX(-50%);
 }
