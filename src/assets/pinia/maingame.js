@@ -60,21 +60,18 @@ export const productStore = defineStore('storage',{
             }else if(p!=null){
                 while(p.orderQuantity>0){
                     let prod;
-                    // let expDate;
-                    // switch(p.goodType){
-                    //     case '신선식품': expDate=3; break;
-                    //     case '즉석식품': expDate=4; break;
-                    //     case '전자제품': break;
-                    //     default: expDate=0; break;
-                    // }
+                    let expDate;
+                    switch(p.goodType){
+                        case '신선식품': console.log("신선"); expDate=3; break;
+                        case '즉석식품': console.log("즉석"); expDate=4; break;
+                        case '전자제품': console.log("전자"); break;
+                        default: console.log("으악"); expDate=0; break;
+                    }
 
-                    // let i = 2;
-                    // while(prod==null && i<=expDate){
-                    //     prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate==expDate && pro.orderQuantity>0)
-                    // }
-                    
-
-                    prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate>=2 && pro.orderQuantity>0)
+                    let i = 2;
+                    while(prod==null && i<=expDate){
+                        prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate==expDate && pro.orderQuantity>0)
+                    }
 
                     console.log("efg",prod);
                     if(prod!=null){

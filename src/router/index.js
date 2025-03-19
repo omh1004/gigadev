@@ -52,6 +52,7 @@ import Settings from '@/components/common/volumesettings.vue' // 개발용으로
 
 import { createRouter, createWebHistory } from 'vue-router'
 import CalculationTuto from '@/components/mainmenu/intro/introMenu/calculationTuto.vue'
+import Finalcalculation from '@/components/mainmenu/ending/finalcalculation.vue'
 
 
 const router = createRouter({
@@ -184,6 +185,11 @@ const router = createRouter({
       path:'/endsummary',
       name:'endsummary',
       component:gameendsummary
+    },
+    {
+      path:'/finalcalculation',
+      name:'finalcalculation',
+      component:Finalcalculation,
     },
     {
       path:'/poorending1'
