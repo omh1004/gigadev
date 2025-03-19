@@ -70,9 +70,12 @@ export const productStore = defineStore('storage',{
 
                     // let i = 2;
                     // while(prod==null && i<=expDate){
-                        prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate>=2 && pro.orderQuantity>0)
+                    //     prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate==expDate && pro.orderQuantity>0)
                     // }
                     
+
+                    prod = this.product.find(pro=>pro.goodsName==p.goodsName && pro.expDate>=2 && pro.orderQuantity>0)
+
                     console.log("efg",prod);
                     if(prod!=null){
                         if(prod.orderQuantity>=p.orderQuantity){
