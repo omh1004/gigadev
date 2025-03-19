@@ -111,7 +111,7 @@
 
 <script>
 import Topbar from '../common/topbar.vue';
-import { revenueStore } from '@/assets/pinia/maingame';
+import { revenueStore } from '/pinia/maingame';
 
 const model = {
   popup: false,
@@ -254,7 +254,7 @@ export default {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-
+              
           })
         })
           .then(response => {
@@ -310,9 +310,9 @@ export default {
         console.log("서버에서 받은 데이터:", data);
         // 서버에서 받은 데이터를 그대로 fruits에 저장
         this.fruits = data;
-        this.playday = this.playday - (data[0].playday-1);
-        this.storageSize = data[0].storagelevel;
-        this.amount = data[0].amount;
+        // this.playday = this.playday - (data[0].playday-1);
+        // this.storageSize = data[0].storagelevel;
+        // this.amount = data[0].amount;
         console.log("적용된 데이터:", this.fruits);
       })
       .catch(error => {

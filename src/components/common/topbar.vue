@@ -34,7 +34,7 @@
 </div>
 </template>
 <script>
-import { revenueStore } from '@/assets/pinia/maingame';
+import { revenueStore } from '/pinia/maingame';
 
 export default {
   data(){
@@ -64,7 +64,7 @@ export default {
       height:8vh;
       padding:3.5vh 2vw;
       /* margin:auto; */
-      background-image:url(@/assets/element/gametopbar.png);
+      background-image:url(/element/gametopbar.png);
       background-position:center;
       background-repeat:no-repeat;
       background-size: contain;
@@ -99,7 +99,7 @@ export default {
       width: 15vw;
       height:5vh;
       margin-right:1vw;
-      background-image:url(@/assets/element/moneybar.png);
+      background-image:url(/element/moneybar.png);
       background-size: 100% 100%;
   }
   .line{
