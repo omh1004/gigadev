@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="date-box">
-      <div class="date-text">{{ gameDay }}일차</div>
+      <div class="date-text">DAY-{{ gameDay }} NEWS</div>
     </div>
     <div class="dialog-box">
       <div class="dialog-text" v-html="inputText"></div>
