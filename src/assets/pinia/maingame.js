@@ -16,6 +16,7 @@ export const revenueStore = defineStore('maingame',{
         playNo:0,
         state:0,    // 이건 봐도 봐도 모르겠다
         userId:'',
+        reliability:50,  // 게임 저장할 때 쓰긴 해야 할 듯
     }),
     actions:{
         saveState(){
@@ -71,10 +72,11 @@ export const productStore = defineStore('storage',{
                     }
                 }
             }
-            
+            this.saveState();
         },
         saveState(){
             localStorage.setItem('product',JSON.stringify(this.$state));
+            console.log(localStorage.getItem('product'));
         },
         loadState(){
             const saveState = localStorage.getItem('product');

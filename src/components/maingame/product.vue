@@ -115,10 +115,11 @@ export default {
             }
         },
         moveprod(){
-            const prod = this.product.find(p=>p.goodsNo==this.target.goodsNo && p.expDate==this.target.expDate);
-            const cartprod = this.getproduct.cart.find(c=>c.goodsNo==this.target.goodsNo && c.expDate==this.target.expDate);
-            console.log("cartprod",cartprod);
             if(this.modal){
+                const prod = this.product.find(p=>p.goodsNo==this.target.goodsNo && p.expDate==this.target.expDate);
+                console.log("prod",prod);
+                const cartprod = this.getproduct.cart.find(c=>c.goodsNo==this.target.goodsNo && c.expDate==this.target.expDate);
+                console.log("cartprod",cartprod);
                 if(this.target.sell>0){
                     if(cartprod==null){
                         console.log("target이 뭐지",this.target);
@@ -126,14 +127,18 @@ export default {
                         prod.orderQuantity-=this.target.sell;
                         console.log("cartprodnull", this.getproduct.cart);
                     }else{
-                        prod.orderQuantity-=(this.target.sell-cartprod.orderQuantity);
-                        cartprod.orderQuantity=this.target.sell;
+                        prod.orderQuantity-=this.target.sell;
+                        cartprod.orderQuantity+=this.target.sell;
                         console.log("cartprod",this.getproduct.cart);
                     }
                 }
                 // this.$emit('moveprod','prod',this.target.id);
                 this.modal=false;
             }else if(this.countermodal){
+                const prod = this.product.find(p=>p.goodsNo==this.countertarget.goodsNo && p.expDate==this.countertarget.expDate);
+                console.log("prod",prod);
+                const cartprod = this.getproduct.cart.find(c=>c.goodsNo==this.countertarget.goodsNo && c.expDate==this.countertarget.expDate);
+                console.log("cartprod",cartprod);
                 prod.orderQuantity-=(this.countertarget.sell-this.countertarget.orderQuantity);
                 cartprod.orderQuantity=this.countertarget.sell;
                 console.log("counterprod",this.getproduct.cart);

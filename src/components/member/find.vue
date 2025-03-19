@@ -116,6 +116,14 @@ export default {
 * {
  box-sizing: border-box;
 }
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
 #maincontainer {
   width: 100%;
   height: auto;
@@ -139,12 +147,14 @@ export default {
 }
 #maintitle {
   margin: 0 auto;
+  font-family: rk;
 }
 h1 {
   font-size: 2.2vw;
 }
 h2 {
-  font-size: 1.6vw;
+  font-size: 1.3vw;
+  font-family: rk;
 }
 #mainbox {
   display: flex;
@@ -192,11 +202,13 @@ input {
 }
 input::placeholder {
   font-size: 1vw;
+  font-family: prebold;
 }
 .firstinput {
   margin-top: 0;
 }
 .findbtn {
+  font-family: rk;
   background-color: #56174F;
   color:#FFFFFF;
   font-size: 1.1vw;

@@ -10,7 +10,7 @@
 
 
 
-    <div class="ranking-board">
+    <!-- <div class="ranking-board">
 
 
       <div class="ranking-header">
@@ -29,6 +29,30 @@
           <span>{{ formatCurrency(player.profit) }}</span>
         </div>
       </div> 
+    </div> -->
+    <div class="ranking-board">
+      <div class="ranking-header">
+        <span>순위</span>
+        <span>닉네임</span>
+        <span>수익</span>
+      </div>
+      <div class="ranking-list">
+        <div 
+          v-for="(player, index) in rankings" 
+          :key="index" 
+          class="ranking-item"
+        >
+          <!-- 트로피 추가 -->
+          <div class="rank-icon">
+            <img v-if="index === 0" src="/lanking/gold-trophy.png" alt="Gold Trophy">
+            <img v-else-if="index === 1" src="/lanking/silver-trophy.png" alt="Silver Trophy">
+            <img v-else-if="index === 2" src="/lanking/bronze-trophy.png" alt="Bronze Trophy">
+            <span v-else>{{ index + 1 }}</span>
+          </div>
+          <div class="nickname">{{ player.nickname }}</div>
+          <div class="profit">{{ formatCurrency(player.profit) }}</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -119,6 +143,7 @@ export default {
       .then(data=>sessionStorage.setItem("gameNo",data))
       .catch(e=>console.error(e))
       
+      this.revenue.saveState();
       return this.$router.push('/introstart');
     }
   },
@@ -162,41 +187,23 @@ export default {
   font-family: RecipekoreaOTF;
   font-size: 2vw;
   background-color: #f5f5f5;
-  
   text-align: center;
   max-width: 100%;
   min-height: 100vh;
-
   background-image: url('/common/homeMenu.png');
   background-size: 100% 100%;
-
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
+
 #secondimg {
   width: 28vw;
   height: 14vh;
   position: absolute;
-  top:8vh;
-}
-
-.title-section {
-  font-family: RecipekoreaOTF;
-  margin-bottom: 30px;
-}
-
-.title-section h1 {
-  font-family: RecipekoreaOTF;
-  color: #6a1b9a;
-  font-size: 2.5em;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  color: #888;
+  top: 8vh;
 }
 
 .action-buttons {
@@ -209,7 +216,6 @@ export default {
 
 .load-button, 
 .start-button {
-  font-family: RecipekoreaOTF;
   padding: 10px 30px;
   border: none;
   border-radius: 5px;
@@ -217,55 +223,91 @@ export default {
 }
 
 .load-button {
-  font-family: RecipekoreaOTF;
   background-color: #f0e5d8;
   color: black;
 }
 
 .start-button {
-  font-family: RecipekoreaOTF;
   background-color: #6a1b9a;
   color: white;
 }
 
 .ranking-board {
   font-family: RecipekoreaOTF;
-  background-color: white;
-  border-radius: 3vw;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  margin-left: 15vw;
-  margin-right: 15vw;
-  min-height:400px;
-  width: 800px;
-  margin-top: 0vh;
-  background-image: url('/common/rankingboard.png');
-  background-size: 100% 100%;
-  overflow:hidden;
+  text-align: center;
+  width: 52vw;
+  margin-top: 3vh;
+  padding: 20px;
+}
+
+ .rank-icon {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rank-icon img {
+  width: 32px;
+  height: 32px;
+}
+
+.nickname {
+  flex: 2;
+  text-align: center;
 }
 
 .ranking-header {
-  font-family: RecipekoreaOTF;
   display: flex;
   justify-content: space-between;
-  /* background-color: #5d4037; */
+  background-color: #5d4037;
+  border-radius: 3vw 3vw 0 0;
   color: white;
   padding: 10px;
   font-weight: bold;
+  text-align: center;
+}
+
+.ranking-header span {
+  flex: 1;
+  text-align: center;
 }
 
 .ranking-list {
-  font-family: RecipekoreaOTF;
   text-align: center;
-  padding-left: 350px;
-  padding-top: 50px;
+  border: 0.5vw solid #5d4037;
+  border-radius: 0 0 3vw 3vw;
+  /* 🔥 스크롤바 추가 */
+  max-height: 300px; /* 🔹 적절한 높이 설정 (6개 정도 표시) */
+  overflow-y: auto; /* 🔹 수직 스크롤 활성화 */
 }
 
 .ranking-item {
-  font-family: RecipekoreaOTF;
   display: flex;
   justify-content: space-between;
-  padding: 11.5px;
-  font-size: 20px;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
 }
 
+.ranking-item:nth-child(2n+1){
+  background-color: #FFEFCA;
+}
+
+.ranking-item:nth-child(2n){
+  background-color: #F0DDB9;
+}
+
+.rank-icon img {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+
+.profit {
+  flex: 1;  /* 기존과 동일한 비율 유지 */
+  text-align: center; /* 수익을 중앙 정렬 */
+}
 </style>
