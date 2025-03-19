@@ -34,7 +34,7 @@
 </div>
 </template>
 <script>
-import { revenueStore } from '/pinia/maingame';
+import { revenueStore } from '@/assets/pinia/maingame';
 
 export default {
   data(){
