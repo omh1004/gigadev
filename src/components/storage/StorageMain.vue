@@ -331,13 +331,21 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
 .main-container {
   width: 100%;
   height: 100vh;
   position: relative;
   overflow: hidden;
 
-  font-family: RecipekoreaOTF;
+
   font-size: 24px;
   background-color: #f5f5f5;
 
@@ -408,12 +416,13 @@ export default {
 }
 
 .navigation {
+  font-family: rk;
   width: 90%;
   display: flex;
   align-items: center;
   padding: 8px 16px;
   margin-bottom: 0;
-  margin-top: 1vh;
+  margin-top: 4vh;
   /* Adjusted to account for fixed header */
   gap: 41vw;
 }
@@ -426,12 +435,14 @@ export default {
 }
 
 .title {
+  font-family: rk;
   font-size: 2vw;
   font-weight: bold;
   text-align: center;
 }
 
 .storageCount {
+  font-family: rk;
   width: 50vw;
   height: 3vh;
   text-align: right;
@@ -441,10 +452,12 @@ export default {
 }
 
 .double-arrow {
+  font-family: rk;
   font-size: 16px;
 }
 
 .inventory-status-bar {
+  font-family: rk;
   display: flex;
   justify-content: space-between;
   padding: 0 16px;
@@ -452,15 +465,18 @@ export default {
 }
 
 .info-text {
+  font-family: rk;
   font-size: 14px;
 }
 
 .capacity-text {
+  font-family: rk;
   font-size: 14px;
   font-weight: bold;
 }
 
 .tab-container {
+  font-family: rk;
   width: 50vw;
   height: 50vh;
   border: 4px solid #6F3533;
@@ -560,6 +576,8 @@ export default {
 }
 
 .confirm-button {
+  font-family: prebold;
+  color: #6F3533;
   background-color: #fff3d4;
   border: 0.25vw solid #8b4513;
   border-radius: 16px;
