@@ -45,6 +45,10 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'prelight';
+  src: url('/fonts/Pretendard-Light.woff') format('woff');
+}
 .main-container {
     width: 100%;
     height: 100vh;
@@ -104,7 +108,7 @@ export default {
   margin: 0;
   flex-grow: 1;
   color: #333;
-  font-family: RecipekoreaOTF;
+  font-family: prelight;
 }
 
 .dialog-arrow {
