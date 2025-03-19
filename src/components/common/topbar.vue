@@ -12,16 +12,16 @@
             </div>
         </div>
         <div v-if="gamestart" style="display:flex;align-items:center;">
-            <img src="@/assets/icons/person.png" style="width:2vw;height:3.5vh;">
+            <img src="/icons/person.png" style="width:2vw;height:3.5vh;">
             <p style="margin:0;font-size:2vh;">{{ customerCount }}/10</p>
         </div>
         <div style="display:flex;align-items:center;">
             <div class="moneybar">
-                <img src="@/assets/icons/money.png" style="width:2.5vw;height:4.5vh;">
+                <img src="/icons/money.png" style="width:2.5vw;height:4.5vh;">
                 <div class="line"></div>
                 <div class="money"><p style="font-size:2vh;">{{ (revenue.cash*1).toLocaleString() }}원</p></div>
             </div>
-            <img src="@/assets/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
+            <img src="/icons/gameoption.png" style="width:2vw;height:3.5vh;" @click="opensettings=!opensettings">
         </div>
     </div>
     <div v-show="opensettings" class="settings">
