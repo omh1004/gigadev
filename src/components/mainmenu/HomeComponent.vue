@@ -119,6 +119,7 @@ export default {
       .then(data=>sessionStorage.setItem("gameNo",data))
       .catch(e=>console.error(e))
       
+      this.revenue.saveState();
       return this.$router.push('/introstart');
     }
   },
