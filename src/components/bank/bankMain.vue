@@ -229,6 +229,7 @@
 
 <script>
 import Topbar from '../common/topbar.vue';  // ✅ Topbar import 추가!
+import { revenueStore } from '@/assets/pinia/maingame';
 
 export default {
   components: { Topbar },
@@ -266,7 +267,7 @@ export default {
       totalIncome: 0,  // ✅ 총 수입
       totalExpense: 0,  // ✅ 총 지출
       showLoanDepletedAlert: false,  // ✅ 알림 모달 상태
-      
+      revenue: {},
     };
   },
 
@@ -675,6 +676,12 @@ async openDaySummary(day) {
     this.gameNo = sessionStorage.getItem("gameNo") || "";
     this.fetchLoanData(); // ✅ 페이지 로드 시 대출 내역 가져오기
     this.fetchCompletedDays();  // ✅ 페이지 로드 시 진행일 가져오기
+
+
+    // fetch("http://localhost:8080/spring/bank/moneydata?gameNo=" + gameNo)
+    //   .then(response => response.text())
+    //   .then(data => this.revenue.cash = data)
+
   },
   
 
