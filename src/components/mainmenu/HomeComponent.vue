@@ -183,8 +183,15 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
 .game-container {
-  font-family: RecipekoreaOTF;
   font-size: 2vw;
   background-color: #f5f5f5;
   text-align: center;
@@ -200,14 +207,14 @@ export default {
 }
 
 #secondimg {
-  width: 28vw;
-  height: 14vh;
+  width: 32vw;
+  height: 15vh;
   position: absolute;
-  top: 8vh;
+  top: 10vh;
 }
 
 .action-buttons {
-  margin-top: 20vh;
+  margin-top: 0;
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -216,19 +223,23 @@ export default {
 
 .load-button, 
 .start-button {
-  padding: 10px 30px;
+  font-family: rk;
+  height: 8vh;
+  width: 12vw;
+  padding: 15px 25px;
   border: none;
-  border-radius: 5px;
-  font-size: 1em;
+  border-radius: 1vw;
+  font-size: 1.3vw;
 }
 
 .load-button {
-  background-color: #f0e5d8;
-  color: black;
+  background-color: #FFEFCA;
+  border: 0.4vw solid #6F3533;
+  color: #6F3533;
 }
 
 .start-button {
-  background-color: #6a1b9a;
+  background-color: #56174F;
   color: white;
 }
 
@@ -261,7 +272,7 @@ export default {
 .ranking-header {
   display: flex;
   justify-content: space-between;
-  background-color: #5d4037;
+  background-color: #6F3533;
   border-radius: 3vw 3vw 0 0;
   color: white;
   padding: 10px;
@@ -276,7 +287,7 @@ export default {
 
 .ranking-list {
   text-align: center;
-  border: 0.5vw solid #5d4037;
+  border: 0.5vw solid #6F3533;
   border-radius: 0 0 3vw 3vw;
   /* 🔥 스크롤바 추가 */
   max-height: 300px; /* 🔹 적절한 높이 설정 (6개 정도 표시) */
