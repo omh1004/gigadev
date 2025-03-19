@@ -255,6 +255,9 @@ export default {
       // userId:"asdfa",
       userId: sessionStorage.getItem("loginUser") ? JSON.parse(sessionStorage.getItem("loginUser")).userId : "", // ✅ 로그인된 유저의 userId 가져오기
 
+      // ✅ userId → gameNo 변경
+      gameNo: sessionStorage.getItem("gameNo") || "", 
+
 
       selectedDay: 10, // ✅ 선택한 날짜 (DAY 버튼 클릭 시 저장) null
       quizBonus: 0,
@@ -269,7 +272,15 @@ export default {
 
   // sk__userId가 바뀔 때마다 대출 내역과 진행일을 다시 불러오자~!@
   watch: {
+   
     userId(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.fetchLoanData();
+        this.fetchCompletedDays();
+      }
+    },
+
+    gameNo(newVal, oldVal) {
       if (newVal !== oldVal) {
         this.fetchLoanData();
         this.fetchCompletedDays();
@@ -316,13 +327,19 @@ export default {
   console.log("🟢 applyLoan() 함수 실행됨!");
 
   const amount = Number(this.loanAmount);
-  const userData = sessionStorage.getItem("loginUser");
-  const userId = userData ? JSON.parse(userData).userId : "";
+  // const userData = sessionStorage.getItem("loginUser");
+  // const userId = userData ? JSON.parse(userData).userId : "";
+  const gameNo = sessionStorage.getItem("gameNo") || "";
 
-  if (!userId) {
-    alert("로그인이 필요합니다!");
-    return;
-  }
+  // if (!userId) {
+  //   alert("로그인이 필요합니다!");
+  //   return;
+  // }
+
+  if (!gameNo) {
+        alert("게임 번호가 없습니다. 게임을 다시 시작해주세요!");
+        return;
+      }
 
   // if (!amount || amount <= 0) {
   //   this.errorMessage = "대출 금액을 입력하세요.";
@@ -363,7 +380,8 @@ export default {
   const loanData = {
     loanMoney: amount,
     // userId: this.userId,
-    userId:userId,
+    // userId:userId,
+    gameNo: gameNo,
   };
 
   try {
@@ -399,17 +417,23 @@ export default {
 
 async fetchCompletedDays() {
 
-    const userData = sessionStorage.getItem("loginUser");
-    const userId = userData ? JSON.parse(userData).userId : "";
+    // const userData = sessionStorage.getItem("loginUser");
+    // const userId = userData ? JSON.parse(userData).userId : "";
+    const gameNo = sessionStorage.getItem("gameNo") || "";
 
-    if (!userId) {
-        console.error("로그인 정보가 없습니다.");
+    // if (!userId) {
+    //     console.error("로그인 정보가 없습니다.");
+    //     return;
+    // }
+
+    if (!gameNo) {
+        console.error("게임 번호가 없습니다.");
         return;
-    }
+      }
 
 
     try {
-        const response = await fetch(`http://localhost:8080/spring/bank/getPlayday?userId=${userId}`);
+        const response = await fetch(`http://localhost:8080/spring/bank/getPlayday?gameNo=${gameNo}`);
         if (!response.ok) throw new Error("진행일자 정보를 가져오는 데 실패했습니다.");
 
         const playday = await response.json();
@@ -538,20 +562,29 @@ async openDaySummary(day) {
 
   this.selectedDay = day;
 
-  const userData = sessionStorage.getItem("loginUser");
-  const userId = userData ? JSON.parse(userData).userId : ""
+  // const userData = sessionStorage.getItem("loginUser");
+  // const userId = userData ? JSON.parse(userData).userId : ""
 
-  if (!userId) {
-    alert("로그인이 필요합니다!");
-    return;
-  }
+  const gameNo = sessionStorage.getItem("gameNo") || "";
+
+
+  // if (!userId) {
+  //   alert("로그인이 필요합니다!");
+  //   return;
+  // }
+
+
+  if (!gameNo) {
+        alert("게임 번호가 없습니다!");
+        return;
+      }
 
 
   try {
     // ✅ 로그 추가 (이게 보이는지 확인!)
-    console.log(`🟢 openDaySummary 실행됨! userId=${userId}, selectedDay=${day}`);
+    console.log(`🟢 openDaySummary 실행됨! gameNo=${gameNo}, selectedDay=${day}`);
 
-    const response = await fetch(`http://localhost:8080/spring/bank/getDailyRevenue?userId=${userId}&selectedDay=${day}`);
+    const response = await fetch(`http://localhost:8080/spring/bank/getDailyRevenue?gameNo=${gameNo}&selectedDay=${day}`);
     
     if (!response.ok) throw new Error("매출 데이터를 가져오지 못했습니다.");
     
@@ -589,17 +622,23 @@ async openDaySummary(day) {
 
     async fetchLoanData() {
 
-      const userData = sessionStorage.getItem("loginUser");
-      const userId = userData ? JSON.parse(userData).userId : "";
+      // const userData = sessionStorage.getItem("loginUser");
+      // const userId = userData ? JSON.parse(userData).userId : "";
+      const gameNo = sessionStorage.getItem("gameNo") || "";
 
-      if (!userId) {
-          console.error("로그인된 사용자 ID가 없습니다.");
-          return;
+      // if (!userId) {
+      //     console.error("로그인된 사용자 ID가 없습니다.");
+      //     return;
+      // }
+
+      if (!gameNo) {
+        console.error("게임 번호가 없습니다.");
+        return;
       }
 
       try {
         // ✅ userId를 API 요청에 포함
-        const response = await fetch(`http://localhost:8080/spring/bank/getLoans?userId=${userId}`);
+        const response = await fetch(`http://localhost:8080/spring/bank/getLoans?gameNo=${gameNo}`);
 
         if (!response.ok) {
           throw new Error('대출 데이터를 가져오는 데 실패했습니다.');
@@ -631,9 +670,9 @@ async openDaySummary(day) {
 
 
   mounted() {
-    const userData = sessionStorage.getItem("loginUser");
-    this.userId = userData ? JSON.parse(userData).userId : "";
-
+    // const userData = sessionStorage.getItem("loginUser");
+    // this.userId = userData ? JSON.parse(userData).userId : "";
+    this.gameNo = sessionStorage.getItem("gameNo") || "";
     this.fetchLoanData(); // ✅ 페이지 로드 시 대출 내역 가져오기
     this.fetchCompletedDays();  // ✅ 페이지 로드 시 진행일 가져오기
   },
