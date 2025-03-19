@@ -23,7 +23,7 @@
         <h2 class="delivery-title">발주</h2>
       </div>
 
-      <div class="product-section">
+      <div class="product-section" style="font-family: rk;">
         <div style="margin-top:1vh;">
           <div class="product-table">
             <div class="table-header">
@@ -455,33 +455,20 @@ export default {
 
 <style scoped>
 @font-face {
-  font-family: 'RecipeKoreaOTF_38';
-  src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
-  font-size:38px;
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'RecipeKoreaOTF_34';
-  src: url('/fonts/RecipeKoreaOTF.otf') format('opentype');
-  font-size:34px;
-  font-weight: bold;
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
 }
-@font-face {
-  font-family: 'Pretendard_24';
-  src: url('/fonts/Pretendard-Black.woff') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-size:24px;
-}
-
 .main-container {
   width: 100%;
     height: 100vh;
     position: relative;
     overflow: hidden;
-  
-    font-family: 'RecipeKoreaOTF_38';
+
+
     font-size: 24px;
     background-color: #f5f5f5;
   
@@ -499,7 +486,6 @@ export default {
     background-size: 100% 100%;
 
 }
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -588,7 +574,7 @@ export default {
 }
 
 .delivery-title {
-  font-family: 'RecipeKoreaOTF_38';
+  font-family: rk;
   margin: 0;
   display: inline-block;
   position: relative;
@@ -810,14 +796,14 @@ export default {
 }
 
 .cart-title {
-  font-family: 'RecipeKoreaOTF_34';
+  font-family: rk;
   font-weight: bold;
   text-align: center;
   font-size: 18px;
   margin: 15px;
 }
 .cart-items {
-  font-family: 'Pretendard_24';
+  font-family: prebold;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -879,7 +865,7 @@ export default {
 }
 
 .total-products-fake{
-  font-family: 'Pretendard_24';
+  font-family: rk;
   text-align:right;
   padding-right:0.5vw;
   padding-top:1vh;
@@ -920,16 +906,16 @@ export default {
 .popup-body {
   padding: 20px;
   text-align: center;
-  font-family: 'Pretendard_24';
+  font-family: prebold;
 }
 
 .popup-body p {
   margin: 5px 0;
-  font-family: 'Pretendard_24';
+  font-family: prebold;
 }
 
 .popup-message {
-  font-family: 'Pretendard_24';
+  font-family: prebold;
   margin-bottom: 0; /* 메시지 아래 마진 제거 */
 }
 
@@ -939,13 +925,13 @@ export default {
   overflow-y: auto;
   text-align: center;
   padding: 0 15px;
-  font-family: 'Pretendard_24';
+  font-family: rk;
 }
 
 .ordered-item {
   padding: 5px 0;
   border-bottom: 1px solid #e0e0e0;
-  font-family: 'Pretendard_24';
+  font-family: rk;
   margin: 0;
   text-align: center;
 }
@@ -1018,7 +1004,7 @@ export default {
 .ordered-item {
   padding: 5px 0;
   border-bottom: 1px solid #e0e0e0;
-  font-family: 'Pretendard_24';
+  font-family: rk;
   margin: 0;
 }
 
