@@ -1,8 +1,8 @@
 <template>
-
     <div class="main-container">
+      <Topbar />
     <!-- Header -->
-    <div class="header">
+    <!-- <div class="header">
       <div class="left-section">D-{{ this.playday }}</div>
       <div class="right-section">
         <div class="money-bag">
@@ -11,8 +11,8 @@
         </div>
         <span class="settings-icon">⚙️</span>
         
-      </div>
-    </div>
+      </div>  
+    </div> -->
 
     <div class="main-content">
       <div class="back-button" @click="backToMain">
@@ -136,6 +136,7 @@
 </template>
 
 <script>
+import Topbar from '../common/topbar.vue';
 import { revenueStore } from '@/assets/pinia/maingame';
 
 export default {
@@ -447,6 +448,7 @@ export default {
       this.$router.push("/mainMenu");
     }
   },
+  components:{ Topbar }
 }
 </script>
 

@@ -1,7 +1,8 @@
 <template>
   <div class="main-container">
+    <Topbar />
     <!-- Header -->
-    <div class="header">
+    <!-- <div class="header">
       <div class="left-section">D-30</div>
       <div class="right-section">
         <div class="money-bag">
@@ -11,7 +12,7 @@
         <span class="settings-icon">⚙️</span>
 
       </div>
-    </div>
+    </div> -->
 
     <!-- Navigation -->
     <div class="navigation">
@@ -108,6 +109,7 @@
 </template>
 
 <script>
+import Topbar from '../common/topbar.vue';
 import { revenueStore } from '@/assets/pinia/maingame';
 
 const model = {
@@ -315,7 +317,8 @@ export default {
     fetch("http://localhost:8080/spring/maingame/moneydata?gameNo=" + gameNo)
       .then(response => response.text())
       .then(data => this.revenue.cash = data)
-  }
+  },
+  components:{ Topbar }
 };
 </script>
 

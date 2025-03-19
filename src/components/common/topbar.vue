@@ -1,7 +1,7 @@
 <template>
 <div style="height:10vh;overflow:visible;text-align:right;">
     <div class="topbar">    <!-- 시간 될 때 떼어내서 common에 넣어놓기 -->
-        <p style="font-size:2vh;">D-{{ 30-revenue.salesDay+1 }}</p>
+        <p style="font-size:2vh; font-family: prebold;">D-{{ 30-revenue.salesDay+1 }}</p>
         <div v-if="gamestart" style="display:flex;">
             <!-- <img src="@/assets/timer.png" width="10" height="52"> -- -->
             <div class="timebar-container">
@@ -48,6 +48,14 @@ export default {
 }
 </script>
 <style scoped>
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
   .topbar{
       display:flex;
       justify-content:space-between;
@@ -108,11 +116,11 @@ export default {
   }
     .settings{
         display:inline-block;
-        width:19vw;
+        width:14vw;
         height:28vh;
         position:relative;
-        background-color:#F5F5F5;
-        border:0.5vh solid #6F3533;
+        background-color:#F9F8F2;
+        border:0.7vh solid #6F3533;
         border-radius:2vh;
         z-index:3;
     }
@@ -121,11 +129,12 @@ export default {
         flex-direction:column;
         justify-content:space-around;
         align-items:center;
-        width:19vw;
+        width:14vw;
         height:28vh;
         text-align:center;
     }
     .settingslist p{
+        font-family: rk;
         display:flex;
         justify-content:center;
         align-items:center;
