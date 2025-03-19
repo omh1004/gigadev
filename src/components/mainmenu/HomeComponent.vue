@@ -91,6 +91,8 @@ export default {
   },
   methods: {
 
+
+
     loadGameData() {
       console.log("로드 함수 실행됨"); // 이게 실행되는지 확인!
 
@@ -102,10 +104,24 @@ export default {
         .then(response => response.json())
         .then(data => {
           console.log("받아온 유저 데이터:", data);
-          this.userData = data;
+          this.revenue.cash=data.cash;
+          this.revenue.loan=data.loan;
+          this.revenue.playNo=data.playNo;
+          // this.
+          this.storageLevel=data.storageLevel;
+          // this.userData = data;
+
+          this.revenue.saveState(); // 로컬에다 revenue store있는걸 저장함
+          return this.$router.push('/mainMenu');
+
         })
         .catch(error => console.error("유저 데이터 불러오기 실패:", error));
     },
+
+
+
+
+
 
     formatCurrency(value) {
       if (value == null) return "0원";

@@ -61,7 +61,7 @@ export const productStore = defineStore('storage',{
                 while(p.orderQuantity>0){
                     let prod;
                     // let expDate;
-                    // switch(p.goodsType){
+                    // switch(p.goodType){
                     //     case '신선식품': expDate=3; break;
                     //     case '즉석식품': expDate=4; break;
                     //     case '전자제품': break;

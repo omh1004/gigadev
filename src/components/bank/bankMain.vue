@@ -267,7 +267,7 @@ export default {
       totalIncome: 0,  // ✅ 총 수입
       totalExpense: 0,  // ✅ 총 지출
       showLoanDepletedAlert: false,  // ✅ 알림 모달 상태
-      revenue: {},
+      revenue:revenueStore(),
     };
   },
 
@@ -322,6 +322,35 @@ export default {
         this.errorMessage = "";
       }
     },
+
+
+    async fetchMoneyData() {
+  const gameNo = sessionStorage.getItem("gameNo") || "";
+
+  if (!gameNo) {
+    console.error("게임 번호가 없습니다.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:8080/spring/bank/moneydata?gameNo=${gameNo}`);
+    if (!response.ok) throw new Error("잔고 데이터를 가져오는 데 실패했습니다.");
+
+    const newCash = await response.text();
+    console.log("💰 최신 잔고 데이터:", newCash);
+
+    // ✅ Vue 상태 업데이트
+    this.revenue.cash = Number(newCash);
+    this.revenue.saveState();  // 변경된 상태 저장
+
+  } catch (error) {
+    console.error("잔고 데이터 로드 오류:", error);
+  }
+},
+
+
+
+
 
 
     async applyLoan() {
@@ -398,15 +427,30 @@ export default {
     console.log("✅ 서버 응답 성공!");
     alert("대출 신청이 완료되었습니다!");
     
-     // ✅ 서버에서 최신 대출 정보를 다시 불러오기
-     await this.fetchLoanData();
+      // ✅ 1️⃣ 최신 대출 내역 다시 불러오기
+      await this.fetchLoanData();
+
+      // ✅ 2️⃣ 서버에서 잔고 다시 불러오기 (중요!)
+      await this.fetchMoneyData();
+
+              // ✅ 3️⃣ Vue 상태 강제 업데이트
+          this.$forceUpdate(); 
+
+      // ✅ 4️⃣ 대출 한도 업데이트
+      this.loanLimit -= amount;
     
     // ✅ 대출 한도 업데이트
     // this.loanLimit -= amount;
     
+  
+
+
     // ✅ 입력 필드 초기화
     this.loanAmount = "";
     this.errorMessage = "";
+
+
+
   } catch (error) {
     console.error(error);
     alert("대출 신청 중 오류 발생");
@@ -439,11 +483,12 @@ async fetchCompletedDays() {
 
         const playday = await response.json();
         
-        // ✅ 1부터 playday까지 배열 채우기
-        this.completedDays = Array.from({ length: playday }, (_, i) => i + 1);
+         // ✅ (playday - 1) 까지만 선택 가능하도록 설정
+        this.completedDays = playday > 1 ? Array.from({ length: playday - 1 }, (_, i) => i + 1) : [];
         
     } catch (error) {
         console.error("진행일자 로드 오류:", error);
+        alert:""
     }
 },
 
@@ -608,7 +653,7 @@ async openDaySummary(day) {
 
   } catch (error) {
     console.error("매출 데이터 가져오기 오류:", error);
-    alert("1일차가 종료된 시점부터 조회 가능합니다.");
+    alert("계산에 필요한 데이터가 부족합니다."); // ✅ 클릭 불가 알림
   }
 },
 
@@ -676,7 +721,7 @@ async openDaySummary(day) {
     this.gameNo = sessionStorage.getItem("gameNo") || "";
     this.fetchLoanData(); // ✅ 페이지 로드 시 대출 내역 가져오기
     this.fetchCompletedDays();  // ✅ 페이지 로드 시 진행일 가져오기
-
+    this.fetchMoneyData();  // ✅ 페이지 로드 시 최신 잔고 가져오기
 
     // fetch("http://localhost:8080/spring/bank/moneydata?gameNo=" + gameNo)
     //   .then(response => response.text())
