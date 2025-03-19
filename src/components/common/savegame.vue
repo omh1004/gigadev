@@ -15,11 +15,11 @@ export default {
   data(){
     return{
       manual:[
-        '/manual/usermanual-1.png',
-        '/manual/usermanual-2.png',
-        '/manual/usermanual-3.png',
-        '/manual/usermanual-4.png',
-        '/manual/usermanual-5.png',
+        '/usermanual-1.png',
+        '/usermanual-2.png',
+        '/usermanual-3.png',
+        '/usermanual-4.png',
+        '/usermanual-5.png',
       ],
       page:0,
     }
