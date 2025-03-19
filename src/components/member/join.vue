@@ -8,10 +8,10 @@
 
       <div id="first" class="input-group">
         <label for="userId"><span>*</span>ID (아이디)</label>
-        <input id="userId" v-model="userId" name="userId" @input="validateId"><br>
+        <input id="userId" v-model="userId" name="userId" @input="validateId" placeholder="ID(아이디)를 입력하세요."><br>
         <p id="alertId" class="p" :class="{ 'error': !isIdValid && userId, 'success': isIdValid && userId }">
           * 5~20자의 영문 소문자, 숫자로만 입력해주세요.
-        </p>
+        </p> 
       </div>
         <button id="checkbtn" @click="checkIdDuplicate" :disabled="!isIdValid || userId.length === 0">ID (아이디) 중복확인</button>
         <p v-if="idChecked" :class="{ 'success-message': !isDuplicate, 'error-message': isDuplicate }">
@@ -20,29 +20,29 @@
 
       <div class="input-group">
         <label for="userPw"><span>*</span>PW (비밀번호)</label>
-        <input id="userPw" v-model="password" name="userPw" type="password" @input="validatePassword">
+        <input id="userPw" v-model="password" name="userPw" type="password" @input="validatePassword" placeholder="PW(비밀번호)를 입력하세요.">
         <p id="alertPw" class="p" :class="{ 'error': !isPasswordValid && password, 'success': isPasswordValid && password }">
           *비밀번호는 8~10글자, 알파벳 소문자, 대문자, 숫자, 특수 기호를 포함해야 합니다.
         </p>
       </div>
 
-      <div class="input-group">
+      <div class="input-group" style="margin-top: -2vw;">
         <label for="pwCheck"><span>*</span>PW (비밀번호) 재입력</label>
-        <input id="pwCheck" name="pwCheck" type="password" v-model="passwordConfirm" @input="checkPasswordMatch"><br>
-        <p v-if="passwordConfirm" :class="{ 'success-message': passwordsMatch, 'error-message': !passwordsMatch }">
+        <input id="pwCheck" name="pwCheck" type="password" v-model="passwordConfirm" @input="checkPasswordMatch" placeholder="PW(비밀번호)를 재입력하세요."><br>
+        <p v-if="passwordConfirm" style="margin-bottom: -2vw; margin-top: -0.5vw;" :class="{ 'success-message': passwordsMatch, 'error-message': !passwordsMatch }">
           {{ passwordsMatch ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.' }}
         </p>
       </div>
 
       <div class="input-group">
         <label for="email"><span>*</span>Email (이메일)</label>
-        <input id="email" v-model="email" name="email" @input="validateEmail">
-        <p v-if="email && !isEmailValid" class="error-message">유효한 이메일 형식이 아닙니다.</p>
+        <input id="email" v-model="email" name="email" @input="validateEmail" placeholder="Email(이메일)을 입력하세요.">
+        <p  v-if="email && !isEmailValid" class="error-message" style="margin-bottom: -2vw; margin-top: -0.5vw;">유효한 이메일 형식이 아닙니다.</p>
       </div>
 
       <div class="input-group">
         <label for="nick"><span>*</span>닉네임 설정</label>
-        <input id="nick" name="nick" v-model="nick" @input="validateNick">
+        <input id="nick" name="nick" v-model="nick" @input="validateNick" placeholder="닉네임을 입력하세요.">
         <p id="alertNick" class="p" :class="{ 'error': !isNickValid && nick, 'success': isNickValid && nick }">
           *2글자 이상,7글자 이하로 입력해 주세요.
         </p>
@@ -192,7 +192,16 @@ export default {
 * {
   box-sizing: border-box;
 }
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
 #title {
+  font-family: rk;
   text-align: center;
   font-size: 2vw;
   margin-top: 5vh;
@@ -202,8 +211,8 @@ span {
   margin-right: 0.7vw;
 }
 label {
+  font-family: rk;
   font-size: 1.4vw;
-  font-weight: 900;
 }
 #must {
   text-align: end;
@@ -241,6 +250,7 @@ label {
   line-height: 5vh;
 }
 #userId {
+  font-family: prebold;
   margin-left: 14vw;
   width: 67vw;
   height: 5vh;
@@ -264,32 +274,36 @@ label {
   cursor: not-allowed;
 }
 #userPw {
+  font-family: prebold;
   margin-top: 3vh;
-  margin-left: 12vw;
+  margin-left: 11.7vw;
   width: 67.1vw;
   height: 5vh;
   border:0.25vw solid #6F3533;
   border-radius: 0.25vw;
 }
 #pwCheck {
+  font-family: prebold;
   margin-top: 3vh;
-  margin-left: 8vw;
+  margin-left: 7.2vw;
   width: 67vw;
   height: 5vh;
   border:0.25vw solid #6F3533;
   border-radius: 0.25vw;
 }
 #email {
+  font-family: prebold;
   margin-top: 3vh;
-  margin-left: 12vw;
+  margin-left: 11.3vw;
   width: 66.9vw;
   height: 5vh;
   border:0.25vw solid #6F3533;
   border-radius: 0.25vw;
 }
 #nick {
+  font-family: prebold;
   margin-top: 3vh;
-  margin-left: 14vw;
+  margin-left: 14.3vw;
   width: 66.8vw;
   height: 5vh;
   border:0.25vw solid #6F3533;
@@ -338,5 +352,8 @@ label {
   font-size: 1vw;
   margin-top: 0.5vh;
   text-align: center;
+}
+input::placeholder {
+  text-indent: 1vw;
 }
 </style>
