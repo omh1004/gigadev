@@ -1,19 +1,20 @@
 <template>
-  <div class="store-layout" @click="linkMainMenu">
-    <div @click.stop="movePage">
+ <div class="main-container" @click="linkMainMenu">
+    
+    <div @click="movePage">
       <img class="skip-button" src="/tutorial/button/skip.png">
     </div>
-
-    <div id="bankman">
-      <img src="@/assets/person/headquartersstaff.png">
+  
+    <div id="bankmanbox">
+      <img id="bankman" src="/person/mainbankman.png">
     </div>
     <div class="dialog-box">
       <div class="dialog-text">{{ inputText }}</div>
       <div class="dialog-arrow">▼</div>
     </div>
+  
   </div>
 </template>
-
 
   
 <script>
@@ -58,33 +59,34 @@ export default {
 </script>
 
 <style scoped>
-.store-layout {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  background-image: url('/background/convenientbg.png');
-  background-size: 100% 100%;
+  @font-face {
+  font-family: 'prelight';
+  src: url('/fonts/Pretendard-Light.woff') format('woff');
+}
+.main-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    
 
-  font-family: RecipekoreaOTF;
-  font-size: 24px;
+
+    font-family: pretendard;
   background-color: #f5f5f5;
-
+  
   text-align: center;
   max-width: 100%;
   min-height: 90%;
+
 
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center; 
 
-  background-repeat: no-repeat;
-}
+  background-image: url('/tutorial/tutorialMain.png');
+  background-size: 100% 100%;
 
-#bankman{
-  position:relative;  
-  top:100px;
 }
 
 .skip-button {
@@ -95,36 +97,51 @@ export default {
 }
 
 .dialog-box {
-  z-index: 1;
-  margin-top: -2.5vh;
+  position: absolute;
+  margin-top: 63vh;
   width: 70%;
   background-color: #F2F1EC;
+  border-radius: 2vw;
   padding: 1vw 1.5vw;
-  margin-bottom: 20px;
-  min-height: 150px;
+  margin-bottom: 5vh;
+  height: 20vh; 
   display: flex;
-  border-radius: 24px;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1vw 2vw rgba(0, 0, 0, 0.1);
 }
 
 .dialog-text {
   text-align: left;
-  font-size: 24px;
+  font-size: 1.8vw;
   margin: 0;
   flex-grow: 1;
   color: #333;
-  font-family: RecipekoreaOTF;
+  font-family: prelight;
 }
 
 .dialog-arrow {
-
+  font-size: 1.6vw;
   bottom: 8px;
   right: 16px;
   color: #666;
 }
-.horror{
-  color:red;
+
+.bottom-indicator {
+  position: absolute;
+  bottom: 10px;
+  color: #333;
+  font-size: 18px;
+}
+#bankmanbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#bankman {
+  position: absolute;
+  width: calc(35%);
+  width: 17vw;
+  height: 55%;
 }
 </style>

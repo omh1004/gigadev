@@ -1,5 +1,14 @@
 <template>  
   <div class="bank-container">
+    <!-- ✅ `Topbar` 상단에 고정 -->
+    <div class="topbar-container">
+      <Topbar />
+    </div>
+
+  <!-- ✅ 뒤로 가기 버튼 (좌측 상단으로 이동) -->
+  <button @click="goBack" class="back-button">
+      <img src="/element/backbank.png" alt="뒤로 가기" />
+    </button>
     <!-- ✅ 달력 (항상 보이게 유지) -->
     <div class="calandar">
 
@@ -196,12 +205,33 @@
       >
         매출정산
       </button>
+
+      
     </div>
+
+
+
+
+      <!-- ✅ 알림 모달 창 -->
+      <div v-if="showLoanDepletedAlert" class="modal-overlay" @click="showLoanDepletedAlert = false">
+        <div class="modal-content">
+          <img src="/element/exhaustion.png" alt="대출 가능 금액 소진 알림" @click="showLoanDepletedAlert = false">
+        </div>
+      </div>
+
+
+
+
   </div>
+
+  
 </template>
 
 <script>
+import Topbar from '../common/topbar.vue';  // ✅ Topbar import 추가!
+
 export default {
+  components: { Topbar },
   data() {
     return {
       activeTab: "loanHistory", // 기본 선택된 탭
@@ -232,7 +262,7 @@ export default {
       wasteIncome: 0,  // ✅ 폐기 수익
       totalIncome: 0,  // ✅ 총 수입
       totalExpense: 0,  // ✅ 총 지출
-
+      showLoanDepletedAlert: false,  // ✅ 알림 모달 상태
       
     };
   },
@@ -262,6 +292,14 @@ export default {
 
   },
   methods: { 
+
+    goBack() {
+      this.$router.go(-1); // ✅ Vue Router가 적용된 경우
+      // 또는
+      // window.history.back(); // ✅ Vue Router가 없는 경우
+    },
+
+
     validateInput() {
       if (this.loanAmount < 0) {
         this.loanAmount = "";
@@ -300,6 +338,27 @@ export default {
   //   this.errorMessage = "대출 가능 금액을 초과했습니다.";
   //   return;
   // }
+
+
+  // ✅ 대출 최대 한도가 0원인지 체크
+  if (this.loanLimit <= 0) {
+    // alert("대출이 불가능합니다. 대출 한도를 확인하세요!");
+    this.showLoanDepletedAlert = true;
+    return;
+  }
+
+  // ✅ 대출 받을 금액이 유효한지 체크
+  if (!amount || amount < 100) {
+    alert("대출 금액은 최소 100원 이상이어야 합니다.");
+    return;
+  }
+
+  // ✅ 대출 한도를 초과하면 안 되도록 체크
+  if (amount > this.loanLimit) {
+    alert("대출 가능 금액을 초과했습니다.");
+    return;
+  }
+
 
   const loanData = {
     loanMoney: amount,
@@ -539,7 +598,6 @@ async openDaySummary(day) {
       }
 
       try {
-
         // ✅ userId를 API 요청에 포함
         const response = await fetch(`http://localhost:8080/spring/bank/getLoans?userId=${userId}`);
 
@@ -549,11 +607,13 @@ async openDaySummary(day) {
 
         const loans = await response.json(); // 응답을 JSON으로 변환 후 저장
 
-        this.loanRecords = loans.map(loan => ({
-          date: new Date(loan.loandate).toISOString().split("T")[0].replace(/-/g, "."),
-          type: "운영 대출금",  // ✅ 대출 타입 추가
-          amount: loan.loanMoney // ✅ 백엔드에서 받은 대출 금액
+
+        this.loanRecords = loans.map((loan) => ({
+        date: new Date(loan.loandate).toISOString().split("T")[0].replace(/-/g, "."),
+        type: loan.loanType, // ✅ 백엔드에서 받은 정확한 대출 타입 사용
+        amount: loan.loanMoney // ✅ 백엔드에서 받은 대출 금액
         }));
+
 
         // ✅ 대출 총합 계산해서 반영
         this.totalLoan = this.loanRecords.reduce((sum, loan) => sum + loan.amount, 0);
@@ -1415,6 +1475,72 @@ button.loan-btn1 {
   margin-right: -3px;
 }
 
+
+/* ✅ 뒤로 가기 버튼 위치 조정 */
+.back-button {
+  position: absolute;
+  top: 20%; /* 중앙 정렬 */
+  left: 5%; /* 왼쪽 배치 */
+  transform: translateY(-50%); /* 버튼을 중앙으로 이동 */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.back-button img {
+  width: 27px;
+  height: 27px;
+}
+
+/* ✅ 기존 레이아웃 유지 */
+.bank-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+
+
+/* ✅ 모달 배경 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* 배경 반투명 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+/* ✅ 모달 콘텐츠 */
+.modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* 클릭 가능하도록 설정 */
+}
+
+/* ✅ 이미지 크기 조절 */
+.modal-content img {
+  width: 400px; /* 필요에 따라 크기 조절 가능 */
+  height: auto;
+}
+
+
+.topbar-container {
+  position: absolute;  /* 화면 최상단에 고정 */
+  top: 0;
+  left: 3%;
+  width: 100%;
+  z-index: 100;  /* 다른 요소 위에 표시되도록 */
+}
 
 
 </style>

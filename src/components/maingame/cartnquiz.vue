@@ -63,6 +63,9 @@ export default {
                 this.$emit('notclick',false);
                 if(this.customerCount>=10){
                     this.$emit('bgmstop');
+                    this.product.saveState();
+                    this.revenue.saveState();
+                    console.log("cartnquiz",localStorage.getItem('product'));
                     this.$router.push({
                         name:'calculation',
                         state:{
@@ -131,6 +134,7 @@ export default {
                 
                 if(prodcount[i]==0 && nothing){
                     perfect = false;
+                    under += prodwant[i];
                 }else if(prodcount[i]==prodwant[i]){
                     nothing = false;
                 }else if(prodcount[i]<prodwant[i]){
@@ -210,6 +214,9 @@ export default {
                     this.$router.push('/maingame/quiz');
                 }else if(this.customerCount>=10){
                     this.$emit('bgmstop');
+                    this.product.saveState();
+                    this.revenue.saveState();
+                    console.log("cartnquiz",localStorage.getItem('product'));
                     this.$router.push({
                         name:'calculation',
                         state:{
@@ -239,6 +246,9 @@ export default {
                         this.$emit('notclick',false);
                         if(this.customerCount>=10){
                             this.$emit('bgmstop');
+                            this.product.saveState();
+                            this.revenue.saveState();
+                            console.log("cartnquiz",localStorage.getItem('product'));
                             this.$router.push({
                                 name:'calculation',
                                 state:{
@@ -258,7 +268,7 @@ export default {
                         this.dialog+='신뢰도 -5';
                         this.relability-=5;
                     }
-                    if(this.relability==0){
+                    if(this.relability<=0){
                         setTimeout(()=>{
                             this.$emit('bgmstop');
                             this.$router.push('/poorending1');
@@ -277,6 +287,9 @@ export default {
                             this.$emit('notclick',false);
                             if(this.customerCount>=10){
                                 this.$emit('bgmstop');
+                                this.product.saveState();
+                                this.revenue.saveState();
+                                console.log("cartnquiz",localStorage.getItem('product'));
                                 this.$router.push({
                                     name:'calculation',
                                     state:{

@@ -25,10 +25,14 @@ export default {
 }
 </script>
 <style scoped>
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
 #loginbtn {
-    font-family: RecipekoreaOTF;
+    font-family: rk;
     font-size: 1.5vw;
-    font-weight: 900;
+    text-align: center;
     border: 0.4vw solid #5E395A;
     border-radius: 1.5vw;
     width: 11vw;
@@ -39,9 +43,9 @@ export default {
     cursor: pointer;
 }
 #joinbtn {
-    font-family: RecipekoreaOTF;
+    font-family: rk;
     font-size: 1.5vw;
-    font-weight: 900;
+    text-align: center;
     border: 0.4vw solid #873511;
     border-radius: 1.5vw;
     width: 11vw;
