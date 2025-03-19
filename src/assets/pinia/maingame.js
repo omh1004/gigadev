@@ -16,6 +16,7 @@ export const revenueStore = defineStore('maingame',{
         playNo:0,
         state:0,    // 이건 봐도 봐도 모르겠다
         userId:'',
+        reliability:50,  // 게임 저장할 때 쓰긴 해야 할 듯
     }),
     actions:{
         saveState(){

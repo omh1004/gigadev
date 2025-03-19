@@ -1,7 +1,7 @@
 <template>
     <div class="conv">
         <RouterView name="customer" class="background":customerA="customerA" :dialog="dialog" :quizDialog="quizDialog" :quizNum="quizNum"
-                    :relability="relability" @quizTime="quizTime" @customer="customer"></RouterView>
+                    :reliability="reliability" @quizTime="quizTime" @customer="customer"></RouterView>
         <RouterView name="counter" :quizNum="quizNum" :quizAnswer="quizAnswer" :cart="cart" :interval="interval"
                     :timeleft="timeleft" :noclick="noclick" @result="result" @revertprod="revertprod" @submit="submit"></RouterView>
         <!-- <QuizMain :quizDialog="dialog" :quizNum="quizNum" class="background" @quizTime="quizTime"/> -->
@@ -28,7 +28,7 @@ export default {
                 {'딸기':1,'파인애플':2},
             ],  // 일단 두개만
             currentWant:{},
-            relability:50,
+            reliability:50,
             quiz:-1,
             revenue:revenueStore(),
             product:productStore(),
@@ -164,26 +164,26 @@ export default {
             let timeout = 0;
             if(nothing){
                 this.dialog='손님이 화났습니다! ';
-                if(this.relability<100){
+                if(this.reliability<100){
                     this.dialog+='신뢰도 -5';
-                    this.relability-=5;
+                    this.reliability-=5;
                 }
             }else if(perfect){
                 this.dialog='손님이 만족했습니다 ';
-                if(this.relability<100){
+                if(this.reliability<100){
                     this.dialog+='신뢰도 +5';
-                    this.relability+=5;
+                    this.reliability+=5;
                 }
-                if(this.relability>=100){
+                if(this.reliability>=100){
                     this.revenue.feverYN='Y';
                 }
             }else{
                 if(over>0 && under>0){
                     timeout = 3500;
                     this.dialog=under + '개 덜 판매했습니다. ';
-                    if(this.relability<100){
+                    if(this.reliability<100){
                         this.dialog+='신뢰도 -2';
-                        this.relability-=2;
+                        this.reliability-=2;
                     }
                     setTimeout(()=>{
                         this.dialog=over + '개 더 판매했습니다. ';
@@ -191,22 +191,22 @@ export default {
                     },3500)
                 }else if(under>0){
                     this.dialog=under + '개 덜 판매했습니다. ';
-                    if(this.relability<100){
+                    if(this.reliability<100){
                         this.dialog+='신뢰도 -2';
-                        this.relability-=2;
+                        this.reliability-=2;
                     }
                 }else if(over>0){
                     this.dialog=over + '개 더 판매했습니다. ';
                     this.dialog+='-' + loss + '원 ';
-                    if(this.relability<100){
+                    if(this.reliability<100){
                         this.dialog+='신뢰도 -2';
-                        this.relability-=2;
+                        this.reliability-=2;
                     }
                 }
             }
             setTimeout(()=>{
                 this.$emit('notclick',false);
-                if(this.relability==0){
+                if(this.reliability==0){
                     this.$emit('bgmstop');
                     this.$router.push('/poorending1');
                 }else if((this.customerCount+1)==this.quizMan){
@@ -264,11 +264,11 @@ export default {
                     },7000);
                 }else{
                     this.dialog='손님이 화났습니다! ';
-                    if(this.relability<100){
+                    if(this.reliability<100){
                         this.dialog+='신뢰도 -5';
-                        this.relability-=5;
+                        this.reliability-=5;
                     }
-                    if(this.relability<=0){
+                    if(this.reliability<=0){
                         setTimeout(()=>{
                             this.$emit('bgmstop');
                             this.$router.push('/poorending1');
@@ -316,6 +316,11 @@ export default {
                 console.log(this.product);
             },
             deep:true,
+        },
+        reliability:{
+            handler(curVal,oriVal){
+                this.revenue.reliability=curVal;
+            }
         }
     },
     components:{
