@@ -1,18 +1,8 @@
 <template>
 
     <div class="main-container">
-    <!-- Header -->
-    <div class="header">
-      <div class="left-section">D-{{ (30*1)-((this.revenue.salesDay-1)*1) }}</div>
-      <div class="right-section">
-        <div class="money-bag">
-          <span class="bag-icon">💰</span>
-          <span class="amount">{{ (revenue.cash*1).toLocaleString() }}원</span>
-        </div>
-        <span class="settings-icon">⚙️</span>
-        
-      </div>
-    </div>
+
+    <Topbar />
 
     <div class="main-content">
       <div class="back-button" @click="backToMain">
@@ -137,8 +127,10 @@
 
 <script>
 import { revenueStore } from '@/assets/pinia/maingame';
+import Topbar from '../common/topbar.vue';
 
 export default {
+  components: { Topbar},
   data() {
   return {
     popupMessage: '',
