@@ -31,6 +31,15 @@
       </div> 
     </div> -->
     <div class="ranking-board">
+      <div class="ranking-title-rayout">
+      <div class="ranking-title">
+          <div class="ranking-info">
+            <img src="/lanking/crown.png" class="crown-icon">
+            <span class="ranking-text">게임랭킹</span>
+          </div>
+        </div>
+      </div>
+
       <div class="ranking-header">
         <span>순위</span>
         <span>닉네임</span>
@@ -259,29 +268,68 @@ export default {
 }
 
 .ranking-board {
-  font-family: RecipekoreaOTF;
+  font-family: 'rk';
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  text-align: center;
-  width: 52vw;
+  text-align: center; 
+  width: 46vw;
   margin-top: 3vh;
   padding: 20px;
 }
 
- .rank-icon {
-  flex: 1;
+.ranking-title {
   display: flex;
+  justify-content: center; /* 중앙 정렬 */
   align-items: center;
-  justify-content: center;
+  background-color: #6F3533;
+  color: white;
+  font-family: RecipekoreaOTF;
+  font-size: 1.8vw;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 2vw 2vw 0 0;
+  position: relative;
+  gap: 10px; /* 아이콘과 텍스트 사이 간격 */
 }
 
-.rank-icon img {
-  width: 32px;
-  height: 32px;
+.crown-icon {
+  width: 2.5vw;
+  height: auto;
+}
+
+.ranking-text {
+  font-size: 1.5vw;
 }
 
 .nickname {
   flex: 2;
   text-align: center;
+}
+
+.ranking-title-rayout{
+  display: flex;
+  justify-content: center;
+}
+
+.ranking-title {
+  display: flex;
+  width: 10vw;
+  align-items: center;
+  justify-content: center;
+  background-color: #6F3533;
+  color: white;
+  font-family: RecipekoreaOTF;
+  font-size: 1.5vw;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 2vw 2vw 0 0;
+  position: relative;
+}
+
+/* 왕관 아이콘 스타일 */
+.crown-icon {
+  width: 2vw;
+  height: auto;
+  margin-right: 0.5vw;
 }
 
 .ranking-header {
@@ -333,6 +381,11 @@ export default {
 
 .ranking-item:nth-child(2n){
   background-color: #F0DDB9;
+}
+
+.rank-icon{
+  display: flex;
+  
 }
 
 .rank-icon img {
