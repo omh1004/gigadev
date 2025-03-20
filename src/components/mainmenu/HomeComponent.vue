@@ -268,10 +268,10 @@ export default {
 }
 
 .ranking-board {
-  font-family: RecipekoreaOTF;
+  font-family: 'rk';
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  text-align: center;
-  width: 52vw;
+  text-align: center; 
+  width: 46vw;
   margin-top: 3vh;
   padding: 20px;
 }
