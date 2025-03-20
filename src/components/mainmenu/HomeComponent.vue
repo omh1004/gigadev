@@ -383,6 +383,11 @@ export default {
   background-color: #F0DDB9;
 }
 
+.rank-icon{
+  display: flex;
+  
+}
+
 .rank-icon img {
   width: 25px;
   height: 25px;
