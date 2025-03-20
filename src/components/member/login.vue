@@ -36,7 +36,7 @@ export default {
   }
   ,methods: {
     loginAccess: function() {
-  fetch('http://3.38.185.252:8080/spring/api/loginMember', {
+  fetch('http://3.38.185.252:9090/spring/api/loginMember', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

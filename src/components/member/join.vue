@@ -121,7 +121,7 @@ export default {
     checkIdDuplicate() {
   if (!this.isIdValid) return;
   
-  fetch('http://3.38.185.252:8080/spring/api/checkId', {
+  fetch('http://3.38.185.252:9090/spring/api/checkId', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
