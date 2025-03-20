@@ -169,7 +169,7 @@ export default {
     this.getProductData(); 
     const gameNo = sessionStorage.getItem("gameNo");
     // 그냥 돈만 가져와야지
-    fetch("http://3.38.185.252/spring/maingame/moneydata?gameNo="+gameNo)
+    fetch("http://3.38.185.252:8080/spring/maingame/moneydata?gameNo="+gameNo)
     .then(response=>response.text())
     .then(data=>this.revenue.cash = data)
   },
@@ -177,7 +177,7 @@ export default {
     getProductData(){
       const gameNo = sessionStorage.getItem("gameNo");
       // 상품 데이터 가져오기
-      fetch('http://3.38.185.252/spring/ordering/selectAllPrd?gameNo='+gameNo, {
+      fetch('http://3.38.185.252:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
         method: 'GET'
       })
       .then(response => response.json())
@@ -228,7 +228,7 @@ export default {
     fetchStockData() {
       // 예시: 서버에서 재고 데이터 가져오기
       // 실제 API 엔드포인트로 교체 필요
-      fetch('http://3.38.185.252/spring/storage/getStock', {
+      fetch('http://3.38.185.252:8080/spring/storage/getStock', {
         method: 'GET'
       })
       .then(response => response.json())
@@ -367,7 +367,7 @@ export default {
       console.log("서버로 전송할 데이터:", JSON.stringify(orderItems));
       
       // fetch API를 사용하여 서버에 데이터 전송
-      fetch('http://3.38.185.252/spring/ordering/insertOrdering', {
+      fetch('http://3.38.185.252:8080/spring/ordering/insertOrdering', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -391,7 +391,7 @@ export default {
   this.revenue.cash -= totalPrice;
   this.revenue.orderPrice -= totalPrice;
 
-  fetch("http://3.38.185.252/spring/maingame/expense?price="+(-totalPrice)+
+  fetch("http://3.38.185.252:8080/spring/maingame/expense?price="+(-totalPrice)+
         "&gameNo="+sessionStorage.getItem("gameNo"))
   .then(response=>console.log(response));
   

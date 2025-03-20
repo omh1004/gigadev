@@ -100,7 +100,7 @@ export default {
         },
     },
     mounted(){
-        fetch('http://3.38.185.252/spring/userdata/getRankings')
+        fetch('http://3.38.185.252:8080/spring/userdata/getRankings')
             .then(response => response.json())
             .then(data => {
                 console.log("받아온 랭킹 데이터:", data); // 서버 응답 확인

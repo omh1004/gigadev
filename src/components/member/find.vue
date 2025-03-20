@@ -54,7 +54,7 @@ export default {
     }
     ,findId:function(){
       console.log('debbue');
-      fetch("http://3.38.185.252/spring/api/findId",{
+      fetch("http://3.38.185.252:8080/spring/api/findId",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export default {
     })
     }
     ,findPwd:function(){
-      fetch("http://3.38.185.252/spring/api/findPwd",{
+      fetch("http://3.38.185.252:8080/spring/api/findPwd",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",

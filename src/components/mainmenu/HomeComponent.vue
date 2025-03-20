@@ -109,7 +109,7 @@ export default {
       const loginUser = sessionStorage.getItem('loginUser');
       const userData = JSON.parse(loginUser);
 
-      fetch('http://3.38.185.252/spring/userdata/getUserData?userId='+userData.userId)
+      fetch('http://3.38.185.252:8080/spring/userdata/getUserData?userId='+userData.userId)
         .then(response => response.json())
         .then(data => {
           console.log("받아온 유저 데이터:", data);
@@ -147,7 +147,7 @@ export default {
       this.revenue.state=0;
       console.log(this.revenue);
       console.log(JSON.parse(sessionStorage.getItem('loginUser')).userId);
-      fetch("http://3.38.185.252/spring/maingame/newgame",{
+      fetch("http://3.38.185.252:8080/spring/maingame/newgame",{
         method:'POST',
         headers:{
           'Content-Type':'application/json'
@@ -175,7 +175,7 @@ export default {
 
   mounted(){
 
-    fetch('http://3.38.185.252/spring/userdata/getRankings')
+    fetch('http://3.38.185.252:8080/spring/userdata/getRankings')
         .then(response => response.json())
         .then(data => {
             console.log("받아온 랭킹 데이터:", data); // 서버 응답 확인

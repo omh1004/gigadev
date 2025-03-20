@@ -90,7 +90,7 @@ export default {
     const gameNo = sessionStorage.getItem("gameNo");
     this.revenue.loadState();
     // 그냥 돈만 가져와야지
-    fetch("http://3.38.185.252/spring/maingame/moneydata?gameNo="+gameNo)
+    fetch("http://3.38.185.252:8080/spring/maingame/moneydata?gameNo="+gameNo)
     .then(response=>response.text())
     .then(data=>this.revenue.cash = data)
 

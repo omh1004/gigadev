@@ -333,7 +333,7 @@ export default {
   }
 
   try {
-    const response = await fetch(`http://3.38.185.252/spring/bank/moneydata?gameNo=${gameNo}`);
+    const response = await fetch(`http://3.38.185.252:8080/spring/bank/moneydata?gameNo=${gameNo}`);
     if (!response.ok) throw new Error("잔고 데이터를 가져오는 데 실패했습니다.");
 
     const newCash = await response.text();
@@ -416,7 +416,7 @@ export default {
 
   try {
     console.log("🚀 Fetch 요청 시작!");
-    const response = await fetch("http://3.38.185.252/spring/bank/applyLoan", {
+    const response = await fetch("http://3.38.185.252:8080/spring/bank/applyLoan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loanData),
@@ -478,7 +478,7 @@ async fetchCompletedDays() {
 
 
     try {
-        const response = await fetch(`http://3.38.185.252/spring/bank/getPlayday?gameNo=${gameNo}`);
+        const response = await fetch(`http://3.38.185.252:8080/spring/bank/getPlayday?gameNo=${gameNo}`);
         if (!response.ok) throw new Error("진행일자 정보를 가져오는 데 실패했습니다.");
 
         const playday = await response.json();
@@ -574,7 +574,7 @@ async fetchCompletedDays() {
 //   try {
 //     // ✅ API 호출
 //     console.log(`🟢 openDaySummary 실행됨! userId=${this.userId}, selectedDay=${day}`);
-//     const response = await fetch(`http://3.38.185.252/spring/bank/getDailyRevenue?userId=${this.userId}&selectedDay=${day}`);
+//     const response = await fetch(`http://3.38.185.252:8080/spring/bank/getDailyRevenue?userId=${this.userId}&selectedDay=${day}`);
     
 //     if (!response.ok) throw new Error("매출 데이터를 가져오지 못했습니다.");
     
@@ -630,7 +630,7 @@ async openDaySummary(day) {
     // ✅ 로그 추가 (이게 보이는지 확인!)
     console.log(`🟢 openDaySummary 실행됨! gameNo=${gameNo}, selectedDay=${day}`);
 
-    const response = await fetch(`http://3.38.185.252/spring/bank/getDailyRevenue?gameNo=${gameNo}&selectedDay=${day}`);
+    const response = await fetch(`http://3.38.185.252:8080/spring/bank/getDailyRevenue?gameNo=${gameNo}&selectedDay=${day}`);
     
     if (!response.ok) throw new Error("매출 데이터를 가져오지 못했습니다.");
     
@@ -684,7 +684,7 @@ async openDaySummary(day) {
 
       try {
         // ✅ userId를 API 요청에 포함
-        const response = await fetch(`http://3.38.185.252/spring/bank/getLoans?gameNo=${gameNo}`);
+        const response = await fetch(`http://3.38.185.252:8080/spring/bank/getLoans?gameNo=${gameNo}`);
 
         if (!response.ok) {
           throw new Error('대출 데이터를 가져오는 데 실패했습니다.');
@@ -723,7 +723,7 @@ async openDaySummary(day) {
     this.fetchCompletedDays();  // ✅ 페이지 로드 시 진행일 가져오기
     this.fetchMoneyData();  // ✅ 페이지 로드 시 최신 잔고 가져오기
 
-    // fetch("http://3.38.185.252/spring/bank/moneydata?gameNo=" + gameNo)
+    // fetch("http://3.38.185.252:8080/spring/bank/moneydata?gameNo=" + gameNo)
     //   .then(response => response.text())
     //   .then(data => this.revenue.cash = data)
 

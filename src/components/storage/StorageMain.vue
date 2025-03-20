@@ -227,7 +227,7 @@ export default {
       this.disposeProfit += price * this.disquantity;
       this.revenue.disposePrice += price * this.disquantity;
 
-      fetch("http://3.38.185.252/spring/maingame/expense?price=" + (price * this.disquantity) +
+      fetch("http://3.38.185.252:8080/spring/maingame/expense?price=" + (price * this.disquantity) +
         "&gameNo=" + sessionStorage.getItem("gameNo"))
         .then(response => console.log(response))
 
@@ -248,7 +248,7 @@ export default {
         const expansionCost = 30000 + ((this.storageSize - 50) / 20) * 10000;
 
         // 서버에 창고 확장 요청
-        fetch("http://3.38.185.252/spring/storage/expandStorage", {
+        fetch("http://3.38.185.252:8080/spring/storage/expandStorage", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -310,7 +310,7 @@ export default {
 
 
 
-    fetch("http://3.38.185.252/spring/storage/findStorageAll?gameNo=" + gameNo)
+    fetch("http://3.38.185.252:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
       .then(response => response.json())
       .then(data => {
         console.log("서버에서 받은 데이터:", data);
@@ -328,12 +328,12 @@ export default {
       });
 
     // 그냥 돈만 가져와야지
-    fetch("http://3.38.185.252/spring/maingame/moneydata?gameNo=" + gameNo)
+    fetch("http://3.38.185.252:8080/spring/maingame/moneydata?gameNo=" + gameNo)
       .then(response => response.text())
       .then(data => this.revenue.cash = data)
 
     // 그냥 돈만 가져와야지
-    fetch("http://3.38.185.252/spring/storage/gameInfo?gameNo=" + gameNo)
+    fetch("http://3.38.185.252:8080/spring/storage/gameInfo?gameNo=" + gameNo)
       .then(response => response.json())
       .then(data => {
         this.storageSize = data.storagelevel;
