@@ -7,28 +7,28 @@
                     <div class="calcul-block">
                         <div>
                             <div class="block-left"><h3>전체 잔고</h3></div>
-                            <div class="block-right"><p>0원</p></div>
+                            <div class="block-right"><p>{{ finalcash }}원</p></div>
                         </div>
                         <div>
                             <div class="block-left"><h3>폐기 수익</h3></div>
-                            <div class="block-right"><p>0원</p></div>
+                            <div class="block-right"><p>{{ finaldispose }}원</p></div>
                         </div>
                     </div>
                     <div class="calcul-block">
                         <div>
                             <div class="block-left"><h3>대출금</h3></div>
-                            <div class="block-right"><p>-100만원</p></div>
+                            <div class="block-right"><p>1000000원</p></div>
                         </div>
                         <div>
                             <div class="block-left"><h3>중간 대출금</h3></div>
-                            <div class="block-right"><p>0원</p></div>
+                            <div class="block-right"><p>{{ finalloan-1000000 }}원</p></div>
                         </div>
                     </div>
                     <div style="width:37.5vw;border-top:0.3vh dashed #4C1B0B;"></div>
                     <div style="width:37.5vw;height:3vh;">
                         <div>
                             <div class="block-left"><h3>최종 잔고</h3></div>
-                            <div class="block-right"><h3>0원</h3></div>
+                            <div class="block-right"><h3>{{ finalcash+finaldispose-finalloan }}원</h3></div>
                         </div>
                     </div>
                 </div>
@@ -65,16 +65,16 @@
             <div class="finalquiz">
                 <div class="quizpage">
                     <div class="quiztitle">
-                        <h3>퀴즈 결과과</h3>
+                        <h3>퀴즈 결과</h3>
                     </div>
                     <div class="quizresult">
                         <div class="quiz-block">
                             <div class="block-left"><h3>맞춘 개수</h3></div>
-                            <div class="block-right"><p>0개</p></div>
+                            <div class="block-right"><p>{{ finalquizresult }}개</p></div>
                         </div>
                         <div class="quiz-block">
                             <div class="block-left"><h3>틀린 개수</h3></div>
-                            <div class="block-right"><p>0개</p></div>
+                            <div class="block-right"><p>{{ finaldays-finalquizresult }}개</p></div>
                         </div>
                     </div>
                 </div>
@@ -86,11 +86,19 @@
     </div>
 </template>
 <script>
+import { revenueStore } from '@/assets/pinia/maingame';
+
 export default {
     data() {
         return {
             rankings: [],
-            userData:{}
+            userData:{},
+            revenue:revenueStore(),
+            finalcash:0,
+            finaldispose:0,
+            finalloan:1000000,
+            finalquizresult:0,
+            finaldays:0,
         }
     },
     methods:{
@@ -113,7 +121,22 @@ export default {
                 console.log("업데이트된 rankings:", this.rankings); // Vue 상태 업데이트 확인
             })
             .catch(error => console.error("랭킹 데이터 불러오기 실패:", error));
-        },
+
+        fetch('http://3.38.185.252:8080/spring/maingame/gamefinal?gameNo='+sessionStorage.getItem('playNo'))   // this.revenue.playNo는 나중에 사용하겠음. 일단 테스트용으로 playNo만 넣어둠. 무조건 바꿔야 함.
+        .then(response=>response.json())
+        .then(data=>{
+            this.finalcash=data.cashloan.cash;
+            this.finalloan=data.cashloan.loan;
+            this.finaldays=data.cashloan.playDay;
+            data.quizdisposal.forEach(d=>{
+                if(d.qeezeYN=='Y'){
+                    this.finalquizresult++;
+                }
+                this.finaldispose+=d.disposePrice;
+            })
+        })
+        .catch(error=>console.error("최종 정산서 불러오기 실패:",error));
+    }
 }
 </script>
 <style scoped>
