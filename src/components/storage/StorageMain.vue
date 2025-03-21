@@ -308,10 +308,7 @@ export default {
 
     const gameNo = sessionStorage.getItem("gameNo");
 
-
-
-    fetch("http://localhost:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
-    // fetch("http://3.38.185.252:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
+    fetch("http://3.38.185.252:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
       .then(response => response.json())
       .then(data => {
         console.log("서버에서 받은 데이터:", data);

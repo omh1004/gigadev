@@ -200,8 +200,7 @@ export default {
         console.log("product mounted");
         console.log(this.getproduct.cart);
         const gameNo = sessionStorage.getItem("gameNo");
-        // fetch("http://3.38.185.252:8080/spring/maingame/gamestart?gameNo="+gameNo)
-        fetch("http://localhost:8080/spring/maingame/gamestart?gameNo="+gameNo)
+        fetch("http://3.38.185.252:8080/spring/maingame/gamestart?gameNo="+gameNo)
         .then(response=>response.json())
         .then(data=>{
             this.getproduct.product=data
@@ -255,7 +254,7 @@ export default {
         })
         .catch(e=>console.error(e));
 
-        fetch('http://localhost:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
+        fetch('http://3.38.185.252:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
         method: 'GET'
         })
         .then(response => response.json())
