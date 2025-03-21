@@ -140,6 +140,14 @@ export default {
 }
 </script>
 <style scoped>
+@font-face {
+  font-family: 'rk';
+  src: url('/fonts/Recipekorea-FONT.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'prebold';
+  src: url('/fonts/Pretendard-bold.woff') format('woff');
+}
     .bank-container {
         width: 100vw;
         height: 100vh;
@@ -185,6 +193,7 @@ export default {
         border-radius:20px;
     }
     .calculation-title{
+        font-family: rk;
         display:flex;
         justify-content:center;
         align-items:center;
@@ -225,13 +234,13 @@ export default {
         border-top-right-radius:2vh;
     }
     .ranking-board {
-        font-family: RecipekoreaOTF;
+        font-family: rk;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         text-align: center;
         width: 40.5vw;
         min-height:48.5vh;
         background-color:#FFEFCA;
-        border-radius:3vw;
+        border-radius:4vw;
         border: 0.5vw solid #6F3533;
     }
     .rank-icon {
@@ -259,6 +268,7 @@ export default {
         text-align: center;
     }
     .ranking-header span {
+        font-family: rk;
         flex: 1;
         text-align: center;
     }
@@ -333,6 +343,7 @@ export default {
         height:9vh;
     }
     .endingbtn{
+        font-family: rk;
         width:14.5vw;
         height:9vh;
         background-color:#FFEFCA;
@@ -354,5 +365,8 @@ export default {
         width:50%;
         height:2vh;
         text-align:right;
+    }
+    .box {
+        font-family: rk;
     }
 </style>

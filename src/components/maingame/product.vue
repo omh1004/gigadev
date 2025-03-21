@@ -196,11 +196,11 @@ export default {
             }
         },
     },
-    mounted(){
+    async mounted(){
         console.log("product mounted");
         console.log(this.getproduct.cart);
         const gameNo = sessionStorage.getItem("gameNo");
-        fetch("http://3.38.185.252:8080/spring/maingame/gamestart?gameNo="+gameNo)
+        await fetch("http://3.38.185.252:8080/spring/maingame/gamestart?gameNo="+gameNo)  // 9090으로 변경경
         .then(response=>response.json())
         .then(data=>{
             this.getproduct.product=data
@@ -213,6 +213,7 @@ export default {
                     }else if(findProd2!=null){
                         findProd2.orderQuantity+=p.orderQuantity;
                     }else{
+                        console.log(this.product,"asdfjsadfj");
                         this.product.push(
                             {
                                 goodsNo:p.goodsNo, goodType:p.goodType, goodsName:p.goodsName, image:p.image,
@@ -223,10 +224,98 @@ export default {
                     this.productAmount+=p.orderQuantity;
                 }
             });
+            console.log("pppprod", this.product);
+            console.log("length",this.product.length);
+        
+            for(let i=0;i<10;i++){
+                let quantity = Math.floor((Math.random()*7)+1);
+                const want = {};
+                while(quantity>0){
+                    const prodName = this.product[Math.floor(Math.random()*this.product.length)].goodsName;
+                    const prodQuan = Math.floor((Math.random()*7)+1);
+
+                    const keys = Object.keys(want);
+                    const nameExist = keys.find(k=>k==prodName);
+
+                    if(nameExist!=null){
+                        if(prodQuan>quantity){
+                            want[nameExist] = quantity;
+                            quantity=0;
+                        }else{
+                            want[nameExist] = prodQuan;
+                            quantity -= prodQuan;
+                        }
+                    }else{
+                        if(prodQuan>quantity){
+                            want[prodName] = quantity;
+                            quantity=0;
+                        }else{
+                            want[prodName] = prodQuan;
+                            quantity -= prodQuan;
+                        }
+                    }
+                }
+                console.log("wantstart");
+                Object.keys(want).forEach(w=>{
+                    console.log("want?", w);
+                })
+                console.log("wantend");
+                this.getproduct.customerWant.push(want);
+            }
+            this.getproduct.customerWant.forEach(prodwant=>console.log(prodwant));
+
+            console.log("aa", this.product);
         })
         .catch(e=>console.error(e));
 
-        console.log("aa", this.product);
+        await fetch('http://3.38.185.252:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
+        method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            for(let i=0;i<10;i++){
+                let quantity = Math.floor((Math.random()*7)+1);
+                const want = {};
+                while(quantity>0){
+                    const prodName = data[Math.floor(Math.random()*data.length)].goodsname;
+                    const prodQuan = Math.floor((Math.random()*7)+1);
+
+                    const keys = Object.keys(want);
+                    const nameExist = keys.find(k=>k==prodName);
+
+                    if(nameExist!=null){
+                        if(prodQuan>quantity){
+                            want[nameExist] = quantity;
+                            quantity=0;
+                        }else{
+                            want[nameExist] = prodQuan;
+                            quantity -= prodQuan;
+                        }
+                    }else{
+                        if(prodQuan>quantity){
+                            want[prodName] = quantity;
+                            quantity=0;
+                        }else{
+                            want[prodName] = prodQuan;
+                            quantity -= prodQuan;
+                        }
+                    }
+                }
+                console.log("wantstart");
+                Object.keys(want).forEach(w=>{
+                    console.log("want?", w);
+                })
+                console.log("wantend");
+                this.getproduct.customerWant.push(want);
+            }
+            this.getproduct.customerWant.forEach(prodwant=>console.log(prodwant));
+        })
+        .catch(error => {
+            // console.error('상품 데이터 가져오기 오류:', error);
+            // this.popupMessage = '상품 데이터를 가져오는 중 오류가 발생했습니다.';
+            // this.popup = true;
+        });
     },
     props:['countermodal','countertarget','timeleft','noclick','quizblind'],
 }

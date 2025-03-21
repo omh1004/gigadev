@@ -308,8 +308,6 @@ export default {
 
     const gameNo = sessionStorage.getItem("gameNo");
 
-
-
     fetch("http://3.38.185.252:8080/spring/storage/findStorageAll?gameNo=" + gameNo)
       .then(response => response.json())
       .then(data => {
