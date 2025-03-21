@@ -23,11 +23,11 @@ export default {
             quizMan:Math.floor(Math.random()*6)+6,
             meetQuizMan:false,
             customerCount:1,
-            customerWant:[
+            customerWant:[   // 수정하기
                 {'딸기':2,'파인애플':1},
                 {'딸기':1,'파인애플':2},
             ],  // 일단 두개만
-            currentWant:{},
+            currentWant:{}, // 수정하기
             reliability:50,
             quiz:-1,
             revenue:revenueStore(),
@@ -84,7 +84,7 @@ export default {
             this.$emit('quizTime');
         },
         customer(){
-            this.currentWant=this.customerWant[Math.floor(Math.random()*2)];
+            this.currentWant=this.customerWant[Math.floor(Math.random()*2)];    // 수정하기기
             const key = Object.keys(this.currentWant);
             this.dialog='';
             key.forEach((p,i)=>{

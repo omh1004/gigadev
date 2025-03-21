@@ -177,7 +177,8 @@ export default {
     getProductData(){
       const gameNo = sessionStorage.getItem("gameNo");
       // 상품 데이터 가져오기
-      fetch('http://3.38.185.252:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
+      // fetch('http://3.38.185.252:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
+      fetch('http://localhost:8080/spring/ordering/selectAllPrd?gameNo='+gameNo, {
         method: 'GET'
       })
       .then(response => response.json())
