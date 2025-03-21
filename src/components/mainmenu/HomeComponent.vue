@@ -53,13 +53,13 @@
         >
           <!-- 트로피 추가 -->
           <div class="rank-icon">
-            <img v-if="index === 0" src="/lanking/gold-trophy.png" alt="Gold Trophy">
-            <img v-else-if="index === 1" src="/lanking/silver-trophy.png" alt="Silver Trophy">
-            <img v-else-if="index === 2" src="/lanking/bronze-trophy.png" alt="Bronze Trophy">
-            <span v-else>{{ index + 1 }}</span>
+            <img class="margin-left" v-if="index === 0" src="/lanking/gold-trophy.png" alt="Gold Trophy">
+            <img class="margin-left" v-else-if="index === 1" src="/lanking/silver-trophy.png" alt="Silver Trophy">
+            <img class="margin-left" v-else-if="index === 2" src="/lanking/bronze-trophy.png" alt="Bronze Trophy">
+            <span class="margin-left" v-else>{{ index + 1 }}</span>
           </div>
-          <div class="nickname">{{ player.nickname }}</div>
-          <div class="profit">{{ formatCurrency(player.profit) }}</div>
+          <div class="nickname margin-left">{{ player.nickname }}</div>
+          <div class="profit margin-left">{{ formatCurrency(player.profit) }}</div>
         </div>
       </div>
     </div>
@@ -147,7 +147,7 @@ export default {
       this.revenue.state=0;
       console.log(this.revenue);
       console.log(JSON.parse(sessionStorage.getItem('loginUser')).userId);
-      fetch("http://3.38.185.252:8080/spring/maingame/newgame",{
+      fetch("http://localhost:8080/spring/maingame/newgame",{
         method:'POST',
         headers:{
           'Content-Type':'application/json'
@@ -175,7 +175,7 @@ export default {
 
   mounted(){
 
-    fetch('http://3.38.185.252:8080/spring/userdata/getRankings')
+    fetch('http://localhost:8080/spring/userdata/getRankings')
         .then(response => response.json())
         .then(data => {
             console.log("받아온 랭킹 데이터:", data); // 서버 응답 확인
@@ -385,7 +385,16 @@ export default {
 
 .rank-icon{
   display: flex;
-  
+}
+
+.margin-left{
+  margin-left: 25%;
+}
+
+.rank-icon span{
+  width: 25px;
+  height: 25px;
+
 }
 
 .rank-icon img {

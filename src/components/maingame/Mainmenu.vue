@@ -81,7 +81,8 @@ export default {
       //     // 근데 뭐 넣지?
       //   })
       // });
-      this.$router.push('/maingame/1');
+      //this.$router.push('/maingame/1');
+      this.$router.push('realnews1');
     }
   },
   components:{ Topbar },
