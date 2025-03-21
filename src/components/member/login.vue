@@ -36,6 +36,7 @@ export default {
   }
   ,methods: {
     loginAccess: function() {
+      console.log('로그인 요청:', this.inputId, this.inputPw);
   fetch('http://3.38.185.252:8080/spring/api/loginMember', {
     method: 'POST',
     headers: {
@@ -48,6 +49,7 @@ export default {
     })
   })
   .then(response => {
+    alert('로그인 요청 성공'+response.status);
     console.log(response.status);
 
     if (!response.ok) {
